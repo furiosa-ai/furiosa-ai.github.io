@@ -473,7 +473,11 @@ Renegade NPU 에서 모델을 실행시키기 위해 하는 작업은 위와 같
 <p>nux-quantizer 의 quantization specification 은 <a href="https://www.tensorflow.org/lite/performance/quantization_spec">Tensorflow Lite 8-bit quantization specification</a>을 따릅니다.</p>
 
 <p>nux-quantizer 는 ONNX 모델을 우선 지원하며, 추후 SDK 릴리즈 계획에 따라 TensorFlow 모델을 지원할 예정입니다.</p>
-<h2 id='b3c0254118'>양자화 바로 시작하기</h2><h3 id='nux-quantizer-post_training_quantization'>nux.quantizer.post_training_quantization()</h3><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+<h2 id='b3c0254118'>양자화 바로 시작하기</h2><h3 id='nux-quantizer-post_training_quantization'>nux.quantizer.post_training_quantization()</h3>
+<blockquote>
+<p>One click quantization </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
 
 
 <span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
@@ -517,6 +521,10 @@ Renegade NPU 에서 모델을 실행시키기 위해 하는 작업은 위와 같
 <p><code>nux.quantizer.post_training_quantization</code> 함수가 동작하기 위하여는 ONNX 모델이 주어져야 합니다.
 Pytorch 로 작성된 모델은 <code>torch.onnx.export</code> 함수를 사용하여 ONNX 로 변환 할 수 있습니다. 
 예제 코드는 python script 로 작성된 Pytorch 모델 <code>ExampleNet</code>을 ONNX 모델로 변환 하고, 랜덤하게 생성한 캘리브레이션 데이터로부터 활성화 값의 동적 범위를 수집하고 양자화를 수행합니다.</p>
+
+<blockquote>
+<p>Export Pytorch to ONNX </p>
+</blockquote>
 <div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
@@ -575,7 +583,11 @@ Pytorch 로 작성된 모델은 <code>torch.onnx.export</code> 함수를 사용�
 <p>변환된 <code>ExampleNet</code>ONNX 모델(이하 <code>ExampleNet</code>)을 <a href="https://github.com/lutzroeder/netron">Netron</a>으로 아래와 같이 ONNX 변환 결과를 시각화할 수 있습니다.</p>
 
 <p><img src="images/nux-quantizer/simple_model-e3ffbcb9.png" alt="simple_model" /></p>
-<h2 id='nux-quantizer-2'>Nux Quantizer 들여다 보기</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+<h2 id='nux-quantizer-2'>Nux Quantizer 들여다 보기</h2>
+<blockquote>
+<p>Nux Quantizer in detail </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
 
 
 <span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
@@ -604,7 +616,11 @@ Pytorch 로 작성된 모델은 <code>torch.onnx.export</code> 함수를 사용�
 ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt; quantization 세 단계를 거쳐 양자화된 ONNX 모델을 출력합니다. </p>
 
 <p><img src="images/nux-quantizer/nux-quantizer_quantization_pipepline-edd29681.png" alt="nux-quantizer pipeline" /></p>
-<h2 id='586724c750'>그래프 최적화</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
+<h2 id='586724c750'>그래프 최적화</h2>
+<blockquote>
+<p>Graph Optimization</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
 
 
 <span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
@@ -631,7 +647,11 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <p>아래와 같이 <code>optimized ExampleNet</code> 을 시각화하여 아래와 같이 ONNX 모델 최적화 결과를 확인할 수 있습니다.</p>
 
 <p><img src="images/nux-quantizer/optimized_simple_model-6cd0bd9a.png" alt="optimized_model" /></p>
-<h2 id='3d9e25ab9d'>캘리브레이션</h2><h3 id='nux-quantizer-build_calibration_model'>nux.quantizer.build_calibration_model()</h3><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
+<h2 id='3d9e25ab9d'>캘리브레이션</h2><h3 id='nux-quantizer-build_calibration_model'>nux.quantizer.build_calibration_model()</h3>
+<blockquote>
+<p>Calibration</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
 
 
 <span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
@@ -716,7 +736,11 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <code>text
 {&#39;input&#39;: (2.170155084968428e-06, 0.9999873042106628), &#39;18&#39;: (-1.1680195331573486, 1.125024437904358), &#39;20&#39;: (-0.6748880743980408, 0.6123914122581482), &#39;21&#39;: (-0.44649842381477356, 0.6123914122581482), &#39;output&#39;: (-0.2456839233636856, 0.39172685146331787)}
 </code></p>
-<h2 id='370f0f8e8c'>양자화</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+<h2 id='370f0f8e8c'>양자화</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
+<blockquote>
+<p>Quantization </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
 
 
 <span class="n">optimized_model</span> <span class="o">=</span> <span class="p">...</span>
