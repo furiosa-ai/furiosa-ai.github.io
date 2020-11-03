@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>FuriosaAI Renegade API Reference</title>
+    <title>FuriosaAI Renegade SDK Installation Guide and API Reference</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -326,29 +326,6 @@
             <a href="#478bf8c928" class="toc-h1 toc-link" data-title="바로 시작하기">바로 시작하기</a>
           </li>
           <li>
-            <a href="#nux-quantizer" class="toc-h1 toc-link" data-title="Nux Quantizer">Nux Quantizer</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#b3c0254118" class="toc-h2 toc-link" data-title="양자화 바로 시작하기">양자화 바로 시작하기</a>
-                  </li>
-                  <li>
-                    <a href="#pytorch-onnx" class="toc-h2 toc-link" data-title="Pytorch 모델 ONNX 변환 예제">Pytorch 모델 ONNX 변환 예제</a>
-                  </li>
-                  <li>
-                    <a href="#nux-quantizer-2" class="toc-h2 toc-link" data-title="Nux Quantizer 들여다 보기">Nux Quantizer 들여다 보기</a>
-                  </li>
-                  <li>
-                    <a href="#586724c750" class="toc-h2 toc-link" data-title="그래프 최적화">그래프 최적화</a>
-                  </li>
-                  <li>
-                    <a href="#3d9e25ab9d" class="toc-h2 toc-link" data-title="캘리브레이션">캘리브레이션</a>
-                  </li>
-                  <li>
-                    <a href="#370f0f8e8c" class="toc-h2 toc-link" data-title="양자화">양자화</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
             <a href="#nux-python-api" class="toc-h1 toc-link" data-title="Nux Python API">Nux Python API</a>
           </li>
           <li>
@@ -433,7 +410,7 @@
 <p>또한 양자화 (quantization)을 도와주는 Nux Quantizer 도구와 Python 및 C/C++ API 를 소개합니다.    </p>
 <h1 id='d9a2f407c6'>필요사항</h1>
 <ul>
-<li>Linux (Ubuntu 18.04 LTS or later)</li>
+<li>Linux (Ubuntu 18.04 혹은 상위 버젼)</li>
 </ul>
 <h1 id='furiosaai-sdk'>FuriosaAI SDK 설치</h1><h2 id='fpga'>FPGA 설치</h2>
 <p>아래 링크로 FuriosaAI 에서 제공하는 FPGA 혹은 AWS F1을 설치해서 사용할 수 있습니다. </p>
@@ -471,315 +448,6 @@ Renegade NPU 에서 모델을 실행시키기 위해 하는 작업은 위와 같
 <li>TFLite 나 ONNX 모델을 컴파일 해서 가상 NPU 에 올리기 </li>
 <li>물리적 NPU 실행시키기</li>
 </ol>
-<h1 id='nux-quantizer'>Nux Quantizer</h1>
-<p>양자화 도구 nux-quantizer 는 post-training 8-bit quantization (이하 양자화)을 지원합니다. </p>
-
-<p>nux-quantizer 의 quantization specification 은 <a href="https://www.tensorflow.org/lite/performance/quantization_spec">Tensorflow Lite 8-bit quantization specification</a>을 따릅니다.</p>
-
-<p>nux-quantizer 는 ONNX 모델을 우선 지원하며, 추후 SDK 릴리즈 계획에 따라 TensorFlow 모델을 지원할 예정입니다.</p>
-<h2 id='b3c0254118'>양자화 바로 시작하기</h2><h3 id='nux-quantizer-post_training_quantization'>nux.quantizer.post_training_quantization()</h3>
-<blockquote>
-<p>One click quantization </p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
-
-
-<span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">calibration_data</span> <span class="o">=</span> <span class="p">...</span>
-
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">post_training_quantization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="c1"># ...
-</span></code></pre></div>
-<p>입력 ONNX 모델을 바로 양자화 할 수 있습니다. 이 함수는 다음의 양자화 기법이 기본으로 적용되어 있습니다. </p>
-
-<ul>
-<li>양자화로 인하여 모델의 정확도가 하락하는 것을 최소화하기 위하여 <code>convolution</code> 오퍼레이터는 <code>per-channel</code> 단위로, 나머지 오퍼레이터들은 <code>per-tensor</code> 단위로 양자화 합니다.</li>
-<li>양자화된 모델 추론 시 부동소수점 연산에 비하여 연산 처리 속도가 빠른 <a href="https://arxiv.org/abs/1712.05877">integer-only-arithmetic</a>을 적용하기 위하여 가중치 (weight) 뿐만 아니라 활성화 값 (activation value)도 양자화하는 <a href="https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html#post-training-static-quantization"><code>static</code> 양자화 기법</a>을 사용합니다.</li>
-</ul>
-<h3 id='parameters'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 형식의 신경망 모델(이하 ONNX 모델)</td>
-</tr>
-<tr>
-<td>input_tensors</td>
-<td><code>List[str]</code> ONNX 모델의 입력 텐서 이름</td>
-</tr>
-<tr>
-<td>calibration_data</td>
-<td><code>Union[Dict[str, np.ndarray], List[Dict[str, np.ndarray]]]</code> 활성화 값의 동적 범위 (dynamic range)를 수집하기 위하여 필요한 캘리브레이션 데이터, 만약 주어지지 않으면 랜덤하게 데이터 생성</td>
-</tr>
-</tbody></table>
-<h3 id='return'>Return</h3>
-<p><code>onnx.ModelProto</code> 정적 채널 단위 (static per-channel)로 int8 양자화된 모델  </p>
-<h2 id='pytorch-onnx'>Pytorch 모델 ONNX 변환 예제</h2>
-<p><code>nux.quantizer.post_training_quantization</code> 함수가 동작하기 위하여는 ONNX 모델이 주어져야 합니다.
-Pytorch 로 작성된 모델은 <code>torch.onnx.export</code> 함수를 사용하여 ONNX 로 변환 할 수 있습니다. 
-예제 코드는 python script 로 작성된 Pytorch 모델 <code>ExampleNet</code>을 ONNX 모델로 변환 하고, 랜덤하게 생성한 캘리브레이션 데이터로부터 활성화 값의 동적 범위를 수집하고 양자화를 수행합니다.</p>
-
-<blockquote>
-<p>Export Pytorch to ONNX </p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
-<span class="kn">import</span> <span class="nn">onnx</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-
-<span class="kn">import</span> <span class="nn">nux</span>
-
-
-<span class="c1"># describe Example Pytorch model
-</span><span class="k">class</span> <span class="nc">ExampleNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x</span>
-
-
-<span class="c1"># util function for exporting Pytorch model to ONNX
-</span><span class="k">def</span> <span class="nf">export_example_net</span><span class="p">():</span>
-    <span class="n">dummy_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
-    <span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"input"</span><span class="p">]</span>
-    <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"output"</span><span class="p">]</span>
-    <span class="n">model_io</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="n">BytesIO</span><span class="p">()</span>
-    <span class="n">torch</span><span class="p">.</span><span class="n">onnx</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">ExampleNet</span><span class="p">(),</span>
-                      <span class="p">(</span><span class="n">dummy_input</span><span class="p">,),</span>
-                      <span class="n">model_io</span><span class="p">,</span>
-                      <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                      <span class="n">input_names</span><span class="o">=</span><span class="n">input_names</span><span class="p">,</span>
-                      <span class="n">output_names</span><span class="o">=</span><span class="n">output_names</span><span class="p">)</span>
-    <span class="n">model_io</span><span class="p">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">onnx</span><span class="p">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_io</span><span class="p">)</span>
-
-<span class="c1"># util function to get input tensor name
-</span><span class="k">def</span> <span class="nf">example_net_input_tensors</span><span class="p">():</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s">"input"</span><span class="p">]</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">export_example_net</span><span class="p">()</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">post_training_quantization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">example_net_input_tensors</span><span class="p">())</span>
-
-<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="c1"># ...
-</span></code></pre></div>
-<p>변환된 <code>ExampleNet</code>ONNX 모델(이하 <code>ExampleNet</code>)을 <a href="https://github.com/lutzroeder/netron">Netron</a>으로 아래와 같이 ONNX 변환 결과를 시각화할 수 있습니다.</p>
-
-<p><img src="images/nux-quantizer/simple_model-e3ffbcb9.png" alt="simple_model" /></p>
-<h2 id='nux-quantizer-2'>Nux Quantizer 들여다 보기</h2>
-<blockquote>
-<p>Nux Quantizer in detail </p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
-
-
-<span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
-
-<span class="n">input_tensors</span> <span class="o">=</span> <span class="n">example_net_input_tensors</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">export_example_net</span><span class="p">()</span>
-
-<span class="c1"># graph optimization
-</span><span class="n">optimized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-
-<span class="c1"># calibration
-</span><span class="n">calibration_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">build_calibration_model</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">IS_TSET</span><span class="p">:</span>
-    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate_with_random_input</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">calibration_data</span> <span class="o">=</span> <span class="n">get_calibration_data</span><span class="p">(...)</span>
-    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>
-
-<span class="c1"># quantization
-</span><span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">dynamic_ranges</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="c1"># ...
-</span></code></pre></div>
-<p>nux-quantizer는 아래 도표의 흐름으로 양자화 합니다. 
-ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt; quantization 세 단계를 거쳐 양자화된 ONNX 모델을 출력합니다. </p>
-
-<p><img src="images/nux-quantizer/nux-quantizer_quantization_pipepline-edd29681.png" alt="nux-quantizer pipeline" /></p>
-<h2 id='586724c750'>그래프 최적화</h2>
-<blockquote>
-<p>Graph Optimization</p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
-
-
-<span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
-
-<span class="n">optimized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-</code></pre></div><h3 id='nux-quantizer-optimize'>nux.quantizer.optimize()</h3>
-<p>이 함수는 캘리브레이션 및 양자화를 수행하기 전 단계로 ONNX 모델을 최적화 합니다. 
-각 노드의 출력 텐서 모양 (shape) 추론, 오퍼레이터 퓨전 (fusion) 등을 수행하여 ONNX 모델 그래프를 최적화합니다.</p>
-<h3 id='parameters-2'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 모델</td>
-</tr>
-</tbody></table>
-<h3 id='return-2'>Return</h3>
-<p><code>onnx.ModelProto</code> 최적화된 ONNX 모델</p>
-<h3 id='result'>Result</h3>
-<p>아래와 같이 <code>optimized ExampleNet</code> 을 시각화하여 아래와 같이 ONNX 모델 최적화 결과를 확인할 수 있습니다.</p>
-
-<p><img src="images/nux-quantizer/optimized_simple_model-6cd0bd9a.png" alt="optimized_model" /></p>
-<h2 id='3d9e25ab9d'>캘리브레이션</h2><h3 id='nux-quantizer-build_calibration_model'>nux.quantizer.build_calibration_model()</h3>
-<blockquote>
-<p>Calibration</p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
-
-
-<span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">optimized_model</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
-
-<span class="n">calibration_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">build_calibration_model</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">IS_TSET</span><span class="p">:</span>
-    <span class="n">calibration_data</span> <span class="o">=</span> <span class="n">get_calibration_data</span><span class="p">(...)</span> <span class="c1"># user-written function
-</span>    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>    
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate_with_random_input</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">)</span>    
-</code></pre></div>
-<p>이 함수는 ONNX 모델을 <code>static</code> 양자화하기 위한 사전 준비단계로 각 노드의 출력에 <code>ReduceMin</code>과 <code>ReduceMax</code> 노드를 덧붙입니다.
-이로써 주어진 캘리브레이션 데이터로부터 활성화 값들의 동적 범위 (dynamic range)를 캘리브레이션 하기 위한 모델을 만들어 냅니다.</p>
-<h3 id='parameters-3'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 모델</td>
-</tr>
-<tr>
-<td>input_tensors</td>
-<td><code>List[str]</code> ONNX 모델의 입력 텐서 이름</td>
-</tr>
-</tbody></table>
-<h3 id='return-3'>Return</h3>
-<p><code>onnx.ModelProto</code> 캘리브레이션 모델</p>
-<h3 id='result-2'>Result</h3>
-<p>아래와 같이 <code>calibration ExampleNet</code>을 시각화하여 아래와 같이 캘리브레이션 모델을 확인할 수 있습니다.</p>
-
-<p><img src="images/nux-quantizer/augmented_simple_model_for_calibration-d6a46c1a.png" alt="calibration_model" /></p>
-<h3 id='nux-quantizer-calibrate'>nux.quantizer.calibrate()</h3>
-<p>이 함수는 캘리브레이션 모델을 실행하여 전처리된 캘리브레이션 데이터로부터 활성화 값들의 동적 범위를 수집하는 일을 수행합니다.</p>
-<h3 id='parameters-4'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 모델</td>
-</tr>
-<tr>
-<td>calibration_data</td>
-<td><code>Union[Dict[str, np.ndarray], List[Dict[str, np.ndarray]]]</code> 전처리된 calibration 데이터</td>
-</tr>
-</tbody></table>
-<h3 id='return-4'>Return</h3>
-<p><code>Dict[str, Tuple[float, float]]</code> 활성화 값들의 동적 범위</p>
-<h3 id='result-3'>Result</h3>
-<p><code>calibration ExampleNet</code>을 캘리브레이션하면 아래와 같이 동적 범위를 확인 할 수 있습니다.
-<code>text
-{&#39;input&#39;: (1.2729454283544328e-05, 0.9999984502792358), &#39;18&#39;: (-0.811184287071228, 1.0816885232925415), &#39;20&#39;: (-0.6744376420974731, 0.5646329522132874), &#39;21&#39;: (-0.29423975944519043, 0.5646329522132874), &#39;output&#39;: (-0.24178576469421387, 0.20031100511550903)}
-</code></p>
-<h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
-<p>이 함수는 캘리브레이션 모델을 실행하여 랜덤하게 생성된 캘리브레이션 데이터로부터 활성화 값들의 동적 범위를 수집합니다.</p>
-<h3 id='parameters-5'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 모델</td>
-</tr>
-</tbody></table>
-<h3 id='return-5'>Return</h3>
-<p><code>Dict[str, Tuple[float, float]]</code> 활성화 값들의 동적 범위</p>
-<h3 id='result-4'>Result</h3>
-<p><code>calibration ExampleNet</code>을 랜덤하게 캘리브레이션 하면 아래와 같이 동적 범위를 확인 할 수 있습니다. 
-<code>text
-{&#39;input&#39;: (2.170155084968428e-06, 0.9999873042106628), &#39;18&#39;: (-1.1680195331573486, 1.125024437904358), &#39;20&#39;: (-0.6748880743980408, 0.6123914122581482), &#39;21&#39;: (-0.44649842381477356, 0.6123914122581482), &#39;output&#39;: (-0.2456839233636856, 0.39172685146331787)}
-</code></p>
-<h2 id='370f0f8e8c'>양자화</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
-<blockquote>
-<p>Quantization </p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
-
-
-<span class="n">optimized_model</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="p">...</span>
-
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">dynamic_ranges</span><span class="p">)</span>
-</code></pre></div>
-<p>이 함수는 그래프 최적화 단계에서 얻은 최적화 ONNX 모델, 캘리브레이션 단계에서 얻은 동적 범위를 활용하여 ONNX 모델을 양자화하는 일을 수행합니다.</p>
-<h3 id='parameters-6'>Parameters</h3>
-<table><thead>
-<tr>
-<th>이름</th>
-<th>설명</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>model</td>
-<td><code>onnx.ModelProto</code> ONNX 모델</td>
-</tr>
-<tr>
-<td>input_tensors</td>
-<td><code>List[str]</code> ONNX 모델의 입력 텐서 이름</td>
-</tr>
-<tr>
-<td>dynamic_ragnes</td>
-<td><code>Dict[str, Tuple[float, float]]</code> 활성화 값들의 동적 범위</td>
-</tr>
-</tbody></table>
-<h3 id='return-6'>Return</h3>
-<p><code>onnx.ModelProto</code> <code>static</code> <code>per-channel</code> 8-bit 양자화 모델</p>
-<h3 id='result-5'>Result</h3>
-<p><code>quantized ExampleNet</code>을 시각화하여 아래와 같이 양자화된 ONNX 모델을 확인할 수 있습니다. </p>
-
-<p><img src="images/nux-quantizer/quantized_simple_model-174257e1.png" alt="quantized_model" /></p>
 <h1 id='nux-python-api'>Nux Python API</h1>
 <p>Python API 문서는 아래 링크에서 확인 가능합니다. </p>
 
@@ -793,9 +461,8 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="n">nux_handle_t</span> <span class="n">nux</span><span class="p">;</span>
 <span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">create_nux</span><span class="p">(</span><span class="o">&amp;</span><span class="n">nux</span><span class="p">);</span>
 </code></pre></div>
-<p>Nux 를 활용하기 위해 핸들을 생성합니다.
-    w   w</p>
-<h3 id='parameters-7'>Parameters</h3>
+<p>Nux 를 활용하기 위해 핸들을 생성합니다.</p>
+<h3 id='parameters'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -807,19 +474,8 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>생성한 nux 핸들을 저장하기 위한 변경시킬 수 있는 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-7'>Return</h3>
+<h3 id='return'>Return</h3>
 <p>성공 하면 <code>nux_error_t_success</code> 를 실패하면 <code>nux_error_t_nux_creation_failed</code> 를 돌려 줍니다.</p>
-
-<!-- @Jeehoon: API가 fix되었으면 어렵겠지만, 함수 이름을 통일성있게 바꾸면 어떨까 합니다.
-- 어떤 함수는 "nux_"로 시작하고 어떤건 아닌데, 모두 "nux_"로 시작하도록 통일하는게 어떨까 합니다 ("create_nux()", "enable_logging()", "destroy_sync_model()" vs. "nux_create_sync_model()").
-- 더 나아가서 모든 API 이름을 "nux_<verb>_<noun>()" 혹은 "nux_<noun>_<verb>()" 식으로 구성할 수 있을까요?  저는 후자를 선호하는데 왜냐하면 OOP에서 "session::create()"와 같이 명사를 먼저 적는 전통과 맞닿아 있어서요.
--->
-
-<!-- @Jeehoon: 코드 예제가 indentation이 잘 안된 경우가 있는 것 같습니다.  가령 C "nux_create_sync_model()", Python "session.create(model)" 은 space 숫자가 안맞습니다. -->
-
-<!-- @Jeehoon: 혹시 API doc을 코드로부터 autogen할 수 있을지 궁금합니다.  그러면 API doc을 항상 코드와 싱크를 맞출 수 있을 것 같아 제안드립니다. -->
-
-<!-- @Jeehoon: API, tutorial, example을 묶는 index page가 있으면 좋을 것 같습니다. -->
 <h2 id='destroy_nux'>destroy_nux()</h2>
 <blockquote>
 <p>Destroy a Nux handle</p>
@@ -829,7 +485,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="n">destroy_nux</span><span class="p">(</span><span class="n">nux</span><span class="p">);</span>
 </code></pre></div>
 <p>Nux 핸들을 해제합니다.</p>
-<h3 id='parameters-8'>Parameters</h3>
+<h3 id='parameters-2'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -854,7 +510,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
                                        <span class="o">&amp;</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>컴파일된 ENF 바이너리를 실행할 수 있는 동기식 모델을 생성합니다. 동기식 모델은 한번에 하나의 배치를 완전하게 수행하는 추론 태스크를 실행하는 API 를 제공합니다. </p>
-<h3 id='parameters-9'>Parameters</h3>
+<h3 id='parameters-3'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -880,7 +536,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 </tbody></table>
 
 <p>파이썬에 해당 API 는 위와 같은 인자를 필요로 하지 않습니다. 대신 <code>enf</code> 파일의 경로를 직접 받습니다.</p>
-<h3 id='return-8'>Return</h3>
+<h3 id='return-2'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_nux_creation_failed</code> </p>
 <h2 id='destroy_sync_model'>destroy_sync_model()</h2>
 <blockquote>
@@ -891,7 +547,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="n">destroy_sync_model</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>더이상 사용하지 않을 동기식 모델의 핸들을 해제합니다. </p>
-<h3 id='parameters-10'>Parameters</h3>
+<h3 id='parameters-4'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -917,7 +573,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
   <span class="n">nInputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">input_num</span><span class="p">()</span>
 </code></pre></div>
 <p>동기식 모델의 입력 텐서들의 개수를 돌려줍니다.</p>
-<h3 id='parameters-11'>Parameters</h3>
+<h3 id='parameters-5'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -929,7 +585,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>동기식 모델의 핸들</td>
 </tr>
 </tbody></table>
-<h3 id='return-9'>Return</h3>
+<h3 id='return-3'>Return</h3>
 <p>모델의 입력 텐서 개수</p>
 <h2 id='model_count_outputs'>model_count_outputs()</h2>
 <blockquote>
@@ -942,7 +598,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="kt">int</span> <span class="n">nOutputs</span> <span class="o">=</span> <span class="n">model_count_outputs</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>동기식 모델의 출력 텐서들의 개수를 돌려줍니다.</p>
-<h3 id='parameters-12'>Parameters</h3>
+<h3 id='parameters-6'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -954,7 +610,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>동기식 모델의 핸들</td>
 </tr>
 </tbody></table>
-<h3 id='return-10'>Return</h3>
+<h3 id='return-4'>Return</h3>
 <p>모델의 출력 텐서 개수</p>
 <h2 id='model_input_tensor'>model_input_tensor()</h2>
 <blockquote>
@@ -973,7 +629,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <aside class="info">
 입력 텐서 핸들은 `destroy_sync_model()` 를 호출하기 전까지 유효합니다.
 </aside>
-<h3 id='parameters-13'>Parameters</h3>
+<h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -993,7 +649,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>특정 입력 텐서 핸들을 가리킬 변경 가능 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-11'>Return</h3>
+<h3 id='return-5'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_invalid_input_index</code></p>
 <h2 id='model_output_tensor'>model_output_tensor()</h2>
 <blockquote>
@@ -1012,7 +668,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <aside class="info">
 출력 텐서 핸들은 `destroy_sync_model()` 를 호출하기 전까지 유효합니다.
 </aside>
-<h3 id='parameters-14'>Parameters</h3>
+<h3 id='parameters-8'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1032,7 +688,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>특정 출력 텐서 핸들을 가리킬 변경 가능 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-12'>Return</h3>
+<h3 id='return-6'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_invalid_output_index</code></p>
 <h2 id='model_run'>model_run()</h2>
 <blockquote>
@@ -1048,7 +704,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 
 <p>이 함수를 호출하기 전에 입력 텐서들을 적합한 데이터로 채워줘야 합니다.
 이를 위해 <code>model_input_tensor</code> 및 <code>tensor_set_buffer</code> 를 참조하시기 바랍니다.</p>
-<h3 id='parameters-15'>Parameters</h3>
+<h3 id='parameters-9'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1060,7 +716,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>동기식 모델의 핸들</td>
 </tr>
 </tbody></table>
-<h3 id='return-13'>Return</h3>
+<h3 id='return-7'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_model_execution_failed</code></p>
 <h2 id='tensor_set_buffer'>tensor_set_buffer()</h2>
 <blockquote>
@@ -1077,7 +733,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <p>특정 입력 텐서에 데이터를 복사합니다. </p>
 
 <p>함수 <code>model_run</code> 을 호출하기 전에 필요한 데이터를 채워줘야 합니다.</p>
-<h3 id='parameters-16'>Parameters</h3>
+<h3 id='parameters-10'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1097,7 +753,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td><code>buffer</code> 바이트 길이</td>
 </tr>
 </tbody></table>
-<h3 id='return-14'>Return</h3>
+<h3 id='return-8'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 만약 <code>buffer</code> 가 유효하지 않으면 <code>nux_error_t_invalid_buffer</code></p>
 <h2 id='tensor_get_buffer'>tensor_get_buffer()</h2>
 <blockquote>
@@ -1119,7 +775,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <aside class="info">
 출력 텐서의 버퍼는 destroy_sync_model 함수가 호출되기 전까지만 유효합니다.
 </aside>
-<h3 id='parameters-17'>Parameters</h3>
+<h3 id='parameters-11'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1139,7 +795,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td><code>buffer</code> 바이트 길이</td>
 </tr>
 </tbody></table>
-<h3 id='return-15'>Return</h3>
+<h3 id='return-9'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code></p>
 <h2 id='nux_create_task_model'>nux_create_task_model()</h2>
 <blockquote>
@@ -1182,7 +838,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 
 <p>사용자는 이 함수를 이용해서 여러 추론 태스크들을 동시에 비동기적으로 실행할 수 있습니다. 
 각각의 태스크 수행이 완료되거나 실패했을 때 해당하는 콜백 함수를 호출합니다. 이때 태스크 리퀘스트 할 때 사용한 <code>nux_request_id_t</code> 를 사용해서 콜백 함수를 호출합니다. 자세한 내용은 <code>task_execute()</code> 를 참고하세요. </p>
-<h3 id='parameters-18'>Parameters</h3>
+<h3 id='parameters-12'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1222,7 +878,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>생성된 태스크 모델의 핸들을 받는 변경 가능 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-16'>Return</h3>
+<h3 id='return-10'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_nux_creation_failed</code></p>
 <h2 id='task_model_get_task'>task_model_get_task()</h2>
 <blockquote>
@@ -1238,7 +894,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <p>특정 테스크 모델로부터 태스크 핸들을 가져옵니다. </p>
 
 <p>주어진 태스크 모델에 유효한 태스크가 없을 경우에는 새로운 태스크가 유효할 때까지 블락 됩니다.</p>
-<h3 id='parameters-19'>Parameters</h3>
+<h3 id='parameters-13'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1254,7 +910,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>생성된 태스크의 핸들을 가리키는 변경 가능 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-17'>Return</h3>
+<h3 id='return-11'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_model_execution_failed</code>.</p>
 <h2 id='task_model_try_get_task'>task_model_try_get_task()</h2>
 <blockquote>
@@ -1270,7 +926,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <p>블락을 하지 않고 태스크 핸들 가져오기를 시도합니다.</p>
 
 <p><code>task_model_get_task</code> 함수의 블락을 하지 않는 버젼 입니다.</p>
-<h3 id='parameters-20'>Parameters</h3>
+<h3 id='parameters-14'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1286,7 +942,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>생성된 태스크의 핸들을 가리키는 변경 가능 포인터</td>
 </tr>
 </tbody></table>
-<h3 id='return-18'>Return</h3>
+<h3 id='return-12'>Return</h3>
 <p>유효한 태스크, 만약 유효한 테스크가 없다면 <code>nux_error_t_get_task_failed</code> </p>
 <h2 id='task_input'>task_input()</h2>
 <blockquote>
@@ -1299,7 +955,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="n">nux_buffer_t</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">task_input</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
 </code></pre></div>
 <p>특정 입력 텐서 버퍼를 가리키는 변경 가능 포인터를 돌려 줍니다.</p>
-<h3 id='parameters-21'>Parameters</h3>
+<h3 id='parameters-15'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1315,7 +971,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>입력 텐서의 인덱스</td>
 </tr>
 </tbody></table>
-<h3 id='return-19'>Return</h3>
+<h3 id='return-13'>Return</h3>
 <p>주어진 입력 텐서의 데이터 버퍼를 가리키는 변경 가능 포인터</p>
 <h2 id='task_input_size'>task_input_size()</h2>
 <blockquote>
@@ -1328,7 +984,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <span class="n">nux_buffer_len_t</span> <span class="n">length</span> <span class="o">=</span> <span class="n">task_input_size</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 </code></pre></div>
 <p>특정 입력 텐서 버퍼의 바이트 길이를 돌려 줍니다.</p>
-<h3 id='parameters-22'>Parameters</h3>
+<h3 id='parameters-16'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1344,7 +1000,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>입력 텐서의 인덱스</td>
 </tr>
 </tbody></table>
-<h3 id='return-20'>Return</h3>
+<h3 id='return-14'>Return</h3>
 <p>특정 입력 텐서의 크기 </p>
 <h2 id='task_execute'>task_execute()</h2>
 <blockquote>
@@ -1365,7 +1021,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <aside class="warning">
 태스크는 task_execute 호출이 된 후에 자동으로 해제됩니다. task_execute 에 전달된 태스크는 destroy_task 를 호출하지 마세요.  
 </aside>
-<h3 id='parameters-23'>Parameters</h3>
+<h3 id='parameters-17'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1381,7 +1037,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <td>태스크 요청을 구분하기 위한 양의 정수, <code>request_id</code>는 <code>task_execute</code> 수행과 무관합니다. <code>request_id</code>는 콜백 함수에 전달되기만 합니다.</td>
 </tr>
 </tbody></table>
-<h3 id='return-21'>Return</h3>
+<h3 id='return-15'>Return</h3>
 <p>성공 시에 <code>nux_error_t_success</code>, 실패 시에 <code>nux_error_t_model_execution_failed</code>.</p>
 <h2 id='destroy_task_model'>destroy_task_model()</h2>
 <blockquote>
@@ -1393,7 +1049,7 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 </code></pre></div>
 <p>태스크 모델을 해제합니다. 
 Destroy the task model and release its resources.</p>
-<h3 id='parameters-24'>Parameters</h3>
+<h3 id='parameters-18'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1416,7 +1072,7 @@ Destroy the task model and release its resources.</p>
 <span class="n">nux_task_model_t</span> <span class="n">task_model</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="n">bool</span> <span class="n">ck</span> <span class="o">=</span> <span class="n">task_model_is_all_task_done</span><span class="p">(</span><span class="n">task_model</span><span class="p">);</span>
-</code></pre></div><h3 id='parameters-25'>Parameters</h3>
+</code></pre></div><h3 id='parameters-19'>Parameters</h3>
 <table><thead>
 <tr>
 <th>이름</th>
@@ -1428,7 +1084,7 @@ Destroy the task model and release its resources.</p>
 <td>태스크 모델 핸들</td>
 </tr>
 </tbody></table>
-<h3 id='return-22'>Return</h3>
+<h3 id='return-16'>Return</h3>
 <p>실행 중인 태스크가 없을 때 <code>true</code>, 아니면 <code>false</code> </p>
 <h1 id='1f24a0ad81'>지원 오퍼레이터 목록</h1>
 <ul>

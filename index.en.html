@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>FuriosaAI Renegade API Reference</title>
+    <title>FuriosaAI Renegade SDK Installation Guide and API Reference</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -288,7 +288,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[&quot;c&quot;]">
+  <body class="index" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -297,9 +297,6 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo-4b03aa02.svg" class="logo" alt="" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="c">C/C++</a>
-        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -329,10 +326,33 @@
             <a href="#getting-started" class="toc-h1 toc-link" data-title="Getting Started">Getting Started</a>
           </li>
           <li>
-            <a href="#python-api" class="toc-h1 toc-link" data-title="Python API">Python API</a>
+            <a href="#nux-quantizer" class="toc-h1 toc-link" data-title="Nux Quantizer">Nux Quantizer</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#quantization-getting-started" class="toc-h2 toc-link" data-title="Quantization Getting Started">Quantization Getting Started</a>
+                  </li>
+                  <li>
+                    <a href="#exporting-pytorch-model-to-onnx-model-example" class="toc-h2 toc-link" data-title="Exporting Pytorch model to ONNX model example">Exporting Pytorch model to ONNX model example</a>
+                  </li>
+                  <li>
+                    <a href="#nux-quantizer-in-detail" class="toc-h2 toc-link" data-title="Nux Quantizer in detail">Nux Quantizer in detail</a>
+                  </li>
+                  <li>
+                    <a href="#graph-optimization" class="toc-h2 toc-link" data-title="Graph Optimization">Graph Optimization</a>
+                  </li>
+                  <li>
+                    <a href="#calibration" class="toc-h2 toc-link" data-title="Calibration">Calibration</a>
+                  </li>
+                  <li>
+                    <a href="#quantization" class="toc-h2 toc-link" data-title="Quantization">Quantization</a>
+                  </li>
+              </ul>
           </li>
           <li>
-            <a href="#c-c-api" class="toc-h1 toc-link" data-title="C/C++ API">C/C++ API</a>
+            <a href="#nux-python-api" class="toc-h1 toc-link" data-title="Nux Python API">Nux Python API</a>
+          </li>
+          <li>
+            <a href="#nux-c-c-api" class="toc-h1 toc-link" data-title="Nux C/C++ API">Nux C/C++ API</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#create_nux" class="toc-h2 toc-link" data-title="create_nux()">create_nux()</a>
@@ -406,7 +426,11 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>FuriosaAI NPU (Neural Processing Unit) has APIs available in C/C++ and Python for executing a DNN model.  </p>
+<p>FuriosaAI NPU (Neural Processing Unit) has APIs available in C/C++ and Python for executing a DNN model.</p>
+
+<p>This document includes FuriosaAI NPU FPGA installation guide, Jupyter Notebook examples, and how to use compiler CLI.</p>
+
+<p>Nux Quantizer which helps users to quantize their models is introduced. </p>
 <h1 id='prerequisites'>Prerequisites</h1>
 <ul>
 <li>Linux (Ubuntu 18.04 LTS or later)</li>
@@ -440,9 +464,316 @@ TFLite or ONNX models do not require this step
 <li>Compile a TFLite or ONNX model and deploy the compiled model to virtual NPU</li>
 <li>Run the compiled model on physical NPU </li>
 </ol>
-<h1 id='python-api'>Python API</h1>
-<p><a href="./nux/index.html">Python API</a></p>
-<h1 id='c-c-api'>C/C++ API</h1><h2 id='create_nux'>create_nux()</h2>
+<h1 id='nux-quantizer'>Nux Quantizer</h1>
+<p>Nux-quantizer supports post-training 8-bit quantization. </p>
+
+<p>Nux-quantizer follows <a href="https://www.tensorflow.org/lite/performance/quantization_spec">Tensorflow Lite 8-bit quantization specification</a>.</p>
+
+<p>Nux-quantizer now supports ONNX models, TensorFlow models will be supported later.</p>
+<h2 id='quantization-getting-started'>Quantization Getting Started</h2><h3 id='nux-quantizer-post_training_quantization'>nux.quantizer.post_training_quantization()</h3>
+<blockquote>
+<p>One click quantization </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">calibration_data</span> <span class="o">=</span> <span class="p">...</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">post_training_quantization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1"># ...
+</span></code></pre></div>
+<p>Input ONNX model can be quantized on one-click. This function applies the following quantization schemes: </p>
+
+<ul>
+<li>To minimize accuracy drop from quantization, <code>convolution</code> operators are <code>per-channel</code>-wise quantized and the other operators are <code>per-tensor</code>-wise quantized.</li>
+<li><a href="https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html#post-training-static-quantization"><code>static</code> quantization</a> which quantizes both weights and activations is used for applying <a href="https://arxiv.org/abs/1712.05877">integer-only-arithmetic</a> which enables faster inference than floating-point calculation.</li>
+</ul>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX modle (DNN model in ONNX format)</td>
+</tr>
+<tr>
+<td>input_tensors</td>
+<td><code>List[str]</code> input tensors of ONNX model</td>
+</tr>
+<tr>
+<td>calibration_data</td>
+<td><code>Union[Dict[str, np.ndarray], List[Dict[str, np.ndarray]]]</code> calibration data for collecting dynamic range of activations, randomly generated if not given.</td>
+</tr>
+</tbody></table>
+<h3 id='return'>Return</h3>
+<p><code>onnx.ModelProto</code> static per-channel int8 quantized model</p>
+<h2 id='exporting-pytorch-model-to-onnx-model-example'>Exporting Pytorch model to ONNX model example</h2>
+<p>Function <code>nux.quantizer.post_training_quantization</code> requires a ONNX model. Function <code>torch.onnx.export</code> exports Pytorch model into ONNX model.
+Example code shows that converting Pytorch model <code>ExampleNet</code> in python script to an ONNX model and quantizing the ONNX model with dynamic range collected with randomly generated calibration data.</p>
+
+<blockquote>
+<p>Export Pytorch to ONNX </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">onnx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">import</span> <span class="nn">nux</span>
+
+
+<span class="c1"># describe Example Pytorch model
+</span><span class="k">class</span> <span class="nc">ExampleNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="c1"># util function for exporting Pytorch model to ONNX
+</span><span class="k">def</span> <span class="nf">export_example_net</span><span class="p">():</span>
+    <span class="n">dummy_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+    <span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"input"</span><span class="p">]</span>
+    <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"output"</span><span class="p">]</span>
+    <span class="n">model_io</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">torch</span><span class="p">.</span><span class="n">onnx</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">ExampleNet</span><span class="p">(),</span>
+                      <span class="p">(</span><span class="n">dummy_input</span><span class="p">,),</span>
+                      <span class="n">model_io</span><span class="p">,</span>
+                      <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                      <span class="n">input_names</span><span class="o">=</span><span class="n">input_names</span><span class="p">,</span>
+                      <span class="n">output_names</span><span class="o">=</span><span class="n">output_names</span><span class="p">)</span>
+    <span class="n">model_io</span><span class="p">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">onnx</span><span class="p">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_io</span><span class="p">)</span>
+
+<span class="c1"># util function to get input tensor name
+</span><span class="k">def</span> <span class="nf">example_net_input_tensors</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s">"input"</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">export_example_net</span><span class="p">()</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">post_training_quantization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">example_net_input_tensors</span><span class="p">())</span>
+
+<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1"># ...
+</span></code></pre></div>
+<p>ONNX model <code>ExampleNet</code> is visualized by <a href="https://github.com/lutzroeder/netron">Netron</a> as follows:</p>
+
+<p><img src="images/nux-quantizer/simple_model-e3ffbcb9.png" alt="simple_model" /></p>
+<h2 id='nux-quantizer-in-detail'>Nux Quantizer in detail</h2>
+<blockquote>
+<p>Nux Quantizer in detail </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+
+
+<span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
+
+<span class="n">input_tensors</span> <span class="o">=</span> <span class="n">example_net_input_tensors</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">export_example_net</span><span class="p">()</span>
+
+<span class="c1"># graph optimization
+</span><span class="n">optimized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># calibration
+</span><span class="n">calibration_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">build_calibration_model</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">IS_TSET</span><span class="p">:</span>
+    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate_with_random_input</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">calibration_data</span> <span class="o">=</span> <span class="n">get_calibration_data</span><span class="p">(...)</span>
+    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>
+
+<span class="c1"># quantization
+</span><span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">dynamic_ranges</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">nux</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1"># ...
+</span></code></pre></div>
+<p>The workflow of nux-quantizer is like the following: 
+An input ONNX model is processed by three steps; 1) graph optimization 2) calibration 3) quantization.
+The output of these steps is quantized ONNX model.  </p>
+
+<p><img src="images/nux-quantizer/nux-quantizer_quantization_pipepline-edd29681.png" alt="nux-quantizer pipeline" /></p>
+<h2 id='graph-optimization'>Graph Optimization</h2>
+<blockquote>
+<p>Graph Optimization</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="p">...</span>
+
+<span class="n">optimized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</code></pre></div><h3 id='nux-quantizer-optimize'>nux.quantizer.optimize()</h3>
+<p>This function optimizes ONNX model in graph level. 
+The input ONNX model is optimized by graph optimization techniques such as shape inference and operator fusion. </p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX model</td>
+</tr>
+</tbody></table>
+<h3 id='return-2'>Return</h3>
+<p><code>onnx.ModelProto</code> Optimized ONNX model</p>
+<h3 id='result'>Result</h3>
+<p>The <code>optimized ExampleNet</code> is visualized like the following:</p>
+
+<p><img src="images/nux-quantizer/optimized_simple_model-6cd0bd9a.png" alt="optimized_model" /></p>
+<h2 id='calibration'>Calibration</h2><h3 id='nux-quantizer-build_calibration_model'>nux.quantizer.build_calibration_model()</h3>
+<blockquote>
+<p>Calibration</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span> 
+
+
+<span class="n">IS_TEST</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">optimized_model</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
+
+<span class="n">calibration_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">build_calibration_model</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">IS_TSET</span><span class="p">:</span>
+    <span class="n">calibration_data</span> <span class="o">=</span> <span class="n">get_calibration_data</span><span class="p">(...)</span> <span class="c1"># user-written function
+</span>    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">,</span> <span class="n">calibration_data</span><span class="p">)</span>    
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">calibrate_with_random_input</span><span class="p">(</span><span class="n">calibration_model</span><span class="p">)</span>    
+</code></pre></div>
+<p>This function adds <code>ReduceMin</code> and <code>ReduceMax</code> nodes to every output node. </p>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX model</td>
+</tr>
+<tr>
+<td>input_tensors</td>
+<td><code>List[str]</code> Input tensors of ONNX model</td>
+</tr>
+</tbody></table>
+<h3 id='return-3'>Return</h3>
+<p><code>onnx.ModelProto</code> Calibration model</p>
+<h3 id='result-2'>Result</h3>
+<p>The <code>calibration ExampleNet</code> is visualized as follows:</p>
+
+<p><img src="images/nux-quantizer/augmented_simple_model_for_calibration-d6a46c1a.png" alt="calibration_model" /></p>
+<h3 id='nux-quantizer-calibrate'>nux.quantizer.calibrate()</h3>
+<p>This function executes a calibration model and then collects the dynamic range of activations with preprocessed calibration data.  </p>
+<h3 id='parameters-4'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX model</td>
+</tr>
+<tr>
+<td>calibration_data</td>
+<td><code>Union[Dict[str, np.ndarray], List[Dict[str, np.ndarray]]]</code> Preprocessed calibration data</td>
+</tr>
+</tbody></table>
+<h3 id='return-4'>Return</h3>
+<p><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations </p>
+<h3 id='result-3'>Result</h3>
+<p>The dynamic range of <code>calibratio ExampleNet</code> is collected by calibration as follows:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>{'input': (1.2729454283544328e-05, 0.9999984502792358), '18': (-0.811184287071228, 1.0816885232925415), '20': (-0.6744376420974731, 0.5646329522132874), '21': (-0.29423975944519043, 0.5646329522132874), 'output': (-0.24178576469421387, 0.20031100511550903)}
+</code></pre></div><h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
+<p>This function executes a calibration model and then collects the dynamic range of activations with randomly generated calibration data. </p>
+<h3 id='parameters-5'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX model</td>
+</tr>
+</tbody></table>
+<h3 id='return-5'>Return</h3>
+<p><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations</p>
+<h3 id='result-4'>Result</h3>
+<p>The dynamic range of <code>calibration ExampleNet</code> is collected by random calibration as follows:
+```text</p>
+
+<p>{&#39;input&#39;: (2.170155084968428e-06, 0.9999873042106628), &#39;18&#39;: (-1.1680195331573486, 1.125024437904358), &#39;20&#39;: (-0.6748880743980408, 0.6123914122581482), &#39;21&#39;: (-0.44649842381477356, 0.6123914122581482), &#39;output&#39;: (-0.2456839233636856, 0.39172685146331787)}
+```</p>
+<h2 id='quantization'>Quantization</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
+<blockquote>
+<p>Quantization </p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">nux</span>
+
+
+<span class="n">optimized_model</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">input_tensors</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">dynamic_ranges</span> <span class="o">=</span> <span class="p">...</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">nux</span><span class="p">.</span><span class="n">quantizer</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">optimized_model</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">dynamic_ranges</span><span class="p">)</span>
+</code></pre></div>
+<p>This function quantizes ONNX model with the dynamic range collected by calibration. </p>
+<h3 id='parameters-6'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Explanation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>model</td>
+<td><code>onnx.ModelProto</code> ONNX model</td>
+</tr>
+<tr>
+<td>input_tensors</td>
+<td><code>List[str]</code> Input tensors of ONNX model</td>
+</tr>
+<tr>
+<td>dynamic_ragnes</td>
+<td><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations</td>
+</tr>
+</tbody></table>
+<h3 id='return-6'>Return</h3>
+<p><code>onnx.ModelProto</code> <code>static</code> <code>per-channel</code> 8-bit quantized model</p>
+<h3 id='result-5'>Result</h3>
+<p>The <code>quantized ExampleNet</code> is visualized as follows: </p>
+
+<p><img src="images/nux-quantizer/quantized_simple_model-174257e1.png" alt="quantized_model" /></p>
+<h1 id='nux-python-api'>Nux Python API</h1>
+<p><a href="nuxpy/">Python API</a></p>
+<h1 id='nux-c-c-api'>Nux C/C++ API</h1><h2 id='create_nux'>create_nux()</h2>
 <blockquote>
 <p>Create a Nux handle</p>
 </blockquote>
@@ -452,7 +783,7 @@ TFLite or ONNX models do not require this step
 <span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">create_nux</span><span class="p">(</span><span class="o">&amp;</span><span class="n">nux</span><span class="p">);</span>
 </code></pre></div>
 <p>This API creates a nux handle for subsequent activities.</p>
-<h3 id='parameters'>Parameters</h3>
+<h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -464,20 +795,9 @@ TFLite or ONNX models do not require this step
 <td>Mutable pointer to receive a created Nux handle</td>
 </tr>
 </tbody></table>
-<h3 id='return'>Return</h3>
+<h3 id='return-7'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
-
-<!-- @Jeehoon: API가 fix되었으면 어렵겠지만, 함수 이름을 통일성있게 바꾸면 어떨까 합니다.
-- 어떤 함수는 "nux_"로 시작하고 어떤건 아닌데, 모두 "nux_"로 시작하도록 통일하는게 어떨까 합니다 ("create_nux()", "enable_logging()", "destroy_sync_model()" vs. "nux_create_sync_model()").
-- 더 나아가서 모든 API 이름을 "nux_<verb>_<noun>()" 혹은 "nux_<noun>_<verb>()" 식으로 구성할 수 있을까요?  저는 후자를 선호하는데 왜냐하면 OOP에서 "session::create()"와 같이 명사를 먼저 적는 전통과 맞닿아 있어서요.
--->
-
-<!-- @Jeehoon: 코드 예제가 indentation이 잘 안된 경우가 있는 것 같습니다.  가령 C "nux_create_sync_model()", Python "session.create(model)" 은 space 숫자가 안맞습니다. -->
-
-<!-- @Jeehoon: 혹시 API doc을 코드로부터 autogen할 수 있을지 궁금합니다.  그러면 API doc을 항상 코드와 싱크를 맞출 수 있을 것 같아 제안드립니다. -->
-
-<!-- @Jeehoon: API, tutorial, example을 묶는 index page가 있으면 좋을 것 같습니다. -->
 <h2 id='destroy_nux'>destroy_nux()</h2>
 <blockquote>
 <p>Destroy a Nux handle</p>
@@ -487,7 +807,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <span class="n">destroy_nux</span><span class="p">(</span><span class="n">nux</span><span class="p">);</span>
 </code></pre></div>
 <p>This API destroys a nux handle.</p>
-<h3 id='parameters-2'>Parameters</h3>
+<h3 id='parameters-8'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -512,7 +832,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
                                        <span class="o">&amp;</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>This creates a synchronous model handle.</p>
-<h3 id='parameters-3'>Parameters</h3>
+<h3 id='parameters-9'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -539,7 +859,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 
 <p>The corresponding Python API does not require the above parameters. Instead,
 it directly takes an <code>enf</code> file path.</p>
-<h3 id='return-2'>Return</h3>
+<h3 id='return-8'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <h2 id='destroy_sync_model'>destroy_sync_model()</h2>
@@ -551,7 +871,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <span class="n">destroy_sync_model</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>This destroys a synchronous model handle, which is not going to be used any more.</p>
-<h3 id='parameters-4'>Parameters</h3>
+<h3 id='parameters-10'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -574,7 +894,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <span class="kt">int</span> <span class="n">nInputs</span> <span class="o">=</span> <span class="n">model_count_inputs</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>Return the number of input tensors of a given sync model.</p>
-<h3 id='parameters-5'>Parameters</h3>
+<h3 id='parameters-11'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -586,7 +906,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <td>Synchronous model handle.</td>
 </tr>
 </tbody></table>
-<h3 id='return-3'>Return</h3>
+<h3 id='return-9'>Return</h3>
 <p>The number of input tensors for the given model.</p>
 <h2 id='model_count_outputs'>model_count_outputs()</h2>
 <blockquote>
@@ -599,7 +919,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <span class="kt">int</span> <span class="n">nOutputs</span> <span class="o">=</span> <span class="n">model_count_outputs</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
 </code></pre></div>
 <p>Return the number of output tensors of a given sync model.</p>
-<h3 id='parameters-6'>Parameters</h3>
+<h3 id='parameters-12'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -611,7 +931,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <td>Synchronous model handle.</td>
 </tr>
 </tbody></table>
-<h3 id='return-4'>Return</h3>
+<h3 id='return-10'>Return</h3>
 <p>The number of output tensors for the given model.</p>
 <h2 id='model_input_tensor'>model_input_tensor()</h2>
 <blockquote>
@@ -631,7 +951,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 An input tensor handle will be valid
 until destroy_sync_model() with this sync_model is called.
 </aside>
-<h3 id='parameters-7'>Parameters</h3>
+<h3 id='parameters-13'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -651,7 +971,7 @@ until destroy_sync_model() with this sync_model is called.
 <td>Mutable pointer to receive the handle of a specified input tensor.</td>
 </tr>
 </tbody></table>
-<h3 id='return-5'>Return</h3>
+<h3 id='return-11'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <h2 id='model_output_tensor'>model_output_tensor()</h2>
@@ -672,7 +992,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 An output tensor handle will be valid
 until destroy_sync_model() with this sync_model is called.
 </aside>
-<h3 id='parameters-8'>Parameters</h3>
+<h3 id='parameters-14'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -692,7 +1012,7 @@ until destroy_sync_model() with this sync_model is called.
 <td>Mutable pointer to receive the handle of a specified output tensor.</td>
 </tr>
 </tbody></table>
-<h3 id='return-6'>Return</h3>
+<h3 id='return-12'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <h2 id='model_run'>model_run()</h2>
@@ -710,7 +1030,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <p>Before calling this function, you must fill input tensors with proper data.
 Please refer to <code>model_input_tensor</code> and <code>tensor_set_buffer</code>
 to learn how to fill input tensors with data.</p>
-<h3 id='parameters-9'>Parameters</h3>
+<h3 id='parameters-15'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -722,7 +1042,7 @@ to learn how to fill input tensors with data.</p>
 <td>Synchronous model handle.</td>
 </tr>
 </tbody></table>
-<h3 id='return-7'>Return</h3>
+<h3 id='return-13'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <h2 id='tensor_set_buffer'>tensor_set_buffer()</h2>
@@ -741,7 +1061,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 
 <p>To execute <code>model_run</code>, you first need to fill input tensors with data.
 This function copies the data into the data buffer of a specified input tensor.</p>
-<h3 id='parameters-10'>Parameters</h3>
+<h3 id='parameters-16'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -761,7 +1081,7 @@ This function copies the data into the data buffer of a specified input tensor.<
 <td>Byte length of <code>buffer</code></td>
 </tr>
 </tbody></table>
-<h3 id='return-8'>Return</h3>
+<h3 id='return-14'>Return</h3>
 <p><code>nux_error_t_success</code> if successful,
 or <code>nux_error_t_invalid_buffer</code> if <code>buffer</code> is invalid.</p>
 <h2 id='tensor_get_buffer'>tensor_get_buffer()</h2>
@@ -784,7 +1104,7 @@ This function returns a pointer to the data buffer of a specified output tensor.
 <aside class="info">
 the buffers of output tensors are valid until destroy_sync_model is called.
 </aside>
-<h3 id='parameters-11'>Parameters</h3>
+<h3 id='parameters-17'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -804,7 +1124,7 @@ the buffers of output tensors are valid until destroy_sync_model is called.
 <td>Byte length of <code>buffer</code></td>
 </tr>
 </tbody></table>
-<h3 id='return-9'>Return</h3>
+<h3 id='return-15'>Return</h3>
 <p><code>nux_error_t_success</code> if successful.</p>
 <h2 id='nux_create_task_model'>nux_create_task_model()</h2>
 <blockquote>
@@ -849,7 +1169,7 @@ the buffers of output tensors are valid until destroy_sync_model is called.
 When each task is completed or failed, corresponding callback functions will be called
 with <code>nux_request_id_t</code>, an identifier of a task request.
 See also <code>task_execute()</code> for more details.</p>
-<h3 id='parameters-12'>Parameters</h3>
+<h3 id='parameters-18'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -889,7 +1209,7 @@ See also <code>task_execute()</code> for more details.</p>
 <td>Mutable pointer to receive the handle of a created task model.</td>
 </tr>
 </tbody></table>
-<h3 id='return-10'>Return</h3>
+<h3 id='return-16'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 <h2 id='task_model_get_task'>task_model_get_task()</h2>
@@ -907,7 +1227,7 @@ it will return <code>nux_error_t_nux_creation_failed</code>.</p>
 
 <p>When there is no available task in a given task model,
 it will block until new task is available.</p>
-<h3 id='parameters-13'>Parameters</h3>
+<h3 id='parameters-19'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -923,7 +1243,7 @@ it will block until new task is available.</p>
 <td>Mutable pointer to receive the handle of a created task.</td>
 </tr>
 </tbody></table>
-<h3 id='return-11'>Return</h3>
+<h3 id='return-17'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <h2 id='task_model_try_get_task'>task_model_try_get_task()</h2>
@@ -940,7 +1260,7 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <p>Get a task handle from the specified task model without blocking operations.</p>
 
 <p>It&#39;s the non-blocking version of <code>task_model_get_task</code>.</p>
-<h3 id='parameters-14'>Parameters</h3>
+<h3 id='parameters-20'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -956,7 +1276,7 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <td>Mutable pointer to receive the handle of a created task.</td>
 </tr>
 </tbody></table>
-<h3 id='return-12'>Return</h3>
+<h3 id='return-18'>Return</h3>
 <p>This function returns an available task, or
 it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39;s no available task in a given task model.</p>
 <h2 id='task_input'>task_input()</h2>
@@ -970,7 +1290,7 @@ it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39
 <span class="n">nux_buffer_t</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">task_input</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
 </code></pre></div>
 <p>Return a mutable pointer to the buffer of the specified input tensor.</p>
-<h3 id='parameters-15'>Parameters</h3>
+<h3 id='parameters-21'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -986,7 +1306,7 @@ it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39
 <td>Index of the input tensor.</td>
 </tr>
 </tbody></table>
-<h3 id='return-13'>Return</h3>
+<h3 id='return-19'>Return</h3>
 <p>A mutable pointer to the data buffer of the given input tensor.</p>
 <h2 id='task_input_size'>task_input_size()</h2>
 <blockquote>
@@ -999,7 +1319,7 @@ it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39
 <span class="n">nux_buffer_len_t</span> <span class="n">length</span> <span class="o">=</span> <span class="n">task_input_size</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 </code></pre></div>
 <p>Return the buffer length in bytes of the specified input tensor.</p>
-<h3 id='parameters-16'>Parameters</h3>
+<h3 id='parameters-22'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1015,7 +1335,7 @@ it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39
 <td>Index of the input tensor.</td>
 </tr>
 </tbody></table>
-<h3 id='return-14'>Return</h3>
+<h3 id='return-20'>Return</h3>
 <p>The size of the specified input tensor.</p>
 <h2 id='task_execute'>task_execute()</h2>
 <blockquote>
@@ -1041,7 +1361,7 @@ Once you call task_execute with a task,
 the task will get destroyed automatically. Please do not call destroy_task with
 the task which is already passed to task_execute.
 </aside>
-<h3 id='parameters-17'>Parameters</h3>
+<h3 id='parameters-23'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1057,7 +1377,7 @@ the task which is already passed to task_execute.
 <td>request_id An positive integer to distinguish task requests. The behavior of <code>task_execute</code> doesn&#39;t rely on a <code>request_id</code> value at all. <code>request_id</code> will be just passed to callback functions.</td>
 </tr>
 </tbody></table>
-<h3 id='return-15'>Return</h3>
+<h3 id='return-21'>Return</h3>
 <p><code>nux_error_t_success</code> if successful, or
 it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <h2 id='destroy_task_model'>destroy_task_model()</h2>
@@ -1104,7 +1424,7 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 </tbody></table>
 
 <p>je</p>
-<h3 id='return-16'>Return</h3>
+<h3 id='return-22'>Return</h3>
 <p><code>true</code> if there&#39;s no running tasks, or <code>false</code> if any task is still running.</p>
 <h1 id='supported-operators'>Supported Operators</h1>
 <ul>
@@ -1148,9 +1468,6 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 
       </div>
       <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="c">C/C++</a>
-          </div>
       </div>
     </div>
   </body>
