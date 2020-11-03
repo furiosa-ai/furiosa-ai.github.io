@@ -1,0 +1,1157 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>FuriosaAI Renegade API Reference</title>
+
+    <style media="screen">
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s, .highlight .sa, .highlight .dl {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf, .highlight .fm {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv, .highlight .vm {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #f92672;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <style media="print">
+      * {
+        -webkit-transition:none!important;
+        transition:none!important;
+      }
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #586e75;
+}
+.highlight .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #657b83;
+}
+.highlight .cp {
+  color: #b58900;
+}
+.highlight .nt {
+  color: #b58900;
+}
+.highlight .o, .highlight .ow {
+  color: #93a1a1;
+}
+.highlight .p, .highlight .pi {
+  color: #93a1a1;
+}
+.highlight .gi {
+  color: #859900;
+}
+.highlight .gd {
+  color: #dc322f;
+}
+.highlight .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #6c71c4;
+}
+.highlight .kc {
+  color: #cb4b16;
+}
+.highlight .kt {
+  color: #cb4b16;
+}
+.highlight .kd {
+  color: #cb4b16;
+}
+.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #859900;
+}
+.highlight .sr {
+  color: #2aa198;
+}
+.highlight .si {
+  color: #d33682;
+}
+.highlight .se {
+  color: #d33682;
+}
+.highlight .nn {
+  color: #b58900;
+}
+.highlight .nc {
+  color: #b58900;
+}
+.highlight .no {
+  color: #b58900;
+}
+.highlight .na {
+  color: #268bd2;
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #859900;
+}
+.highlight .ss {
+  color: #859900;
+}
+    </style>
+    <link href="stylesheets/screen-373dae74.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-e9bde216.js"></script>
+
+    <script>
+      $(function() { setupCodeCopy(); });
+    </script>
+  </head>
+
+  <body class="index" data-languages="[&quot;c&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar-cad8cdcb.png" alt="" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo-4b03aa02.svg" class="logo" alt="" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="c">C/C++</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#prerequisites" class="toc-h1 toc-link" data-title="Prerequisites">Prerequisites</a>
+          </li>
+          <li>
+            <a href="#installing-furiosaai-sdk" class="toc-h1 toc-link" data-title="Installing FuriosaAI SDK">Installing FuriosaAI SDK</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#fpga-installation" class="toc-h2 toc-link" data-title="FPGA Installation">FPGA Installation</a>
+                  </li>
+                  <li>
+                    <a href="#jupyter-notebook-examples" class="toc-h2 toc-link" data-title="Jupyter Notebook Examples">Jupyter Notebook Examples</a>
+                  </li>
+                  <li>
+                    <a href="#furiosaai-cli" class="toc-h2 toc-link" data-title="FuriosaAI CLI">FuriosaAI CLI</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#getting-started" class="toc-h1 toc-link" data-title="Getting Started">Getting Started</a>
+          </li>
+          <li>
+            <a href="#python-api" class="toc-h1 toc-link" data-title="Python API">Python API</a>
+          </li>
+          <li>
+            <a href="#c-c-api" class="toc-h1 toc-link" data-title="C/C++ API">C/C++ API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create_nux" class="toc-h2 toc-link" data-title="create_nux()">create_nux()</a>
+                  </li>
+                  <li>
+                    <a href="#destroy_nux" class="toc-h2 toc-link" data-title="destroy_nux()">destroy_nux()</a>
+                  </li>
+                  <li>
+                    <a href="#nux_create_sync_model" class="toc-h2 toc-link" data-title="nux_create_sync_model()">nux_create_sync_model()</a>
+                  </li>
+                  <li>
+                    <a href="#destroy_sync_model" class="toc-h2 toc-link" data-title="destroy_sync_model()">destroy_sync_model()</a>
+                  </li>
+                  <li>
+                    <a href="#model_count_inputs" class="toc-h2 toc-link" data-title="model_count_inputs()">model_count_inputs()</a>
+                  </li>
+                  <li>
+                    <a href="#model_count_outputs" class="toc-h2 toc-link" data-title="model_count_outputs()">model_count_outputs()</a>
+                  </li>
+                  <li>
+                    <a href="#model_input_tensor" class="toc-h2 toc-link" data-title="model_input_tensor()">model_input_tensor()</a>
+                  </li>
+                  <li>
+                    <a href="#model_output_tensor" class="toc-h2 toc-link" data-title="model_output_tensor()">model_output_tensor()</a>
+                  </li>
+                  <li>
+                    <a href="#model_run" class="toc-h2 toc-link" data-title="model_run()">model_run()</a>
+                  </li>
+                  <li>
+                    <a href="#tensor_set_buffer" class="toc-h2 toc-link" data-title="tensor_set_buffer()">tensor_set_buffer()</a>
+                  </li>
+                  <li>
+                    <a href="#tensor_get_buffer" class="toc-h2 toc-link" data-title="tensor_get_buffer()">tensor_get_buffer()</a>
+                  </li>
+                  <li>
+                    <a href="#nux_create_task_model" class="toc-h2 toc-link" data-title="nux_create_task_model()">nux_create_task_model()</a>
+                  </li>
+                  <li>
+                    <a href="#task_model_get_task" class="toc-h2 toc-link" data-title="task_model_get_task()">task_model_get_task()</a>
+                  </li>
+                  <li>
+                    <a href="#task_model_try_get_task" class="toc-h2 toc-link" data-title="task_model_try_get_task()">task_model_try_get_task()</a>
+                  </li>
+                  <li>
+                    <a href="#task_input" class="toc-h2 toc-link" data-title="task_input()">task_input()</a>
+                  </li>
+                  <li>
+                    <a href="#task_input_size" class="toc-h2 toc-link" data-title="task_input_size()">task_input_size()</a>
+                  </li>
+                  <li>
+                    <a href="#task_execute" class="toc-h2 toc-link" data-title="task_execute()">task_execute()</a>
+                  </li>
+                  <li>
+                    <a href="#destroy_task_model" class="toc-h2 toc-link" data-title="destroy_task_model()">destroy_task_model()</a>
+                  </li>
+                  <li>
+                    <a href="#task_model_is_all_task_done" class="toc-h2 toc-link" data-title="task_model_is_all_task_done()">task_model_is_all_task_done()</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#supported-operators" class="toc-h1 toc-link" data-title="Supported Operators">Supported Operators</a>
+          </li>
+      </ul>
+        <ul class="toc-footer">
+            <li>FuriosaAI SDK 0.1.0</li>
+            <li><a href='./index.html'>Korean Version</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>FuriosaAI NPU (Neural Processing Unit) has APIs available in C/C++ and Python for executing a DNN model.  </p>
+<h1 id='prerequisites'>Prerequisites</h1>
+<ul>
+<li>Linux (Ubuntu 18.04 LTS or later)</li>
+</ul>
+<h1 id='installing-furiosaai-sdk'>Installing FuriosaAI SDK</h1><h2 id='fpga-installation'>FPGA Installation</h2>
+<p><a href="https://github.com/furiosa-ai/furiosa-fpga-install">FuriosaAI FPGA Install</a></p>
+<h2 id='jupyter-notebook-examples'>Jupyter Notebook Examples</h2>
+<p><a href="https://github.com/furiosa-ai/nuxpy-examples">FuriosaAI Jupyter Notebook Examples</a></p>
+
+<aside class="info">
+FURIOSA_ACCESS_KEY_ID and FURIOSA_SECRET_ACCESS_KEY are required.
+</aside>
+<h2 id='furiosaai-cli'>FuriosaAI CLI</h2>
+<p><a href="https://github.com/furiosa-ai/furiosa-cli">FuriosaAI CLI</a></p>
+
+<aside class="info">
+FURIOSA_ACCESS_KEY_ID and FURIOSA_SECRET_ACCESS_KEY are required.
+</aside>
+<h1 id='getting-started'>Getting Started</h1>
+<p><img src="images/python_workflow-f626da73.png" alt="Python API Workflow" />
+Renegade Python API workflow is like the above.</p>
+
+<p><img src="images/python_workflow_detail-df5d2b0e.png" alt="Python API Workflow" />
+Running models on Renegade NPU consists of three steps:</p>
+
+<ol>
+<li>Covert models on TensorFlow or PyTorch into TFLite and ONNX models with quantization 
+<aside class="success">
+TFLite or ONNX models do not require this step
+</aside></li>
+<li>Compile a TFLite or ONNX model and deploy the compiled model to virtual NPU</li>
+<li>Run the compiled model on physical NPU </li>
+</ol>
+<h1 id='python-api'>Python API</h1>
+<p><a href="nux/">Python API</a></p>
+<h1 id='c-c-api'>C/C++ API</h1><h2 id='create_nux'>create_nux()</h2>
+<blockquote>
+<p>Create a Nux handle</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_handle_t</span> <span class="n">nux</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">create_nux</span><span class="p">(</span><span class="o">&amp;</span><span class="n">nux</span><span class="p">);</span>
+</code></pre></div>
+<p>This API creates a nux handle for subsequent activities.</p>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nux</td>
+<td>Mutable pointer to receive a created Nux handle</td>
+</tr>
+</tbody></table>
+<h3 id='return'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+
+<!-- @Jeehoon: API가 fix되었으면 어렵겠지만, 함수 이름을 통일성있게 바꾸면 어떨까 합니다.
+- 어떤 함수는 "nux_"로 시작하고 어떤건 아닌데, 모두 "nux_"로 시작하도록 통일하는게 어떨까 합니다 ("create_nux()", "enable_logging()", "destroy_sync_model()" vs. "nux_create_sync_model()").
+- 더 나아가서 모든 API 이름을 "nux_<verb>_<noun>()" 혹은 "nux_<noun>_<verb>()" 식으로 구성할 수 있을까요?  저는 후자를 선호하는데 왜냐하면 OOP에서 "session::create()"와 같이 명사를 먼저 적는 전통과 맞닿아 있어서요.
+-->
+
+<!-- @Jeehoon: 코드 예제가 indentation이 잘 안된 경우가 있는 것 같습니다.  가령 C "nux_create_sync_model()", Python "session.create(model)" 은 space 숫자가 안맞습니다. -->
+
+<!-- @Jeehoon: 혹시 API doc을 코드로부터 autogen할 수 있을지 궁금합니다.  그러면 API doc을 항상 코드와 싱크를 맞출 수 있을 것 같아 제안드립니다. -->
+
+<!-- @Jeehoon: API, tutorial, example을 묶는 index page가 있으면 좋을 것 같습니다. -->
+<h2 id='destroy_nux'>destroy_nux()</h2>
+<blockquote>
+<p>Destroy a Nux handle</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">destroy_nux</span><span class="p">(</span><span class="n">nux</span><span class="p">);</span>
+</code></pre></div>
+<p>This API destroys a nux handle.</p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nux</td>
+<td>Nux handle to be destroyed. It must not be NULL.</td>
+</tr>
+</tbody></table>
+<h2 id='nux_create_sync_model'>nux_create_sync_model()</h2>
+<blockquote>
+<p>Create a synchronous model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">nux_create_sync_model</span><span class="p">(</span><span class="n">nux</span><span class="p">,</span>
+                                       <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">,</span>
+                                       <span class="n">model_size</span><span class="p">,</span>
+                                       <span class="o">&amp;</span><span class="n">sync_model</span><span class="p">);</span>
+</code></pre></div>
+<p>This creates a synchronous model handle.</p>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nux</td>
+<td>Mutable pointer to specify Nux handle</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>Byte buffer containing ENF binary (i.e., model to be used in an inference task)</td>
+</tr>
+<tr>
+<td>model_size</td>
+<td>Byte length of <code>buffer</code></td>
+</tr>
+<tr>
+<td>sync_model</td>
+<td>Mutable pointer to receive the handle of a created synchronous model</td>
+</tr>
+</tbody></table>
+
+<p>The corresponding Python API does not require the above parameters. Instead,
+it directly takes an <code>enf</code> file path.</p>
+<h3 id='return-2'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+<h2 id='destroy_sync_model'>destroy_sync_model()</h2>
+<blockquote>
+<p>Destroy a synchronous model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">destroy_sync_model</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
+</code></pre></div>
+<p>This destroys a synchronous model handle, which is not going to be used any more.</p>
+<h3 id='parameters-4'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model to be destroyed, and it must not be NULL.</td>
+</tr>
+</tbody></table>
+<h2 id='model_count_inputs'>model_count_inputs()</h2>
+<blockquote>
+<p>Get the number of input tensors</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="kt">int</span> <span class="n">nInputs</span> <span class="o">=</span> <span class="n">model_count_inputs</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
+</code></pre></div>
+<p>Return the number of input tensors of a given sync model.</p>
+<h3 id='parameters-5'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model handle.</td>
+</tr>
+</tbody></table>
+<h3 id='return-3'>Return</h3>
+<p>The number of input tensors for the given model.</p>
+<h2 id='model_count_outputs'>model_count_outputs()</h2>
+<blockquote>
+<p>Get the number of output tensors</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="kt">int</span> <span class="n">nOutputs</span> <span class="o">=</span> <span class="n">model_count_outputs</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
+</code></pre></div>
+<p>Return the number of output tensors of a given sync model.</p>
+<h3 id='parameters-6'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model handle.</td>
+</tr>
+</tbody></table>
+<h3 id='return-4'>Return</h3>
+<p>The number of output tensors for the given model.</p>
+<h2 id='model_input_tensor'>model_input_tensor()</h2>
+<blockquote>
+<p>Get an input tensor handle for a synchronous model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="n">nux_tensor_t</span> <span class="n">tensor</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">model_input_tensor</span><span class="p">(</span><span class="n">sync_model</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">);</span>
+</code></pre></div>
+<p>Get the handle of a specified input tensor from a given sync model.</p>
+
+<aside class="info">
+An input tensor handle will be valid
+until destroy_sync_model() with this sync_model is called.
+</aside>
+<h3 id='parameters-7'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model handle.</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Input tensor index.</td>
+</tr>
+<tr>
+<td>tensor[out]</td>
+<td>Mutable pointer to receive the handle of a specified input tensor.</td>
+</tr>
+</tbody></table>
+<h3 id='return-5'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+<h2 id='model_output_tensor'>model_output_tensor()</h2>
+<blockquote>
+<p>Get an output tensor handle for a synchronous model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="n">nux_tensor_t</span> <span class="n">tensor</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">model_output_tensor</span><span class="p">(</span><span class="n">sync_model</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">);</span>
+</code></pre></div>
+<p>Get the handle of a specified output tensor from a given sync model.</p>
+
+<aside class="info">
+An output tensor handle will be valid
+until destroy_sync_model() with this sync_model is called.
+</aside>
+<h3 id='parameters-8'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model handle.</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Output tensor index.</td>
+</tr>
+<tr>
+<td>tensor[out]</td>
+<td>Mutable pointer to receive the handle of a specified output tensor.</td>
+</tr>
+</tbody></table>
+<h3 id='return-6'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+<h2 id='model_run'>model_run()</h2>
+<blockquote>
+<p>Execute a synchronous model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_sync_model_t</span> <span class="n">sync_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">model_run</span><span class="p">(</span><span class="n">sync_model</span><span class="p">);</span>
+</code></pre></div>
+<p>Run a single inference task</p>
+
+<p>Before calling this function, you must fill input tensors with proper data.
+Please refer to <code>model_input_tensor</code> and <code>tensor_set_buffer</code>
+to learn how to fill input tensors with data.</p>
+<h3 id='parameters-9'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sync_model</td>
+<td>Synchronous model handle.</td>
+</tr>
+</tbody></table>
+<h3 id='return-7'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+<h2 id='tensor_set_buffer'>tensor_set_buffer()</h2>
+<blockquote>
+<p>Copy data to an input tensor</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_tensor_t</span> <span class="n">inputTensor</span><span class="p">;</span>
+<span class="kt">void</span><span class="o">*</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">buf_size</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">tensor_set_buffer</span><span class="p">(</span><span class="n">inputTensor</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">buf_size</span><span class="p">);</span>
+</code></pre></div>
+<p>Copy data into the data buffer of a specified input tensor.</p>
+
+<p>To execute <code>model_run</code>, you first need to fill input tensors with data.
+This function copies the data into the data buffer of a specified input tensor.</p>
+<h3 id='parameters-10'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>inputTensor</td>
+<td>Tensor handle into which you want to copy input data.</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>Pointer to the data buffer.</td>
+</tr>
+<tr>
+<td>buf_size</td>
+<td>Byte length of <code>buffer</code></td>
+</tr>
+</tbody></table>
+<h3 id='return-8'>Return</h3>
+<p><code>nux_error_t_success</code> if successful,
+or <code>nux_error_t_invalid_buffer</code> if <code>buffer</code> is invalid.</p>
+<h2 id='tensor_get_buffer'>tensor_get_buffer()</h2>
+<blockquote>
+<p>Copy data from an output tensor</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_tensor_t</span> <span class="n">outputTensor</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_buffer_t</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="n">nux_buffer_len_t</span> <span class="n">buf_size</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">tensor_get_buffer</span><span class="p">(</span><span class="n">outputTensor</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf_size</span><span class="p">);</span>
+</code></pre></div>
+<p>Get a pointer to the data buffer of a given tensor.</p>
+
+<p>Once <code>model_run</code> is called, the inference result will be written into output tensors.
+This function returns a pointer to the data buffer of a specified output tensor.</p>
+
+<aside class="info">
+the buffers of output tensors are valid until destroy_sync_model is called.
+</aside>
+<h3 id='parameters-11'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>outputTensor</td>
+<td>Tensor from which you want to get a pointer of the data buffer</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>Mutable pointer to receive the pointer to the data buffer</td>
+</tr>
+<tr>
+<td>buf_size[out]</td>
+<td>Byte length of <code>buffer</code></td>
+</tr>
+</tbody></table>
+<h3 id='return-9'>Return</h3>
+<p><code>nux_error_t_success</code> if successful.</p>
+<h2 id='nux_create_task_model'>nux_create_task_model()</h2>
+<blockquote>
+<p>Create a task model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">max_batch</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">model_size</span><span class="p">;</span>
+<span class="n">nux_handle_t</span> <span class="n">nux</span><span class="p">;</span>
+<span class="n">nux_task_model_t</span> <span class="n">task_model</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">nux_create_task_model</span><span class="p">(</span><span class="n">nux</span><span class="p">,</span>
+                                 <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">,</span>
+                                 <span class="n">model_size</span><span class="p">,</span>
+                                 <span class="n">max_batch</span><span class="p">,</span>
+                                 <span class="n">output_callback</span><span class="p">,</span>
+                                 <span class="n">error_callback</span><span class="p">,</span>
+                                 <span class="n">finish_callback</span><span class="p">,</span>
+                                 <span class="o">&amp;</span><span class="n">task_model</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>The signatures of the above callback functions should be:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="kt">void</span> <span class="nf">output_cb</span><span class="p">(</span><span class="n">nux_request_id_t</span> <span class="n">id</span><span class="p">,</span>
+               <span class="n">nux_output_index_t</span> <span class="n">out_id</span><span class="p">,</span>
+               <span class="n">nux_buffer_t</span> <span class="n">buf</span><span class="p">,</span>
+               <span class="n">nux_buffer_len_t</span> <span class="n">buf_len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// fill your logic</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">my_error_cb</span><span class="p">(</span><span class="n">nux_request_id_t</span> <span class="n">id</span><span class="p">,</span> <span class="n">nux_error_t</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// fill your logic</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">my_finish_cb</span><span class="p">(</span><span class="n">nux_request_id_t</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// fill your logic</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Create an instance of a task model.</p>
+
+<p>This function allows users to run multiple inference tasks asynchronously and simultaneously.
+When each task is completed or failed, corresponding callback functions will be called
+with <code>nux_request_id_t</code>, an identifier of a task request.
+See also <code>task_execute()</code> for more details.</p>
+<h3 id='parameters-12'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nux</td>
+<td>Nux handle.</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>Byte buffer containing ENF binary.</td>
+</tr>
+<tr>
+<td>model_size</td>
+<td>Byte length of <code>buffer</code></td>
+</tr>
+<tr>
+<td>max_batch</td>
+<td>Number of concurrent running tasks. This can be limited according to internal configurations and HW capacity.</td>
+</tr>
+<tr>
+<td>output_callback</td>
+<td>Callback function invoked when a task is completed. It will be called per output tensor.</td>
+</tr>
+<tr>
+<td>error_callback</td>
+<td>Callback function invoked when a task is failed.</td>
+</tr>
+<tr>
+<td>finish_callback</td>
+<td>Callback function which will be called finally after the output_callback is called after all output tensors.</td>
+</tr>
+<tr>
+<td>task_model</td>
+<td>Mutable pointer to receive the handle of a created task model.</td>
+</tr>
+</tbody></table>
+<h3 id='return-10'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_nux_creation_failed</code>.</p>
+<h2 id='task_model_get_task'>task_model_get_task()</h2>
+<blockquote>
+<p>Get a task from a task model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_model_t</span> <span class="n">task_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_task_t</span> <span class="n">task</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">task_model_get_task</span><span class="p">(</span><span class="n">task_model</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">task</span><span class="p">);</span>
+</code></pre></div>
+<p>Retrieve a task handle from a specified task model.</p>
+
+<p>When there is no available task in a given task model,
+it will block until new task is available.</p>
+<h3 id='parameters-13'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_model</td>
+<td>Handle of a task model.</td>
+</tr>
+<tr>
+<td>task</td>
+<td>Mutable pointer to receive the handle of a created task.</td>
+</tr>
+</tbody></table>
+<h3 id='return-11'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_model_execution_failed</code>.</p>
+<h2 id='task_model_try_get_task'>task_model_try_get_task()</h2>
+<blockquote>
+<p>Get a task from a task model (Non-blocking)</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_model_t</span> <span class="n">task_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_task_t</span> <span class="n">task</span><span class="p">;</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">task_model_try_get_task</span><span class="p">(</span><span class="n">task_model</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">task</span><span class="p">);</span>
+</code></pre></div>
+<p>Get a task handle from the specified task model without blocking operations.</p>
+
+<p>It&#39;s the non-blocking version of <code>task_model_get_task</code>.</p>
+<h3 id='parameters-14'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_model</td>
+<td>Handle of a task model.</td>
+</tr>
+<tr>
+<td>task</td>
+<td>Mutable pointer to receive the handle of a created task.</td>
+</tr>
+</tbody></table>
+<h3 id='return-12'>Return</h3>
+<p>This function returns an available task, or
+it will return immediately <code>nux_error_t_get_task_failed</code> if there&#39;s no available task in a given task model.</p>
+<h2 id='task_input'>task_input()</h2>
+<blockquote>
+<p>Get a task input tensor handle</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_t</span> <span class="n">task</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_buffer_t</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">task_input</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
+</code></pre></div>
+<p>Return a mutable pointer to the buffer of the specified input tensor.</p>
+<h3 id='parameters-15'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task</td>
+<td>Task handle</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Index of the input tensor.</td>
+</tr>
+</tbody></table>
+<h3 id='return-13'>Return</h3>
+<p>A mutable pointer to the data buffer of the given input tensor.</p>
+<h2 id='task_input_size'>task_input_size()</h2>
+<blockquote>
+<p>Get the size of an input tensor</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_t</span> <span class="n">task</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_buffer_len_t</span> <span class="n">length</span> <span class="o">=</span> <span class="n">task_input_size</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>Return the buffer length in bytes of the specified input tensor.</p>
+<h3 id='parameters-16'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task</td>
+<td>Task handle</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Index of the input tensor.</td>
+</tr>
+</tbody></table>
+<h3 id='return-14'>Return</h3>
+<p>The size of the specified input tensor.</p>
+<h2 id='task_execute'>task_execute()</h2>
+<blockquote>
+<p>Run a task model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_t</span> <span class="n">task</span><span class="p">;</span>
+<span class="n">nux_request_id_t</span> <span class="n">request_id</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">nux_error_t</span> <span class="n">err</span> <span class="o">=</span> <span class="n">task_execute</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">request_id</span><span class="p">);</span>
+</code></pre></div>
+<p>Request one asynchronous inference task.</p>
+
+<p>This function submits a request for an inference task identified by <code>task</code>.
+Once a task is completed, <code>output_callback</code> function passed to <code>nux_create_task_model</code>
+will be called with a distinct output index per output tensor.
+<code>finish_callback</code> function will be also called
+after <code>output_callback</code> function is called for all output tensors.</p>
+
+<aside class="warning">
+Once you call task_execute with a task,
+the task will get destroyed automatically. Please do not call destroy_task with
+the task which is already passed to task_execute.
+</aside>
+<h3 id='parameters-17'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task</td>
+<td>Task handle obtained from calling <code>task_model_get_task</code> or <code>task_model_try_get_task</code>.</td>
+</tr>
+<tr>
+<td>request_id</td>
+<td>request_id An positive integer to distinguish task requests. The behavior of <code>task_execute</code> doesn&#39;t rely on a <code>request_id</code> value at all. <code>request_id</code> will be just passed to callback functions.</td>
+</tr>
+</tbody></table>
+<h3 id='return-15'>Return</h3>
+<p><code>nux_error_t_success</code> if successful, or
+it will return <code>nux_error_t_model_execution_failed</code>.</p>
+<h2 id='destroy_task_model'>destroy_task_model()</h2>
+<blockquote>
+<p>Destroy a task model</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">destroy_task_model</span><span class="p">(</span><span class="n">task_model</span><span class="p">);</span>
+</code></pre></div>
+<p>Destroy the task model and release its resources.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_model</td>
+<td>Task model to be destroyed.</td>
+</tr>
+</tbody></table>
+<h2 id='task_model_is_all_task_done'>task_model_is_all_task_done()</h2>
+<blockquote>
+<p>Check whether all tasks are done</p>
+</blockquote>
+<div class="highlight"><pre class="highlight c tab-c"><code><span class="cp">#include "nux.h"
+</span>
+<span class="n">nux_task_model_t</span> <span class="n">task_model</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">bool</span> <span class="n">ck</span> <span class="o">=</span> <span class="n">task_model_is_all_task_done</span><span class="p">(</span><span class="n">task_model</span><span class="p">);</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_model</td>
+<td>Task model handle.</td>
+</tr>
+</tbody></table>
+
+<p>je</p>
+<h3 id='return-16'>Return</h3>
+<p><code>true</code> if there&#39;s no running tasks, or <code>false</code> if any task is still running.</p>
+<h1 id='supported-operators'>Supported Operators</h1>
+<ul>
+<li>Add</li>
+<li>AveragePool2d</li>
+<li>Broadcast</li>
+<li>Clip</li>
+<li>Concatenation</li>
+<li>Conv2d</li>
+<li>DepthToSpace</li>
+<li>DepthwiseConv2d</li>
+<li>Exp</li>
+<li>Expand</li>
+<li>Flatten</li>
+<li>FullyConnected</li>
+<li>Gemm</li>
+<li>LpNorm</li>
+<li>Mask</li>
+<li>MatMul</li>
+<li>MaxPool2d</li>
+<li>Mean</li>
+<li>Mul</li>
+<li>Pad</li>
+<li>Pad</li>
+<li>ReduceL2</li>
+<li>ReduceSum</li>
+<li>Relu</li>
+<li>Requantize</li>
+<li>Reshape</li>
+<li>Resize</li>
+<li>Sigmoid</li>
+<li>Slice</li>
+<li>Softmax</li>
+<li>Softplus</li>
+<li>Split</li>
+<li>TableLookup</li>
+<li>Transpose</li>
+<li>TransposeConv</li>
+<li>Unsqueeze</li>
+</ul>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="c">C/C++</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
