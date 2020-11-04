@@ -715,9 +715,11 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 <h3 id='return-4'>Return</h3>
 <p><code>Dict[str, Tuple[float, float]]</code> 활성화 값들의 동적 범위  </p>
 <h3 id='result-3'>Result</h3>
-<p><code>calibration ExampleNet</code>을 캘리브레이션하면 아래와 같이 동적 범위를 확인 할 수 있습니다. </p>
-<div class="highlight"><pre class="highlight plaintext"><code>{'input': (1.2729454283544328e-05, 0.9999984502792358), '18': (-0.811184287071228, 1.0816885232925415), '20': (-0.6744376420974731, 0.5646329522132874), '21': (-0.29423975944519043, 0.5646329522132874), 'output': (-0.24178576469421387, 0.20031100511550903)}
-</code></pre></div><h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
+<p><code>calibration ExampleNet</code>을 캘리브레이션하면 아래와 같이 동적 범위를 확인 할 수 있습니다. 
+<code>text
+{&#39;input&#39;: (1.2729454283544328e-05, 0.9999984502792358), &#39;18&#39;: (-0.811184287071228, 1.0816885232925415), &#39;20&#39;: (-0.6744376420974731, 0.5646329522132874), &#39;21&#39;: (-0.29423975944519043, 0.5646329522132874), &#39;output&#39;: (-0.24178576469421387, 0.20031100511550903)}
+</code></p>
+<h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
 <p>이 함수는 캘리브레이션 모델을 실행하여 랜덤하게 생성된 캘리브레이션 데이터로부터 활성화 값들의 동적 범위를 수집합니다.  </p>
 <h3 id='parameters-5'>Parameters</h3>
 <table><thead>

@@ -707,9 +707,11 @@ The input ONNX model is optimized by graph optimization techniques such as shape
 <h3 id='return-4'>Return</h3>
 <p><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations </p>
 <h3 id='result-3'>Result</h3>
-<p>The dynamic range of <code>calibratio ExampleNet</code> is collected by calibration as follows:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>{'input': (1.2729454283544328e-05, 0.9999984502792358), '18': (-0.811184287071228, 1.0816885232925415), '20': (-0.6744376420974731, 0.5646329522132874), '21': (-0.29423975944519043, 0.5646329522132874), 'output': (-0.24178576469421387, 0.20031100511550903)}
-</code></pre></div><h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
+<p>The dynamic range of <code>calibratio ExampleNet</code> is collected by calibration as follows:
+<code>text
+{&#39;input&#39;: (1.2729454283544328e-05, 0.9999984502792358), &#39;18&#39;: (-0.811184287071228, 1.0816885232925415), &#39;20&#39;: (-0.6744376420974731, 0.5646329522132874), &#39;21&#39;: (-0.29423975944519043, 0.5646329522132874), &#39;output&#39;: (-0.24178576469421387, 0.20031100511550903)}
+</code></p>
+<h3 id='nux-quantizer-calibrate_with_random_input'>nux.quantizer.calibrate_with_random_input()</h3>
 <p>This function executes a calibration model and then collects the dynamic range of activations with randomly generated calibration data. </p>
 <h3 id='parameters-5'>Parameters</h3>
 <table><thead>
@@ -726,9 +728,11 @@ The input ONNX model is optimized by graph optimization techniques such as shape
 <h3 id='return-5'>Return</h3>
 <p><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations</p>
 <h3 id='result-4'>Result</h3>
-<p>The dynamic range of <code>calibration ExampleNet</code> is collected by random calibration as follows:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>{'input': (2.170155084968428e-06, 0.9999873042106628), '18': (-1.1680195331573486, 1.125024437904358), '20': (-0.6748880743980408, 0.6123914122581482), '21': (-0.44649842381477356, 0.6123914122581482), 'output': (-0.2456839233636856, 0.39172685146331787)}
-</code></pre></div><h2 id='quantization'>Quantization</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
+<p>The dynamic range of <code>calibration ExampleNet</code> is collected by random calibration as follows:
+<code>text
+{&#39;input&#39;: (2.170155084968428e-06, 0.9999873042106628), &#39;18&#39;: (-1.1680195331573486, 1.125024437904358), &#39;20&#39;: (-0.6748880743980408, 0.6123914122581482), &#39;21&#39;: (-0.44649842381477356, 0.6123914122581482), &#39;output&#39;: (-0.2456839233636856, 0.39172685146331787)}
+</code></p>
+<h2 id='quantization'>Quantization</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
 <blockquote>
 <p>Quantization </p>
 </blockquote>
