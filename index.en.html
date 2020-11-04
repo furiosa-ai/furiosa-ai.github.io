@@ -726,12 +726,9 @@ The input ONNX model is optimized by graph optimization techniques such as shape
 <h3 id='return-5'>Return</h3>
 <p><code>Dict[str, Tuple[float, float]]</code> Dynamic range of activations</p>
 <h3 id='result-4'>Result</h3>
-<p>The dynamic range of <code>calibration ExampleNet</code> is collected by random calibration as follows:
-```text</p>
-
-<p>{&#39;input&#39;: (2.170155084968428e-06, 0.9999873042106628), &#39;18&#39;: (-1.1680195331573486, 1.125024437904358), &#39;20&#39;: (-0.6748880743980408, 0.6123914122581482), &#39;21&#39;: (-0.44649842381477356, 0.6123914122581482), &#39;output&#39;: (-0.2456839233636856, 0.39172685146331787)}
-```</p>
-<h2 id='quantization'>Quantization</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
+<p>The dynamic range of <code>calibration ExampleNet</code> is collected by random calibration as follows:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>{'input': (2.170155084968428e-06, 0.9999873042106628), '18': (-1.1680195331573486, 1.125024437904358), '20': (-0.6748880743980408, 0.6123914122581482), '21': (-0.44649842381477356, 0.6123914122581482), 'output': (-0.2456839233636856, 0.39172685146331787)}
+</code></pre></div><h2 id='quantization'>Quantization</h2><h3 id='nux-quantizer-quantize'>nux.quantizer.quantize()</h3>
 <blockquote>
 <p>Quantization </p>
 </blockquote>
