@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>FuriosaAI Renegade SDK Installation Guide and API Reference</title>
+    <title>FuriosaAI SDK Installation Guide and API Reference</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -414,11 +414,11 @@
               </ul>
           </li>
           <li>
-            <a href="#supported-operators" class="toc-h1 toc-link" data-title="Supported Operators">Supported Operators</a>
+            <a href="#operators-accelerated-on-npu" class="toc-h1 toc-link" data-title="Operators Accelerated on NPU">Operators Accelerated on NPU</a>
           </li>
       </ul>
         <ul class="toc-footer">
-            <li>FuriosaAI SDK 0.1.0</li>
+            <li><a href='./release_history.en.html'>FuriosaAI SDK 0.2.0</a></li>
             <li><a href='./index.html'>Korean Version</a></li>
         </ul>
     </div>
@@ -451,10 +451,10 @@ FURIOSA_ACCESS_KEY_ID and FURIOSA_SECRET_ACCESS_KEY are required.
 </aside>
 <h1 id='getting-started'>Getting Started</h1>
 <p><img src="images/python_workflow-f626da73.png" alt="Python API Workflow" />
-Renegade Python API workflow is like the above.</p>
+Python API workflow is like the above.</p>
 
 <p><img src="images/python_workflow_detail-df5d2b0e.png" alt="Python API Workflow" />
-Running models on Renegade NPU consists of three steps:</p>
+Running models on NPU consists of three steps:</p>
 
 <ol>
 <li>Covert models on TensorFlow or PyTorch into TFLite and ONNX models with quantization 
@@ -1427,7 +1427,7 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <p>je</p>
 <h3 id='return-22'>Return</h3>
 <p><code>true</code> if there&#39;s no running tasks, or <code>false</code> if any task is still running.</p>
-<h1 id='supported-operators'>Supported Operators</h1>
+<h1 id='operators-accelerated-on-npu'>Operators Accelerated on NPU</h1>
 <ul>
 <li>Add</li>
 <li>AveragePool2d</li>
@@ -1442,7 +1442,7 @@ it will return <code>nux_error_t_model_execution_failed</code>.</p>
 <li>Flatten</li>
 <li>FullyConnected</li>
 <li>Gemm</li>
-<li>LpNorm</li>
+<li>LpNormalization (when p = 2)</li>
 <li>Mask</li>
 <li>MatMul</li>
 <li>MaxPool2d</li>
