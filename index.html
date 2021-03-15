@@ -414,7 +414,7 @@
               </ul>
           </li>
           <li>
-            <a href="#npu" class="toc-h1 toc-link" data-title="NPU에서 가속되는 오퍼레이터">NPU에서 가속되는 오퍼레이터</a>
+            <a href="#furiosa-npu" class="toc-h1 toc-link" data-title="Furiosa NPU 에서 가속되는 연산자">Furiosa NPU 에서 가속되는 연산자</a>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -1417,43 +1417,37 @@ ONNX 모델을 입력으로 받아서 graph optimization -&gt; calibration -&gt;
 </tbody></table>
 <h3 id='return-22'>Return</h3>
 <p>실행 중인 태스크가 없을 때 <code>true</code>, 아니면 <code>false</code> </p>
-<h1 id='npu'>NPU에서 가속되는 오퍼레이터</h1>
+<h1 id='furiosa-npu'>Furiosa NPU 에서 가속되는 연산자</h1>
+<p><a href='https://github.com/onnx/onnx/blob/master/docs/Operators.md'>ONNX 연산자</a> 기준으로 아래 28 종의 연산자를 Furiosa NPU 로 가속 할 수 있다.</p>
+
 <ul>
 <li>Add</li>
-<li>AveragePool2d</li>
-<li>Broadcast</li>
+<li>AveragePool</li>
 <li>Clip</li>
-<li>Concatenation</li>
-<li>Conv2d</li>
+<li>Concat</li>
+<li>Conv</li>
+<li>ConvTranspose</li>
 <li>DepthToSpace</li>
-<li>DepthwiseConv2d</li>
 <li>Exp</li>
 <li>Expand</li>
 <li>Flatten</li>
-<li>FullyConnected</li>
 <li>Gemm</li>
 <li>LpNormalization (when p = 2)</li>
-<li>Mask</li>
 <li>MatMul</li>
-<li>MaxPool2d</li>
+<li>MaxPool</li>
 <li>Mean</li>
 <li>Mul</li>
-<li>Pad</li>
 <li>Pad</li>
 <li>ReduceL2</li>
 <li>ReduceSum</li>
 <li>Relu</li>
-<li>Requantize</li>
 <li>Reshape</li>
-<li>Resize</li>
 <li>Sigmoid</li>
-<li>Slice</li>
+<li>Slice </li>
 <li>Softmax</li>
 <li>Softplus</li>
 <li>Split</li>
-<li>TableLookup</li>
 <li>Transpose</li>
-<li>TransposeConv</li>
 <li>Unsqueeze</li>
 </ul>
 

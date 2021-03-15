@@ -414,7 +414,7 @@
               </ul>
           </li>
           <li>
-            <a href="#operators-accelerated-on-npu" class="toc-h1 toc-link" data-title="Operators Accelerated on NPU">Operators Accelerated on NPU</a>
+            <a href="#operators-accelerated-on-furiosa-npu" class="toc-h1 toc-link" data-title="Operators Accelerated on Furiosa NPU">Operators Accelerated on Furiosa NPU</a>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -1419,43 +1419,37 @@ the task which is already passed to task_execute.
 </tbody></table>
 <h3 id='return-22'>Return</h3>
 <p><code>true</code> if there&#39;s no running tasks, or <code>false</code> otherwise.</p>
-<h1 id='operators-accelerated-on-npu'>Operators Accelerated on NPU</h1>
+<h1 id='operators-accelerated-on-furiosa-npu'>Operators Accelerated on Furiosa NPU</h1>
+<p>The following 28 operators of <a href='https://github.com/onnx/onnx/blob/master/docs/Operators.md'>ONNX operators</a> are accelerated on Furiosa NPU.  </p>
+
 <ul>
 <li>Add</li>
-<li>AveragePool2d</li>
-<li>Broadcast</li>
+<li>AveragePool</li>
 <li>Clip</li>
-<li>Concatenation</li>
-<li>Conv2d</li>
+<li>Concat</li>
+<li>Conv</li>
+<li>ConvTranspose</li>
 <li>DepthToSpace</li>
-<li>DepthwiseConv2d</li>
 <li>Exp</li>
 <li>Expand</li>
 <li>Flatten</li>
-<li>FullyConnected</li>
 <li>Gemm</li>
 <li>LpNormalization (when p = 2)</li>
-<li>Mask</li>
 <li>MatMul</li>
-<li>MaxPool2d</li>
+<li>MaxPool</li>
 <li>Mean</li>
 <li>Mul</li>
-<li>Pad</li>
 <li>Pad</li>
 <li>ReduceL2</li>
 <li>ReduceSum</li>
 <li>Relu</li>
-<li>Requantize</li>
 <li>Reshape</li>
-<li>Resize</li>
 <li>Sigmoid</li>
 <li>Slice</li>
 <li>Softmax</li>
 <li>Softplus</li>
 <li>Split</li>
-<li>TableLookup</li>
 <li>Transpose</li>
-<li>TransposeConv</li>
 <li>Unsqueeze</li>
 </ul>
 
