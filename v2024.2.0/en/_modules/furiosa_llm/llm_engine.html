@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>furiosa_llm.llm_engine &#8212; FuriosaAI Developer Center 2024.2.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=c81376e9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=d2cfb411"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/tabs.js?v=3030b3cb"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/furiosa_llm/llm_engine';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2024.2.dev0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.dev0 documentation - Home"/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.dev0 documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/intro.html">Furiosa LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Support</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.discourse.group/">FuriosaAI Forum</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">FuriosaAI Customer Portal</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">FuriosaAI Warboy SDK Document</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for furiosa_llm.llm_engine</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">fields</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BatchEncoding</span><span class="p">,</span> <span class="n">PreTrainedTokenizerBase</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+
+<span class="kn">from</span> <span class="nn">furiosa.native_runtime.llm</span> <span class="kn">import</span> <span class="n">NativeLLMEngine</span><span class="p">,</span> <span class="n">NativeRequestOutput</span>  <span class="c1"># type: ignore</span>
+<span class="kn">from</span> <span class="nn">furiosa_llm.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CACHE_DIR</span><span class="p">,</span>
+    <span class="n">LLM</span><span class="p">,</span>
+    <span class="n">CompletionOutput</span><span class="p">,</span>
+    <span class="n">LLMBackend</span><span class="p">,</span>
+    <span class="n">RequestOutput</span><span class="p">,</span>
+    <span class="n">SamplingParams</span><span class="p">,</span>
+    <span class="n">SchedulerConfig</span><span class="p">,</span>
+    <span class="n">TokenizerModeType</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># adopted from https://github.com/vllm-project/vllm/blob/main/vllm/inputs/data.py</span>
+<span class="k">class</span> <span class="nc">TextPrompt</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for a text prompt.&quot;&quot;&quot;</span>
+
+    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The input text to be tokenized before passing to the model.&quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">TokensPrompt</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for a tokenized prompt.&quot;&quot;&quot;</span>
+
+    <span class="n">prompt_token_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A list of token IDs to pass to the model.&quot;&quot;&quot;</span>
+
+
+<span class="n">SingletonPrompt</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextPrompt</span><span class="p">,</span> <span class="n">TokensPrompt</span><span class="p">]</span>
+
+<span class="c1"># TODO: support ExplicitEncoderDecoderPrompt later</span>
+<span class="n">PromptType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">SingletonPrompt</span><span class="p">]</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">EngineArgs</span><span class="p">:</span>
+    <span class="c1"># Currently only artifact path is supported</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">num_speculative_tokens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">use_speculative_decoding_if_possible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">data_parallel_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tokenizer_mode</span><span class="p">:</span> <span class="n">TokenizerModeType</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">devices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">cache_dir</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="n">CACHE_DIR</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LLMBackend</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">paged_attention_num_blocks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># scheduler_config</span>
+    <span class="n">npu_queue_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">max_processing_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">spare_blocks_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">is_offline</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">packing_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;IDENTITY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;IDENTITY&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArgumentParser</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shared CLI arguments for vLLM engine.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Model arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--model&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the LLM engine artifact (Pretrained id will be supported in the future releases).&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--num-speculative-tokens&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The number of tokens that specualtive model will generate speculatively during each iteration of the decoding process.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--tokenizer&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The name or path of a HuggingFace Transformers tokenizer.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--tokenizer-mode&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">tokenizer_mode</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The tokenizer mode. &quot;auto&quot; will use the fast tokenizer &#39;</span>
+            <span class="s1">&#39;if available, and &quot;slow&quot; will always use the slow tokenizer.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--seed&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The seed to initialize the random number generator for sampling.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Furiosa LLM specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--devices&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The devices to run the model. It can be a single device or a list of devices. &#39;</span>
+            <span class="s1">&#39;Each device can be either &quot;npu:X&quot; or &quot;npu:X:*&quot; where X is a specific device index. &#39;</span>
+            <span class="s1">&#39;If not given, available devices will be used.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--data-parallel-size&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The size of the data parallelism group. &#39;</span>
+            <span class="s1">&#39;If not given, it will be inferred from total avaialble PEs and other parallelism degrees.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--cache-dir&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The devices to run the model. It can be a single device or a list of devices. &#39;</span>
+            <span class="s1">&#39;Each device can be either &quot;npu:X&quot; or &quot;npu:X:*&quot; where X is a specific device index. &#39;</span>
+            <span class="s1">&#39;If not given, available devices will be used.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--backend&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The backend implementation to run forward() of a model for the LLM. &#39;</span>
+            <span class="s1">&#39;If not specified, the backend will be chosen based on the device kind.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--paged-attention-num-blocks&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The maximum number of blocks that each k/v storage per layer can store. &#39;</span>
+            <span class="s1">&#39;This argument must be given if model uses paged attention.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--npu-queue-limit&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">npu_queue_limit</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The NPU queue limit of the scheduler config.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--max-processing-samples&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">max_processing_samples</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The maximum processing samples. Used as an hint for the scheduler.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--spare-blocks-ratio&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">spare_blocks_ratio</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The spare blocks ratio. Used as an hint for the scheduler.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--is-offline&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">is_offline</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;If True, the scheduler will assume the workload will be offline scenario.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--use-speculative-decoding-if-possible&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If True, speculative decoding will be used if possible &quot;</span>
+            <span class="s2">&quot;(`speculative_model` is given or there&#39;s artifacts for specualtive model in the artifacts.). &quot;</span>
+            <span class="s2">&quot;Otherwise, speculative decoding will not be used.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--speculative-model-paged-attention-num-blocks&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The maximum number of blocks that each k/v storage per layer can store for the specualtive model. &#39;</span>
+            <span class="s1">&#39;This argument must be given if the specualtive model uses paged attention.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--packing-type&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Packing algorithm. Possible values are &quot;IDENTITY&quot; only for now&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">parser</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_cli_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span>
+        <span class="n">engine_args</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">attr</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">engine_args</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">AsyncEngineArgs</span><span class="p">(</span><span class="n">EngineArgs</span><span class="p">):</span>
+    <span class="c1"># TODO: add async-specific arguments</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArgumentParser</span><span class="p">:</span>
+        <span class="c1"># TODO: add async-specific arguments</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parser</span>
+
+
+<span class="c1"># TODO: currently LLMEngine wraps LLM, but the relationship must be inverted</span>
+<div class="viewcode-block" id="LLMEngine">
+<a class="viewcode-back" href="../../furiosa_llm/references/llm_engine.html#furiosa_llm.LLMEngine">[docs]</a>
+<span class="k">class</span> <span class="nc">LLMEngine</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">native_engine</span><span class="p">:</span> <span class="n">NativeLLMEngine</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span> <span class="o">=</span> <span class="n">native_engine</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span>
+
+        <span class="c1"># Queue[Tuple[request_id, NativeRequestOutput]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NativeRequestOutput</span><span class="p">]]</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unfinished</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Dict[request_id, Tuple[prompt, prompt_token_ids]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt_cache</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># vllm&#39;s accumulates output tokens between each step() calls.</span>
+        <span class="c1"># To mimic the behavior, we store outputs and update them in each step() call.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">CompletionOutput</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">aio_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_llm</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LLMEngine&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">llm</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_engine_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">EngineArgs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LLMEngine&quot;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/scheduler_config.json&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">scheduler_config_attr</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">SchedulerConfig</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="n">scheduler_config_</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">from_artifacts</span><span class="p">(</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
+            <span class="n">use_speculative_decoding_if_possible</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
+            <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
+            <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_mode</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
+            <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
+            <span class="n">backend</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+            <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config_</span><span class="p">,</span>
+            <span class="n">speculative_model_paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">packing_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span>
+        <span class="n">sampling_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SamplingParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">prompt_str</span><span class="p">,</span> <span class="n">batch_encoding</span> <span class="o">=</span> <span class="n">preprocess_prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+        <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">batch_encoding</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unfinished</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt_cache</span><span class="p">[</span><span class="n">request_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">prompt_str</span><span class="p">,</span>
+            <span class="n">prompt_token_ids</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aio_loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">batch_encoding</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_process_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">batch_encoding</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">,</span>
+        <span class="n">sampling_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SamplingParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">batch_encoding</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">request_id</span><span class="p">,</span> <span class="n">output</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">has_unfinished_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unfinished</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RequestOutput</span><span class="p">]:</span>
+        <span class="n">output</span><span class="p">:</span> <span class="n">NativeRequestOutput</span>
+        <span class="n">req_id</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aio_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="c1"># currently only single output is supported inside `hf_compat_stream_generate`</span>
+        <span class="c1"># if the behavior is changed, this part should be updated accordingly</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">prompt_str</span><span class="p">,</span> <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_cache</span><span class="p">[</span><span class="n">req_id</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">req_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="n">completion_outputs</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">CompletionOutput</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                        <span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">),</span>
+                    <span class="n">token_ids</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span>
+                    <span class="n">finish_reason</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">outputs</span>
+            <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">completion_outputs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">token_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">finish_reason</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span>
+        <span class="n">completion_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">]</span>
+
+        <span class="n">finished</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">finished</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unfinished</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_cache</span><span class="p">[</span><span class="n">req_id</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">req_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">RequestOutput</span><span class="p">(</span>
+                <span class="n">request_id</span><span class="o">=</span><span class="n">req_id</span><span class="p">,</span>
+                <span class="n">prompt</span><span class="o">=</span><span class="n">prompt_str</span><span class="p">,</span>
+                <span class="n">prompt_token_ids</span><span class="o">=</span><span class="n">prompt_token_ids</span><span class="p">,</span>
+                <span class="n">outputs</span><span class="o">=</span><span class="n">completion_outputs</span><span class="p">,</span>
+                <span class="n">finished</span><span class="o">=</span><span class="n">finished</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncLLMEngine">
+<a class="viewcode-back" href="../../furiosa_llm/references/async_llm_engine.html#furiosa_llm.AsyncLLMEngine">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncLLMEngine</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">native_engine</span><span class="p">:</span> <span class="n">NativeLLMEngine</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span> <span class="o">=</span> <span class="n">native_engine</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_llm</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncLLMEngine&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">llm</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_engine_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">AsyncEngineArgs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncLLMEngine&quot;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/scheduler_config.json&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">scheduler_config_attr</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">SchedulerConfig</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="n">scheduler_config_</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">from_artifacts</span><span class="p">(</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
+            <span class="n">use_speculative_decoding_if_possible</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
+            <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
+            <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_mode</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
+            <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
+            <span class="n">backend</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+            <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config_</span><span class="p">,</span>
+            <span class="n">speculative_model_paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
+            <span class="n">packing_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span>
+        <span class="n">sampling_params</span><span class="p">:</span> <span class="n">SamplingParams</span><span class="p">,</span>
+        <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">RequestOutput</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+            <span class="n">request_id</span><span class="p">,</span>
+            <span class="n">prompt</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">yield</span> <span class="n">output</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span>
+        <span class="n">sampling_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SamplingParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">RequestOutput</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="n">prompt_str</span><span class="p">,</span> <span class="n">batch_encoding</span> <span class="o">=</span> <span class="n">preprocess_prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+        <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">batch_encoding</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+        <span class="n">completion_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">batch_encoding</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">completion_outputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">completion_outputs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">CompletionOutput</span><span class="p">(</span>
+                        <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                            <span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span>
+                        <span class="p">),</span>
+                        <span class="n">token_ids</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span>
+                        <span class="n">finish_reason</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">outputs</span>
+                <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="p">):</span>
+                    <span class="n">completion_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">token_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">token_ids</span><span class="p">)</span>
+                    <span class="n">completion_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                        <span class="n">completion_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+                    <span class="n">completion_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">finish_reason</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span>
+            <span class="k">yield</span> <span class="n">RequestOutput</span><span class="p">(</span>
+                <span class="n">request_id</span><span class="o">=</span><span class="n">request_id</span><span class="p">,</span>
+                <span class="n">prompt</span><span class="o">=</span><span class="n">prompt_str</span><span class="p">,</span>
+                <span class="n">prompt_token_ids</span><span class="o">=</span><span class="n">prompt_token_ids</span><span class="p">,</span>
+                <span class="n">outputs</span><span class="o">=</span><span class="n">completion_outputs</span><span class="p">,</span>
+                <span class="n">finished</span><span class="o">=</span><span class="nb">all</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">finish_reason</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="p">),</span>
+            <span class="p">)</span></div>
+
+
+    <span class="c1"># TODO</span>
+    <span class="c1"># async def engine_step(self): ...</span>
+    <span class="c1"># async def abort(self, request_id): ...</span>
+
+
+<span class="k">def</span> <span class="nf">preprocess_prompt</span><span class="p">(</span>
+    <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">:</span> <span class="n">PreTrainedTokenizerBase</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BatchEncoding</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;prompt&quot;</span> <span class="ow">in</span> <span class="n">prompt</span><span class="p">:</span>
+            <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="k">elif</span> <span class="s2">&quot;prompt_token_ids&quot;</span> <span class="ow">in</span> <span class="n">prompt</span><span class="p">:</span>
+            <span class="c1"># To get BatchEncoding, decode first and then encode again.</span>
+            <span class="c1"># This is inefficient but since generator takes BatchEncoding as input this is the safest way.</span>
+            <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">prompt</span><span class="p">[</span><span class="s2">&quot;prompt_token_ids&quot;</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported prompt type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported prompt type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prompt_str</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">prompt_str</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, FuriosaAI, Inc..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

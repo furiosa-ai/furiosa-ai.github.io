@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Furiosa SMI Library &#8212; FuriosaAI Developer Center 2024.2.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=c81376e9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=d2cfb411"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'device_management/system_management_interface/furiosa_smi_lib';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Furiosa SMI CLI" href="furiosa_smi_cli.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2024.2.dev0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.dev0 documentation - Home"/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.dev0 documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/intro.html">Furiosa LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Support</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../system_management_interface.html">Furiosa SMI</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.discourse.group/">FuriosaAI Forum</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">FuriosaAI Customer Portal</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">FuriosaAI Warboy SDK Document</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/device_management/system_management_interface/furiosa_smi_lib.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Furiosa SMI Library</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-smi-library">Installing <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-modules">API Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-bindings">API Bindings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-language-documentation">Supported Language Documentation:</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="furiosa-smi-library">
+<span id="furiosasmilib"></span><h1>Furiosa SMI Library<a class="headerlink" href="#furiosa-smi-library" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library is a C-based programmatic interface for managing and monitoring FuriosaAI NPUs.</p>
+<section id="installing-furiosa-smi-library">
+<h2>Installing <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library<a class="headerlink" href="#installing-furiosa-smi-library" title="Link to this heading">#</a></h2>
+<p>To install <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library, install <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code> package.</p>
+<p>The minimum requirements for installing the library are as follows:</p>
+<ul class="simple">
+<li><p>Ubuntu 22.04 LTS (Debian Bookworm) or later</p></li>
+<li><p>Linux Kernel 6.3 or later</p></li>
+<li><p>Administrator privileges on system (root)</p></li>
+<li><p><a class="reference internal" href="../../getting_started/prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT server</span></a> and <a class="reference internal" href="../../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
+</ul>
+<p>Then, please install the <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code> package as follows:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-libsmi
+</pre></div>
+</div>
+<p>This command installs <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code> package.</p>
+</section>
+<section id="api-modules">
+<h2>API Modules<a class="headerlink" href="#api-modules" title="Link to this heading">#</a></h2>
+<p>The library provides the following API modules, each designed to offer distinct functionalities for managing and monitoring NPU devices.
+These modules enable developers to access essential hardware information, topology details, system-wide information, and performance metrics.</p>
+<p>Each module provides the following features:</p>
+<ul class="simple">
+<li><p><strong>Device module</strong> provides NPU device discovery and information including <em>device specification</em> and <em>liveness</em>.</p></li>
+<li><p><strong>Topology module</strong> provides the topology status within a system including <em>device-to-device link type</em> and <em>p2p accessibility</em>.</p></li>
+<li><p><strong>System module</strong> provides system-wide information of each NPU device, including <em>firmware version</em> and <em>driver version</em>.</p></li>
+<li><p><strong>Performance module</strong> provides the device performance metrics including <em>power consumption</em>, <em>temperature</em>, <em>utilization</em>.</p></li>
+</ul>
+<p>For further details on using these modules and available functions, please refer to the comprehensive <a class="reference external" href="https://furiosa-ai.github.io/furiosa-smi">C API Documentation</a>.</p>
+</section>
+<section id="api-bindings">
+<h2>API Bindings<a class="headerlink" href="#api-bindings" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library officially supports bindings for Go, Rust, Python, allowing developers to integrate NPU management and monitoring capabilities into various applications, systems, and platforms.</p>
+<section id="supported-language-documentation">
+<h3>Supported Language Documentation:<a class="headerlink" href="#supported-language-documentation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pkg.go.dev/github.com/furiosa-ai/furiosa-smi-go">Furiosa SMI - Go API</a></p></li>
+<li><p><a class="reference external" href="https://crates.io/crates/furiosa-smi-rs">Furiosa SMI - Rust API</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/furiosa-smi-py">Furiosa SMI - Python API</a></p></li>
+</ul>
+<p>Each link provides language-specific examples and guides to help you get started quickly.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="furiosa_smi_cli.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Furiosa SMI CLI</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-smi-library">Installing <code class="docutils literal notranslate"><span class="pre">Furiosa</span> <span class="pre">SMI</span></code> library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-modules">API Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-bindings">API Bindings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-language-documentation">Supported Language Documentation:</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, FuriosaAI, Inc..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
