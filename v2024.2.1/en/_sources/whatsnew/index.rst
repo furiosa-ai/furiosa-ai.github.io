@@ -22,7 +22,7 @@ such as LLaMA 3.1, EXAONE. You can find the upgrade guide for this release in :r
 
 .. _Release2024_2_1_Highlights:
 
-Highlights
+🚀 Highlights
 ----------------------
 * Up to 32k context length (``<= 32768``) support in furiosa-llm for various models, such as LLaMA 3.1, and EXAONE
 * Artifacts with the same ``tensor_parallel_size`` is compatible even with any ``pipeline_parallel_size``
@@ -41,7 +41,7 @@ Highlights
    * - furiosa-firmware-tools-rngd
      - 2024.2.1
    * - furiosa-firmware-image-rngd
-     - 2024.2.1
+     - 2024.2.0
    * - furiosa-pert-rngd
      - 2024.2.1
    * - furiosa-model-compressor
@@ -85,7 +85,7 @@ Please refer to :ref:`UpgradeGuide` to upgrade the Furiosa software stack.
 
 .. _Release2024_2_0_Highlights:
 
-Highlights
+🚀 Highlights
 ----------------------
 * New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna, ...
 * Up to 8k context length (<= 8192) support in models, such as LLaMA 3.1
@@ -102,7 +102,7 @@ Highlights
 * About 20% performance improvements in models based on LlamaForCausalLM
     * e.g., 3580 tokens/sec in LLaMA 3.1 8B model with a single RNGD card
 
-Breaking Changes
+⚠️ Breaking Changes
 ----------------------------------
 * LLM.from_artifacts() API has been deprecated. Please use LLM.load_artifacts() instead.
 * The artifacts built from 2024.1.x is not compatible with 2024.2.x. Please use the artifact built from 2024.2.x.
@@ -160,7 +160,7 @@ and the features and APIs described in this document may change in the future.
 
 .. _Release2024_1_0_Highlights:
 
-Highlights
+🚀 Highlights
 ------------------------
 * Model Support: LLaMA 3.1 8B/70B, BERT Large, GPT-J 6B
 * Furiosa Quantizer supports the following quantization methods:
