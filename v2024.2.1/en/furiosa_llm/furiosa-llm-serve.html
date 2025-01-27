@@ -179,7 +179,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="current nav bd-sidenav">
@@ -374,6 +374,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool Calling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-llm-serve-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-openai-api-with-furiosa-llm">Using OpenAI API with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-compatibility-with-openai-api">The compatibility with OpenAI API</a></li>
@@ -411,7 +412,7 @@ and the features and APIs described in this document may change in the future.</
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
 <p>To use the OpenAI-Compatible server, you need the following prerequisites:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../getting_started/prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT server</span></a> and <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
+<li><p><a class="reference internal" href="../getting_started/prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT</span></a> and <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
 <li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa LLM Installation</span></a></p></li>
 <li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">HuggingFace Access Token</span></a></p></li>
 <li><p>LLM Engine Artifact</p></li>
@@ -425,12 +426,69 @@ It’s necessary because the model should be able to understand the context of t
 including the role of the speaker (e.g., “user” and “assistant”) and the content of the message.
 Similar to tokenization, different models require very different input formats for chat.
 That’s why we need a chat template.</p>
-<p>Furiosa LLM supports chat templates based on Jina2 template engine in the same way as HuggingFace Transformers.
-<a class="reference external" href="https://huggingface.co/docs/transformers/en/chat_templating">Chat Templates</a> offers
-a comprehensive guide on what chat templates are and how to write your chat templates.
-You can also find one good example of chat template at <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
-<p>The following command launches the server with the chat template:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="o">--</span><span class="n">model</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span> <span class="o">--</span><span class="n">chat</span><span class="o">-</span><span class="n">template</span> <span class="p">[</span><span class="n">CHAT_TEMPLATE_PATH</span><span class="p">]</span>
+<p>Furiosa LLM supports chat templates based on Jinja2 template engine in the same way as HuggingFace Transformers.
+If the model’s tokenizer provides a built-in chat template, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> will automatically use it.
+You can also provide the <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> parameter if the tokenizer lacks a built-in template or if you want to override the default one.
+For reference, you can find a good example of how to write a chat template at <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
+<p>The following command launches the server with a custom chat template:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="tool-calling">
+<h2>Tool Calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h2>
+<p>The server supports the function calling (tool calling) feature for models that are trained with this capability.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> options supported by the <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice">OpenAI API</a>, the choices <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code> are currently supported.
+Future releases will extend support to <code class="docutils literal notranslate"><span class="pre">&quot;required&quot;</span></code> and named function calling.</p>
+<p>The system converts model outputs into the OpenAI response format through a designated parser implementation.
+At present, the <code class="docutils literal notranslate"><span class="pre">llama3_json</span></code> parser is exclusively available. Additional parsers will be made available as more models are integrated.</p>
+<p>The following command starts the server with tool calling enabled for Llama 3.1 models:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--enable-auto-tool-choice<span class="w"> </span>--tool-call-parser<span class="w"> </span>llama3_json
+</pre></div>
+</div>
+<p>To use the tool calling feature, use <code class="docutils literal notranslate"><span class="pre">tools</span></code> and <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> parameters. The following is an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">...&quot;</span>
+<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;get_weather&quot;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
+
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;City and state, e.g., &#39;San Francisco, CA&#39;&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}]</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.1-70B-Instruct&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span> <span class="c1"># None is also equivalent to &quot;auto&quot;</span>
+<span class="p">)</span>
+
+<span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The expected output is as follows.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Function called: get_weather
+Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot;: &quot;fahrenheit&quot;}
+Result: Getting the weather for San Francisco, CA in fahrenheit...
 </pre></div>
 </div>
 </section>
@@ -439,25 +497,30 @@ You can also find one good example of chat template at <a class="reference exter
 <p>By default, the server binds to <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>, and
 you can change the host and port using the <code class="docutils literal notranslate"><span class="pre">--host</span></code> and <code class="docutils literal notranslate"><span class="pre">--port</span></code> options.
 The following is the list of options and arguments for the serve command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">--</span><span class="n">model</span> <span class="n">MODEL</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">chat</span><span class="o">-</span><span class="n">template</span> <span class="n">CHAT_TEMPLATE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">response</span><span class="o">-</span><span class="n">role</span> <span class="n">RESPONSE_ROLE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">tp</span> <span class="n">TENSOR_PARALLEL_SIZE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">pp</span> <span class="n">PIPELINE_PARALLEL_SIZE</span><span class="p">]</span>
-                        <span class="p">[</span><span class="o">-</span><span class="n">dp</span> <span class="n">DATA_PARALLEL_SIZE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">devices</span> <span class="n">DEVICES</span><span class="p">]</span>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: furiosa-llm serve [-h] --model MODEL [--host HOST] [--port PORT] [--chat-template CHAT_TEMPLATE] [--response-role RESPONSE_ROLE] [-tp TENSOR_PARALLEL_SIZE] [-pp PIPELINE_PARALLEL_SIZE]
+                        [-dp DATA_PARALLEL_SIZE] [--devices DEVICES]
 
-<span class="n">options</span><span class="p">:</span>
-    <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-    <span class="o">--</span><span class="n">model</span> <span class="n">MODEL</span>         <span class="n">The</span> <span class="n">Hugging</span> <span class="n">Face</span> <span class="n">model</span> <span class="nb">id</span><span class="p">,</span> <span class="ow">or</span> <span class="n">path</span> <span class="n">to</span> <span class="n">Furiosa</span> <span class="n">model</span> <span class="n">artifact</span><span class="o">.</span> <span class="n">Currently</span> <span class="n">only</span> <span class="n">one</span> <span class="n">model</span> <span class="ow">is</span> <span class="n">supported</span> <span class="n">per</span> <span class="n">server</span><span class="o">.</span>
-    <span class="o">--</span><span class="n">host</span> <span class="n">HOST</span>           <span class="n">Host</span> <span class="n">to</span> <span class="n">bind</span> <span class="n">the</span> <span class="n">server</span> <span class="n">to</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mf">0.0.0.0</span><span class="p">)</span>
-    <span class="o">--</span><span class="n">port</span> <span class="n">PORT</span>           <span class="n">Port</span> <span class="n">to</span> <span class="n">bind</span> <span class="n">the</span> <span class="n">server</span> <span class="n">to</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">8000</span><span class="p">)</span>
-    <span class="o">--</span><span class="n">chat</span><span class="o">-</span><span class="n">template</span> <span class="n">CHAT_TEMPLATE</span>
-                            <span class="n">If</span> <span class="n">given</span><span class="p">,</span> <span class="n">the</span> <span class="n">default</span> <span class="n">chat</span> <span class="n">template</span> <span class="n">will</span> <span class="n">be</span> <span class="n">overridden</span> <span class="k">with</span> <span class="n">the</span> <span class="n">given</span> <span class="n">file</span><span class="o">.</span> <span class="p">(</span><span class="n">Default</span><span class="p">:</span> <span class="n">use</span> <span class="n">chat</span> <span class="n">template</span> <span class="kn">from</span><span class="w"> </span><span class="nn">tokenizer</span><span class="p">)</span>
-    <span class="o">--</span><span class="n">response</span><span class="o">-</span><span class="n">role</span> <span class="n">RESPONSE_ROLE</span>
-                            <span class="n">Response</span> <span class="n">role</span> <span class="k">for</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">chat</span><span class="o">/</span><span class="n">completions</span> <span class="n">API</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">assistant</span><span class="p">)</span>
-    <span class="o">-</span><span class="n">tp</span> <span class="n">TENSOR_PARALLEL_SIZE</span><span class="p">,</span> <span class="o">--</span><span class="n">tensor</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="n">TENSOR_PARALLEL_SIZE</span>
-                            <span class="n">Number</span> <span class="n">of</span> <span class="n">tensor</span> <span class="n">parallel</span> <span class="n">replicas</span><span class="o">.</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="o">-</span><span class="n">pp</span> <span class="n">PIPELINE_PARALLEL_SIZE</span><span class="p">,</span> <span class="o">--</span><span class="n">pipeline</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="n">PIPELINE_PARALLEL_SIZE</span>
-                            <span class="n">Number</span> <span class="n">of</span> <span class="n">pipeline</span> <span class="n">stages</span><span class="o">.</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="o">-</span><span class="n">dp</span> <span class="n">DATA_PARALLEL_SIZE</span><span class="p">,</span> <span class="o">--</span><span class="n">data</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="n">DATA_PARALLEL_SIZE</span>
-                            <span class="n">Data</span> <span class="n">parallelism</span> <span class="n">size</span><span class="o">.</span> <span class="n">If</span> <span class="ow">not</span> <span class="n">given</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">inferred</span> <span class="kn">from</span><span class="w"> </span><span class="nn">total</span> <span class="n">avaialble</span> <span class="n">PEs</span> <span class="ow">and</span> <span class="n">other</span> <span class="n">parallelism</span> <span class="n">degrees</span><span class="o">.</span>
-    <span class="o">--</span><span class="n">devices</span> <span class="n">DEVICES</span>     <span class="n">Devices</span> <span class="n">to</span> <span class="n">use</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="s2">&quot;npu:0:*,npu:1:*&quot;</span><span class="p">)</span><span class="o">.</span> <span class="n">If</span> <span class="n">unspecified</span><span class="p">,</span> <span class="nb">all</span> <span class="n">available</span> <span class="n">devices</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">host</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span><span class="o">.</span>
+options:
+    -h, --help            show this help message and exit
+    --model MODEL         The Hugging Face model id, or path to Furiosa model artifact. Currently only one model is supported per server.
+    --host HOST           Host to bind the server to (default: 0.0.0.0)
+    --port PORT           Port to bind the server to (default: 8000)
+    --chat-template CHAT_TEMPLATE
+                          If given, the default chat template will be overridden with the given file. (Default: use chat template from tokenizer)
+    --enable-auto-tool-choice
+                          Enable auto tool choice for supported models. Use --tool-call-parser to specify which parser to use
+    --tool-call-parser {llama3_json}
+                          Select the tool call parser depending on the model that you&#39;re using. This is used to parse the model-generated tool call into OpenAI API format.
+                          Required for --enable-auto-tool-choice.
+    --response-role RESPONSE_ROLE
+                            Response role for /v1/chat/completions API (default: assistant)
+    -tp TENSOR_PARALLEL_SIZE, --tensor-parallel-size TENSOR_PARALLEL_SIZE
+                            Number of tensor parallel replicas. (default: 4)
+    -pp PIPELINE_PARALLEL_SIZE, --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
+                            Number of pipeline stages. (default: 1)
+    -dp DATA_PARALLEL_SIZE, --data-parallel-size DATA_PARALLEL_SIZE
+                            Data parallelism size. If not given, it will be inferred from total avaialble PEs and other parallelism degrees.
+    --devices DEVICES     Devices to use (e.g. &quot;npu:0:*,npu:1:*&quot;). If unspecified, all available devices from the host will be used.
 </pre></div>
 </div>
 </section>
@@ -509,15 +572,16 @@ API with <code class="docutils literal notranslate"><span class="pre">stream=Tru
 </section>
 <section id="the-compatibility-with-openai-api">
 <h2>The compatibility with OpenAI API<a class="headerlink" href="#the-compatibility-with-openai-api" title="Link to this heading">#</a></h2>
-<p>Currently, <code class="docutils literal notranslate"><span class="pre">furiosa</span> <span class="pre">serve</span></code> supports the following OpenAI API parameters:
-You can find more about each parameter at <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a>
-and <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>.</p>
+<p>Here are the API parameters currently supported by the server:
+For detailed information on each parameter, please refer to <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a>
+and <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>. The parameters generally function in the same way, except where differences are explicitly noted.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not allowed
 because the beam search cannot determine the tokens until the end of the sequence.</p>
 <p>In 2024.2 release, <code class="docutils literal notranslate"><span class="pre">n</span></code> works only for beam search and it will be fixed in the next release.</p>
 </div>
+<p>Parameters supported by both <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a> and <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></li>
@@ -529,6 +593,12 @@ because the beam search cannot determine the tokens until the end of the sequenc
 <li><p><code class="docutils literal notranslate"><span class="pre">min_tokens</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">best_of</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code></p></li>
+</ul>
+<p>Parameters supported by <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tool_choice</span></code></p></li>
 </ul>
 </section>
 <section id="launching-the-openai-compatible-server-container">
@@ -593,6 +663,7 @@ because the beam search cannot determine the tokens until the end of the sequenc
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool Calling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-llm-serve-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-openai-api-with-furiosa-llm">Using OpenAI API with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-compatibility-with-openai-api">The compatibility with OpenAI API</a></li>

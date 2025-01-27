@@ -63,7 +63,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrading Furiosa Software Stack" href="upgrade_guide.html" />
+    <link rel="next" title="Upgrading the Furiosa Software Stack" href="upgrade_guide.html" />
     <link rel="prev" title="Quick Start with Furiosa LLM" href="furiosa_llm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -179,7 +179,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Upgrading Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
@@ -372,14 +372,14 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf-command">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf Inference Benchmark</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf™ Inference Benchmark</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-mlperf-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf™ Configuration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-a-running-benchmark">Monitoring a running benchmark</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-furiosa-mlperf-in-container-environment">Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in container environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-furiosa-mlperf-in-a-container-environment">Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in a Container Environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-examples">Benchmark Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-large">BERT Large</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-j-6b-benchmark">GPT-J 6B benchmark</a></li>
@@ -399,79 +399,79 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                   
   <section id="running-mlperf-inference-benchmark">
 <span id="gettingstartedfuriosamlperf"></span><h1>Running MLPerf™ Inference Benchmark<a class="headerlink" href="#running-mlperf-inference-benchmark" title="Link to this heading">#</a></h1>
-<p>MLPerf™ is a benchmark suite that evaluates the performance of machine learning (ML) software, hardware, and
-cloud platforms. It is generally used to compare the performance of different systems,
-and to help developers and end users make decisions about AI systems.</p>
-<p>FuriosaAI Software Stack provides <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command to run easily the MLPerf Inference Benchmark.
-This section describes how to reproduce the MLPerf™ Inference Benchmark using the FuriosaAI Software Stack.</p>
+<p>MLPerf™ is a benchmark suite that evaluates the performance of machine
+learning (ML) software, hardware, and cloud platforms.
+It is commonly used to compare the performance of different systems,
+and to assist developers and end users in making decisions about AI systems.</p>
+<p>The FuriosaAI software stack provides a <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command to run the
+MLPerf™ Inference Benchmark more easily.
+This section describes how to reproduce the MLPerf™ Inference Benchmark results
+using FuriosaAI’s NPUs.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> is based on MLPerf™ Inference Benchmark v4.1.</p>
-<p>The only exception is that we replaced the Llama2 benchmark with one using Llama 3.1.</p>
+<p><code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> is based on MLPerf™ Inference Benchmark v4.1.
+The only exception is that we replaced the Llama2 benchmark with one using Llama 3.1.</p>
 </div>
-<section id="installing-furiosa-mlperf-command">
-<h2>Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command<a class="headerlink" href="#installing-furiosa-mlperf-command" title="Link to this heading">#</a></h2>
-<p>To install the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command, you need to install <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> as following:</p>
-<p>The minimum requirements for <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> are as follows:</p>
-<ul class="simple">
-<li><p>Ubuntu 22.04 LTS (Debian Bookworm) or later</p></li>
-<li><p>Linux Kernel 6.3 or later</p></li>
-<li><p>Administrator privileges on system (root)</p></li>
-<li><p>Configuring the APT server and installing device drivers (<a class="reference internal" href="prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT server</span></a>)</p></li>
-<li><p>About 100GB storage space (only for the Llama 3.1 70B)</p></li>
-</ul>
-<p>Then, please install the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> package as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-mlperf
+<section id="installing-furiosa-mlperf">
+<h2>Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code><a class="headerlink" href="#installing-furiosa-mlperf" title="Link to this heading">#</a></h2>
+<p>Before installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code>, please ensure you have
+the <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">prerequisites</span></a> installed, as well as
+sufficient storage space (100 GB).
+Then run the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-mlperf
 </pre></div>
 </div>
-<p>This command installs packages <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code>, <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> and <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf-resources</span></code>.</p>
+<p>This command installs the <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code>, <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf-resources</span></code> packages.</p>
 </section>
 <section id="id1">
-<h2>Running MLPerf Inference Benchmark<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>Running MLPerf™ Inference Benchmark<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <section id="arguments-of-furiosa-mlperf-command">
 <h3>Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command<a class="headerlink" href="#arguments-of-furiosa-mlperf-command" title="Link to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command provides the following subcommands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FuriosaAI</span> <span class="n">MLPerf</span> <span class="n">Inference</span> <span class="n">Benchmark</span> <span class="n">Launcher</span> <span class="n">v2024</span><span class="mf">.2.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FuriosaAI MLPerf™ Inference Benchmark Launcher v2024.2.1
 
-<span class="n">Usage</span><span class="p">:</span> <span class="n">furiosa</span><span class="o">-</span><span class="n">mlperf</span> <span class="o">&lt;</span><span class="n">SUBCOMMAND</span><span class="o">&gt;</span>
+Usage: furiosa-mlperf &lt;SUBCOMMAND&gt;
 
-<span class="n">Subcommands</span><span class="p">:</span>
-  <span class="n">bert</span><span class="o">-</span><span class="n">offline</span>       <span class="n">Run</span> <span class="n">BERT</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">offline</span> <span class="n">scenario</span>
-  <span class="n">bert</span><span class="o">-</span><span class="n">server</span>        <span class="n">Run</span> <span class="n">BERT</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">server</span> <span class="n">scenario</span>
-  <span class="n">gpt</span><span class="o">-</span><span class="n">j</span><span class="o">-</span><span class="n">offline</span>      <span class="n">Run</span> <span class="n">GPT</span><span class="o">-</span><span class="n">J</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">offline</span> <span class="n">scenario</span>
-  <span class="n">gpt</span><span class="o">-</span><span class="n">j</span><span class="o">-</span><span class="n">server</span>       <span class="n">Run</span> <span class="n">GPT</span><span class="o">-</span><span class="n">J</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">server</span> <span class="n">scenario</span>
-  <span class="n">llama</span><span class="o">-</span><span class="mf">3.1</span><span class="o">-</span><span class="n">offline</span>  <span class="n">Run</span> <span class="n">Llama</span> <span class="mf">3.1</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">offline</span> <span class="n">scenario</span>
-  <span class="n">llama</span><span class="o">-</span><span class="mf">3.1</span><span class="o">-</span><span class="n">server</span>   <span class="n">Run</span> <span class="n">Llama</span> <span class="mf">3.1</span> <span class="n">benchmark</span> <span class="k">with</span> <span class="n">server</span> <span class="n">scenario</span>
-  <span class="n">help</span>               <span class="n">Print</span> <span class="n">this</span> <span class="n">message</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">help</span> <span class="n">of</span> <span class="n">the</span> <span class="n">given</span> <span class="n">subcommand</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+Subcommands:
+  bert-offline       Run BERT benchmark with offline scenario
+  bert-server        Run BERT benchmark with server scenario
+  gpt-j-offline      Run GPT-J benchmark with offline scenario
+  gpt-j-server       Run GPT-J benchmark with server scenario
+  llama-3.1-offline  Run Llama 3.1 benchmark with offline scenario
+  llama-3.1-server   Run Llama 3.1 benchmark with server scenario
+  help               Print this message or the help of the given subcommand(s)
 
-<span class="n">Options</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">Print</span> <span class="n">help</span>
-  <span class="o">-</span><span class="n">V</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">Print</span> <span class="n">version</span>
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
 </pre></div>
 </div>
 <p>Also, each subcommand has the following arguments:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="n">furiosa</span><span class="o">-</span><span class="n">mlperf</span> <span class="o">&lt;</span><span class="n">SUBCOMMAND</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">ARTIFACT_PATH</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">LOG_DIR</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Usage: furiosa-mlperf &lt;SUBCOMMAND&gt; [OPTIONS] &lt;ARTIFACT_PATH&gt; &lt;LOG_DIR&gt;
 
-<span class="n">Arguments</span><span class="p">:</span>
-  <span class="o">&lt;</span><span class="n">LLM_ENGINE_ARTIFACTS</span><span class="o">&gt;</span>
-          <span class="n">A</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">cache</span> <span class="n">LLM</span> <span class="n">engine</span> <span class="n">artifacts</span> <span class="ow">in</span>
+Arguments:
+  &lt;LLM_ENGINE_ARTIFACTS&gt;
+          A directory to cache LLM engine artifacts in
 
-  <span class="o">&lt;</span><span class="n">LOG_DIR</span><span class="o">&gt;</span>
-          <span class="n">A</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">store</span> <span class="n">MLPerf</span> <span class="n">logs</span>
+  &lt;LOG_DIR&gt;
+          A directory to store MLPerf™ logs
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;ARTIFACT_PATH&gt;</span></code> is the path to the model artifacts, and <code class="docutils literal notranslate"><span class="pre">&lt;LOG_DIR&gt;</span></code> is the directory to store the MLPerf logs.
-Once mlperf command is executed, it will generate the logs into a specified directory.
+<p><code class="docutils literal notranslate"><span class="pre">&lt;ARTIFACT_PATH&gt;</span></code> is the path to the model artifacts,
+and <code class="docutils literal notranslate"><span class="pre">&lt;LOG_DIR&gt;</span></code> is the directory to store the MLPerf™ logs.
+Once the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command is executed, it will generate the logs
+into the specified directory.
 You can check the logs to see the results of the benchmark.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>The subcommand of furiosa-mlperf provides various options. So, you can use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option to see the detailed options.</p>
+<p>Each subcommand of furiosa-mlperf provides various options.
+You can use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option to see the detailed options.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>bert-offline<span class="w"> </span>--help
 </pre></div>
 </div>
 </div>
-<p>For example, you will be able to see the MLPerf results summary once you run the GPT-J 6B offline scenario.</p>
+<p>For example, you will be able to see the MLPerf™ results summary once you run the GPT-J 6B offline scenario.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>gpt-j-offline-result/mlperf_log_summary.txt
 
 <span class="o">================================================</span>
@@ -490,8 +490,10 @@ Result<span class="w"> </span>is<span class="w"> </span>:<span class="w"> </span
 </div>
 </section>
 <section id="mlperf-configuration">
-<h3>MLPerf Configuration<a class="headerlink" href="#mlperf-configuration" title="Link to this heading">#</a></h3>
-<p>You can configure the MLPerf benchmark by specifying <code class="docutils literal notranslate"><span class="pre">--user-conf</span></code> option with your configuration file.</p>
+<h3>MLPerf™ Configuration<a class="headerlink" href="#mlperf-configuration" title="Link to this heading">#</a></h3>
+<p>You can configure the MLPerf™ benchmark by using the <code class="docutils literal notranslate"><span class="pre">--user-conf</span></code> option to
+specify a custom configuration file.
+For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">bert</span><span class="o">.</span><span class="n">Server</span><span class="o">.</span><span class="n">target_qps</span> <span class="o">=</span> <span class="mi">1900</span>
 <span class="n">EOF</span>
@@ -502,20 +504,23 @@ Result<span class="w"> </span>is<span class="w"> </span>:<span class="w"> </span
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can find more information about the MLPerf configuration and examples at
+<p>More information about MLPerf™ configuration files and examples can be found at
 <a class="reference external" href="https://github.com/mlcommons/inference/blob/v4.1/mlperf.conf">mlcommons/inference/mlperf.conf</a>.</p>
 </div>
 </section>
 <section id="monitoring-a-running-benchmark">
 <h3>Monitoring a running benchmark<a class="headerlink" href="#monitoring-a-running-benchmark" title="Link to this heading">#</a></h3>
-<p>Depending on model and scenario, the benchmark may take a long time to complete.
-For example, Bert Large and GPT-J 6B take about 10 mins and 20 mins with 1 RNGD card respectively.
-Llama 3.1 70B with 4 RNGD takes about 2 and half hours. So, we need a way to monitor the running benchmark.</p>
-<p>You can check the status of the FuriosaAI NPUs using the <a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">Furiosa SMI CLI</span></a> command as following:</p>
+<p>Some benchmarks take a long time to complete.
+For example, Bert Large and GPT-J 6B take about 10 mins and 20 mins,
+respectively, with 1 RNGD card.
+However, Llama 3.1 70B with 4 RNGD takes about 2.5 hours.
+Therefore, it is important to monitor the running benchmark.</p>
+<p>You can check the status of the FuriosaAI NPUs using the <a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">Furiosa SMI CLI</span></a>
+command as follows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-smi<span class="w"> </span>status
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Example output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+------+--------+----------------+------------------+</span>
 <span class="o">|</span> <span class="n">Arch</span> <span class="o">|</span> <span class="n">Device</span> <span class="o">|</span> <span class="n">Cores</span>          <span class="o">|</span> <span class="n">Core</span> <span class="n">Utilization</span> <span class="o">|</span>
 <span class="o">+------+--------+----------------+------------------+</span>
@@ -532,17 +537,18 @@ Llama 3.1 70B with 4 RNGD takes about 2 and half hours. So, we need a way to mon
 </div>
 </section>
 </section>
-<section id="running-furiosa-mlperf-in-container-environment">
-<h2>Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in container environment<a class="headerlink" href="#running-furiosa-mlperf-in-container-environment" title="Link to this heading">#</a></h2>
+<section id="running-furiosa-mlperf-in-a-container-environment">
+<h2>Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in a Container Environment<a class="headerlink" href="#running-furiosa-mlperf-in-a-container-environment" title="Link to this heading">#</a></h2>
 <p>FuriosaAI provides a containerized version of the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command.
-With <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container image, you can readily run <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code>.</p>
+The <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container image allows you to run <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code>
+effortlessly.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The container version still requires <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a> step
-to install driver, firmware, pert on the host system.</p>
+<p>The container version still requires the <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a> step
+to install the driver, firmware, and PERT on the host system.</p>
 </div>
-<p>To run the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container for GPT-J 6B offline scenario,
-you can use the following command:</p>
+<p>To run the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container for the GPT-J 6B offline scenario,
+use the following command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please replace the path with the actual path to the model artifacts.</span>
 <span class="nv">ARTFIACTS_DIR</span><span class="o">=</span>./mlperf-gpt-j-6b
 
@@ -556,21 +562,21 @@ docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </s
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The above example uses the <code class="docutils literal notranslate"><span class="pre">--privileged</span></code> option for simplicity, but it is not recommended for security reasons.
-If you use Kubernetes, please refer to <a class="reference internal" href="../cloud_native_toolkit/intro.html#cloudnativetoolkit"><span class="std std-ref">Cloud Native Toolkit</span></a> to learn more about the best practice.</p>
+If you use Kubernetes, please refer to <a class="reference internal" href="../cloud_native_toolkit/intro.html#cloudnativetoolkit"><span class="std std-ref">Cloud Native Toolkit</span></a> to learn more about best practices.</p>
 </div>
 </section>
 <section id="benchmark-examples">
 <h2>Benchmark Examples<a class="headerlink" href="#benchmark-examples" title="Link to this heading">#</a></h2>
 <section id="bert-large">
 <h3>BERT Large<a class="headerlink" href="#bert-large" title="Link to this heading">#</a></h3>
-<p>The BERT benchmark can show the good performance with a single RNGD card.</p>
-<p>Please run the follwing command for for the offline Scenario:</p>
+<p>The BERT benchmark exhibits good performance with a single RNGD card.
+Use the following command to run the offline scenario:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>bert-offline<span class="w"> </span>./mlperf-bert-large<span class="w"> </span>./bert-offline-result<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0:*&quot;</span>
 </pre></div>
 </div>
-<p>To run BERT-large server scenario, you need to specify the target QPS
-in an user config file to get the expected performance.</p>
+<p>To run the BERT-large server scenario, you need to specify the target QPS
+in a user config file to get the expected performance:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; user.conf</span>
 <span class="s">bert.Server.target_qps = 1900</span>
 <span class="s">EOF</span>
@@ -578,10 +584,11 @@ in an user config file to get the expected performance.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The default target qps of MLPerf is <code class="docutils literal notranslate"><span class="pre">1</span></code>, and too light-weight workload cannot
-show the full performance in the server scenario.</p>
+<p>The default target QPS (queries per second) of MLPerf™ is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+This setting does not allow devices to show their full performance with
+lightweight workloads such as BERT.</p>
 </div>
-<p>Then, you can run the following command with <code class="docutils literal notranslate"><span class="pre">--user-conf</span></code> option:</p>
+<p>Then, you can run the benchmark with a custom configuration as follows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>bert-server<span class="w"> </span>./mlperf-bert-large<span class="w"> </span>./bert-server-result<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0:*&quot;</span><span class="w"> </span>--user-conf<span class="w"> </span>./user.conf
 </pre></div>
@@ -597,25 +604,24 @@ show the full performance in the server scenario.</p>
 </section>
 <section id="gpt-j-6b-benchmark">
 <h3>GPT-J 6B benchmark<a class="headerlink" href="#gpt-j-6b-benchmark" title="Link to this heading">#</a></h3>
-<p>The GPT-J benchmark also can show the good performance with a single RNGD.</p>
-<p>To run GPT-J 6B serving inference benchmark, you can use the following command:</p>
+<p>The GPT-J benchmark also runs on a single RNGD card.</p>
+<p>The following commands run the GPT-J 6B serving and offline inference
+benchmarks, respectively:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>gpt-j-server<span class="w"> </span>./mlperf-gpt-j-6b<span class="w"> </span>./gpt-j-server-result
-</pre></div>
-</div>
-<p>To run GPT-J 6B offline inference benchmark, you can use the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>gpt-j-offline<span class="w"> </span>./mlperf-gpt-j-6b<span class="w"> </span>./gpt-j-offline-result
+
+furiosa-mlperf<span class="w"> </span>gpt-j-offline<span class="w"> </span>./mlperf-gpt-j-6b<span class="w"> </span>./gpt-j-offline-result
 </pre></div>
 </div>
 </section>
 <section id="llama-3-1-70b-benchmark">
 <h3>Llama 3.1 70B benchmark<a class="headerlink" href="#llama-3-1-70b-benchmark" title="Link to this heading">#</a></h3>
-<p>Llama 3.1 70B can fit to at least 2 RNGDs. For the best performance, you will need 8 RNGD cards.</p>
-<p>To run Llama 3.1 70B serving inference benchmark, you can use the following command:</p>
+<p>Llama 3.1 70B requires at least 2 RNGD cards.
+For the best performance, you will need 8 RNGD cards.</p>
+<p>The following commands run the Llama 3.1 70B serving and offline inference
+benchmarks, respectively:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>llama-3.1-server<span class="w"> </span>./Llama-3.1-70B-Instruct<span class="w"> </span>./llama-3.1-server-result
-</pre></div>
-</div>
-<p>To run Llama 3.1 70B offline inference benchmark, you can use the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-mlperf<span class="w"> </span>llama-3.1-offline<span class="w"> </span>./Llama-3.1-70B-Instruct<span class="w"> </span>./llama-3.1-offline-result
+
+furiosa-mlperf<span class="w"> </span>llama-3.1-offline<span class="w"> </span>./Llama-3.1-70B-Instruct<span class="w"> </span>./llama-3.1-offline-result
 </pre></div>
 </div>
 </section>
@@ -647,7 +653,7 @@ show the full performance in the server scenario.</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Upgrading Furiosa Software Stack</p>
+        <p class="prev-next-title">Upgrading the Furiosa Software Stack</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -668,14 +674,14 @@ show the full performance in the server scenario.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf-command">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf Inference Benchmark</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf™ Inference Benchmark</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-mlperf-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf™ Configuration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-a-running-benchmark">Monitoring a running benchmark</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-furiosa-mlperf-in-container-environment">Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in container environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-furiosa-mlperf-in-a-container-environment">Running <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> in a Container Environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-examples">Benchmark Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-large">BERT Large</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-j-6b-benchmark">GPT-J 6B benchmark</a></li>

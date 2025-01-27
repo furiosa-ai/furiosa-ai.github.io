@@ -43,17 +43,45 @@ including the role of the speaker (e.g., "user" and "assistant") and the content
 Similar to tokenization, different models require very different input formats for chat.
 That's why we need a chat template.
 
-Furiosa LLM supports chat templates based on Jina2 template engine in the same way as HuggingFace Transformers.
-`Chat Templates <https://huggingface.co/docs/transformers/en/chat_templating>`_ offers
-a comprehensive guide on what chat templates are and how to write your chat templates.
-You can also find one good example of chat template at `Llama 3.1 Model Card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_.
+Furiosa LLM supports chat templates based on Jinja2 template engine in the same way as HuggingFace Transformers.
+If the model's tokenizer provides a built-in chat template, ``furiosa-llm serve`` will automatically use it.
+You can also provide the ``--chat-template`` parameter if the tokenizer lacks a built-in template or if you want to override the default one.
+For reference, you can find a good example of how to write a chat template at `Llama 3.1 Model Card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_.
 
-The following command launches the server with the chat template:
+The following command launches the server with a custom chat template:
 
-.. code-block::
+.. code-block:: bash
 
     furiosa-llm serve --model [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
 
+Tool Calling
+================================================
+The server supports the function calling (tool calling) feature for models that are trained with this capability.
+
+Within the ``tool_choice`` options supported by the `OpenAI API <https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice>`_, the choices ``"auto"`` and ``"none"`` are currently supported.
+Future releases will extend support to ``"required"`` and named function calling.
+
+The system converts model outputs into the OpenAI response format through a designated parser implementation. 
+At present, the ``llama3_json`` parser is exclusively available. Additional parsers will be made available as more models are integrated.
+
+The following command starts the server with tool calling enabled for Llama 3.1 models:
+
+.. code-block:: bash
+
+    furiosa-llm serve --model [ARTIFACT_PATH] --enable-auto-tool-choice --tool-call-parser llama3_json
+
+To use the tool calling feature, use ``tools`` and ``tool_choice`` parameters. The following is an example:
+
+.. literalinclude:: ../../../examples/tool_calling.py
+  :language: python
+
+The expected output is as follows.
+
+.. code-block:: text
+
+    Function called: get_weather
+    Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
+    Result: Getting the weather for San Francisco, CA in fahrenheit...
 
 Arguments of ``furiosa-llm serve`` command
 ================================================
@@ -61,7 +89,7 @@ By default, the server binds to ``localhost:8000``, and
 you can change the host and port using the ``--host`` and ``--port`` options.
 The following is the list of options and arguments for the serve command:
 
-.. code-block::
+.. code-block:: text
 
     usage: furiosa-llm serve [-h] --model MODEL [--host HOST] [--port PORT] [--chat-template CHAT_TEMPLATE] [--response-role RESPONSE_ROLE] [-tp TENSOR_PARALLEL_SIZE] [-pp PIPELINE_PARALLEL_SIZE]
                             [-dp DATA_PARALLEL_SIZE] [--devices DEVICES]
@@ -72,7 +100,12 @@ The following is the list of options and arguments for the serve command:
         --host HOST           Host to bind the server to (default: 0.0.0.0)
         --port PORT           Port to bind the server to (default: 8000)
         --chat-template CHAT_TEMPLATE
-                                If given, the default chat template will be overridden with the given file. (Default: use chat template from tokenizer)
+                              If given, the default chat template will be overridden with the given file. (Default: use chat template from tokenizer)
+        --enable-auto-tool-choice
+                              Enable auto tool choice for supported models. Use --tool-call-parser to specify which parser to use
+        --tool-call-parser {llama3_json}
+                              Select the tool call parser depending on the model that you're using. This is used to parse the model-generated tool call into OpenAI API format.
+                              Required for --enable-auto-tool-choice.
         --response-role RESPONSE_ROLE
                                 Response role for /v1/chat/completions API (default: assistant)
         -tp TENSOR_PARALLEL_SIZE, --tensor-parallel-size TENSOR_PARALLEL_SIZE
@@ -111,9 +144,9 @@ API with ``stream=True`` for streaming responses, as following:
 The compatibility with OpenAI API
 =================================================
 
-Currently, ``furiosa serve`` supports the following OpenAI API parameters:
-You can find more about each parameter at `Completions API <https://platform.openai.com/docs/api-reference/completions>`_
-and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_.
+Here are the API parameters currently supported by the server:
+For detailed information on each parameter, please refer to `Completions API <https://platform.openai.com/docs/api-reference/completions>`_
+and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_. The parameters generally function in the same way, except where differences are explicitly noted.
 
 .. warning::
 
@@ -121,6 +154,8 @@ and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_.
     because the beam search cannot determine the tokens until the end of the sequence.
 
     In 2024.2 release, ``n`` works only for beam search and it will be fixed in the next release.
+
+Parameters supported by both `Completions API <https://platform.openai.com/docs/api-reference/completions>`_ and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_:
 
 * ``n``
 * ``temperature``
@@ -132,6 +167,12 @@ and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_.
 * ``min_tokens``
 * ``use_beam_search``
 * ``best_of``
+* ``stream``
+
+Parameters supported by `Chat API <https://platform.openai.com/docs/api-reference/chat>`_:
+
+* ``tools``
+* ``tool_choice``
 
 Launching the OpenAI-Compatible Server Container
 ================================================================

@@ -1,47 +1,43 @@
 .. _GettingStartedFuriosaMLPerf:
 
-**********************************************
+***********************************
 Running MLPerf™ Inference Benchmark
-**********************************************
+***********************************
 
-MLPerf™ is a benchmark suite that evaluates the performance of machine learning (ML) software, hardware, and
-cloud platforms. It is generally used to compare the performance of different systems,
-and to help developers and end users make decisions about AI systems.
+MLPerf™ is a benchmark suite that evaluates the performance of machine
+learning (ML) software, hardware, and cloud platforms.
+It is commonly used to compare the performance of different systems,
+and to assist developers and end users in making decisions about AI systems.
 
-FuriosaAI Software Stack provides ``furiosa-mlperf`` command to run easily the MLPerf Inference Benchmark.
-This section describes how to reproduce the MLPerf™ Inference Benchmark using the FuriosaAI Software Stack.
+The FuriosaAI software stack provides a ``furiosa-mlperf`` command to run the
+MLPerf™ Inference Benchmark more easily.
+This section describes how to reproduce the MLPerf™ Inference Benchmark results
+using FuriosaAI's NPUs.
 
 .. note::
 
   ``furiosa-mlperf`` is based on MLPerf™ Inference Benchmark v4.1.
-
   The only exception is that we replaced the Llama2 benchmark with one using Llama 3.1.
 
 
-Installing ``furiosa-mlperf`` command
-=========================================
+Installing ``furiosa-mlperf``
+=============================
 
-To install the ``furiosa-mlperf`` command, you need to install ``furiosa-mlperf`` as following:
-
-The minimum requirements for ``furiosa-mlperf`` are as follows:
-
-* Ubuntu 22.04 LTS (Debian Bookworm) or later
-* Linux Kernel 6.3 or later
-* Administrator privileges on system (root)
-* Configuring the APT server and installing device drivers (:ref:`AptSetup`)
-* About 100GB storage space (only for the Llama 3.1 70B)
-
-Then, please install the ``furiosa-mlperf`` package as follows:
+Before installing ``furiosa-mlperf``, please ensure you have
+the :ref:`prerequisites <InstallingPrerequisites>` installed, as well as
+sufficient storage space (100 GB).
+Then run the following command:
 
 .. code-block:: sh
 
-  sudo apt update
   sudo apt install -y furiosa-mlperf
 
-This command installs packages ``furiosa-compiler``, ``furiosa-mlperf`` and ``furiosa-mlperf-resources``.
+This command installs the ``furiosa-compiler``, ``furiosa-mlperf``,
+and ``furiosa-mlperf-resources`` packages.
 
-Running MLPerf Inference Benchmark
-====================================================
+
+Running MLPerf™ Inference Benchmark
+===================================
 
 Arguments of ``furiosa-mlperf`` command
 -------------------------------------------------
@@ -50,7 +46,7 @@ The ``furiosa-mlperf`` command provides the following subcommands:
 
 .. code-block::
 
-  FuriosaAI MLPerf Inference Benchmark Launcher v2024.2.1
+  FuriosaAI MLPerf™ Inference Benchmark Launcher v2024.2.1
 
   Usage: furiosa-mlperf <SUBCOMMAND>
 
@@ -79,23 +75,26 @@ Also, each subcommand has the following arguments:
             A directory to cache LLM engine artifacts in
 
     <LOG_DIR>
-            A directory to store MLPerf logs
+            A directory to store MLPerf™ logs
 
 
-``<ARTIFACT_PATH>`` is the path to the model artifacts, and ``<LOG_DIR>`` is the directory to store the MLPerf logs.
-Once mlperf command is executed, it will generate the logs into a specified directory.
+``<ARTIFACT_PATH>`` is the path to the model artifacts,
+and ``<LOG_DIR>`` is the directory to store the MLPerf™ logs.
+Once the ``furiosa-mlperf`` command is executed, it will generate the logs
+into the specified directory.
 You can check the logs to see the results of the benchmark.
 
 .. tip::
 
-  The subcommand of furiosa-mlperf provides various options. So, you can use the ``--help`` option to see the detailed options.
+  Each subcommand of furiosa-mlperf provides various options.
+  You can use the ``--help`` option to see the detailed options.
 
   .. code-block:: sh
 
     furiosa-mlperf bert-offline --help
 
 
-For example, you will be able to see the MLPerf results summary once you run the GPT-J 6B offline scenario.
+For example, you will be able to see the MLPerf™ results summary once you run the GPT-J 6B offline scenario.
 
 .. code-block:: sh
 
@@ -115,10 +114,11 @@ For example, you will be able to see the MLPerf results summary once you run the
     Early stopping satisfied: Yes
 
 
-MLPerf Configuration
--------------------------------------------------
-You can configure the MLPerf benchmark by specifying ``--user-conf`` option with your configuration file.
-
+MLPerf™ Configuration
+---------------------
+You can configure the MLPerf™ benchmark by using the ``--user-conf`` option to
+specify a custom configuration file.
+For example:
 
 .. code-block::
 
@@ -133,25 +133,28 @@ You can configure the MLPerf benchmark by specifying ``--user-conf`` option with
 
 .. tip::
 
-  You can find more information about the MLPerf configuration and examples at
+  More information about MLPerf™ configuration files and examples can be found at
   `mlcommons/inference/mlperf.conf <https://github.com/mlcommons/inference/blob/v4.1/mlperf.conf>`_.
 
 
 Monitoring a running benchmark
--------------------------------------------------
+------------------------------
 
-Depending on model and scenario, the benchmark may take a long time to complete.
-For example, Bert Large and GPT-J 6B take about 10 mins and 20 mins with 1 RNGD card respectively.
-Llama 3.1 70B with 4 RNGD takes about 2 and half hours. So, we need a way to monitor the running benchmark.
+Some benchmarks take a long time to complete.
+For example, Bert Large and GPT-J 6B take about 10 mins and 20 mins,
+respectively, with 1 RNGD card.
+However, Llama 3.1 70B with 4 RNGD takes about 2.5 hours.
+Therefore, it is important to monitor the running benchmark.
 
-You can check the status of the FuriosaAI NPUs using the :ref:`FuriosaSMICLI` command as following:
+You can check the status of the FuriosaAI NPUs using the :ref:`FuriosaSMICLI`
+command as follows:
 
 .. code-block:: sh
 
   furiosa-smi status
 
 
-Output:
+Example output:
 
 .. code-block::
 
@@ -169,19 +172,20 @@ Output:
   +------+--------+----------------+------------------+
 
 
-Running ``furiosa-mlperf`` in container environment
-====================================================
+Running ``furiosa-mlperf`` in a Container Environment
+=====================================================
 FuriosaAI provides a containerized version of the ``furiosa-mlperf`` command.
-With ``furiosa-mlperf`` container image, you can readily run ``furiosa-mlperf``.
+The ``furiosa-mlperf`` container image allows you to run ``furiosa-mlperf``
+effortlessly.
 
 .. note::
 
-  The container version still requires :ref:`InstallingPrerequisites` step
-  to install driver, firmware, pert on the host system.
+  The container version still requires the :ref:`InstallingPrerequisites` step
+  to install the driver, firmware, and PERT on the host system.
 
 
-To run the ``furiosa-mlperf`` container for GPT-J 6B offline scenario,
-you can use the following command:
+To run the ``furiosa-mlperf`` container for the GPT-J 6B offline scenario,
+use the following command:
 
 .. code-block:: sh
 
@@ -199,18 +203,17 @@ you can use the following command:
 .. warning::
 
   The above example uses the ``--privileged`` option for simplicity, but it is not recommended for security reasons.
-  If you use Kubernetes, please refer to :ref:`CloudNativeToolkit` to learn more about the best practice.
+  If you use Kubernetes, please refer to :ref:`CloudNativeToolkit` to learn more about best practices.
 
 
 Benchmark Examples
-====================================================
+==================
 
 BERT Large
----------------------------
+----------
 
-The BERT benchmark can show the good performance with a single RNGD card.
-
-Please run the follwing command for for the offline Scenario:
+The BERT benchmark exhibits good performance with a single RNGD card.
+Use the following command to run the offline scenario:
 
 .. code-block:: sh
 
@@ -218,8 +221,8 @@ Please run the follwing command for for the offline Scenario:
     --devices "npu:0:*"
 
 
-To run BERT-large server scenario, you need to specify the target QPS
-in an user config file to get the expected performance.
+To run the BERT-large server scenario, you need to specify the target QPS
+in a user config file to get the expected performance:
 
 .. code-block:: sh
 
@@ -229,10 +232,11 @@ in an user config file to get the expected performance.
 
 .. note::
 
-  The default target qps of MLPerf is ``1``, and too light-weight workload cannot
-  show the full performance in the server scenario.
+  The default target QPS (queries per second) of MLPerf™ is ``1``.
+  This setting does not allow devices to show their full performance with
+  lightweight workloads such as BERT.
 
-Then, you can run the following command with ``--user-conf`` option:
+Then, you can run the benchmark with a custom configuration as follows:
 
 .. code-block:: sh
 
@@ -251,37 +255,31 @@ Then, you can run the following command with ``--user-conf`` option:
 
 
 GPT-J 6B benchmark
-----------------------------
+------------------
 
-The GPT-J benchmark also can show the good performance with a single RNGD.
+The GPT-J benchmark also runs on a single RNGD card.
 
-To run GPT-J 6B serving inference benchmark, you can use the following command:
+The following commands run the GPT-J 6B serving and offline inference
+benchmarks, respectively:
 
 .. code-block:: sh
 
   furiosa-mlperf gpt-j-server ./mlperf-gpt-j-6b ./gpt-j-server-result
 
-To run GPT-J 6B offline inference benchmark, you can use the following command:
-
-.. code-block:: sh
-
   furiosa-mlperf gpt-j-offline ./mlperf-gpt-j-6b ./gpt-j-offline-result
 
 
 Llama 3.1 70B benchmark
------------------------------
+-----------------------
 
-Llama 3.1 70B can fit to at least 2 RNGDs. For the best performance, you will need 8 RNGD cards.
+Llama 3.1 70B requires at least 2 RNGD cards.
+For the best performance, you will need 8 RNGD cards.
 
-To run Llama 3.1 70B serving inference benchmark, you can use the following command:
+The following commands run the Llama 3.1 70B serving and offline inference
+benchmarks, respectively:
 
 .. code-block:: sh
 
   furiosa-mlperf llama-3.1-server ./Llama-3.1-70B-Instruct ./llama-3.1-server-result
-
-
-To run Llama 3.1 70B offline inference benchmark, you can use the following command:
-
-.. code-block:: sh
 
   furiosa-mlperf llama-3.1-offline ./Llama-3.1-70B-Instruct ./llama-3.1-offline-result

@@ -179,7 +179,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Upgrading Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
@@ -373,11 +373,11 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-llm">Installing Furiosa LLM</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-huggingface-hub-optional">Authorizing HuggingFace Hub (Optional)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server">Launching the OpenAI-Compatible Server</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-chat-templates-with-furiosa-llm">Using Chat Templates with Furiosa LLM</a></li>
 </ul>
@@ -393,52 +393,55 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                   
   <section id="quick-start-with-furiosa-llm">
 <span id="gettingstartedfuriosallm"></span><h1>Quick Start with Furiosa LLM<a class="headerlink" href="#quick-start-with-furiosa-llm" title="Link to this heading">#</a></h1>
-<p>Furiosa LLM is a serving framework for LLM models that utilizes FuriosaAI’s NPU.
-It provides a Python API compatible with vLLM and a server compatible with the OpenAI API.
+<p>Furiosa LLM is a serving framework for LLM models that uses FuriosaAI’s NPU.
+It provides a Python API compatible with vLLM and a server compatible with
+OpenAI’s API.
 This document explains how to install and use Furiosa LLM.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2024.2.1 (beta0) version,
-and the features and APIs described in this document may change in the future.</p>
+<p>This document is based on the Furiosa SDK 2024.2.1 (beta0) version.
+The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="installing-furiosa-llm">
 <span id="installingfuriosallm"></span><h2>Installing Furiosa LLM<a class="headerlink" href="#installing-furiosa-llm" title="Link to this heading">#</a></h2>
 <p>The minimum requirements for Furiosa LLM are as follows:</p>
 <ul class="simple">
-<li><p>Ubuntu 22.04 LTS (Debian Bookworm) or later</p></li>
-<li><p>Linux Kernel 6.3 or later</p></li>
-<li><p>Administrator privileges on system (root)</p></li>
-<li><p><a class="reference internal" href="prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT server</span></a> and <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
+<li><p>A system with the prerequisites installed (see <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
 <li><p>Python 3.8, 3.9, or 3.10</p></li>
 <li><p>PyTorch 2.4.1</p></li>
-<li><p>Enough storage space for model weights; e.g., about 100GB for Llama 3.1 70B model</p></li>
+<li><p>Enough storage space for model weights, e.g., about 100 GB for the
+Llama 3.1 70B model</p></li>
 </ul>
-<p>You need to install <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code> and the Furiosa LLM with the following command:</p>
+<p>To install the <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code> package and the Furiosa LLM,
+run the following commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-compiler
 
 pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w"> </span>setuptools<span class="w"> </span>wheel
 pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>furiosa-llm
 </pre></div>
 </div>
-<section id="authorizing-huggingface-hub-optional">
-<span id="authorizinghuggingfacehub"></span><h3>Authorizing HuggingFace Hub (Optional)<a class="headerlink" href="#authorizing-huggingface-hub-optional" title="Link to this heading">#</a></h3>
-<p>Some models, such as meta-llama/Meta-Llama-3.1-8B require you to accept their license,
-hence, you need to create a HuggingFace account, accept the model’s license, and generate a token.
+<section id="authorizing-hugging-face-hub-optional">
+<span id="authorizinghuggingfacehub"></span><h3>Authorizing Hugging Face Hub (Optional)<a class="headerlink" href="#authorizing-hugging-face-hub-optional" title="Link to this heading">#</a></h3>
+<p>Some models, such as meta-llama/Meta-Llama-3.1-8B require a license to run.
+For these, you need to create a Hugging Face account, accept the model’s
+license, and generate a token.
 You can create your token at <a class="reference external" href="https://huggingface.co/settings/tokens">https://huggingface.co/settings/tokens</a>.
-Once you get a token, you can authenticate on the HuggingFace Hub as following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>huggingface-cli login --token $HF_TOKEN
+Once you get a token, you can authenticate on the Hugging Face Hub as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade &quot;huggingface_hub[cli]&quot;
+huggingface-cli login --token $HF_TOKEN
 </pre></div>
 </div>
 </section>
+</section>
 <section id="offline-batch-inference-with-furiosa-llm">
-<h3>Offline Batch Inference with Furiosa LLM<a class="headerlink" href="#offline-batch-inference-with-furiosa-llm" title="Link to this heading">#</a></h3>
-<p>In this section, we will explain how to perform offline LLM inference using the Python API of Furiosa LLM.
-First, import the <code class="docutils literal notranslate"><span class="pre">LLM</span></code> class and <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> from the furiosa_llm module.
-<code class="docutils literal notranslate"><span class="pre">LLM</span></code> class is used to load LLM models and provides the core API for LLM inference.
-<code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> allows to specify various parameters for text generation.</p>
+<h2>Offline Batch Inference with Furiosa LLM<a class="headerlink" href="#offline-batch-inference-with-furiosa-llm" title="Link to this heading">#</a></h2>
+<p>We now explain how to perform offline LLM inference using the Python API of Furiosa LLM.
+First, import the <code class="docutils literal notranslate"><span class="pre">LLM</span></code> and <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> classes from the furiosa_llm module.
+The <code class="docutils literal notranslate"><span class="pre">LLM</span></code> class is used to load LLM models and provides the core API for LLM inference.
+<code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> is used to specify various parameters for text generation.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
-<span class="c1"># Loading an artifact of Llama 3.1 8B Instruct model</span>
+<span class="c1"># Load the Llama 3.1 8B Instruct model</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;./Llama-3.1-8B-Instruct&quot;</span>
 <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">load_artifacts</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="s2">&quot;npu:0:*&quot;</span><span class="p">)</span>
 
@@ -446,32 +449,37 @@ First, import the <code class="docutils literal notranslate"><span class="pre">L
 <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># Generate text</span>
-<span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Say this is test&quot;</span><span class="p">]</span>
+<span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Say this is a test&quot;</span><span class="p">]</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span>
 
-<span class="c1"># Print outputs</span>
+<span class="c1"># Print the output of the model</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="streaming-inference-with-furiosa-llm">
-<h3>Streaming Inference with Furiosa LLM<a class="headerlink" href="#streaming-inference-with-furiosa-llm" title="Link to this heading">#</a></h3>
+<h2>Streaming Inference with Furiosa LLM<a class="headerlink" href="#streaming-inference-with-furiosa-llm" title="Link to this heading">#</a></h2>
 <p>In addition to batch inference, Furiosa LLM also supports streaming inference.
-The key difference of streaming inference is that tokens are returned as soon as tokens are generated, allowing you to start printing or processing partial tokens before the full completion is finished.
-To perform streaming inference, the <code class="docutils literal notranslate"><span class="pre">stream_generate</span></code> method is used instead of <code class="docutils literal notranslate"><span class="pre">generate</span></code>. This method is asynchronous and returns a stream of tokens as they are generated.</p>
+The key difference of streaming inference is that tokens are returned as soon
+they are generated.
+This allows you to start printing or processing partial tokens before the whole
+inference process finishes.
+To perform streaming inference, use the <code class="docutils literal notranslate"><span class="pre">stream_generate</span></code> method instead of
+<code class="docutils literal notranslate"><span class="pre">generate</span></code>.
+This method is asynchronous and returns a stream of tokens as they are generated.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="c1"># Loading an artifact of Llama 3.1 8B Instruct model</span>
+    <span class="c1"># Load the Llama 3.1 8B Instruct model</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;./Llama-3.1-8B-Instruct&quot;</span>
     <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">load_artifacts</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="s2">&quot;npu:0:*&quot;</span><span class="p">)</span>
 
     <span class="c1"># You can specify various parameters for text generation</span>
     <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-    <span class="c1"># Generate text and print outputs</span>
-    <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Say this is test&quot;</span>
+    <span class="c1"># Generate text and print each token at a time</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Say this is a test&quot;</span>
     <span class="k">async</span> <span class="k">for</span> <span class="n">output_txt</span> <span class="ow">in</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">output_txt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -481,22 +489,22 @@ To perform streaming inference, the <code class="docutils literal notranslate"><
 </pre></div>
 </div>
 </section>
-</section>
 <section id="launching-the-openai-compatible-server">
 <h2>Launching the OpenAI-Compatible Server<a class="headerlink" href="#launching-the-openai-compatible-server" title="Link to this heading">#</a></h2>
-<p>Furiosa LLM can be deployed as a server that provides an API compatible with OpenAI API.
-Since many LLM frameworks and applications are built on top of OpenAI API protocol,
+<p>Furiosa LLM can be deployed as a server that provides an API compatible with
+OpenAI’s.
+Since many LLM frameworks and applications are built on top of OpenAI’s API,
 you can easily integrate Furiosa LLM into your existing applications.</p>
-<p>By default, the server provides the HTTP endpoint <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>.
+<p>By default, the server listens on the HTTP endpoint <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>.
 You can change the binding address and port by specifying the <code class="docutils literal notranslate"><span class="pre">--host</span></code> and <code class="docutils literal notranslate"><span class="pre">--port</span></code> options.
 The server can host only one model at a time for now and provides a chat template feature.
-You can find more details at <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Compatible Server</span></a>.</p>
-<p>The following is an example of launching the server with the Llama 3.1 8B Instruct model.</p>
+You can find more details in the <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Compatible Server</span></a> section.</p>
+<p>Below is an example of how to launch the server with the Llama 3.1 8B Instruct model.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch the server to listen 8000 port by default</span>
 furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span>./Llama-3.1-8B-Instruct<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0:*&quot;</span>
 </pre></div>
 </div>
-<p>You can simply test the server using the following curl command:</p>
+<p>You can test the server using the following curl command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -506,7 +514,7 @@ furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span cla
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Example output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat-21f0b74b2c6040d3b615c04cb5bf2e2e&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat.completion&quot;</span><span class="p">,</span>
@@ -537,17 +545,24 @@ furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span cla
 </section>
 <section id="using-chat-templates-with-furiosa-llm">
 <h2>Using Chat Templates with Furiosa LLM<a class="headerlink" href="#using-chat-templates-with-furiosa-llm" title="Link to this heading">#</a></h2>
-<p>Chat models have been trained with very different prompt formats.
-Especially, Llama 3.x models require a specific prompt format to leverage multiple tools.
-You can see a full guide to prompt formatting at <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama model card</a></p>
-<p>If you use the OpenAI-Compatible Server with a chat model, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> will automatically apply the chat template
-if the model’s tokenizer provides its chat template. Also, you can use <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> option to specify that chat template path.</p>
+<p>Chat models are usually trained with a variety of prompt formats.
+In particular, Llama 3.x models require a specific prompt format to leverage
+multiple tools.
+You can find a full guide to prompt formatting in the
+<a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama model card</a>.</p>
+<p>When using the OpenAI-Compatible Server with a chat model, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>
+will automatically apply the chat template if the model’s tokenizer provides it.
+Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> option to specify a custom
+chat template path.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Chat API is not yet supported in furiosa-llm. Chat API is planned to be supported in 2025.1 release.</p>
+<p>The Chat API is not yet supported in furiosa-llm.
+Support is planned for the 2025.1 release.</p>
 </div>
-<p>If you use LLM API, you still need to apply the chat template to the prompt manually for now.
-Currently, furiosa-llm does not provide chat API, so you need to use tokenizer to apply a chat template to the prompt.</p>
+<p>If you are using the LLM API, you will need to manually apply the chat template
+to the prompt for now.
+Since furiosa-llm does not yet provide a chat API, you need to use the tokenizer
+to apply the chat template to the prompt.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">SamplingParams</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
 
@@ -624,11 +639,11 @@ Currently, furiosa-llm does not provide chat API, so you need to use tokenizer t
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-llm">Installing Furiosa LLM</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-huggingface-hub-optional">Authorizing HuggingFace Hub (Optional)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server">Launching the OpenAI-Compatible Server</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-chat-templates-with-furiosa-llm">Using Chat Templates with Furiosa LLM</a></li>
 </ul>

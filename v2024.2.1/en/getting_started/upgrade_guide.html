@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Upgrading Furiosa Software Stack &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>Upgrading the Furiosa Software Stack &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
   
   
   
@@ -179,7 +179,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Upgrading Furiosa Software Stack</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Upgrading the Furiosa Software Stack</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
@@ -360,7 +360,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Upgrading Furiosa Software Stack</h1>
+    <h1>Upgrading the Furiosa Software Stack</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -374,37 +374,40 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="upgrading-furiosa-software-stack">
-<span id="upgradeguide"></span><h1>Upgrading Furiosa Software Stack<a class="headerlink" href="#upgrading-furiosa-software-stack" title="Link to this heading">#</a></h1>
-<p>The upgrade workflow at high level is the following:</p>
+  <section id="upgrading-the-furiosa-software-stack">
+<span id="upgradeguide"></span><h1>Upgrading the Furiosa Software Stack<a class="headerlink" href="#upgrading-the-furiosa-software-stack" title="Link to this heading">#</a></h1>
+<p>The high-level upgrade workflow is as follows:</p>
 <ol class="arabic simple">
-<li><p>Upgrade the prerequisite packages (the driver and PE Runtime packages)</p></li>
-<li><p>Upgrade the Firmware tool and image if there’s new version.</p></li>
-<li><p>Do cold reboot the system to apply the changes if the device firmware is upgraded.</p></li>
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">info</span></code> CLI tool to check the new driver and firmware versions in all devices.</p></li>
+<li><p>Upgrade the prerequisite packages (the driver and PE Runtime packages).</p></li>
+<li><p>Upgrade the firmware tool and image if a new version is available.</p></li>
+<li><p>Perform a cold reboot of the system to apply the changes if the device firmware is upgraded.</p></li>
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">info</span></code> CLI tool to confirm the new driver and firmware versions in all devices.</p></li>
 <li><p>Upgrade Furiosa LLM if necessary.</p></li>
 </ol>
-<p>Please follow the steps below to upgrade the Furiosa software stack:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Please make sure to stop all the running applications using NPUs before upgrading the SDK.
-Otherwise, the old driver kernel module won’t be unloaded and the new driver cannot loaded.
-In that case, you need to reboot the system to load the new driver kernel module.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to stop all running applications using NPUs before upgrading the SDK.
+Otherwise, the new driver kernel module won’t be loaded.
+In that case, you will need to reboot the system to load the new driver kernel
+module.</p>
 </div>
+<p>Please follow the steps below to upgrade the Furiosa software stack:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-pert-rngd<span class="w"> </span>furiosa-smi
 </pre></div>
 </div>
-<p>Usually, the major release of the Furiosa SDK includes the firmware upgrade for RNGD.
-You can upgrade the firmware by running the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
+<p>Usually, major releases of the Furiosa SDK include a firmware upgrade.
+The firmware can be upgraded by running the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Please do not forget to cold reboot the system after the firmware upgrade process is completed.
-If you learn more about the firmware upgrade process, please refer to <a class="reference internal" href="prerequisites.html#upgradingdevicefirmware"><span class="std std-ref">Upgrading Device Firmware</span></a>.</p>
+<p>Please remember to cold reboot the system after the firmware upgrade process is completed.
+For more information about the firmware upgrade process, please refer to
+<a class="reference internal" href="prerequisites.html#upgradingdevicefirmware"><span class="std std-ref">Upgrading Device Firmware</span></a>.</p>
 </div>
-<p>Please check the new driver and firmware versions in all devices by running the following command:</p>
+<p>To check if the new driver and firmware were installed successfully in all
+devices, run the following command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>furiosa-smi<span class="w"> </span>info
 +------+--------+------------------+------------------+---------+---------+--------------+
 <span class="p">|</span><span class="w"> </span>Arch<span class="w"> </span><span class="p">|</span><span class="w"> </span>Device<span class="w"> </span><span class="p">|</span><span class="w"> </span>Firmware<span class="w">         </span><span class="p">|</span><span class="w"> </span>PERT<span class="w">             </span><span class="p">|</span><span class="w"> </span>Temp.<span class="w">   </span><span class="p">|</span><span class="w"> </span>Power<span class="w">   </span><span class="p">|</span><span class="w"> </span>PCI-BDF<span class="w">      </span><span class="p">|</span>
@@ -415,7 +418,7 @@ If you learn more about the firmware upgrade process, please refer to <a class="
 +------+--------+------------------+------------------+---------+---------+--------------+
 </pre></div>
 </div>
-<p>If you want to use the latest Furiosa LLM, you can install it via pip:</p>
+<p>Upgrading Furiosa LLM is done via pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span>
 </pre></div>
 </div>

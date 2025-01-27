@@ -4,14 +4,15 @@
 Quick Start with Furiosa LLM
 **********************************
 
-Furiosa LLM is a serving framework for LLM models that utilizes FuriosaAI's NPU.
-It provides a Python API compatible with vLLM and a server compatible with the OpenAI API.
+Furiosa LLM is a serving framework for LLM models that uses FuriosaAI's NPU.
+It provides a Python API compatible with vLLM and a server compatible with
+OpenAI's API.
 This document explains how to install and use Furiosa LLM.
 
 .. warning::
 
-   This document is based on Furiosa SDK |release| (beta0) version,
-   and the features and APIs described in this document may change in the future.
+  This document is based on the Furiosa SDK |release| (beta0) version.
+  The features and APIs described herein are subject to change in the future.
 
 
 .. _InstallingFuriosaLLM:
@@ -21,15 +22,14 @@ Installing Furiosa LLM
 
 The minimum requirements for Furiosa LLM are as follows:
 
-* Ubuntu 22.04 LTS (Debian Bookworm) or later
-* Linux Kernel 6.3 or later
-* Administrator privileges on system (root)
-* :ref:`AptSetup` and :ref:`InstallingPrerequisites`
+* A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * Python 3.8, 3.9, or 3.10
 * PyTorch 2.4.1
-* Enough storage space for model weights; e.g., about 100GB for Llama 3.1 70B model
+* Enough storage space for model weights, e.g., about 100 GB for the
+  Llama 3.1 70B model
 
-You need to install ``furiosa-compiler`` and the Furiosa LLM with the following command:
+To install the ``furiosa-compiler`` package and the Furiosa LLM,
+run the following commands:
 
 .. code-block:: sh
 
@@ -41,33 +41,40 @@ You need to install ``furiosa-compiler`` and the Furiosa LLM with the following 
 
 .. _AuthorizingHuggingFaceHub:
 
-Authorizing HuggingFace Hub (Optional)
+Authorizing Hugging Face Hub (Optional)
 ---------------------------------------------
-Some models, such as meta-llama/Meta-Llama-3.1-8B require you to accept their license,
-hence, you need to create a HuggingFace account, accept the model's license, and generate a token.
+Some models, such as meta-llama/Meta-Llama-3.1-8B require a license to run.
+For these, you need to create a Hugging Face account, accept the model's
+license, and generate a token.
 You can create your token at https://huggingface.co/settings/tokens.
-Once you get a token, you can authenticate on the HuggingFace Hub as following:
+Once you get a token, you can authenticate on the Hugging Face Hub as follows:
 
 .. code-block::
 
+  pip install --upgrade "huggingface_hub[cli]"
   huggingface-cli login --token $HF_TOKEN
 
 
 Offline Batch Inference with Furiosa LLM
-------------------------------------------------------
-In this section, we will explain how to perform offline LLM inference using the Python API of Furiosa LLM.
-First, import the ``LLM`` class and ``SamplingParams`` from the furiosa_llm module.
-``LLM`` class is used to load LLM models and provides the core API for LLM inference.
-``SamplingParams`` allows to specify various parameters for text generation.
+========================================
+We now explain how to perform offline LLM inference using the Python API of Furiosa LLM.
+First, import the ``LLM`` and ``SamplingParams`` classes from the furiosa_llm module.
+The ``LLM`` class is used to load LLM models and provides the core API for LLM inference.
+``SamplingParams`` is used to specify various parameters for text generation.
 
 .. literalinclude:: ../../../examples/offline_batch_inference.py
    :language: python
 
 Streaming Inference with Furiosa LLM
-------------------------------------------------------
+====================================
 In addition to batch inference, Furiosa LLM also supports streaming inference.
-The key difference of streaming inference is that tokens are returned as soon as tokens are generated, allowing you to start printing or processing partial tokens before the full completion is finished.
-To perform streaming inference, the ``stream_generate`` method is used instead of ``generate``. This method is asynchronous and returns a stream of tokens as they are generated.
+The key difference of streaming inference is that tokens are returned as soon
+they are generated.
+This allows you to start printing or processing partial tokens before the whole
+inference process finishes.
+To perform streaming inference, use the ``stream_generate`` method instead of
+``generate``.
+This method is asynchronous and returns a stream of tokens as they are generated.
 
 .. literalinclude:: ../../../examples/streaming_inference.py
    :language: python
@@ -75,26 +82,27 @@ To perform streaming inference, the ``stream_generate`` method is used instead o
 Launching the OpenAI-Compatible Server
 =========================================
 
-Furiosa LLM can be deployed as a server that provides an API compatible with OpenAI API.
-Since many LLM frameworks and applications are built on top of OpenAI API protocol,
+Furiosa LLM can be deployed as a server that provides an API compatible with
+OpenAI's.
+Since many LLM frameworks and applications are built on top of OpenAI's API,
 you can easily integrate Furiosa LLM into your existing applications.
 
-By default, the server provides the HTTP endpoint http://localhost:8000.
+By default, the server listens on the HTTP endpoint http://localhost:8000.
 You can change the binding address and port by specifying the ``--host`` and ``--port`` options.
 The server can host only one model at a time for now and provides a chat template feature.
-You can find more details at :ref:`OpenAIServer`.
+You can find more details in the :ref:`OpenAIServer` section.
 
-The following is an example of launching the server with the Llama 3.1 8B Instruct model.
+Below is an example of how to launch the server with the Llama 3.1 8B Instruct model.
 
 .. literalinclude:: ../../../examples/launch_llm_serve.sh
   :language: sh
 
-You can simply test the server using the following curl command:
+You can test the server using the following curl command:
 
 .. literalinclude:: ../../../examples/curl_chat_completions.sh
   :language: sh
 
-Output:
+Example output:
 
 .. code-block:: json
 
@@ -127,19 +135,26 @@ Output:
 
 Using Chat Templates with Furiosa LLM
 =========================================
-Chat models have been trained with very different prompt formats.
-Especially, Llama 3.x models require a specific prompt format to leverage multiple tools.
-You can see a full guide to prompt formatting at `Llama model card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_
+Chat models are usually trained with a variety of prompt formats.
+In particular, Llama 3.x models require a specific prompt format to leverage
+multiple tools.
+You can find a full guide to prompt formatting in the
+`Llama model card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_.
 
-If you use the OpenAI-Compatible Server with a chat model, ``furiosa-llm serve`` will automatically apply the chat template
-if the model's tokenizer provides its chat template. Also, you can use ``--chat-template`` option to specify that chat template path.
+When using the OpenAI-Compatible Server with a chat model, ``furiosa-llm serve``
+will automatically apply the chat template if the model's tokenizer provides it.
+Additionally, you can use the ``--chat-template`` option to specify a custom
+chat template path.
 
 .. note::
 
-  Chat API is not yet supported in furiosa-llm. Chat API is planned to be supported in 2025.1 release.
+  The Chat API is not yet supported in furiosa-llm.
+  Support is planned for the 2025.1 release.
 
-If you use LLM API, you still need to apply the chat template to the prompt manually for now.
-Currently, furiosa-llm does not provide chat API, so you need to use tokenizer to apply a chat template to the prompt.
+If you are using the LLM API, you will need to manually apply the chat template
+to the prompt for now.
+Since furiosa-llm does not yet provide a chat API, you need to use the tokenizer
+to apply the chat template to the prompt.
 
 .. literalinclude:: ../../../examples/chat_template.py
   :language: python
