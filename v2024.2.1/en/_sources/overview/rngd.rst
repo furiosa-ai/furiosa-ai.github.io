@@ -8,24 +8,24 @@ FuriosaAI's second-generation Neural Processing Unit (NPU), RNGD, is a chip desi
 supporting high-performance Large Language Models (LLM), Multi-Modal LLM, Vision models,
 and other deep learning models.
 
-.. figure:: ../_static/imgs/rngd_card.webp
+.. figure:: ../_static/imgs/rngd_card.avif
   :alt: FuriosaAI RNGD
   :class: only-dark
   :width: 650px
   :align: center
 
-.. figure:: ../_static/imgs/rngd_card.webp
+.. figure:: ../_static/imgs/rngd_card.avif
   :alt: FuriosaAI RNGD
   :class: only-light
   :width: 650px
   :align: center
 
-
 RNGD is based the Tensor Contraction Processor (TCP) architecture which
 utilizes TSMC's 5nm process node, and operates at 1.0 GHz. It offers 512 TOPS and 1024 TOPS of INT8 and INT4
-performance respectively. RNGD is configured with two HBM3 modules providing a memory bandwidth of 1.5 TB/s,
-and supports PCIe Gen5 x16. For multi-tenant environments like Kubernetes and virtual environment,
-a single RNGD chip can work as 2, 4, 8 individual NPUs, each fully isolated with its own cores and memory bandwidth.
+performance, respectively.
+RNGD is configured with two HBM3 modules providing a memory bandwidth of 1.5 TB/s,
+and supports PCIe Gen5 x16. For multi-tenant environments like Kubernetes,
+a single RNGD chip can work as 2, 4, or 8 individual NPUs, each fully isolated with its own cores and memory bandwidth.
 RNGD supports Single Root IO Virtualization (SR-IOV) and virtualization for multi-instance NPUs.
 
 Please refer to the followings to learn more about TCP architecture and RNGD:
@@ -44,15 +44,15 @@ Please refer to the followings to learn more about TCP architecture and RNGD:
    * - Process Node
      - TSMC 5nm
    * - Frequency
-     - 1.0GHz
+     - 1.0 GHz
    * - BF16
-     - 256TFLOPS
+     - 256 TFLOPS
    * - FP8
-     - 512TFLOPS
+     - 512 TFLOPS
    * - INT8
-     - 512TOPS
+     - 512 TOPS
    * - INT4
-     - 1024TOPS
+     - 1024 TOPS
    * - Memory Bandwidth
      - HBM3 1.5TB/s
    * - Memory Capacity

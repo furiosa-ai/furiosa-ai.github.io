@@ -4,22 +4,24 @@
 Supported Models
 **********************************
 
-FuriosaAI Software Stack supports a variety of Transformer-based models in HuggingFace Hub.
-The following is the list of model architectures that are currently supported by Furiosa SDK.
-If your model is based on the following architectures,
-you can use Furiosa SDK to compile, quantize, and run the model on FuriosaAI RNGD.
+FuriosaAI's software stack supports a wide range of Transformer-based models
+available on the Hugging Face Hub.
+Below is a list of model architectures currently supported by the Furiosa SDK.
+If your model is based on any of these architectures, you can leverage the
+Furiosa SDK to compile, quantize, and run the model efficiently on
+Furiosa's NPUs.
 
 Decoder-only Models
-====================================
+===================
 
-.. list-table:: Decoder-only Models
+.. list-table::
    :align: center
    :header-rows: 1
    :widths: 130 120 300
 
    * - Model Name
      - Architecture
-     - Example HuggingFace Models
+     - Example Hugging Face Models
    * - Llama 2, Llama 3.1
      - ``LlamaForCausalLM``
      - ``meta-llama/Llama-2-70b-hf``, ``meta-llama/Llama-3.1-70B``, ``meta-llama/Llama-3.1-70B-Instruct``, ``meta-llama/Llama-3.1-8B``, ``meta-llama/Llama-3.1-8B-Instruct``, ..
@@ -37,16 +39,16 @@ Decoder-only Models
      - ``meta-llama/CodeLlama-7b-Instruct-hf``
 
 Encoder-only Models
-====================================
+===================
 
-.. list-table:: Encoder-only Models
+.. list-table::
    :align: center
    :header-rows: 1
    :widths: 130 120 300
 
    * - Model Name
      - Architecture
-     - Example HuggingFace Models
+     - Example Hugging Face Models
    * - Bert
      - ``BertForQuestionAnswering``
      - ``google-bert/bert-large-uncased``, ``google-bert/bert-base-uncased``, ..

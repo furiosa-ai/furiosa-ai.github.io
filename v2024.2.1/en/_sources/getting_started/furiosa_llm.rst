@@ -54,6 +54,37 @@ Once you get a token, you can authenticate on the Hugging Face Hub as follows:
   pip install --upgrade "huggingface_hub[cli]"
   huggingface-cli login --token $HF_TOKEN
 
+Building Model Artifacts
+==========================
+
+To run Furiosa LLM with a given model, you need to build a model artifact first.
+This process starts with a pre-trained model from the Hugging Face Hub,
+and involves calibration and quantization, and compilation, ultimately generating
+an artifact. Furiosa LLM provides a Python API to perform these steps simply.
+
+.. note::
+
+  If you already have a pre-built model artifact, you can skip this section.
+  According to our roadmap, the 2025.2 release will allow BF16 models
+  to run on Furiosa LLM without the calibration and quantization steps.
+  So, the following steps will be much simpler.
+
+The following examples show how to build a model artifact
+from a pre-trained model.
+
+.. literalinclude:: ../../../examples/optimum_quantize.py
+  :language: python
+
+The above code snippet shows how to quantize a model using the ``QuantizerForCausalLM`` class.
+Eventually, it will save the quantized model to the specified directory.
+
+.. literalinclude:: ../../../examples/artifact_builder.py
+  :language: python
+
+``ArtifactBuilder`` applies the parallelism strategy to the quantized model,
+compiles the parallelized model, and eventually generates a model artifact.
+More details and examples can be found in the :ref:`ModelPreparationWorkflow` section.
+
 
 Offline Batch Inference with Furiosa LLM
 ========================================
@@ -97,7 +128,18 @@ Below is an example of how to launch the server with the Llama 3.1 8B Instruct m
 .. literalinclude:: ../../../examples/launch_llm_serve.sh
   :language: sh
 
-You can test the server using the following curl command:
+The server loads the model and starts listening on the specified port.
+When the server is ready, you will see the following message:
+
+.. code-block:: sh
+
+  INFO:     Started server process [27507]
+  INFO:     Waiting for application startup.
+  INFO:     Application startup complete.
+  INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+
+
+Then, you can test the server using the following curl command:
 
 .. literalinclude:: ../../../examples/curl_chat_completions.sh
   :language: sh

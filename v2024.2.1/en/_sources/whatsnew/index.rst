@@ -15,20 +15,21 @@ What's New
 Furiosa SDK 2024.2.1 Beta0 (2025-01-10)
 ==============================================
 
-2024.2.1 is the minor release based on 2024.2.0 major release.
-Even though this release is minor, but the improvement is significant.
-This release includes up to 32k context length support in models,
-such as LLaMA 3.1, EXAONE. You can find the upgrade guide for this release in :ref:`UpgradeGuide`.
+2024.2.1 is a minor release based on 2024.2.0 major release.
+
+Please refer to the :ref:`UpgradeGuide` section for instructions on
+obtaining this update.
 
 .. _Release2024_2_1_Highlights:
 
 🚀 Highlights
 ----------------------
-* Up to 32k context length (``<= 32768``) support in furiosa-llm for various models, such as LLaMA 3.1, and EXAONE
-* Artifacts with the same ``tensor_parallel_size`` is compatible even with any ``pipeline_parallel_size``
+* Support for context lengths of up to 32k in furiosa-llm for various models, including LLaMA 3.1, and EXAONE
+* Artifacts with the same ``tensor_parallel_size`` are compatible even with any ``pipeline_parallel_size``
 
+Versions of components:
 
-.. list-table:: Component version
+.. list-table::
    :widths: 200 50
    :header-rows: 1
 
@@ -78,19 +79,22 @@ Furiosa SDK 2024.2.0 Beta0 (2024-12-23)
 
 2024.2.0 is the second major SDK release for RNGD.
 This release includes a lot of new features and significant improvements,
-including new model support, 8k context length support in models, Tensor Parallelism support,
-Pytorch upgrade, Optimum API, and performance improvements. You can find more details the below highlights.
-Please refer to :ref:`UpgradeGuide` to upgrade the Furiosa software stack.
+including new model support, support for context lengths of up to 8k,
+support for Tensor Parallelism, support for PyTorch 2.4, Optimum API, and
+multiple performance improvements.
+
+Please refer to the :ref:`UpgradeGuide` section for instructions on
+obtaining this update.
 
 
 .. _Release2024_2_0_Highlights:
 
 🚀 Highlights
 ----------------------
-* New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna, ...
-* Up to 8k context length (<= 8192) support in models, such as LLaMA 3.1
+* New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna
+* Up to 8k context length support in models, such as LLaMA 3.1
 * Tensor Parallelism support (``tensor_parallel_size <= 8``)
-* Torch 2.4.1 support
+* PyTorch 2.4.1 support
 * Transformers 4.44.2 support
 * Furiosa LLM
     * ArtifactBuilder API and CLI tools (refer to :ref:`ArtifactBuilder`)

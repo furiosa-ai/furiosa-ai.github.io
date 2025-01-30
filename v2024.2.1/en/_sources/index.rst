@@ -2,15 +2,17 @@
 FuriosaAI Developer Center
 ****************************************************
 
-Welcome to the FuriosaAI Developer Center.
-FuriosaAI provides an streamlined software stack for deep learning model inference on FuriosaAI NPUs.
-This document provides a guide to easily perform the entire workflow of writing inference applications,
-from starting with PyTorch model to model quantization, serving, and production deployment.
+Welcome to the FuriosaAI Developer Center!
+FuriosaAI offers a streamlined software stack designed for deep learning model
+inference on FuriosaAI NPUs.
+This guide covers the entire workflow for creating inference applications,
+starting from a PyTorch model, through model quantization, and model serving and
+deployment.
 
 .. warning::
 
-   This document is based on Furiosa SDK |release| (beta0) version,
-   and the features and APIs described in this document may change in the future.
+   This document is based on the Furiosa SDK |release| (beta0) version.
+   The features and APIs described herein are subject to change in the future.
 
 .. grid:: 3
 

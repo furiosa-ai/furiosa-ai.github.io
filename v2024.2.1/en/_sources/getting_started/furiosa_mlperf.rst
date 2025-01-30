@@ -114,6 +114,16 @@ For example, you will be able to see the MLPerf™ results summary once you run 
     Early stopping satisfied: Yes
 
 
+Offline vs Server Scenario
+------------------------------------
+The MLPerf™ benchmark provides two scenarios for data center systems: offline and server.
+The offline scenario is designed to measure the system's maximum throughput.
+The server scenario measures both throughput and tail latencies, ensuring that 99%
+of the requests are served within a specified latency threshold.
+Depending on your target use case, you can select the appropriate scenario.
+For more details on benchmark scenarios, please refer to
+`MLPerf™ Inference Rules - 3. Scenarios <https://github.com/mlcommons/inference_policies/blob/master/inference_rules.adoc#scenarios>`_.
+
 MLPerf™ Configuration
 ---------------------
 You can configure the MLPerf™ benchmark by using the ``--user-conf`` option to

@@ -107,8 +107,10 @@
 </div>
 <aside class="bd-header-announcement" aria-label="Announcement">
   <div class="bd-header-announcement__content">
+<div>
 SDK 2024.2.1 has been released on Jan 10, 2025.
 Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew/index.html#furiosa-sdk-2024-2-1-beta0-2024-01-10">SDK Release Announcement of 2024.2.1</a>.
+</div>
 </div>
 </aside>
 
@@ -401,25 +403,24 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#furiosa-sdk-2024-2-1-beta0-2025-01-10" id="id6">Furiosa SDK 2024.2.1 Beta0 (2025-01-10)</a></p></li>
-<li><p><a class="reference internal" href="#furiosa-sdk-2024-2-0-beta0-2024-12-23" id="id7">Furiosa SDK 2024.2.0 Beta0 (2024-12-23)</a></p></li>
-<li><p><a class="reference internal" href="#furiosa-sdk-2024-1-0-alpha-2024-10-11" id="id8">Furiosa SDK 2024.1.0 Alpha (2024-10-11)</a></p></li>
+<li><p><a class="reference internal" href="#furiosa-sdk-2024-2-1-beta0-2025-01-10" id="id5">Furiosa SDK 2024.2.1 Beta0 (2025-01-10)</a></p></li>
+<li><p><a class="reference internal" href="#furiosa-sdk-2024-2-0-beta0-2024-12-23" id="id6">Furiosa SDK 2024.2.0 Beta0 (2024-12-23)</a></p></li>
+<li><p><a class="reference internal" href="#furiosa-sdk-2024-1-0-alpha-2024-10-11" id="id7">Furiosa SDK 2024.1.0 Alpha (2024-10-11)</a></p></li>
 </ul>
 </nav>
 <section id="furiosa-sdk-2024-2-1-beta0-2025-01-10">
 <span id="release2024-2-1"></span><h2>Furiosa SDK 2024.2.1 Beta0 (2025-01-10)<a class="headerlink" href="#furiosa-sdk-2024-2-1-beta0-2025-01-10" title="Link to this heading">#</a></h2>
-<p>2024.2.1 is the minor release based on 2024.2.0 major release.
-Even though this release is minor, but the improvement is significant.
-This release includes up to 32k context length support in models,
-such as LLaMA 3.1, EXAONE. You can find the upgrade guide for this release in <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a>.</p>
+<p>2024.2.1 is a minor release based on 2024.2.0 major release.</p>
+<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a> section for instructions on
+obtaining this update.</p>
 <section id="highlights">
 <span id="release2024-2-1-highlights"></span><h3>🚀 Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Up to 32k context length (<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">32768</span></code>) support in furiosa-llm for various models, such as LLaMA 3.1, and EXAONE</p></li>
-<li><p>Artifacts with the same <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> is compatible even with any <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code></p></li>
+<li><p>Support for context lengths of up to 32k in furiosa-llm for various models, including LLaMA 3.1, and EXAONE</p></li>
+<li><p>Artifacts with the same <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> are compatible even with any <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code></p></li>
 </ul>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-text">Component version</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<p>Versions of components:</p>
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 80.0%" />
 <col style="width: 20.0%" />
@@ -487,16 +488,18 @@ such as LLaMA 3.1, EXAONE. You can find the upgrade guide for this release in <a
 <span id="release2024-2-0"></span><h2>Furiosa SDK 2024.2.0 Beta0 (2024-12-23)<a class="headerlink" href="#furiosa-sdk-2024-2-0-beta0-2024-12-23" title="Link to this heading">#</a></h2>
 <p>2024.2.0 is the second major SDK release for RNGD.
 This release includes a lot of new features and significant improvements,
-including new model support, 8k context length support in models, Tensor Parallelism support,
-Pytorch upgrade, Optimum API, and performance improvements. You can find more details the below highlights.
-Please refer to <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a> to upgrade the Furiosa software stack.</p>
+including new model support, support for context lengths of up to 8k,
+support for Tensor Parallelism, support for PyTorch 2.4, Optimum API, and
+multiple performance improvements.</p>
+<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a> section for instructions on
+obtaining this update.</p>
 <section id="release2024-2-0-highlights">
 <span id="id1"></span><h3>🚀 Highlights<a class="headerlink" href="#release2024-2-0-highlights" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna, …</p></li>
-<li><p>Up to 8k context length (&lt;= 8192) support in models, such as LLaMA 3.1</p></li>
+<li><p>New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna</p></li>
+<li><p>Up to 8k context length support in models, such as LLaMA 3.1</p></li>
 <li><p>Tensor Parallelism support (<code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span> <span class="pre">&lt;=</span> <span class="pre">8</span></code>)</p></li>
-<li><p>Torch 2.4.1 support</p></li>
+<li><p>PyTorch 2.4.1 support</p></li>
 <li><p>Transformers 4.44.2 support</p></li>
 <li><dl class="simple">
 <dt>Furiosa LLM</dt><dd><ul>
@@ -535,8 +538,8 @@ Please refer to <a class="reference internal" href="../getting_started/upgrade_g
 <li><p>LLM.from_artifacts() API has been deprecated. Please use LLM.load_artifacts() instead.</p></li>
 <li><p>The artifacts built from 2024.1.x is not compatible with 2024.2.x. Please use the artifact built from 2024.2.x.</p></li>
 </ul>
-<div class="pst-scrollable-table-container"><table class="table" id="id4">
-<caption><span class="caption-text">Component version</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Component version</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 80.0%" />
 <col style="width: 20.0%" />
@@ -652,8 +655,8 @@ and the features and APIs described in this document may change in the future.</
 </dl>
 </li>
 </ul>
-<div class="pst-scrollable-table-container"><table class="table" id="id5">
-<caption><span class="caption-text">Component version</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Component version</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 80.0%" />
 <col style="width: 20.0%" />

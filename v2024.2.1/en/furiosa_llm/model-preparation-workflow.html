@@ -107,8 +107,10 @@
 </div>
 <aside class="bd-header-announcement" aria-label="Announcement">
   <div class="bd-header-announcement__content">
+<div>
 SDK 2024.2.1 has been released on Jan 10, 2025.
 Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew/index.html#furiosa-sdk-2024-2-1-beta0-2024-01-10">SDK Release Announcement of 2024.2.1</a>.
+</div>
 </div>
 </aside>
 
@@ -379,7 +381,8 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-build-a-furiosa-llm-model-artifact">How to build a Furiosa LLM model artifact</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-model">Deploying the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-built-model-artifact">Deploying the Built Model Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#current-limitations">Current Limitations</a></li>
 </ul>
             </nav>
         </div>
@@ -394,58 +397,63 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
   <section id="model-preparation-workflow">
 <span id="modelpreparationworkflow"></span><h1>Model Preparation Workflow<a class="headerlink" href="#model-preparation-workflow" title="Link to this heading">#</a></h1>
 <p>This document describes how to prepare the model of Furiosa LLM.
-At a high level, the workflow consists of the following steps:</p>
+At a high level, the workflow consists of the following four steps:</p>
 <ol class="arabic simple">
 <li><p>Loading a model from Hugging Face Hub or a local disk</p></li>
-<li><p>(Optional) Calibrating the model and exporting the quantized model to a checkpoint</p></li>
+<li><p>Calibrating the model and exporting the quantized model to a checkpoint</p></li>
 <li><p>Building a model artifact</p></li>
 <li><p>Deploying the model</p></li>
 </ol>
-<p>The 2nd step is optional. It’s necessary if you need to calibrate the model, quantize the model
-to an lower precision like INT4, INT8, or FP8.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The latest release 2024.2.1 always requires the calibration and quantization steps for all
+models. The 2025.2.0 release will allow BF16 models to run on Furiosa LLM without the calibration and quantization steps.
+The 2nd step will be required only for INT8, FP8, and INT4 models.</p>
+</div>
+<figure class="align-center">
+<a class="only-light reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-light" src="../_images/model_preparation_workflow.png" style="width: 720px;" />
+</a>
+</figure>
+<figure class="align-center">
+<a class="only-dark reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-dark" src="../_images/model_preparation_workflow.png" style="width: 720px;" />
+</a>
+</figure>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
-<p>For the following instructions, you need the following prerequisites:</p>
+<p>Please ensure you meet the prerequisites before starting the model preparation workflow:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../getting_started/prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT</span></a> and <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
 <li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa LLM Installation</span></a></p></li>
 <li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">HuggingFace Access Token</span></a></p></li>
+<li><p>Sufficient Storage space for model weights, e.g., about 100 GB for the Llama 3.1 70B model</p></li>
 </ul>
 </section>
 <section id="loading-a-model-from-hugging-face-hub">
 <h2>Loading a model from Hugging Face Hub<a class="headerlink" href="#loading-a-model-from-hugging-face-hub" title="Link to this heading">#</a></h2>
-<p>The Hugging Face Hub is a platform with over 900k models and 200k datasets which are open source and publicly available.
-Hugging Face provides a Python library called <cite>transformers</cite> to easily load and use these models.
-Furiosa LLM provides a compatible API with the <cite>transformers</cite> library,
-so you just need to replace the <cite>transformers</cite> library with the <cite>furiosa_llm.optimum</cite> library
-to load a model from the Hugging Face Hub or a local directory.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># from transformers import AutoModelForCausalLM</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
-
-<span class="n">config</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;meta-llama/Meta-Llama-3.1-8B-Instruct&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Please note that you can run BF16 models directly on Furiosa LLM without further steps,
-such as calibration and quantization. For quantization,
-you can directly use the <cite>QuantizerForCausalLM</cite> class to load a model from the Hugging Face Hub or a local directory.</p>
+<p>The Hugging Face Hub is a platform with over 900k models and 200k datasets which are open source
+and publicly available. You can load a model from the Hugging Face Hub using the
+<code class="docutils literal notranslate"><span class="pre">furiosa_llm.optimum</span></code> library. The <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> class provides a simple API to load a
+model from the Hugging Face Hub and a <code class="docutils literal notranslate"><span class="pre">quantize()</span></code> method to calibrate and quantize the model.
+<code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> is a subclass of <a class="reference external" href="https://huggingface.co/docs/transformers/en/model_doc/auto#transformers.AutoModelForCausalLM">AutoModelForCausalLM</a>,
+so it finds automatically the model class from the Hugging Face model id in the same way as
+<code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantizerForCausalLM</span>
 
 <span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;meta-llama/Meta-Llama-3.1-8B-Instruct&quot;</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">QuantizerForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Instead of <code class="docutils literal notranslate"><span class="pre">model_id</span></code>, you can specify the path to the model artifact directory,
-which can be usually a downloaded model from the Hugging Face Hub.</p>
 </section>
 <section id="calibrating-and-quantizing-the-model">
 <h2>Calibrating and Quantizing the model<a class="headerlink" href="#calibrating-and-quantizing-the-model" title="Link to this heading">#</a></h2>
-<p>Generally, quantization is a technique to reduce the required computational and memory resources for inference
-while still preserving the accuracy of your model by mapping the high precision space of
-activation, weight, KV cache to lower precision INT8, FP8, or INT4 space.</p>
+<p>Quantization is a popular technique to reduce the required computational and memory resources for
+inference while preserving the accuracy of your model by mapping the high precision space of
+activations, weights, and KV cache to lower precision INT8, FP8, or INT4 space.</p>
 <p>Currently, Furiosa LLM provides the PTQ (Post Training Quantization) technique to quantize a model.
-To quantize a model, you need to calibrate the model with a calibration dataset and export the quantized model to a checkpoint.
-<code class="docutils literal notranslate"><span class="pre">create_data_loader</span></code> function creates a dataloader for calibration by specifying
-the tokenizer, dataset name or path, the dataset split, the number of samples, and the maximum sample length.</p>
+To quantize a model, you need to calibrate the model with a calibration dataset and export the
+quantized model to a checkpoint. The <code class="docutils literal notranslate"><span class="pre">create_data_loader</span></code> function creates a dataloader for
+calibration by specifying the tokenizer, dataset name or path, the dataset split, the number of
+samples, and the maximum sample length.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p><code class="docutils literal notranslate"><span class="pre">create_data_loader</span></code> is based on the <code class="docutils literal notranslate"><span class="pre">datasets</span></code>,
@@ -457,8 +465,9 @@ You can find more datasets at <a class="reference external" href="https://huggin
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> class provides <code class="docutils literal notranslate"><span class="pre">quantize()</span></code> method to quantize the text-generation model
 with the calibration dataset and export the quantized model to a checkpoint.
-The first argument of <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> is the model id of Hugging Face Hub or path to the model artifact.
-<code class="docutils literal notranslate"><span class="pre">quantize()</span></code> method takes the quantized model, dataloader, and quantization configuration as arguments.</p>
+The first argument of <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> is the model id of Hugging Face Hub or the path to the
+model artifact. The <code class="docutils literal notranslate"><span class="pre">quantize()</span></code> method takes the quantized model, a data loader, and a quantization
+configuration as arguments.</p>
 <p>Here is an example of quantizing a model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum.dataset_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_data_loader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantizerForCausalLM</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
@@ -470,20 +479,20 @@ The first argument of <code class="docutils literal notranslate"><span class="pr
     <span class="n">tokenizer</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
     <span class="n">dataset_name_or_path</span><span class="o">=</span><span class="s2">&quot;mit-han-lab/pile-val-backup&quot;</span><span class="p">,</span>
     <span class="n">dataset_split</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">,</span>
-    <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">max_sample_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">num_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="c1"># Increase this number for better calibration</span>
+    <span class="n">max_sample_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./path_to_save/quantized_model&quot;</span>
-<span class="c1"># Load</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="c1"># Load a pre-trained model from Hugging Face model hub</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">QuantizerForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
-<span class="c1"># Quantize the model</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">QuantizationConfig</span><span class="o">.</span><span class="n">w_f8_a_f8_kv_f8</span><span class="p">())</span>
+<span class="c1"># Calibrate, quantize the model, and save the quantized model</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">QuantizationConfig</span><span class="o">.</span><span class="n">w_f8_a_f8_kv_f8</span><span class="p">())</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">QuantizationConfig.w_f8_a_f8_kv_f8()</span></code> is a quantization configuration
-that quantizes the weights, activations, and KV cache to FP8 space.</p>
-<p>Once you quantize the model, you will get the quantized model checkpoint in the <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> path.</p>
+that quantizes the weights, activations, and KV cache to FP8 space.
+Once you quantize the model, you will get the quantized model checkpoint in the <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> path.</p>
 </section>
 <section id="building-a-model-artifact">
 <h2>Building a Model Artifact<a class="headerlink" href="#building-a-model-artifact" title="Link to this heading">#</a></h2>
@@ -501,36 +510,51 @@ the <a class="reference internal" href="references/artifact_builder.html#artifac
 <p>Here is an example of building a model artifact using the <a class="reference internal" href="references/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span>
 
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./path_to_save/quantized_model&quot;</span>
-<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./path_to_save/compiled_model&quot;</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./Llama-3.1-8B-Instruct&quot;</span>
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
-        <span class="n">save_dir</span><span class="p">,</span>
+        <span class="n">quantized_model</span><span class="p">,</span>
         <span class="s2">&quot;npu:0:*&quot;</span><span class="p">,</span>
         <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
         <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="mi">80000</span><span class="p">,</span> <span class="c1"># Number of blocks for paged attention</span>
-        <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
+        <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
 <span class="p">)</span>
 <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">compiled_model</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> class provides various options to build a furiosa-llm model artifact.
-The options include devices, parallelism degrees, prefill buckets, decode buckets, and other configurations.
-You can find more details about the arguments in the <a class="reference internal" href="references/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> document.</p>
+The options include devices, parallelism degrees, prefill buckets, decode buckets, and other
+configurations. You can find more details about the arguments in the <a class="reference internal" href="references/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a>
+document.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>To achieve better performance or to run large language models on multiple NPUs,
-you can use the model parallelism in Furiosa LLM. To learn more the model parallelism,
-please refer to <a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a> document.</p>
+you can make good use of the model parallelism in Furiosa LLM. To learn more about model
+parallelism, please refer to <a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a> document.</p>
 </div>
 </section>
 </section>
-<section id="deploying-the-model">
-<h2>Deploying the model<a class="headerlink" href="#deploying-the-model" title="Link to this heading">#</a></h2>
-<p>Once you have a model artifact, you can just copy the model artifact directory.
-You can use your preferred compression tool to compress the model artifact directory and copy it to the target host.
-Then, you can uncompress the model artifact directory and run the model through <a class="reference internal" href="references/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Compatible Server</span></a>.</p>
+<section id="deploying-the-built-model-artifact">
+<h2>Deploying the Built Model Artifact<a class="headerlink" href="#deploying-the-built-model-artifact" title="Link to this heading">#</a></h2>
+<p>Once you have a model artifact, you can copy and reuse the model artifact directory
+anywhere RNGD NPUs and Furiosa LLM are installed. You can use your preferred compression tool to
+compress the model artifact directory and copy it to the target host. Then, you can uncompress
+the model artifact directory and run the model through the <a class="reference internal" href="references/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or the <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Compatible Server</span></a>.
+You can find quick examples for loading and running model artifacts using Furiosa LLM
+in the <a class="reference internal" href="../getting_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa LLM</span></a> section.</p>
+</section>
+<section id="current-limitations">
+<h2>Current Limitations<a class="headerlink" href="#current-limitations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> currently supports up to 8k context length even though Furiosa LLM supports
+up to 32k context length. So, you can run 32k context length models only through the pre-built
+artifacts that the FuriosaAI provides. This limitation will be removed in the 2025.1.0 release.</p></li>
+<li><p>The current version of ArtifactBuilder requires models quantized by <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code>.
+The 2025.2.0 release will allow BF16 models to run on Furiosa
+LLM without the calibration and quantization steps.</p></li>
+</ul>
 </section>
 </section>
 
@@ -587,7 +611,8 @@ Then, you can uncompress the model artifact directory and run the model through 
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-build-a-furiosa-llm-model-artifact">How to build a Furiosa LLM model artifact</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-model">Deploying the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-built-model-artifact">Deploying the Built Model Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#current-limitations">Current Limitations</a></li>
 </ul>
   </nav></div>
 

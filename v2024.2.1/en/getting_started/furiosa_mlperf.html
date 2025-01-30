@@ -107,8 +107,10 @@
 </div>
 <aside class="bd-header-announcement" aria-label="Announcement">
   <div class="bd-header-announcement__content">
+<div>
 SDK 2024.2.1 has been released on Jan 10, 2025.
 Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew/index.html#furiosa-sdk-2024-2-1-beta0-2024-01-10">SDK Release Announcement of 2024.2.1</a>.
+</div>
 </div>
 </aside>
 
@@ -375,6 +377,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf™ Inference Benchmark</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-mlperf-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-vs-server-scenario">Offline vs Server Scenario</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf™ Configuration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-a-running-benchmark">Monitoring a running benchmark</a></li>
 </ul>
@@ -488,6 +491,16 @@ Result<span class="w"> </span>is<span class="w"> </span>:<span class="w"> </span
 <span class="w">  </span>Early<span class="w"> </span>stopping<span class="w"> </span>satisfied:<span class="w"> </span>Yes
 </pre></div>
 </div>
+</section>
+<section id="offline-vs-server-scenario">
+<h3>Offline vs Server Scenario<a class="headerlink" href="#offline-vs-server-scenario" title="Link to this heading">#</a></h3>
+<p>The MLPerf™ benchmark provides two scenarios for data center systems: offline and server.
+The offline scenario is designed to measure the system’s maximum throughput.
+The server scenario measures both throughput and tail latencies, ensuring that 99%
+of the requests are served within a specified latency threshold.
+Depending on your target use case, you can select the appropriate scenario.
+For more details on benchmark scenarios, please refer to
+<a class="reference external" href="https://github.com/mlcommons/inference_policies/blob/master/inference_rules.adoc#scenarios">MLPerf™ Inference Rules - 3. Scenarios</a>.</p>
 </section>
 <section id="mlperf-configuration">
 <h3>MLPerf™ Configuration<a class="headerlink" href="#mlperf-configuration" title="Link to this heading">#</a></h3>
@@ -677,6 +690,7 @@ furiosa-mlperf<span class="w"> </span>llama-3.1-offline<span class="w"> </span>.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosa-mlperf">Installing <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Running MLPerf™ Inference Benchmark</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-mlperf-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-vs-server-scenario">Offline vs Server Scenario</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mlperf-configuration">MLPerf™ Configuration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-a-running-benchmark">Monitoring a running benchmark</a></li>
 </ul>

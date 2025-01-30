@@ -107,8 +107,10 @@
 </div>
 <aside class="bd-header-announcement" aria-label="Announcement">
   <div class="bd-header-announcement__content">
+<div>
 SDK 2024.2.1 has been released on Jan 10, 2025.
 Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew/index.html#furiosa-sdk-2024-2-1-beta0-2024-01-10">SDK Release Announcement of 2024.2.1</a>.
+</div>
 </div>
 </aside>
 
@@ -376,6 +378,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-model-artifacts">Building Model Artifacts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server">Launching the OpenAI-Compatible Server</a></li>
@@ -432,6 +435,64 @@ huggingface-cli login --token $HF_TOKEN
 </pre></div>
 </div>
 </section>
+</section>
+<section id="building-model-artifacts">
+<h2>Building Model Artifacts<a class="headerlink" href="#building-model-artifacts" title="Link to this heading">#</a></h2>
+<p>To run Furiosa LLM with a given model, you need to build a model artifact first.
+This process starts with a pre-trained model from the Hugging Face Hub,
+and involves calibration and quantization, and compilation, ultimately generating
+an artifact. Furiosa LLM provides a Python API to perform these steps simply.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you already have a pre-built model artifact, you can skip this section.
+According to our roadmap, the 2025.2 release will allow BF16 models
+to run on Furiosa LLM without the calibration and quantization steps.
+So, the following steps will be much simpler.</p>
+</div>
+<p>The following examples show how to build a model artifact
+from a pre-trained model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum.dataset_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_data_loader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantizerForCausalLM</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;meta-llama/Meta-Llama-3.1-8B-Instruct&quot;</span>
+
+<span class="c1"># Create a dataloader for calibration</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">create_data_loader</span><span class="p">(</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+    <span class="n">dataset_name_or_path</span><span class="o">=</span><span class="s2">&quot;mit-han-lab/pile-val-backup&quot;</span><span class="p">,</span>
+    <span class="n">dataset_split</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">,</span>
+    <span class="n">num_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="c1"># Increase this number for better calibration</span>
+    <span class="n">max_sample_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="c1"># Load a pre-trained model from Hugging Face model hub</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">QuantizerForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+<span class="c1"># Calibrate, quantize the model, and save the quantized model</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">QuantizationConfig</span><span class="o">.</span><span class="n">w_f8_a_f8_kv_f8</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The above code snippet shows how to quantize a model using the <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> class.
+Eventually, it will save the quantized model to the specified directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./Llama-3.1-8B-Instruct&quot;</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
+        <span class="n">quantized_model</span><span class="p">,</span>
+        <span class="s2">&quot;npu:0:*&quot;</span><span class="p">,</span>
+        <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="mi">80000</span><span class="p">,</span> <span class="c1"># Number of blocks for paged attention</span>
+        <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
+<span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">compiled_model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> applies the parallelism strategy to the quantized model,
+compiles the parallelized model, and eventually generates a model artifact.
+More details and examples can be found in the <a class="reference internal" href="../furiosa_llm/model-preparation-workflow.html#modelpreparationworkflow"><span class="std std-ref">Model Preparation Workflow</span></a> section.</p>
 </section>
 <section id="offline-batch-inference-with-furiosa-llm">
 <h2>Offline Batch Inference with Furiosa LLM<a class="headerlink" href="#offline-batch-inference-with-furiosa-llm" title="Link to this heading">#</a></h2>
@@ -504,7 +565,15 @@ You can find more details in the <a class="reference internal" href="../furiosa_
 furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span>./Llama-3.1-8B-Instruct<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0:*&quot;</span>
 </pre></div>
 </div>
-<p>You can test the server using the following curl command:</p>
+<p>The server loads the model and starts listening on the specified port.
+When the server is ready, you will see the following message:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">27507</span><span class="o">]</span>
+INFO:<span class="w">     </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
+INFO:<span class="w">     </span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
+INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>http://0.0.0.0:8000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
+</pre></div>
+</div>
+<p>Then, you can test the server using the following curl command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -642,6 +711,7 @@ to apply the chat template to the prompt.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-model-artifacts">Building Model Artifacts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-batch-inference-with-furiosa-llm">Offline Batch Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-inference-with-furiosa-llm">Streaming Inference with Furiosa LLM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server">Launching the OpenAI-Compatible Server</a></li>
