@@ -4,111 +4,113 @@
 Model Parallelism
 ****************************************************
 
-The model parallelism is a technique to split up the model into multiple parts
+Model parallelism is a technique used to split a model into multiple parts
 and run them in parallel across multiple devices.
-It's useful to handle a large model that doesn't fit into a single device
-or to increase the throughput or latency of the model inference.
+It's particularly useful for handling large models that don't fit in a single
+device or for improving the throughput or latency of model inference.
 
-Generally, there are three types of model parallelism: Tensor Parallelism, Pipeline Parallelism,
-and Data Parallelism. Each parallelism type has its own benefits and drawbacks.
-Also, you can combine multiple types of parallelism to achieve better performance.
+There are three types of model parallelism: tensor parallelism (TP),
+pipeline parallelism (PP), and data parallelism (DP).
+Each type has its own benefits and drawbacks.
+Additionally, it is possible to combine multiple types of parallelism to achieve
+better performance.
 
-In this section, we will explain the three types of model parallelism, how to configure them in Furiosa LLM,
-and the best practices.
+In this section, we explain the three types of model parallelism, how to
+configure them in Furiosa LLM, and provide best practices.
 
 
 Tensor Parallelism (TP)
-****************************
+***********************
 Tensor Parallelism (TP) splits each layer into multiple chunks along a specific dimension.
-Each device only holds 1/N of the whole layer while not affecting the correctness of the computation graph.
+Each device only holds 1/N of the whole layer, without affecting the correctness
+of the computation graph.
 
-TP can reduce the memory footprint of a single device for weights, KV cache, and activation memory
-because only a part of the model and intermediate result reside on a single device.
-As a result, TP is very useful when the model size is too large to fit into a single device.
-Larger memory availability also allows higher batch sizes and longer sequences.
+Since only a portion of the model and intermediate results reside on each
+device, TP reduces the memory requirements for weights, KV cache, and activation
+memory in each device.
+Hence, TP is particularly useful when the model size exceeds the memory capacity
+of a single device.
+Increased memory availability also allows larger batch sizes and longer
+sequences.
 
-TP can reduce the latency of the model inference by leveraging
+Additionally, TP can reduce the latency of model inference by leveraging
 the aggregate computation power and memory bandwidth of multiple devices.
 
-TP requires additional communication to synchronize the data across multiple devices.
-The communication is called collective communication operation, and it synchronizes the data across
-all multiple devices. If TP degree is too high, the communication can be overhead,
-causing the performance degration of of the model inference.
+However, TP requires extra communication to synchronize data across multiple
+devices.
+This operation, known as collective communication (e.g., all-reduce and
+all-gather), ensures data consistency across all devices.
+If the degree of TP is too high, the communication overhead can hurt
+performance, leading to slower model inference.
+
 
 Pipeline Parallelism (PP)
-******************************
-Pipeline Parallelism (PP) splits the model vertically (layer-level) across multiple NPUs,
-so that only some layers of the model reside on a single NPU.
-Each NPU processes a different part called 'stage' of the model, and the intermediate results are passed to the next NPU.
+*************************
+Pipeline Parallelism (PP) splits the model vertically (usually at layer level)
+across multiple devices, so that only a subset of the model layers reside on a
+single device.
+Each device processes a different part, or "stage", of the model, passing the
+intermediate results to the next device.
 
-TP can reduce the memory footprint of a single device for weights, KV cache, and activation memory
-because only a part of the model and intermediate result reside on a single device.
-As a result, TP is very useful when the model size is too large to fit into a single device.
-Larger memory availability also allows higher batch sizes and longer sequences.
+Like tensor parallelism, PP also reduces the memory footprint of a single
+device.
+This is because only a portion of the model and its intermediate results are
+stored on each device.
 
-Unlike TP, PP can increase the throughput of the model inference
-rather than reducing latency because each NPU sequentially processes a different part of the model.
-The end-to-end latency is determined by the accumulated latency of each stage.
-Instead, PP can increase the throughput of the model inference by processing multiple requests in parallel.
+Unlike TP, PP increases the throughput of model inference at the cost of
+increased latency
+Since each device processes a different part of the model sequentially, the
+end-to-end latency is determined by the accumulated latency of each stage.
+However, PP increases the throughput by processing multiple requests in
+parallel.
+
 
 Data Parallelism (DP)
-******************************
-Data parallelism (DP) is based on SPMD (single program multiple data) programming model.
-It's the most common form of parallelism due to its simplicity.
+*********************
+Data parallelism (DP) is based on the SPMD (single program multiple data)
+programming model.
+It is the most common form of parallelism due to its simplicity.
 For inference, DP replicates the same model instance multiple times,
-and each replica computes independently a split of input requests.
-So, DP is very useful to scale out the throughput of the model inference.
+with each replica independently processing a fraction of the input requests.
+As a result, DP is highly effective for scaling out the throughput of model
+inference.
 
-Each model replica requires a separate copy of the model weights and KV cache memory
-across the multiple RNGD cards. So, the memory usage is proportional to the number of replicas.
-If you use DP within the single RNGD card, the weights of replicas in the same RNGD card
-can be shared due to the shared memory architecture.
+Each device requires a separate copy of the model weights and KV cache.
+Therefore, memory usage scales with the number of replicas.
+However, when using DP within a single FuriosaAI device, the weights of replicas
+can be shared due to the shared memory architecture of the device.
 
-How to Configure Model Parallelism in Furiosa LLM
-=================================================================
 
-ArtifactBuilder API or ``furiosa-llm build`` command provides the following options to configure the model parallelism:
+Configuring Model Parallelism in Furiosa LLM
+============================================
 
-- ``tensor_parallel_size``: the number of devices to split each layer with tensor parallelism
+The ArtifactBuilder API and the ``furiosa-llm build`` command provides the
+following options to configure model parallelism:
+
+- ``tensor_parallel_size``: the number of devices/slices for splitting each layer
 - ``pipeline_parallel_size``: the number of devices to split the model vertically
 - ``data_parallel_size``: the number of model replicas
 
-Each option specifies the parallelism degree for each parallelism type.
-By default, the parallelism degrees will be automatically inferred based
-on the total number of available NPUs in your machine.
-So, you don't have to specify all the parallelism degrees.
-You can refer to the best practices section to configure the parallelism degrees.
+Each option specifies the degree of parallelism for the respective parallelism
+type.
+By default, the parallelism degrees are automatically inferred based on the
+total number of devices on the machine.
 
-Best Practices in Furiosa LLM
-=================================================================
-Each parallelism type has its own natures and constraints.
 
-The ``pipeline_parallel_size`` can be at most the number of RNGD cards; e.g.,
+Best Practices for Furiosa LLM
+==============================
+Each parallelism type has its own characteristics and constraints.
 
-- With 2 RNGD cards, ``pipeline_parallel_size`` should be ``<=2``.
-- With 8 RNGD cards, ``pipeline_parallel_size`` should be ``<=8``.
-
-The ``tensor_parallel_size`` should be 4 or 8 in the 2024.2 release.
-In the future release, it can be higher than 8.
+The ``pipeline_parallel_size`` parameter can be at most the number of devices.
+The ``tensor_parallel_size`` parameter can only be 4 or 8 in the 2024.2 release;
+future releases will lift this limitation.
 
 The product of ``tensor_parallel_size``, ``pipeline_parallel_size``, and ``data_parallel_size``
-should be equal to the total number of NPUs in your machine; i.e.,
+should be equal to the total number of PEs in your machine.
 
-.. code-block::
-
-    TP size x PP size x DP size = total number of NPU PEs
-
-For examples, let's assume that you have 4 RNGD cards, each of which has 8 PEs. Then, the total number of PEs is 32.
+For example, let's assume that you have 4 RNGD cards, each of which has 8 PEs.
+Then, the total number of PEs is 32.
 In that case, you can use the following configurations:
 
 - ``tensor_parallel_size=8``, ``pipeline_parallel_size=4``, ``data_parallel_size=1``
 - ``tensor_parallel_size=4``, ``pipeline_parallel_size=2``, ``data_parallel_size=2``
-
-
-
-
-
-
-
-
-

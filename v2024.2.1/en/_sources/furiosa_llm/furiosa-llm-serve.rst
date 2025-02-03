@@ -1,16 +1,16 @@
 .. _OpenAIServer:
 
 ****************************************************
-OpenAI Compatible Server
+OpenAI-Compatible Server
 ****************************************************
 
-In addition to Python API, ``furiosa-llm`` also offers an OpenAI-compatible server
-which hosts a single model and provides two OpenAI-compatible APIs:
+In addition to the Python API, Furiosa LLVM offers an OpenAI-compatible server
+that hosts a single model and provides two OpenAI-compatible APIs:
 `Completions API <https://platform.openai.com/docs/api-reference/completions>`_ and
 `Chat API <https://platform.openai.com/docs/api-reference/chat>`_.
 
-You can simply launch the server using the ``furiosa-llm serve`` command with an artifact path
-as the following.
+To launch the server, use the ``furiosa-llm serve`` command with the model
+artifact path, as follows:
 
 .. code-block::
 
@@ -21,141 +21,95 @@ and interact with the server using OpenAI API clients.
 
 .. warning::
 
-   This document is based on Furiosa SDK |release| (beta0) version,
-   and the features and APIs described in this document may change in the future.
+  This document is based on Furiosa SDK |release| (beta0).
+  The features and APIs described herein are subject to change in the future.
+
 
 Prerequisites
-==================================================
-To use the OpenAI-Compatible server, you need the following prerequisites:
+=============
+To use the OpenAI-Compatible server, you need the following:
 
-* :ref:`AptSetup` and :ref:`InstallingPrerequisites`
-* :ref:`Furiosa LLM Installation <InstallingFuriosaLLM>`
-* :ref:`HuggingFace Access Token <AuthorizingHuggingFaceHub>`
-* LLM Engine Artifact
+* A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
+* An installation of :ref:`Furiosa LLM <InstallingFuriosaLLM>`
+* A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>`
+* A model artifact
 * Chat template for chat application (Optional)
 
 
-Chat Templates
-================================================
-To use the language models for chat application, we need a structured string instead of a single string.
-It's necessary because the model should be able to understand the context of the conversation,
-including the role of the speaker (e.g., "user" and "assistant") and the content of the message.
-Similar to tokenization, different models require very different input formats for chat.
-That's why we need a chat template.
-
-Furiosa LLM supports chat templates based on Jinja2 template engine in the same way as HuggingFace Transformers.
-If the model's tokenizer provides a built-in chat template, ``furiosa-llm serve`` will automatically use it.
-You can also provide the ``--chat-template`` parameter if the tokenizer lacks a built-in template or if you want to override the default one.
-For reference, you can find a good example of how to write a chat template at `Llama 3.1 Model Card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_.
-
-The following command launches the server with a custom chat template:
-
-.. code-block:: bash
-
-    furiosa-llm serve --model [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
-
-Tool Calling
-================================================
-The server supports the function calling (tool calling) feature for models that are trained with this capability.
-
-Within the ``tool_choice`` options supported by the `OpenAI API <https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice>`_, the choices ``"auto"`` and ``"none"`` are currently supported.
-Future releases will extend support to ``"required"`` and named function calling.
-
-The system converts model outputs into the OpenAI response format through a designated parser implementation. 
-At present, the ``llama3_json`` parser is exclusively available. Additional parsers will be made available as more models are integrated.
-
-The following command starts the server with tool calling enabled for Llama 3.1 models:
-
-.. code-block:: bash
-
-    furiosa-llm serve --model [ARTIFACT_PATH] --enable-auto-tool-choice --tool-call-parser llama3_json
-
-To use the tool calling feature, use ``tools`` and ``tool_choice`` parameters. The following is an example:
-
-.. literalinclude:: ../../../examples/tool_calling.py
-  :language: python
-
-The expected output is as follows.
-
-.. code-block:: text
-
-    Function called: get_weather
-    Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
-    Result: Getting the weather for San Francisco, CA in fahrenheit...
-
-Arguments of ``furiosa-llm serve`` command
-================================================
-By default, the server binds to ``localhost:8000``, and
-you can change the host and port using the ``--host`` and ``--port`` options.
-The following is the list of options and arguments for the serve command:
-
-.. code-block:: text
-
-    usage: furiosa-llm serve [-h] --model MODEL [--host HOST] [--port PORT] [--chat-template CHAT_TEMPLATE] [--response-role RESPONSE_ROLE] [-tp TENSOR_PARALLEL_SIZE] [-pp PIPELINE_PARALLEL_SIZE]
-                            [-dp DATA_PARALLEL_SIZE] [--devices DEVICES]
-
-    options:
-        -h, --help            show this help message and exit
-        --model MODEL         The Hugging Face model id, or path to Furiosa model artifact. Currently only one model is supported per server.
-        --host HOST           Host to bind the server to (default: 0.0.0.0)
-        --port PORT           Port to bind the server to (default: 8000)
-        --chat-template CHAT_TEMPLATE
-                              If given, the default chat template will be overridden with the given file. (Default: use chat template from tokenizer)
-        --enable-auto-tool-choice
-                              Enable auto tool choice for supported models. Use --tool-call-parser to specify which parser to use
-        --tool-call-parser {llama3_json}
-                              Select the tool call parser depending on the model that you're using. This is used to parse the model-generated tool call into OpenAI API format.
-                              Required for --enable-auto-tool-choice.
-        --response-role RESPONSE_ROLE
-                                Response role for /v1/chat/completions API (default: assistant)
-        -tp TENSOR_PARALLEL_SIZE, --tensor-parallel-size TENSOR_PARALLEL_SIZE
-                                Number of tensor parallel replicas. (default: 4)
-        -pp PIPELINE_PARALLEL_SIZE, --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
-                                Number of pipeline stages. (default: 1)
-        -dp DATA_PARALLEL_SIZE, --data-parallel-size DATA_PARALLEL_SIZE
-                                Data parallelism size. If not given, it will be inferred from total avaialble PEs and other parallelism degrees.
-        --devices DEVICES     Devices to use (e.g. "npu:0:*,npu:1:*"). If unspecified, all available devices from the host will be used.
-
-
-Using OpenAI API with Furiosa LLM
-=====================================================
-Once the server is launched, you can interact with the server using HTTP clients
-as the following ``CURL`` command example.
+Using the OpenAI API
+====================
+Once the server is running, you can interact with it using an HTTP client,
+as shown in the following example:
 
 .. literalinclude:: ../../../examples/curl_chat_completions.sh
   :language: sh
 
-You can use OpenAI client to interact with the server.
-To use OpenAI client, you need to install the ``openai`` package first.
+You can also use the OpenAI client to interact with the server.
+To use the OpenAI client, you need to install the ``openai`` package first:
 
 .. code-block:: sh
 
-    pip install openai==1.58.1
+    pip install openai
 
 
-OpenAI client provides two APIs: ``client.chat.completions`` and ``client.completions``.
-You can use the ``client.chat.completions``
-API with ``stream=True`` for streaming responses, as following:
+The OpenAI client provides two APIs: ``client.chat.completions`` and
+``client.completions``.
+To stream responses, you can use the ``client.chat.completions``
+API with ``stream=True``, as follows:
 
 .. literalinclude:: ../../../examples/openai_client.py
   :language: python
 
 
-The compatibility with OpenAI API
-=================================================
+By default, the Furiosa LLM server binds to ``localhost:8000``.
+You can change the host and port using the ``--host`` and ``--port`` options.
 
-Here are the API parameters currently supported by the server:
-For detailed information on each parameter, please refer to `Completions API <https://platform.openai.com/docs/api-reference/completions>`_
-and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_. The parameters generally function in the same way, except where differences are explicitly noted.
+
+Chat Templates
+==============
+To use a language model in a chat application, we need to prepare a structured
+string to give as input.
+This is essential because the model must understand the conversation's context,
+including the speaker's role (e.g., "user" and "assistant") and the
+message content.
+Just as different models require distinct tokenization methods, they also have
+varying input formats for chat.
+This is why a chat template is necessary.
+
+Furiosa LLM supports chat templates based on the Jinja2 template engine, similar
+to Hugging Face Transformers.
+If the model's tokenizer includes a built-in chat template,
+``furiosa-llm serve`` will automatically use it.
+However, if the tokenizer lacks a built-in template, or if you want to override
+the default, you can specify one using the ``--chat-template`` parameter.
+
+For reference, you can find a well-structured example of a chat template in the
+`Llama 3.1 Model Card <https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/>`_.
+
+To launch the server with a custom chat template, use the following command:
+
+.. code-block:: bash
+
+    furiosa-llm serve --model [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
+
+
+Compatibility with OpenAI API
+=============================
+
+Below are the API parameters currently supported by Furiosa LLM:
 
 .. warning::
 
-    Please note that using ``use_beam_search`` with ``stream`` is not allowed
-    because the beam search cannot determine the tokens until the end of the sequence.
+    Please note that using ``use_beam_search`` together with ``stream`` is not
+    allowed because beam search requires the whole sequence to produce the
+    output tokens.
 
-    In 2024.2 release, ``n`` works only for beam search and it will be fixed in the next release.
+    In the 2024.2 release, ``n`` works only for beam search. This limitation
+    will be fixed in the next release.
 
-Parameters supported by both `Completions API <https://platform.openai.com/docs/api-reference/completions>`_ and `Chat API <https://platform.openai.com/docs/api-reference/chat>`_:
+Parameters supported by both the
+`Completions <https://platform.openai.com/docs/api-reference/completions>`_ and
+`Chat <https://platform.openai.com/docs/api-reference/chat>`_ APIs:
 
 * ``n``
 * ``temperature``
@@ -169,15 +123,13 @@ Parameters supported by both `Completions API <https://platform.openai.com/docs/
 * ``best_of``
 * ``stream``
 
-Parameters supported by `Chat API <https://platform.openai.com/docs/api-reference/chat>`_:
-
-* ``tools``
-* ``tool_choice``
 
 Launching the OpenAI-Compatible Server Container
-================================================================
+================================================
 
-Furiosa LLM can be launched immedaitely as a containerized server.
+FuriosaAI offers a containerized server that can be used for faster deployment.
+Here is an example that launches the Furiosa LLM server in a Docker container
+(replace ``$HF_TOKEN`` with your Hugging Face Hub token):
 
 .. code-block::
 

@@ -117,10 +117,10 @@ Other Links
    :caption: Furiosa LLM
 
    /furiosa_llm/intro
-   /furiosa_llm/furiosa-llm-serve
    /furiosa_llm/model-preparation-workflow
+   /furiosa_llm/furiosa-llm-serve
    /furiosa_llm/model-parallelism
-   /furiosa_llm/references
+   /furiosa_llm/reference
 
 
 .. toctree::

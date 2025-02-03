@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="References" href="references.html" />
-    <link rel="prev" title="Model Preparation Workflow" href="model-preparation-workflow.html" />
+    <link rel="next" title="API Reference" href="reference.html" />
+    <link rel="prev" title="OpenAI-Compatible Server" href="furiosa-llm-serve.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2024.2.1" />
@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -377,8 +377,8 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">Tensor Parallelism (TP)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">Pipeline Parallelism (PP)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism-dp">Data Parallelism (DP)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-configure-model-parallelism-in-furiosa-llm">How to Configure Model Parallelism in Furiosa LLM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-in-furiosa-llm">Best Practices in Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-model-parallelism-in-furiosa-llm">Configuring Model Parallelism in Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-furiosa-llm">Best Practices for Furiosa LLM</a></li>
 </ul>
 </li>
 </ul>
@@ -394,85 +394,93 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                   
   <section id="model-parallelism">
 <span id="modelparallelism"></span><h1>Model Parallelism<a class="headerlink" href="#model-parallelism" title="Link to this heading">#</a></h1>
-<p>The model parallelism is a technique to split up the model into multiple parts
+<p>Model parallelism is a technique used to split a model into multiple parts
 and run them in parallel across multiple devices.
-It’s useful to handle a large model that doesn’t fit into a single device
-or to increase the throughput or latency of the model inference.</p>
-<p>Generally, there are three types of model parallelism: Tensor Parallelism, Pipeline Parallelism,
-and Data Parallelism. Each parallelism type has its own benefits and drawbacks.
-Also, you can combine multiple types of parallelism to achieve better performance.</p>
-<p>In this section, we will explain the three types of model parallelism, how to configure them in Furiosa LLM,
-and the best practices.</p>
+It’s particularly useful for handling large models that don’t fit in a single
+device or for improving the throughput or latency of model inference.</p>
+<p>There are three types of model parallelism: tensor parallelism (TP),
+pipeline parallelism (PP), and data parallelism (DP).
+Each type has its own benefits and drawbacks.
+Additionally, it is possible to combine multiple types of parallelism to achieve
+better performance.</p>
+<p>In this section, we explain the three types of model parallelism, how to
+configure them in Furiosa LLM, and provide best practices.</p>
 <section id="tensor-parallelism-tp">
 <h2>Tensor Parallelism (TP)<a class="headerlink" href="#tensor-parallelism-tp" title="Link to this heading">#</a></h2>
 <p>Tensor Parallelism (TP) splits each layer into multiple chunks along a specific dimension.
-Each device only holds 1/N of the whole layer while not affecting the correctness of the computation graph.</p>
-<p>TP can reduce the memory footprint of a single device for weights, KV cache, and activation memory
-because only a part of the model and intermediate result reside on a single device.
-As a result, TP is very useful when the model size is too large to fit into a single device.
-Larger memory availability also allows higher batch sizes and longer sequences.</p>
-<p>TP can reduce the latency of the model inference by leveraging
+Each device only holds 1/N of the whole layer, without affecting the correctness
+of the computation graph.</p>
+<p>Since only a portion of the model and intermediate results reside on each
+device, TP reduces the memory requirements for weights, KV cache, and activation
+memory in each device.
+Hence, TP is particularly useful when the model size exceeds the memory capacity
+of a single device.
+Increased memory availability also allows larger batch sizes and longer
+sequences.</p>
+<p>Additionally, TP can reduce the latency of model inference by leveraging
 the aggregate computation power and memory bandwidth of multiple devices.</p>
-<p>TP requires additional communication to synchronize the data across multiple devices.
-The communication is called collective communication operation, and it synchronizes the data across
-all multiple devices. If TP degree is too high, the communication can be overhead,
-causing the performance degration of of the model inference.</p>
+<p>However, TP requires extra communication to synchronize data across multiple
+devices.
+This operation, known as collective communication (e.g., all-reduce and
+all-gather), ensures data consistency across all devices.
+If the degree of TP is too high, the communication overhead can hurt
+performance, leading to slower model inference.</p>
 </section>
 <section id="pipeline-parallelism-pp">
 <h2>Pipeline Parallelism (PP)<a class="headerlink" href="#pipeline-parallelism-pp" title="Link to this heading">#</a></h2>
-<p>Pipeline Parallelism (PP) splits the model vertically (layer-level) across multiple NPUs,
-so that only some layers of the model reside on a single NPU.
-Each NPU processes a different part called ‘stage’ of the model, and the intermediate results are passed to the next NPU.</p>
-<p>TP can reduce the memory footprint of a single device for weights, KV cache, and activation memory
-because only a part of the model and intermediate result reside on a single device.
-As a result, TP is very useful when the model size is too large to fit into a single device.
-Larger memory availability also allows higher batch sizes and longer sequences.</p>
-<p>Unlike TP, PP can increase the throughput of the model inference
-rather than reducing latency because each NPU sequentially processes a different part of the model.
-The end-to-end latency is determined by the accumulated latency of each stage.
-Instead, PP can increase the throughput of the model inference by processing multiple requests in parallel.</p>
+<p>Pipeline Parallelism (PP) splits the model vertically (usually at layer level)
+across multiple devices, so that only a subset of the model layers reside on a
+single device.
+Each device processes a different part, or “stage”, of the model, passing the
+intermediate results to the next device.</p>
+<p>Like tensor parallelism, PP also reduces the memory footprint of a single
+device.
+This is because only a portion of the model and its intermediate results are
+stored on each device.</p>
+<p>Unlike TP, PP increases the throughput of model inference at the cost of
+increased latency
+Since each device processes a different part of the model sequentially, the
+end-to-end latency is determined by the accumulated latency of each stage.
+However, PP increases the throughput by processing multiple requests in
+parallel.</p>
 </section>
 <section id="data-parallelism-dp">
 <h2>Data Parallelism (DP)<a class="headerlink" href="#data-parallelism-dp" title="Link to this heading">#</a></h2>
-<p>Data parallelism (DP) is based on SPMD (single program multiple data) programming model.
-It’s the most common form of parallelism due to its simplicity.
+<p>Data parallelism (DP) is based on the SPMD (single program multiple data)
+programming model.
+It is the most common form of parallelism due to its simplicity.
 For inference, DP replicates the same model instance multiple times,
-and each replica computes independently a split of input requests.
-So, DP is very useful to scale out the throughput of the model inference.</p>
-<p>Each model replica requires a separate copy of the model weights and KV cache memory
-across the multiple RNGD cards. So, the memory usage is proportional to the number of replicas.
-If you use DP within the single RNGD card, the weights of replicas in the same RNGD card
-can be shared due to the shared memory architecture.</p>
-<section id="how-to-configure-model-parallelism-in-furiosa-llm">
-<h3>How to Configure Model Parallelism in Furiosa LLM<a class="headerlink" href="#how-to-configure-model-parallelism-in-furiosa-llm" title="Link to this heading">#</a></h3>
-<p>ArtifactBuilder API or <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command provides the following options to configure the model parallelism:</p>
+with each replica independently processing a fraction of the input requests.
+As a result, DP is highly effective for scaling out the throughput of model
+inference.</p>
+<p>Each device requires a separate copy of the model weights and KV cache.
+Therefore, memory usage scales with the number of replicas.
+However, when using DP within a single FuriosaAI device, the weights of replicas
+can be shared due to the shared memory architecture of the device.</p>
+<section id="configuring-model-parallelism-in-furiosa-llm">
+<h3>Configuring Model Parallelism in Furiosa LLM<a class="headerlink" href="#configuring-model-parallelism-in-furiosa-llm" title="Link to this heading">#</a></h3>
+<p>The ArtifactBuilder API and the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command provides the
+following options to configure model parallelism:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>: the number of devices to split each layer with tensor parallelism</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>: the number of devices/slices for splitting each layer</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>: the number of devices to split the model vertically</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>: the number of model replicas</p></li>
 </ul>
-<p>Each option specifies the parallelism degree for each parallelism type.
-By default, the parallelism degrees will be automatically inferred based
-on the total number of available NPUs in your machine.
-So, you don’t have to specify all the parallelism degrees.
-You can refer to the best practices section to configure the parallelism degrees.</p>
+<p>Each option specifies the degree of parallelism for the respective parallelism
+type.
+By default, the parallelism degrees are automatically inferred based on the
+total number of devices on the machine.</p>
 </section>
-<section id="best-practices-in-furiosa-llm">
-<h3>Best Practices in Furiosa LLM<a class="headerlink" href="#best-practices-in-furiosa-llm" title="Link to this heading">#</a></h3>
-<p>Each parallelism type has its own natures and constraints.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> can be at most the number of RNGD cards; e.g.,</p>
-<ul class="simple">
-<li><p>With 2 RNGD cards, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> should be <code class="docutils literal notranslate"><span class="pre">&lt;=2</span></code>.</p></li>
-<li><p>With 8 RNGD cards, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> should be <code class="docutils literal notranslate"><span class="pre">&lt;=8</span></code>.</p></li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> should be 4 or 8 in the 2024.2 release.
-In the future release, it can be higher than 8.</p>
+<section id="best-practices-for-furiosa-llm">
+<h3>Best Practices for Furiosa LLM<a class="headerlink" href="#best-practices-for-furiosa-llm" title="Link to this heading">#</a></h3>
+<p>Each parallelism type has its own characteristics and constraints.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> parameter can be at most the number of devices.
+The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2024.2 release;
+future releases will lift this limitation.</p>
 <p>The product of <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>
-should be equal to the total number of NPUs in your machine; i.e.,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TP</span> <span class="n">size</span> <span class="n">x</span> <span class="n">PP</span> <span class="n">size</span> <span class="n">x</span> <span class="n">DP</span> <span class="n">size</span> <span class="o">=</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">NPU</span> <span class="n">PEs</span>
-</pre></div>
-</div>
-<p>For examples, let’s assume that you have 4 RNGD cards, each of which has 8 PEs. Then, the total number of PEs is 32.
+should be equal to the total number of PEs in your machine.</p>
+<p>For example, let’s assume that you have 4 RNGD cards, each of which has 8 PEs.
+Then, the total number of PEs is 32.
 In that case, you can use the following configurations:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tensor_parallel_size=8</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size=4</span></code>, <code class="docutils literal notranslate"><span class="pre">data_parallel_size=1</span></code></p></li>
@@ -494,20 +502,20 @@ In that case, you can use the following configurations:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="model-preparation-workflow.html"
+       href="furiosa-llm-serve.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Model Preparation Workflow</p>
+        <p class="prev-next-title">OpenAI-Compatible Server</p>
       </div>
     </a>
     <a class="right-next"
-       href="references.html"
+       href="reference.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title">API Reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -531,8 +539,8 @@ In that case, you can use the following configurations:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">Tensor Parallelism (TP)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">Pipeline Parallelism (PP)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism-dp">Data Parallelism (DP)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-configure-model-parallelism-in-furiosa-llm">How to Configure Model Parallelism in Furiosa LLM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-in-furiosa-llm">Best Practices in Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-model-parallelism-in-furiosa-llm">Configuring Model Parallelism in Furiosa LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-furiosa-llm">Best Practices for Furiosa LLM</a></li>
 </ul>
 </li>
 </ul>

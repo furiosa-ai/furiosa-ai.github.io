@@ -11,7 +11,7 @@ This document explains how to install and use Furiosa LLM.
 
 .. warning::
 
-  This document is based on the Furiosa SDK |release| (beta0) version.
+  This document is based on Furiosa SDK |release| (beta0).
   The features and APIs described herein are subject to change in the future.
 
 

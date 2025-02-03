@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -411,7 +411,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <section id="furiosa-sdk-2024-2-1-beta0-2025-01-10">
 <span id="release2024-2-1"></span><h2>Furiosa SDK 2024.2.1 Beta0 (2025-01-10)<a class="headerlink" href="#furiosa-sdk-2024-2-1-beta0-2025-01-10" title="Link to this heading">#</a></h2>
 <p>2024.2.1 is a minor release based on 2024.2.0 major release.</p>
-<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a> section for instructions on
+<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> section for instructions on
 obtaining this update.</p>
 <section id="highlights">
 <span id="release2024-2-1-highlights"></span><h3>🚀 Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h3>
@@ -491,7 +491,7 @@ This release includes a lot of new features and significant improvements,
 including new model support, support for context lengths of up to 8k,
 support for Tensor Parallelism, support for PyTorch 2.4, Optimum API, and
 multiple performance improvements.</p>
-<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading the Furiosa Software Stack</span></a> section for instructions on
+<p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> section for instructions on
 obtaining this update.</p>
 <section id="release2024-2-0-highlights">
 <span id="id1"></span><h3>🚀 Highlights<a class="headerlink" href="#release2024-2-0-highlights" title="Link to this heading">#</a></h3>
@@ -504,7 +504,7 @@ obtaining this update.</p>
 <li><dl class="simple">
 <dt>Furiosa LLM</dt><dd><ul>
 <li><dl class="simple">
-<dt>ArtifactBuilder API and CLI tools (refer to <a class="reference internal" href="../furiosa_llm/furiosa-llm-build.html#artifactbuilder"><span class="std std-ref">ArtifactBuilder API</span></a>)</dt><dd><ul>
+<dt>ArtifactBuilder API and CLI tools (refer to <span class="xref std std-ref">ArtifactBuilder</span>)</dt><dd><ul>
 <li><p>Users can build artifacts from Huggingface Hub models with Huggingface Transformers compatible API</p></li>
 </ul>
 </dd>

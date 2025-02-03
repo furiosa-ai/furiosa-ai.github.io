@@ -1,9 +1,9 @@
 
 .. _UpgradeGuide:
 
-************************************
-Upgrading the Furiosa Software Stack
-************************************
+******************************
+Upgrading FuriosaAI's Software
+******************************
 The high-level upgrade workflow is as follows:
 
 1. Upgrade the prerequisite packages (the driver and PE Runtime packages).

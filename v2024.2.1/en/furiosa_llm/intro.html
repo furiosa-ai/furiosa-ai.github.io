@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="OpenAI Compatible Server" href="furiosa-llm-serve.html" />
-    <link rel="prev" title="Upgrading the Furiosa Software Stack" href="../getting_started/upgrade_guide.html" />
+    <link rel="next" title="Model Preparation Workflow" href="model-preparation-workflow.html" />
+    <link rel="prev" title="Upgrading FuriosaAI’s Software" href="../getting_started/upgrade_guide.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2024.2.1" />
@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Furiosa LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -388,29 +388,31 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                   
   <section id="furiosa-llm">
 <span id="furiosallm"></span><h1>Furiosa LLM<a class="headerlink" href="#furiosa-llm" title="Link to this heading">#</a></h1>
-<p>Furiosa LLM is a high-performance inference engine for LLM models and Multi-Modal LLM models,
-Furiosa LLM is designed to provide the state-of-the-art serving optimization.
-The features of Furiosa LLM includes:</p>
+<p>Furiosa LLM is a high-performance inference engine for LLM and multi-modal
+LLM models.
+Furiosa LLM offers state-of-the-art serving efficiency and optimizations.
+Key features of Furiosa LLM include:</p>
 <ul class="simple">
 <li><p>vLLM-compatible API (LLM, LLMEngine, AsyncLLMEngine API)</p></li>
 <li><p>Efficient KV cache management with PagedAttention</p></li>
-<li><p>Continuous batching of incoming requests in serving</p></li>
+<li><p>Continuous batching of incoming requests</p></li>
 <li><p>Quantization: INT4, INT8, FP8, GPTQ, AWQ</p></li>
-<li><p>Data, Tensor, Pipeline Parallelism support across multiple NPUs</p></li>
+<li><p>Support for data, tensor, and pipeline parallelism across multiple NPUs</p></li>
 <li><p>OpenAI-compatible API server</p></li>
-<li><p>Various decoding algorithms, greedy search, beam search, top-k/top-p, speculative decoding (planned in 2024.2)</p></li>
-<li><p>Up to 32k context length support</p></li>
-<li><p>HuggingFace model integration and hub support</p></li>
-<li><p>HuggingFace PEFT support (planned)</p></li>
+<li><p>Various decoding algorithms: greedy search, beam search, top-k/top-p, and
+speculative decoding (planned for 2025.1)</p></li>
+<li><p>Support for context lengths of up to 32k</p></li>
+<li><p>Integration with Hugging Face models and hub support</p></li>
+<li><p>Hugging Face PEFT support (planned)</p></li>
 </ul>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa LLM</span></a>: A quick start guide to Furiosa LLM</p></li>
-<li><p><a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Compatible Server</span></a>: More details about the OpenAI-compatible server and its features</p></li>
-<li><p><a class="reference internal" href="model-preparation-workflow.html#modelpreparationworkflow"><span class="std std-ref">Model Preparation Workflow</span></a>: How to quantize and compile Huggingface models</p></li>
-<li><p><a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a>: Tensor/Pipeline/Data parallelism in Furiosa LLM</p></li>
-<li><p><a class="reference internal" href="references.html#furiosallmreference"><span class="std std-ref">References</span></a>: The Python API reference for Furiosa LLM</p></li>
+<li><p><a class="reference internal" href="model-preparation-workflow.html#modelpreparationworkflow"><span class="std std-ref">Model Preparation Workflow</span></a>: Guide on how to prepare models to be served by Furiosa LLVM</p></li>
+<li><p><a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>: Details about the OpenAI-compatible server and its features</p></li>
+<li><p><a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a>: Guide on tensor/pipeline/data parallelism in Furiosa LLM</p></li>
+<li><p><a class="reference internal" href="reference.html#furiosallmreference"><span class="std std-ref">API Reference</span></a>: Python API reference for Furiosa LLM</p></li>
 </ul>
 </section>
 </section>
@@ -432,15 +434,15 @@ The features of Furiosa LLM includes:</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Upgrading the Furiosa Software Stack</p>
+        <p class="prev-next-title">Upgrading FuriosaAI’s Software</p>
       </div>
     </a>
     <a class="right-next"
-       href="furiosa-llm-serve.html"
+       href="model-preparation-workflow.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">OpenAI Compatible Server</p>
+        <p class="prev-next-title">Model Preparation Workflow</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

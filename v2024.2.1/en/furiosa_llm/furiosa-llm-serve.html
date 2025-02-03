@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI Compatible Server &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
   
   
   
@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model Preparation Workflow" href="model-preparation-workflow.html" />
-    <link rel="prev" title="Furiosa LLM" href="intro.html" />
+    <link rel="next" title="Model Parallelism" href="model-parallelism.html" />
+    <link rel="prev" title="Model Preparation Workflow" href="model-preparation-workflow.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2024.2.1" />
@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa LLM</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -364,7 +364,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>OpenAI Compatible Server</h1>
+    <h1>OpenAI-Compatible Server</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -375,11 +375,9 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool Calling</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-llm-serve-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-openai-api-with-furiosa-llm">Using OpenAI API with Furiosa LLM</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-compatibility-with-openai-api">The compatibility with OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-with-openai-api">Compatibility with OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server-container">Launching the OpenAI-Compatible Server Container</a></li>
 </ul>
             </nav>
@@ -393,13 +391,13 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
                 <article class="bd-article">
                   
   <section id="openai-compatible-server">
-<span id="openaiserver"></span><h1>OpenAI Compatible Server<a class="headerlink" href="#openai-compatible-server" title="Link to this heading">#</a></h1>
-<p>In addition to Python API, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> also offers an OpenAI-compatible server
-which hosts a single model and provides two OpenAI-compatible APIs:
+<span id="openaiserver"></span><h1>OpenAI-Compatible Server<a class="headerlink" href="#openai-compatible-server" title="Link to this heading">#</a></h1>
+<p>In addition to the Python API, Furiosa LLVM offers an OpenAI-compatible server
+that hosts a single model and provides two OpenAI-compatible APIs:
 <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a> and
 <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>.</p>
-<p>You can simply launch the server using the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command with an artifact path
-as the following.</p>
+<p>To launch the server, use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command with the model
+artifact path, as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="o">--</span><span class="n">model</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -407,129 +405,24 @@ as the following.</p>
 and interact with the server using OpenAI API clients.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2024.2.1 (beta0) version,
-and the features and APIs described in this document may change in the future.</p>
+<p>This document is based on Furiosa SDK 2024.2.1 (beta0).
+The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
-<p>To use the OpenAI-Compatible server, you need the following prerequisites:</p>
+<p>To use the OpenAI-Compatible server, you need the following:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../getting_started/prerequisites.html#aptsetup"><span class="std std-ref">Setting up APT</span></a> and <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a></p></li>
-<li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa LLM Installation</span></a></p></li>
-<li><p><a class="reference internal" href="../getting_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">HuggingFace Access Token</span></a></p></li>
-<li><p>LLM Engine Artifact</p></li>
+<li><p>A system with the prerequisites installed (see <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
+<li><p>An installation of <a class="reference internal" href="../getting_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa LLM</span></a></p></li>
+<li><p>A <a class="reference internal" href="../getting_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
+<li><p>A model artifact</p></li>
 <li><p>Chat template for chat application (Optional)</p></li>
 </ul>
 </section>
-<section id="chat-templates">
-<h2>Chat Templates<a class="headerlink" href="#chat-templates" title="Link to this heading">#</a></h2>
-<p>To use the language models for chat application, we need a structured string instead of a single string.
-It’s necessary because the model should be able to understand the context of the conversation,
-including the role of the speaker (e.g., “user” and “assistant”) and the content of the message.
-Similar to tokenization, different models require very different input formats for chat.
-That’s why we need a chat template.</p>
-<p>Furiosa LLM supports chat templates based on Jinja2 template engine in the same way as HuggingFace Transformers.
-If the model’s tokenizer provides a built-in chat template, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> will automatically use it.
-You can also provide the <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> parameter if the tokenizer lacks a built-in template or if you want to override the default one.
-For reference, you can find a good example of how to write a chat template at <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
-<p>The following command launches the server with a custom chat template:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
-</pre></div>
-</div>
-</section>
-<section id="tool-calling">
-<h2>Tool Calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h2>
-<p>The server supports the function calling (tool calling) feature for models that are trained with this capability.</p>
-<p>Within the <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> options supported by the <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice">OpenAI API</a>, the choices <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code> are currently supported.
-Future releases will extend support to <code class="docutils literal notranslate"><span class="pre">&quot;required&quot;</span></code> and named function calling.</p>
-<p>The system converts model outputs into the OpenAI response format through a designated parser implementation.
-At present, the <code class="docutils literal notranslate"><span class="pre">llama3_json</span></code> parser is exclusively available. Additional parsers will be made available as more models are integrated.</p>
-<p>The following command starts the server with tool calling enabled for Llama 3.1 models:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--enable-auto-tool-choice<span class="w"> </span>--tool-call-parser<span class="w"> </span>llama3_json
-</pre></div>
-</div>
-<p>To use the tool calling feature, use <code class="docutils literal notranslate"><span class="pre">tools</span></code> and <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> parameters. The following is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">...&quot;</span>
-<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;get_weather&quot;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
-
-<span class="n">tools</span> <span class="o">=</span> <span class="p">[{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;City and state, e.g., &#39;San Francisco, CA&#39;&quot;</span><span class="p">},</span>
-                <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]}</span>
-            <span class="p">},</span>
-            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}]</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.1-70B-Instruct&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
-    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span> <span class="c1"># None is also equivalent to &quot;auto&quot;</span>
-<span class="p">)</span>
-
-<span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The expected output is as follows.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Function called: get_weather
-Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot;: &quot;fahrenheit&quot;}
-Result: Getting the weather for San Francisco, CA in fahrenheit...
-</pre></div>
-</div>
-</section>
-<section id="arguments-of-furiosa-llm-serve-command">
-<h2>Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command<a class="headerlink" href="#arguments-of-furiosa-llm-serve-command" title="Link to this heading">#</a></h2>
-<p>By default, the server binds to <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>, and
-you can change the host and port using the <code class="docutils literal notranslate"><span class="pre">--host</span></code> and <code class="docutils literal notranslate"><span class="pre">--port</span></code> options.
-The following is the list of options and arguments for the serve command:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: furiosa-llm serve [-h] --model MODEL [--host HOST] [--port PORT] [--chat-template CHAT_TEMPLATE] [--response-role RESPONSE_ROLE] [-tp TENSOR_PARALLEL_SIZE] [-pp PIPELINE_PARALLEL_SIZE]
-                        [-dp DATA_PARALLEL_SIZE] [--devices DEVICES]
-
-options:
-    -h, --help            show this help message and exit
-    --model MODEL         The Hugging Face model id, or path to Furiosa model artifact. Currently only one model is supported per server.
-    --host HOST           Host to bind the server to (default: 0.0.0.0)
-    --port PORT           Port to bind the server to (default: 8000)
-    --chat-template CHAT_TEMPLATE
-                          If given, the default chat template will be overridden with the given file. (Default: use chat template from tokenizer)
-    --enable-auto-tool-choice
-                          Enable auto tool choice for supported models. Use --tool-call-parser to specify which parser to use
-    --tool-call-parser {llama3_json}
-                          Select the tool call parser depending on the model that you&#39;re using. This is used to parse the model-generated tool call into OpenAI API format.
-                          Required for --enable-auto-tool-choice.
-    --response-role RESPONSE_ROLE
-                            Response role for /v1/chat/completions API (default: assistant)
-    -tp TENSOR_PARALLEL_SIZE, --tensor-parallel-size TENSOR_PARALLEL_SIZE
-                            Number of tensor parallel replicas. (default: 4)
-    -pp PIPELINE_PARALLEL_SIZE, --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
-                            Number of pipeline stages. (default: 1)
-    -dp DATA_PARALLEL_SIZE, --data-parallel-size DATA_PARALLEL_SIZE
-                            Data parallelism size. If not given, it will be inferred from total avaialble PEs and other parallelism degrees.
-    --devices DEVICES     Devices to use (e.g. &quot;npu:0:*,npu:1:*&quot;). If unspecified, all available devices from the host will be used.
-</pre></div>
-</div>
-</section>
-<section id="using-openai-api-with-furiosa-llm">
-<h2>Using OpenAI API with Furiosa LLM<a class="headerlink" href="#using-openai-api-with-furiosa-llm" title="Link to this heading">#</a></h2>
-<p>Once the server is launched, you can interact with the server using HTTP clients
-as the following <code class="docutils literal notranslate"><span class="pre">CURL</span></code> command example.</p>
+<section id="using-the-openai-api">
+<h2>Using the OpenAI API<a class="headerlink" href="#using-the-openai-api" title="Link to this heading">#</a></h2>
+<p>Once the server is running, you can interact with it using an HTTP client,
+as shown in the following example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -539,14 +432,15 @@ as the following <code class="docutils literal notranslate"><span class="pre">CU
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
-<p>You can use OpenAI client to interact with the server.
-To use OpenAI client, you need to install the <code class="docutils literal notranslate"><span class="pre">openai</span></code> package first.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">openai</span><span class="o">==</span><span class="m">1</span>.58.1
+<p>You can also use the OpenAI client to interact with the server.
+To use the OpenAI client, you need to install the <code class="docutils literal notranslate"><span class="pre">openai</span></code> package first:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>openai
 </pre></div>
 </div>
-<p>OpenAI client provides two APIs: <code class="docutils literal notranslate"><span class="pre">client.chat.completions</span></code> and <code class="docutils literal notranslate"><span class="pre">client.completions</span></code>.
-You can use the <code class="docutils literal notranslate"><span class="pre">client.chat.completions</span></code>
-API with <code class="docutils literal notranslate"><span class="pre">stream=True</span></code> for streaming responses, as following:</p>
+<p>The OpenAI client provides two APIs: <code class="docutils literal notranslate"><span class="pre">client.chat.completions</span></code> and
+<code class="docutils literal notranslate"><span class="pre">client.completions</span></code>.
+To stream responses, you can use the <code class="docutils literal notranslate"><span class="pre">client.chat.completions</span></code>
+API with <code class="docutils literal notranslate"><span class="pre">stream=True</span></code>, as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
 
@@ -571,19 +465,46 @@ API with <code class="docutils literal notranslate"><span class="pre">stream=Tru
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">run</span><span class="p">())</span>
 </pre></div>
 </div>
+<p>By default, the Furiosa LLM server binds to <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>.
+You can change the host and port using the <code class="docutils literal notranslate"><span class="pre">--host</span></code> and <code class="docutils literal notranslate"><span class="pre">--port</span></code> options.</p>
 </section>
-<section id="the-compatibility-with-openai-api">
-<h2>The compatibility with OpenAI API<a class="headerlink" href="#the-compatibility-with-openai-api" title="Link to this heading">#</a></h2>
-<p>Here are the API parameters currently supported by the server:
-For detailed information on each parameter, please refer to <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a>
-and <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>. The parameters generally function in the same way, except where differences are explicitly noted.</p>
+<section id="chat-templates">
+<h2>Chat Templates<a class="headerlink" href="#chat-templates" title="Link to this heading">#</a></h2>
+<p>To use a language model in a chat application, we need to prepare a structured
+string to give as input.
+This is essential because the model must understand the conversation’s context,
+including the speaker’s role (e.g., “user” and “assistant”) and the
+message content.
+Just as different models require distinct tokenization methods, they also have
+varying input formats for chat.
+This is why a chat template is necessary.</p>
+<p>Furiosa LLM supports chat templates based on the Jinja2 template engine, similar
+to Hugging Face Transformers.
+If the model’s tokenizer includes a built-in chat template,
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> will automatically use it.
+However, if the tokenizer lacks a built-in template, or if you want to override
+the default, you can specify one using the <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> parameter.</p>
+<p>For reference, you can find a well-structured example of a chat template in the
+<a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
+<p>To launch the server with a custom chat template, use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--model<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="compatibility-with-openai-api">
+<h2>Compatibility with OpenAI API<a class="headerlink" href="#compatibility-with-openai-api" title="Link to this heading">#</a></h2>
+<p>Below are the API parameters currently supported by Furiosa LLM:</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not allowed
-because the beam search cannot determine the tokens until the end of the sequence.</p>
-<p>In 2024.2 release, <code class="docutils literal notranslate"><span class="pre">n</span></code> works only for beam search and it will be fixed in the next release.</p>
+<p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> together with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not
+allowed because beam search requires the whole sequence to produce the
+output tokens.</p>
+<p>In the 2024.2 release, <code class="docutils literal notranslate"><span class="pre">n</span></code> works only for beam search. This limitation
+will be fixed in the next release.</p>
 </div>
-<p>Parameters supported by both <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions API</a> and <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>:</p>
+<p>Parameters supported by both the
+<a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions</a> and
+<a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat</a> APIs:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></li>
@@ -597,15 +518,12 @@ because the beam search cannot determine the tokens until the end of the sequenc
 <li><p><code class="docutils literal notranslate"><span class="pre">best_of</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code></p></li>
 </ul>
-<p>Parameters supported by <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a>:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tool_choice</span></code></p></li>
-</ul>
 </section>
 <section id="launching-the-openai-compatible-server-container">
 <h2>Launching the OpenAI-Compatible Server Container<a class="headerlink" href="#launching-the-openai-compatible-server-container" title="Link to this heading">#</a></h2>
-<p>Furiosa LLM can be launched immedaitely as a containerized server.</p>
+<p>FuriosaAI offers a containerized server that can be used for faster deployment.
+Here is an example that launches the Furiosa LLM server in a Docker container
+(replace <code class="docutils literal notranslate"><span class="pre">$HF_TOKEN</span></code> with your Hugging Face Hub token):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -it --rm --privileged \
     --env HF_TOKEN=$HF_TOKEN \
     -v ./Llama-3.1-8B-Instruct:/model \
@@ -629,20 +547,20 @@ because the beam search cannot determine the tokens until the end of the sequenc
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="intro.html"
+       href="model-preparation-workflow.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Furiosa LLM</p>
+        <p class="prev-next-title">Model Preparation Workflow</p>
       </div>
     </a>
     <a class="right-next"
-       href="model-preparation-workflow.html"
+       href="model-parallelism.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Preparation Workflow</p>
+        <p class="prev-next-title">Model Parallelism</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -664,11 +582,9 @@ because the beam search cannot determine the tokens until the end of the sequenc
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool Calling</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-of-furiosa-llm-serve-command">Arguments of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-openai-api-with-furiosa-llm">Using OpenAI API with Furiosa LLM</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-compatibility-with-openai-api">The compatibility with OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-with-openai-api">Compatibility with OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server-container">Launching the OpenAI-Compatible Server Container</a></li>
 </ul>
   </nav></div>

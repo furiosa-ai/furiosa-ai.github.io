@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Upgrading the Furiosa Software Stack &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>Upgrading FuriosaAI’s Software &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
   
   
   
@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -362,7 +362,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Upgrading the Furiosa Software Stack</h1>
+    <h1>Upgrading FuriosaAI’s Software</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,8 +376,8 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="upgrading-the-furiosa-software-stack">
-<span id="upgradeguide"></span><h1>Upgrading the Furiosa Software Stack<a class="headerlink" href="#upgrading-the-furiosa-software-stack" title="Link to this heading">#</a></h1>
+  <section id="upgrading-furiosaai-s-software">
+<span id="upgradeguide"></span><h1>Upgrading FuriosaAI’s Software<a class="headerlink" href="#upgrading-furiosaai-s-software" title="Link to this heading">#</a></h1>
 <p>The high-level upgrade workflow is as follows:</p>
 <ol class="arabic simple">
 <li><p>Upgrade the prerequisite packages (the driver and PE Runtime packages).</p></li>

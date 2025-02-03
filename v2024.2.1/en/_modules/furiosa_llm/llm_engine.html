@@ -181,23 +181,23 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_llm.html">Quick Start with Furiosa LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../getting_started/upgrade_guide.html">Upgrading the Furiosa Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa LLM</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/intro.html">Furiosa LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-preparation-workflow.html">Model Preparation Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/references.html">References</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm.html">LLM class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/sampling_params.html">SamplingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/artifact_builder.html">ArtifactBuilder</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/llm_engine.html">LLMEngine class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/references/async_llm_engine.html">AsyncLLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
 </details></li>
 </ul>
@@ -541,7 +541,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 
 <span class="c1"># TODO: currently LLMEngine wraps LLM, but the relationship must be inverted</span>
 <div class="viewcode-block" id="LLMEngine">
-<a class="viewcode-back" href="../../furiosa_llm/references/llm_engine.html#furiosa_llm.LLMEngine">[docs]</a>
+<a class="viewcode-back" href="../../furiosa_llm/reference/llm_engine.html#furiosa_llm.LLMEngine">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LLMEngine</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -674,7 +674,7 @@ Please checkout <a href="https://furiosa-ai.github.io/docs/v2024.2.1/en/whatsnew
 
 
 <div class="viewcode-block" id="AsyncLLMEngine">
-<a class="viewcode-back" href="../../furiosa_llm/references/async_llm_engine.html#furiosa_llm.AsyncLLMEngine">[docs]</a>
+<a class="viewcode-back" href="../../furiosa_llm/reference/async_llm_engine.html#furiosa_llm.AsyncLLMEngine">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AsyncLLMEngine</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
