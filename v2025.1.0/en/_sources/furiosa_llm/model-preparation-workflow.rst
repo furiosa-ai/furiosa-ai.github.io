@@ -125,19 +125,11 @@ decode buckets, etc. You can find more details about the arguments in the
 Alternatively, you can use the ``furiosa-llm build`` command to build a model
 artifact.
 Below is an example that produces an artifact that uses 4-way tensor
-parallelism.
+parallelism and will save the compiled artifact into the ``./Llama-3.1-8B-Instruct`` directory.
 
-.. code-block:: sh
 
-    furiosa-llm build path/to/quantized_model \
-        --devices "npu:0" \
-        -tp 4 \
-        -pb 1,512 -pb 1,1024 \
-        -db 1,2048 -db 8,2048 -db 16,2048 -db 64,2048 -db 128,2048 \
-        --additional-model-config calculate_logit_only_for_last_token=True \
-        --num-pipeline-builder-workers 4 \
-        --num-compile-workers 4
-
+.. literalinclude:: ../../../examples/furiosa_llm_build_cmd.sh
+  :language: sh
 
 .. tip::
 

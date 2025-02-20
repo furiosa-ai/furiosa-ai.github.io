@@ -511,10 +511,7 @@ Here is an example using the <a class="reference internal" href="reference/artif
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
         <span class="n">quantized_model</span><span class="p">,</span>
-        <span class="s2">&quot;npu:0&quot;</span><span class="p">,</span>
         <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-        <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="mi">80000</span><span class="p">,</span> <span class="c1"># Number of blocks for paged attention</span>
         <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
 <span class="p">)</span>
 <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">compiled_model</span><span class="p">)</span>
@@ -527,13 +524,10 @@ decode buckets, etc. You can find more details about the arguments in the
 <p>Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command to build a model
 artifact.
 Below is an example that produces an artifact that uses 4-way tensor
-parallelism.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>path/to/quantized_model<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span><span class="w"> </span><span class="se">\</span>
+parallelism and will save the compiled artifact into the <code class="docutils literal notranslate"><span class="pre">./Llama-3.1-8B-Instruct</span></code> directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span>./Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-tp<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-pb<span class="w"> </span><span class="m">1</span>,512<span class="w"> </span>-pb<span class="w"> </span><span class="m">1</span>,1024<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-db<span class="w"> </span><span class="m">1</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">8</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">16</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">64</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">128</span>,2048<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--additional-model-config<span class="w"> </span><span class="nv">calculate_logit_only_for_last_token</span><span class="o">=</span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">1024</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--num-pipeline-builder-workers<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--num-compile-workers<span class="w"> </span><span class="m">4</span>
 </pre></div>

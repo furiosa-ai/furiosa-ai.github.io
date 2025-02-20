@@ -145,6 +145,12 @@ Below are the API parameters currently supported by Furiosa LLM:
     In the 2024.2 release, ``n`` works only for beam search. This limitation
     will be fixed in the next release.
 
+.. warning::
+    
+    The ``max_tokens`` parameter in the Chat API has been deprecated in favor of
+    ``max_completion_tokens``. While both parameters are currently supported for
+    backwards compatibility, ``max_tokens`` will be removed in a future release.
+
 Parameters supported by both the
 `Completions <https://platform.openai.com/docs/api-reference/completions>`_ and
 `Chat <https://platform.openai.com/docs/api-reference/chat>`_ APIs:
@@ -155,15 +161,16 @@ Parameters supported by both the
 * ``top_k``
 * ``early_stopping``
 * ``length_penalty``
-* ``max_tokens``
-* ``min_tokens``
 * ``use_beam_search``
 * ``best_of``
 * ``stream``
+* ``min_tokens``
+* ``max_tokens``
 
 Parameters supported by the
 `Chat API <https://platform.openai.com/docs/api-reference/chat>`_ only:
 
+* ``max_completion_tokens``
 * ``tools``
 * ``tool_choice``
 

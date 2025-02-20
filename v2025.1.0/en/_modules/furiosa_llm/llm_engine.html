@@ -333,7 +333,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">fields</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedTokenizerBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span>
@@ -342,7 +342,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.api</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">CACHE_DIR</span><span class="p">,</span>
     <span class="n">LLM</span><span class="p">,</span>
-    <span class="n">LLMBackend</span><span class="p">,</span>
     <span class="n">RequestOutput</span><span class="p">,</span>
     <span class="n">SamplingParams</span><span class="p">,</span>
     <span class="n">SchedulerConfig</span><span class="p">,</span>
@@ -384,15 +383,13 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="k">class</span><span class="w"> </span><span class="nc">EngineArgs</span><span class="p">:</span>
     <span class="c1"># Currently only artifact path is supported</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">num_speculative_tokens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">use_speculative_decoding_if_possible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">data_parallel_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tokenizer_mode</span><span class="p">:</span> <span class="n">TokenizerModeType</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
     <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">devices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">cache_dir</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="n">CACHE_DIR</span>
-    <span class="n">backend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LLMBackend</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">paged_attention_num_blocks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># scheduler_config</span>
@@ -400,9 +397,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
     <span class="n">max_processing_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">spare_blocks_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">is_offline</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">packing_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;IDENTITY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;IDENTITY&quot;</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArgumentParser</span><span class="p">:</span>
@@ -414,12 +408,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
             <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the LLM engine artifact (Pretrained id will be supported in the future releases).&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--num-speculative-tokens&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The number of tokens that specualtive model will generate speculatively during each iteration of the decoding process.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">&#39;--tokenizer&#39;</span><span class="p">,</span>
@@ -451,6 +439,13 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="s1">&#39;If not given, available devices will be used.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--pipeline-parallel-size&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The size of the pipeline parallelism group. &#39;</span>
+            <span class="s1">&#39;If not given, it will use the default pp value of the artifact.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">&#39;--data-parallel-size&#39;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
@@ -463,13 +458,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The cache directory for temporarily generated files for this LLM instance. &#39;</span>
             <span class="s1">&#39;When its value is ``None``, caching is disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--backend&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The backend implementation to run forward() of a model for the LLM. &#39;</span>
-            <span class="s1">&#39;If not specified, the backend will be chosen based on the device kind.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">&#39;--paged-attention-num-blocks&#39;</span><span class="p">,</span>
@@ -502,28 +490,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">is_offline</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;If True, the scheduler will assume the workload will be offline scenario.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--use-speculative-decoding-if-possible&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If True, speculative decoding will be used if possible &quot;</span>
-            <span class="s2">&quot;(`speculative_model` is given or there&#39;s artifacts for specualtive model in the artifacts.). &quot;</span>
-            <span class="s2">&quot;Otherwise, speculative decoding will not be used.&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--speculative-model-paged-attention-num-blocks&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The maximum number of blocks that each k/v storage per layer can store for the specualtive model. &#39;</span>
-            <span class="s1">&#39;This argument must be given if the specualtive model uses paged attention.&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--packing-type&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Packing algorithm. Possible values are &quot;IDENTITY&quot; only for now&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-
         <span class="k">return</span> <span class="n">parser</span>
 
     <span class="nd">@classmethod</span>
@@ -633,28 +599,24 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="sd">        Creates an LLMEngine from EngineArgs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/scheduler_config.json&quot;</span><span class="p">)</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/runtime_config.json&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">scheduler_config_attr</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">SchedulerConfig</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">v</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="n">scheduler_config_</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">from_artifacts</span><span class="p">(</span>
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">load_artifact</span><span class="p">(</span>
             <span class="n">path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
-            <span class="n">use_speculative_decoding_if_possible</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
+            <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
             <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
             <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_mode</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
-            <span class="n">backend</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
             <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">paged_attention_num_blocks</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config_</span><span class="p">,</span>
-            <span class="n">speculative_model_paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
-            <span class="n">packing_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span></div>
@@ -771,28 +733,24 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="sd">        Creates an AsyncLLMEngine from AsyncEngineArgs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/scheduler_config.json&quot;</span><span class="p">)</span>
+            <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">/runtime_config.json&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">scheduler_config_attr</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">SchedulerConfig</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">v</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="n">scheduler_config_</span><span class="p">,</span> <span class="n">scheduler_config_attr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">scheduler_config_</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">from_artifacts</span><span class="p">(</span>
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="o">.</span><span class="n">load_artifact</span><span class="p">(</span>
             <span class="n">path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
-            <span class="n">use_speculative_decoding_if_possible</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_speculative_decoding_if_possible</span><span class="p">,</span>
+            <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
             <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
             <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_mode</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
-            <span class="n">backend</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
             <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">paged_attention_num_blocks</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config_</span><span class="p">,</span>
-            <span class="n">speculative_model_paged_attention_num_blocks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">speculative_model_paged_attention_num_blocks</span><span class="p">,</span>
-            <span class="n">packing_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">packing_type</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span></div>

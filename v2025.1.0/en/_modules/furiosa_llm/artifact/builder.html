@@ -414,14 +414,12 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="sd">    Args:</span>
 <span class="sd">        model_id_or_path: The Huggingface model id or a local path. This corresponds to</span>
 <span class="sd">            pretrained_model_name_or_path in HuggingFace Transformers.</span>
-<span class="sd">        devices: The devices to run the model. It can be a single device or a list of devices.</span>
-<span class="sd">            Each device can be either &quot;npu:X&quot; or &quot;npu:X:\*&quot; where X is a specific device index.</span>
-<span class="sd">            If not given, build the artifact based on using just one device.</span>
 <span class="sd">        name: The name of the artifact to build.</span>
 <span class="sd">        tensor_parallel_size: The number of PEs for each tensor parallelism group. The default is 4.</span>
-<span class="sd">        pipeline_parallel_size: The number of pipeline stages for pipeline parallelism. The default is 1,</span>
-<span class="sd">            which means no pipeline parallelism.</span>
-<span class="sd">        data_parallel_size: The size of the data parallelism group. If not given, it will be inferred from</span>
+<span class="sd">        pipeline_parallel_size: The number of pipeline stages for pipeline parallelism. The default is 1.</span>
+<span class="sd">            This param configures the default pipeline parallelism degree for the artifact.</span>
+<span class="sd">            pipeline_parallel_size can be overridden when the artifact is loaded.</span>
+<span class="sd">        data_parallel_size: The size of the data parallelism group. If not given, it will be derived from</span>
 <span class="sd">            total avaialble PEs and other parallelism degrees.</span>
 <span class="sd">        prefill_buckets: Specify the bucket size for prefill</span>
 <span class="sd">        decode_buckets: Specify the bucket size for decode</span>
@@ -451,8 +449,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="sd">        kv_cache_sharing_across_beams_config: Configuration for sharing kv cache across beams. This argument must be given if and only if</span>
 <span class="sd">            the model is optimized to share kv cache across beams. If this argument is given, decode phase buckets with batch size of</span>
 <span class="sd">            ``batch_size`` \* ``kv_cache_sharing_across_beams_config.beam_width`` will be created.</span>
-<span class="sd">        paged_attention_num_blocks: The maximum number of blocks that each k/v storage per layer can store. This argument must be given</span>
-<span class="sd">            if model uses paged attention. This argument must be given if model uses paged attention.</span>
 <span class="sd">        paged_attention_block_size: The maximum number of tokens that can be stored in a single paged attention block. This argument must be given</span>
 <span class="sd">            if model uses paged attention.</span>
 <span class="sd">        default_scheduler_config: Default configuration for the scheduler, allowing to maximum number of tasks which can be queued to HW,</span>
@@ -463,7 +459,6 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_id_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">devices</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="c1"># Parallelize Config</span>
@@ -478,7 +473,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="c1"># Model Config</span>
         <span class="n">num_hidden_layers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">seed_for_random_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">calculate_logit_only_for_last_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">calculate_logit_only_for_last_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="c1"># Quantize Config</span>
         <span class="n">quantize_artifact_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># Compiler Config</span>
@@ -488,10 +483,9 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="n">num_blocks_per_supertask</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">num_blocks_per_pp_stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">embed_all_constants_into_graph</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">optimize_logit_shape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">optimize_logit_shape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">kv_cache_sharing_across_beams_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KvCacheSharingAcrossBeamsConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># PagedAttention Config</span>
-        <span class="n">paged_attention_num_blocks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">paged_attention_block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="c1"># Scheduler Config for RuntimeConfig</span>
         <span class="n">default_scheduler_config</span><span class="p">:</span> <span class="n">SchedulerConfig</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="p">(),</span>
@@ -546,7 +540,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="c1"># The followings are required for compilation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="n">devices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;npu:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pipeline_parallel_size</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor_parallel_size</span> <span class="o">=</span> <span class="n">tensor_parallel_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_parallel_size</span> <span class="o">=</span> <span class="n">pipeline_parallel_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_parallel_size</span> <span class="o">=</span> <span class="n">data_parallel_size</span>
@@ -575,11 +569,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="bp">self</span><span class="o">.</span><span class="n">kv_cache_sharing_across_beams_config</span> <span class="o">=</span> <span class="n">kv_cache_sharing_across_beams_config</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_metadata</span><span class="o">.</span><span class="n">attention_type</span> <span class="ow">is</span> <span class="n">AttentionType</span><span class="o">.</span><span class="n">PAGED_ATTENTION</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">paged_attention_num_blocks</span><span class="p">:</span>
-                <span class="c1"># TODO: if `paged_attention_num_blocks` is not given, always calculate maximum possible num blocks and use that.</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                    <span class="s2">&quot;`paged_attention_num_blocks` must be given for paged attention models now.&quot;</span>
-                <span class="p">)</span>
+            <span class="n">paged_attention_num_blocks</span> <span class="o">=</span> <span class="mi">65536</span>  <span class="c1"># A dummy number until we remove this option</span>
 
             <span class="k">if</span> <span class="n">paged_attention_block_size</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>

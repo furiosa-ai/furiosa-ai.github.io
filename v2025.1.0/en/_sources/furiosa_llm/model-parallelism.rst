@@ -84,25 +84,20 @@ can be shared due to the shared memory architecture of the device.
 Configuring Model Parallelism in Furiosa LLM
 ============================================
 
-The ArtifactBuilder API and the ``furiosa-llm build`` command provides the
-following options to configure model parallelism:
+The ArtifactBuilder API and the ``furiosa-llm build`` command allows to configure the degree of tensor parallelism
+by specifying the ``--tensor_parallel_size`` or ``-tp`` option.
 
-- ``tensor_parallel_size``: the number of devices/slices for splitting each layer
-- ``pipeline_parallel_size``: the number of devices to split the model vertically
-- ``data_parallel_size``: the number of model replicas
-
-Each option specifies the degree of parallelism for the respective parallelism
-type.
-By default, the parallelism degrees are automatically inferred based on the
-total number of devices on the machine.
-
+``pipeline_parallel_size`` and ``data_parallel_size`` can be configured when loading a model artifact.
+For example, when you run ``furiosa-llm serve``, ``furiosa-mlperf`` command,
+you can specify ``--pipeline-parallel-size`` (or ``-pp``) and ``--data-parallel-size`` (or ``-dp``) options.
+Similarily, ``LLMEngine``, ``AsyncLLMEngine`` allows to specify the degree of pipeline parallelism and data parallelism.
 
 Best Practices for Furiosa LLM
 ==============================
 Each parallelism type has its own characteristics and constraints.
 
 The ``pipeline_parallel_size`` parameter can be at most the number of devices.
-The ``tensor_parallel_size`` parameter can only be 4 or 8 in the 2024.2 release;
+The ``tensor_parallel_size`` parameter can only be 4 or 8 in the |release| release;
 future releases will lift this limitation.
 
 The product of ``tensor_parallel_size``, ``pipeline_parallel_size``, and ``data_parallel_size``

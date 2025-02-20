@@ -370,6 +370,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="sd">            `best_of` must be greater than or equal to `n`. This is treated as</span>
 <span class="sd">            the beam width when `use_beam_search` is True. By default, `best_of`</span>
 <span class="sd">            is set to `n`.</span>
+<span class="sd">        repetition_penalty: Float that penalizes new tokens based on whether</span>
+<span class="sd">            they appear in the prompt and the generated text so far. Values &gt; 1</span>
+<span class="sd">            encourage the model to use new tokens, while values &lt; 1 encourage</span>
+<span class="sd">            the model to repeat tokens.</span>
 <span class="sd">        temperature: Float that controls the randomness of the sampling. Lower</span>
 <span class="sd">            values make the model more deterministic, while higher values make</span>
 <span class="sd">            the model more random. Zero means greedy sampling.</span>
@@ -401,6 +405,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="o">*</span><span class="p">,</span>
         <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">best_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">repetition_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
@@ -414,6 +419,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">=</span> <span class="n">best_of</span> <span class="k">if</span> <span class="n">best_of</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">=</span> <span class="n">repetition_penalty</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">=</span> <span class="n">top_p</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">=</span> <span class="n">top_k</span>
@@ -438,6 +444,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="o">*</span><span class="p">,</span>
         <span class="n">n</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">best_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">repetition_penalty</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">temperature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">top_p</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">top_k</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -452,6 +459,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">n</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span><span class="p">,</span>
             <span class="n">best_of</span><span class="o">=</span><span class="n">best_of</span><span class="p">,</span>
+            <span class="n">repetition_penalty</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">repetition_penalty</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">repetition_penalty</span><span class="p">,</span>
             <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">temperature</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">temperature</span><span class="p">,</span>
             <span class="n">top_p</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">top_p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_p</span><span class="p">,</span>
             <span class="n">top_k</span><span class="o">=-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">top_k</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_k</span><span class="p">,</span>
@@ -469,6 +477,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">)</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">best_of</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">repetition_penalty</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">temperature</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">top_p</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">top_k</span>
@@ -490,6 +499,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;best_of must be greater than or equal to n, &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;got n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2"> and best_of=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">&lt;=</span> <span class="mf">2.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;repetition_penalty must be in (0, 2], got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;temperature must be non-negative, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -548,6 +561,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;SamplingParams(n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;best_of=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;repetition_penalty=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;temperature=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;top_p=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_p</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;top_k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_k</span><span class="si">}</span><span class="s2">, &quot;</span>
