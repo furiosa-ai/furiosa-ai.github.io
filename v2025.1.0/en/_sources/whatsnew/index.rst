@@ -30,7 +30,8 @@ obtaining this update.
 * Support Device remapping (e.g., ``/dev/rngd/npu2pe0-3`` -> ``/dev/rngd/npu0pe0-3``) for container
 * Add the new command line tool ``furiosa-llm build`` to build easily an artifact from Hugging Face model (:ref:`BuildingModelArtifact`)
 * Fix continuous batch scheduling bugs which occur in certain ranges of sequence lengths and batch sizes
-* Maximize the blocked KV cache allocation by reducing the memory fragmentations
+* Automatic configuration of the maximum KV-cache memory allocation
+* Reduce the fragmentations of runtime memory allocation
 * Allow ``furiosa-mlperf`` command to specify ``pipeline_parallel_size`` and ``data_parallel_size``
 * Add ``--allowed-origins`` argument to ``furiosa-llm serve`` (:ref:`OpenAIServer`)
 * Fix ``trust_remote_code`` support bug in furiosa-llm

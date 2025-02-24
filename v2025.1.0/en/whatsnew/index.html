@@ -429,7 +429,8 @@ obtaining this update.</p>
 <li><p>Support Device remapping (e.g., <code class="docutils literal notranslate"><span class="pre">/dev/rngd/npu2pe0-3</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">/dev/rngd/npu0pe0-3</span></code>) for container</p></li>
 <li><p>Add the new command line tool <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> to build easily an artifact from Hugging Face model (<a class="reference internal" href="../furiosa_llm/model-preparation-workflow.html#buildingmodelartifact"><span class="std std-ref">Building a Model Artifact</span></a>)</p></li>
 <li><p>Fix continuous batch scheduling bugs which occur in certain ranges of sequence lengths and batch sizes</p></li>
-<li><p>Maximize the blocked KV cache allocation by reducing the memory fragmentations</p></li>
+<li><p>Automatic configuration of the maximum KV-cache memory allocation</p></li>
+<li><p>Reduce the fragmentations of runtime memory allocation</p></li>
 <li><p>Allow <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command to specify <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code></p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">--allowed-origins</span></code> argument to <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> (<a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>)</p></li>
 <li><p>Fix <code class="docutils literal notranslate"><span class="pre">trust_remote_code</span></code> support bug in furiosa-llm</p></li>
