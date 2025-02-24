@@ -38,7 +38,7 @@ obtaining this update.
 * Support Min-p sampling in ``SamplingParams`` (:ref:`SamplingParams`)
 * Allow ``npu:X`` in addition to ``npu:X:*`` in ``devices`` option
     * e.g., ``furiosa-llm serve ./model --devices "npu:0"``
-* ``fuiorsa-mlperf`` command supports ``npu-queue-limit``, ``spare-blocks-ratio``, allowing to optimize the performance
+* ``fuiorsa-mlperf`` command supports ``npu_queue_limit``, ``spare_blocks_ratio``, allowing to optimize the performance
 
 ⚠️ Deprecations & Upcoming Changes
 ----------------------------------
