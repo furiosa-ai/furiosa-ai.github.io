@@ -120,7 +120,9 @@ Installing the ``furiosa-firmware-image-rngd`` package will automatically upgrad
 The process takes 3 to 5 minutes per device to complete.
 The firmware upgrade process may require a reboot to complete the installation.
 
-.. warning::
+.. note::
 
-  If the firmware upgrade process is interrupted, the device may become unusable.
-  In this case, please contact FuriosaAI support for assistance.
+  Please remember to cold reboot the system after the firmware upgrade process is completed.
+  For more information about the firmware upgrade process. If the firmware upgrade process is interrupted,
+  the device may become unusable. In this case, please contact FuriosaAI support for assistance.
+
