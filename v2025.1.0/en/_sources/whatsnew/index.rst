@@ -44,7 +44,7 @@ obtaining this update.
 ----------------------------------
 * ``LLM.from_artifacts()`` API will be deprecated from the 2025.2.0 release. Please use ``LLM.load_artifact()`` instead (:ref:`LLMClass`).
 
-👎 Breaking Changes
+🚨 Breaking Changes
 --------------------
 * ``--model`` option of ``furiosa-llm serve`` become a positional argument.
   Please use ``furiosa-llm serve <model>`` instead of ``furiosa-llm serve --model <model>``. (:ref:`OpenAIServer`)
@@ -146,7 +146,7 @@ obtaining this update.
 * About 20% performance improvements in models based on LlamaForCausalLM
     * e.g., 3580 tokens/sec in LLaMA 3.1 8B model with a single RNGD card
 
-👎 Breaking Changes
+🚨 Breaking Changes
 -------------------
 * LLM.from_artifacts() API has been deprecated. Please use LLM.load_artifacts() instead.
 * The artifacts built from 2024.1.x is not compatible with 2024.2.x. Please use the artifact built from 2024.2.x.

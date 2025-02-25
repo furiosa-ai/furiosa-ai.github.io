@@ -23,7 +23,7 @@ Labels
 
 The followings are the labels that the Furiosa Feature Discovery attaches and what they mean.
 
-.. list-table:: Labels
+.. list-table:: 
    :align: center
    :header-rows: 1
    :widths: 130 160 260

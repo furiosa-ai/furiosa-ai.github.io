@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0cbe815c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b5224c7" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -107,7 +107,7 @@
 <aside class="bd-header-announcement" aria-label="Announcement">
   <div class="bd-header-announcement__content">
 <div>
-SDK 2025.1.0 has been released on Feb 24, 2025.
+📣 SDK <b>2025.1.0</b> has been released on Feb 24, 2025.
 Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/index.html#furiosa-sdk-2025-1-0-beta1-2025-02-24">SDK Release Announcement of 2025.1.0</a>.
 </div>
 </div>
@@ -153,18 +153,17 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
   
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>            
+                Furiosa Docs
+            </div>
+        </p>
   
 </a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
@@ -221,13 +220,13 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">FuriosaAI Forum</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">FuriosaAI Customer Portal</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">FuriosaAI Warboy SDK Document</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
 </ul>
 
     </div>
@@ -236,13 +235,16 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
       <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
+
+  <p class="copyright">
+    
+      © Copyright 2025 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
   </div>
 
 
@@ -273,87 +275,21 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
       
         <div class="header-article-item">
 
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
       
-      
-      
-      <li><a href="../_sources/furiosa_llm/model-preparation-workflow.rst" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.rst</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
+        <div class="header-article-item">
 
 <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
   <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
   <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
-</div></div>
+</button></div>
       
     </div>
   
@@ -369,7 +305,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <div id="jb-print-toc">
             
             <div>
-                <h2> Contents </h2>
+                <h2>  </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
@@ -408,11 +344,11 @@ without the calibration and quantization steps.
 The 2nd step will be required only for INT8, FP8, and INT4 models.</p>
 </div>
 <figure class="align-center">
-<a class="only-light reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-light" src="../_images/model_preparation_workflow.png" style="width: 720px;" />
+<a class="only-light reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-light" src="../_images/model_preparation_workflow.png" style="width: 900px;" />
 </a>
 </figure>
 <figure class="align-center">
-<a class="only-dark reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-dark" src="../_images/model_preparation_workflow.png" style="width: 720px;" />
+<a class="only-dark reference internal image-reference" href="../_images/model_preparation_workflow.png"><img alt="Model Preparation Workflow" class="only-dark" src="../_images/model_preparation_workflow.png" style="width: 900px;" />
 </a>
 </figure>
 <section id="prerequisites">
@@ -610,7 +546,7 @@ LLM without the calibration and quantization steps.</p></li>
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
+    <i class="fa-solid fa-list"></i> 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
@@ -644,7 +580,7 @@ By FuriosaAI, Inc.
 
   <p class="copyright">
     
-      © Copyright 2025, FuriosaAI, Inc..
+      © Copyright 2025 FuriosaAI Inc.
       <br/>
     
   </p>

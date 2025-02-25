@@ -15,7 +15,7 @@ The following diagram shows the software stack provided by FuriosaAI.
   :width: 500px
   :align: center
 
-
+  
 Kernel Driver, Firmware, and PE Runtime
 =======================================
 The kernel device driver enables the Linux operating system to recognize NPU devices and

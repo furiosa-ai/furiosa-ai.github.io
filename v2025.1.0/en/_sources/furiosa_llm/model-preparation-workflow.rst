@@ -22,13 +22,13 @@ At a high level, the workflow consists of the following four steps:
 
 .. figure:: ../_static/imgs/model_preparation_workflow.png
   :alt: Model Preparation Workflow
-  :width: 720px
+  :width: 900px
   :class: only-light
   :align: center
 
 .. figure:: ../_static/imgs/model_preparation_workflow.png
   :alt: Model Preparation Workflow
-  :width: 720px
+  :width: 900px
   :class: only-dark
   :align: center
 
