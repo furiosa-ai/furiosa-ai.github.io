@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Kubernetes Support &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
+    <title>Kubernetes Plugins &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -202,11 +202,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Cloud Native Toolkit</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes Support</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes Plugins</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </details></li>
 </ul>
@@ -287,6 +286,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button></div>
       
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
     </div>
   
 </div>
@@ -295,11 +298,23 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Kubernetes Support</h1>
+    <h1>Kubernetes Plugins</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes-support">Kubernetes Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-plugins-deployment-guide">NPU Plugins Deployment Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requesting-npus">Requesting NPUs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scheduling-npus-with-specific-requirements">Scheduling NPUs With Specific Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">Known Issues</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -309,8 +324,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="kubernetes-support">
-<span id="kubernetes"></span><h1>Kubernetes Support<a class="headerlink" href="#kubernetes-support" title="Link to this heading">#</a></h1>
+  <section id="kubernetes-plugins">
+<span id="kubernetes"></span><h1>Kubernetes Plugins<a class="headerlink" href="#kubernetes-plugins" title="Link to this heading">#</a></h1>
+<section id="kubernetes-support">
+<span id="kubernetesversioninfo"></span><h2>Kubernetes Support<a class="headerlink" href="#kubernetes-support" title="Link to this heading">#</a></h2>
 <p>We do support the following versions of Kubernetes and CRI runtime:</p>
 <ul class="simple">
 <li><p>Kubernetes: v1.24.0 or later</p></li>
@@ -321,18 +338,152 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p class="admonition-title">Note</p>
 <p>Docker is officially deprecated as a container runtime in Kubernetes.
 It is recommended to use containerd or CRI-O as a container runtime.
-Otherwise you may face unexpected issues with the device plugin.
+Otherwise you may face unexpected issues with NPU plugins.
 For more information, see <a class="reference external" href="https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/">here</a>.</p>
 </div>
+</section>
+<section id="npu-plugins-deployment-guide">
+<h2>NPU Plugins Deployment Guide<a class="headerlink" href="#npu-plugins-deployment-guide" title="Link to this heading">#</a></h2>
+<p>As an administrator, you have to install <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">prerequisites</span></a> such as driver, firmware on NPU nodes.
+If prerequisites are not installed, the NPU plugins will return an error.</p>
+<p>We recommend to deploy NPU plugins using Helm charts. Since it is difficult to control deployment of each plugin individually.
+If NPU plugins are deployed on non-NPU nodes, the plugins will return not supported errors and the pods will be in a CrashLoopBackOff state.</p>
+<p>The helm chart deploy the Node Feature Discovery (NFD) by default.
+Once NFD is deployed, NPU nodes are automatically labelled with PCI IDs and capabilities.
+Here is an example of the labels that are attached to the NPU node:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>feature.node.kubernetes.io/pci-1200_1ed2.present:<span class="w"> </span><span class="s2">&quot;true&quot;</span>
+feature.node.kubernetes.io/pci-1200_1ed2.sriov.capable:<span class="w"> </span><span class="s2">&quot;true&quot;</span>
+</pre></div>
+</div>
+<p>The NPU Plugins helm chart set nodeAffinity like below to control the deployment of NPU plugins only on NPU nodes.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>affinity:
+<span class="w">  </span>nodeAffinity:
+<span class="w">    </span>requiredDuringSchedulingIgnoredDuringExecution:
+<span class="w">      </span>nodeSelectorTerms:
+<span class="w">      </span>-<span class="w"> </span>matchExpressions:
+<span class="w">        </span>-<span class="w"> </span>key:<span class="w"> </span>feature.node.kubernetes.io/pci-1200_1ed2.present
+<span class="w">          </span>operator:<span class="w"> </span>In
+<span class="w">          </span>values:
+<span class="w">            </span>-<span class="w"> </span><span class="s2">&quot;true&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you already have NFD deployed in your cluster, you can configure helm-chart to skip NFD deployment.
+However, you need to ensure that NFD has default label policy. Default label policy includes PCI class and Vendor ID fields in the label.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>feature.node.kubernetes.io/pci_&lt;CLASS_ID&gt;_&lt;VENDOR_ID&gt;.present
+</pre></div>
+</div>
+<p>In some cases, NFD is configured to omit PCI class field in the label.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>feature.node.kubernetes.io/pci_&lt;VENDOR_ID&gt;.present
+</pre></div>
+</div>
+<p>You have two options to resolve this issue: either deploy two NFD instances in the cluster with different label policies,
+managing them using taint and toleration,or modify the NPU plugins Helm chart to use the correct label.</p>
+</div>
+<p>See the following links for more information and configurations of each plugin:</p>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Kubernetes Support</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </div>
+<p>Once you have installed the NPU plugins, your cluster exposes Furiosa NPUs as schedulable resources, such as <code class="docutils literal notranslate"><span class="pre">furiosa.ai/rngd</span></code>.</p>
+<p>To ensure your node is ready, you can examine Capacity and/or Allocatable field of <code class="docutils literal notranslate"><span class="pre">v1.node</span></code> object.
+Here is an example of node that has 2 RNGD NPUs:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">status</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">allocatable</span><span class="p p-Indicator">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
+<span class="w">    </span><span class="nt">ephemeral-storage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1770585791219&quot;</span>
+<span class="w">    </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span>
+<span class="w">    </span><span class="nt">hugepages-1Gi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span>
+<span class="w">    </span><span class="nt">hugepages-2Mi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">527727860Ki</span>
+<span class="w">    </span><span class="nt">pods</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;110&quot;</span>
+<span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
+<span class="w">    </span><span class="nt">ephemeral-storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1921208544Ki</span>
+<span class="w">    </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span>
+<span class="w">    </span><span class="nt">hugepages-1Gi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span>
+<span class="w">    </span><span class="nt">hugepages-2Mi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">527830260Ki</span>
+<span class="w">    </span><span class="nt">pods</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;110&quot;</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>The following command should show the <code class="docutils literal notranslate"><span class="pre">Capacity</span></code> field of each node in the Kubernetes cluster.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.items[] | .metadata.name as $name | .status.capacity | to_entries | map(&quot;    \(.key): \(.value)&quot;) | $name + &quot;:\n  capacity:\n&quot; + join(&quot;\n&quot;)&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="requesting-npus">
+<h2>Requesting NPUs<a class="headerlink" href="#requesting-npus" title="Link to this heading">#</a></h2>
+<p>You can consume NPUs from your containers in a Pod by requesting NPU resources, the same way you request CPU or memory.</p>
+<p>However, since NPUs are exposed as a custom resource, there are some limitations you should be aware of when requesting NPU resources:</p>
+<ul class="simple">
+<li><p>You can specify NPU <code class="docutils literal notranslate"><span class="pre">limits</span></code> without specifying <code class="docutils literal notranslate"><span class="pre">requests</span></code>, because kubernetes will use limit as request if request is not specified.</p></li>
+<li><p>You can specify NPU in both <code class="docutils literal notranslate"><span class="pre">limits</span></code> and <code class="docutils literal notranslate"><span class="pre">requests</span></code> but these two values must be equal.</p></li>
+<li><p>You cannot specify NPU <code class="docutils literal notranslate"><span class="pre">request</span></code> without specifying <code class="docutils literal notranslate"><span class="pre">limits</span></code>.</p></li>
+</ul>
+<p>Here is an example manifest for a Pod that requests 2 RNGD NPUs:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-npu-request</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosa</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-smi:latest</span>
+<span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;sleep&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;120&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</div>
+</section>
+<section id="scheduling-npus-with-specific-requirements">
+<h2>Scheduling NPUs With Specific Requirements<a class="headerlink" href="#scheduling-npus-with-specific-requirements" title="Link to this heading">#</a></h2>
+<p>In certain cases, user may need to schedule NPU workload on node that meet specific hardware or software requirements, such as particular driver versions.
+If the <a class="reference internal" href="kubernetes/feature_discovery.html#featurediscovery"><span class="std std-ref">Furiosa Feature Discovery</span></a> is deployed in your cluster, nodes are automatically labelled based on their hardware and software configurations including driver version.
+This allows user to schedule Pod on nodes that meet specific requirements.</p>
+<p>Following example shows how to use affinity to schedule a Pod that request 2 RNGD NPUs with specific driver version:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-npu-scheduling-with-affinity</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosa</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-smi:latest</span>
+<span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;sleep&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;120&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">affinity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">nodeAffinity</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requiredDuringSchedulingIgnoredDuringExecution</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosa.ai/driver-version</span>
+<span class="w">            </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
+<span class="w">            </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;1.0.12&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A pod that uses an external device, like an NPU, may not restart and will end up in an UnexpectedAdmissionError when the node is restarted. This happens because the kubelet has a race condition when allocating external resources to the restarting pod. The issue is tracked in <a class="reference external" href="https://github.com/kubernetes/kubernetes/issues/128043">kubernetes/kubernetes#128043</a></p></li>
+</ul>
+</section>
 </section>
 
 
@@ -370,6 +521,26 @@ For more information, see <a class="reference external" href="https://kubernetes
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes-support">Kubernetes Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-plugins-deployment-guide">NPU Plugins Deployment Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requesting-npus">Requesting NPUs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scheduling-npus-with-specific-requirements">Scheduling NPUs With Specific Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">Known Issues</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -201,11 +201,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Support</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </details></li>
 </ul>
@@ -351,6 +350,7 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 These modules enable developers to access essential hardware information, topology details, system-wide information, and performance metrics.</p>
 <p>Each module provides the following features:</p>
 <ul class="simple">
+<li><p><strong>Initialize module</strong> handles initialization of the Furiosa SMI library.</p></li>
 <li><p><strong>Device module</strong> provides NPU device discovery and information including <em>device specification</em> and <em>liveness</em>.</p></li>
 <li><p><strong>Topology module</strong> provides the topology status within a system including <em>device-to-device link type</em> and <em>p2p accessibility</em>.</p></li>
 <li><p><strong>System module</strong> provides system-wide information of each NPU device, including <em>firmware version</em> and <em>driver version</em>.</p></li>

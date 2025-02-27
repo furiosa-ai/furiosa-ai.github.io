@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Installing Furiosa Device Plugin" href="device_plugin.html" />
-    <link rel="prev" title="Kubernetes Support" href="../kubernetes.html" />
+    <link rel="prev" title="Kubernetes Plugins" href="../kubernetes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2025.1.0" />
@@ -202,11 +202,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Cloud Native Toolkit</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes Support</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes Plugins</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="device_plugin.html">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </details></li>
 </ul>
@@ -330,12 +329,16 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <section id="furiosa-feature-discovery-and-nfd">
 <h2>Furiosa Feature Discovery and NFD<a class="headerlink" href="#furiosa-feature-discovery-and-nfd" title="Link to this heading">#</a></h2>
 <p>The Furiosa Feature Discovery automatically labels Kubernetes nodes with information
-about FuriosaAI NPU properties, such as the NPU family, count, and driver versions.
+about FuriosaAI NPU properties, such as the NPU family, count, and various versions.
 Using these labels, you can schedule your Kubernetes workloads based on specific NPU requirements.</p>
 <p>The Furiosa Feature Discovery leverage NFD(Node Feature Discovery) which is a tool that detects
 hardware features and labels Kubernetes nodes. It is recommended to use NFD and
 Furiosa Feature Discovery to ensure that the Cloud Native Toolkit is deployed only on nodes
 equipped with FuriosaAI NPUs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If multiple versions of device-level components (like pert or firmware) exist on the same node, the related labels are removed to avoid conflicts.</p>
+</div>
 <section id="labels">
 <h3>Labels<a class="headerlink" href="#labels" title="Link to this heading">#</a></h3>
 <p>The followings are the labels that the Furiosa Feature Discovery attaches and what they mean.</p>
@@ -384,6 +387,46 @@ equipped with FuriosaAI NPUs.</p>
 <td><p>abcxyz</p></td>
 <td><p>NPU device driver version metadata</p></td>
 </tr>
+<tr class="row-even"><td><p>furiosa.ai/npu.pert.version</p></td>
+<td><p>x.y.z</p></td>
+<td><p>NPU pert version</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa.ai/npu.pert.version.major</p></td>
+<td><p>x</p></td>
+<td><p>NPU pert version major part</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa.ai/npu.pert.version.minor</p></td>
+<td><p>y</p></td>
+<td><p>NPU pert version minor part</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa.ai/npu.pert.version.patch</p></td>
+<td><p>z</p></td>
+<td><p>NPU pert version patch part</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa.ai/npu.pert.version.metadata</p></td>
+<td><p>abcxyz</p></td>
+<td><p>NPU device pert version metadata</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa.ai/npu.firmware.version</p></td>
+<td><p>x.y.z</p></td>
+<td><p>NPU firmware version</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa.ai/npu.firmware.version.major</p></td>
+<td><p>x</p></td>
+<td><p>NPU firmware version major part</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa.ai/npu.firmware.version.minor</p></td>
+<td><p>y</p></td>
+<td><p>NPU firmware version minor part</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa.ai/npu.firmware.version.patch</p></td>
+<td><p>z</p></td>
+<td><p>NPU firmware version patch part</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa.ai/npu.firmware.version.metadata</p></td>
+<td><p>abcxyz</p></td>
+<td><p>NPU firmware version metadata</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -419,7 +462,7 @@ helm<span class="w"> </span>install<span class="w"> </span>furiosa-feature-disco
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Kubernetes Support</p>
+        <p class="prev-next-title">Kubernetes Plugins</p>
       </div>
     </a>
     <a class="right-next"

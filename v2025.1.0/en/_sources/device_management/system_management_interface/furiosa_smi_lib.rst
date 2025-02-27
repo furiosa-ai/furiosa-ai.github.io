@@ -35,6 +35,8 @@ These modules enable developers to access essential hardware information, topolo
 
 Each module provides the following features:
 
+- **Initialize module** handles initialization of the Furiosa SMI library.
+
 - **Device module** provides NPU device discovery and information including *device specification* and *liveness*.
 
 - **Topology module** provides the topology status within a system including *device-to-device link type* and *p2p accessibility*.

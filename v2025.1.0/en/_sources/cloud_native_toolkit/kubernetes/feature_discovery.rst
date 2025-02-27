@@ -9,13 +9,18 @@ Furiosa Feature Discovery and NFD
 ================================================================
 
 The Furiosa Feature Discovery automatically labels Kubernetes nodes with information
-about FuriosaAI NPU properties, such as the NPU family, count, and driver versions.
+about FuriosaAI NPU properties, such as the NPU family, count, and various versions.
 Using these labels, you can schedule your Kubernetes workloads based on specific NPU requirements.
 
 The Furiosa Feature Discovery leverage NFD(Node Feature Discovery) which is a tool that detects
 hardware features and labels Kubernetes nodes. It is recommended to use NFD and
 Furiosa Feature Discovery to ensure that the Cloud Native Toolkit is deployed only on nodes
 equipped with FuriosaAI NPUs.
+
+.. note::
+
+  If multiple versions of device-level components (like pert or firmware) exist on the same node, the related labels are removed to avoid conflicts.
+
 
 
 Labels
@@ -55,6 +60,36 @@ The followings are the labels that the Furiosa Feature Discovery attaches and wh
    * - furiosa.ai/npu.driver.version.metadata
      - abcxyz
      - NPU device driver version metadata
+   * - furiosa.ai/npu.pert.version
+     - x.y.z
+     - NPU pert version
+   * - furiosa.ai/npu.pert.version.major
+     - x
+     - NPU pert version major part
+   * - furiosa.ai/npu.pert.version.minor
+     - y
+     - NPU pert version minor part
+   * - furiosa.ai/npu.pert.version.patch
+     - z
+     - NPU pert version patch part
+   * - furiosa.ai/npu.pert.version.metadata
+     - abcxyz
+     - NPU device pert version metadata
+   * - furiosa.ai/npu.firmware.version
+     - x.y.z
+     - NPU firmware version
+   * - furiosa.ai/npu.firmware.version.major
+     - x
+     - NPU firmware version major part
+   * - furiosa.ai/npu.firmware.version.minor
+     - y
+     - NPU firmware version minor part
+   * - furiosa.ai/npu.firmware.version.patch
+     - z
+     - NPU firmware version patch part
+   * - furiosa.ai/npu.firmware.version.metadata
+     - abcxyz
+     - NPU firmware version metadata
 
 
 Deploying Furiosa Feature Discovery with Helm

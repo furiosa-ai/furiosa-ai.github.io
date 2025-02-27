@@ -202,11 +202,10 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Cloud Native Toolkit</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes Support</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes Plugins</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </details></li>
 </ul>
@@ -310,7 +309,12 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-device-plugin">Furiosa Device Plugin</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#device-partitioning">Device Partitioning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#debug-mode">Debug Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#disable-device-experimental">Disable Device (Experimental)</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-furiosa-device-plugin-with-helm">Deploying Furiosa Device Plugin with Helm</a></li>
 </ul>
 </li>
@@ -332,23 +336,28 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p>The Furiosa device plugin implements the <a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/">Kubernetes Device Plugin</a>
 interface for FuriosaAI NPU devices, and its features are as follows:</p>
 <ul class="simple">
-<li><p>Discovering the Furiosa NPU devices and registeriing to a Kubernetes cluster.</p></li>
+<li><p>Discovering the Furiosa NPU devices and registering to a Kubernetes cluster.</p></li>
 <li><p>Tracking the health of the devices and reporting to a Kubernetes cluster.</p></li>
 <li><p>Running AI workload on the top of the Furiosa NPU devices within a Kubernetes cluster.</p></li>
 </ul>
 <section id="configuration">
 <h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h3>
-<p>The Furiosa NPU can be integrated into the Kubernetes cluster in various configurations.
-A single NPU card can either be exposed as a single resource or partitioned into multiple resources.
-Partitioning into multiple resources allows for more granular control.</p>
 <p>The configuration structure is as follows:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">resourceStrategy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">generic</span>
+<span class="w">  </span><span class="nt">partitioning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
 <span class="w">  </span><span class="nt">debugMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="nt">disabledDeviceUUIDListMap</span><span class="p">:</span>
 </pre></div>
 </div>
-<p><cite>resourceStrategy</cite> defines the resource unit of NPU scheduling in the cluster. The following table shows the available resource strategy:</p>
+<section id="device-partitioning">
+<h4>Device Partitioning<a class="headerlink" href="#device-partitioning" title="Link to this heading">#</a></h4>
+<p>The Furiosa NPU can be integrated into the Kubernetes cluster in various configurations.
+A single NPU card can either be exposed as a single resource or partitioned into multiple resources.
+<code class="docutils literal notranslate"><span class="pre">partitioning</span></code> determines the resource unit of partitioned resource and name of the resource.
+The following table shows the available partitioning configurations and expected resource names:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only RNGD architecture supports partitioning. If the partitioning configuration is configured on the Warboy, the device plugin will not start.</p>
+</div>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 33.3%" />
@@ -362,45 +371,50 @@ Partitioning into multiple resources allows for more granular control.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>generic</p></td>
+<tr class="row-even"><td><p>none</p></td>
 <td><p>furiosa.ai/rngd</p></td>
 <td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td><p>single-core</p></td>
-<td><p>furiosa.ai/rngd-1core.6gb</p></td>
-<td><p>8</p></td>
-</tr>
-<tr class="row-even"><td><p>dual-core</p></td>
+<tr class="row-odd"><td><p>2core.12gb</p></td>
 <td><p>furiosa.ai/rngd-2core.12gb</p></td>
 <td><p>4</p></td>
 </tr>
-<tr class="row-odd"><td><p>quad-core</p></td>
+<tr class="row-even"><td><p>4core.24gb</p></td>
 <td><p>furiosa.ai/rngd-4core.24gb</p></td>
 <td><p>2</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><cite>debugMode</cite> enables or disables debug mode. The default value is <cite>false</cite>.</p>
-<p><cite>disabledDeviceUUIDListMap</cite> allows disabling specific devices on a per-node basis. This is structured as follows:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">disabledDeviceUUIDListMap</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">node_a</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid1&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid2&quot;</span>
-<span class="w">  </span><span class="nt">node_b</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid3&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid4&quot;</span>
+</section>
+<section id="debug-mode">
+<h4>Debug Mode<a class="headerlink" href="#debug-mode" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">debugMode</span></code> enables or disables debug mode. The default value is <cite>false</cite>.</p>
+</section>
+<section id="disable-device-experimental">
+<h4>Disable Device (Experimental)<a class="headerlink" href="#disable-device-experimental" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">disabledDeviceUUIDs</span></code> allows disabling specific devices on a per-node basis. This is structured as follows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">partitioning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
+<span class="w">  </span><span class="nt">debugMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">disabledDeviceUUIDs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">node_a</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid2&quot;</span>
+<span class="w">    </span><span class="nt">node_b</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid3&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;uuid4&quot;</span>
 </pre></div>
 </div>
-<p>If <cite>disabledDeviceUUIDListMap</cite> is not configured, all devices are enabled by default.</p>
+</section>
 </section>
 <section id="deploying-furiosa-device-plugin-with-helm">
 <h3>Deploying Furiosa Device Plugin with Helm<a class="headerlink" href="#deploying-furiosa-device-plugin-with-helm" title="Link to this heading">#</a></h3>
 <p>The Furiosa device plugin helm chart is available at <a class="github reference external" href="https://github.com/furiosa-ai/helm-charts">furiosa-ai/helm-charts</a>. To configure deployment as you need, you can modify <code class="docutils literal notranslate"><span class="pre">charts/furiosa-device-plugin/values.yaml</span></code>.</p>
 <ul class="simple">
-<li><p>If resourceStrategy is not specified, the default value is <code class="docutils literal notranslate"><span class="pre">&quot;generic&quot;</span></code>.</p></li>
+<li><p>If partitioning is not specified, the default value is <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>.</p></li>
 <li><p>If debugMode is not specified, the default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
-<li><p>If disabledDeviceUUIDListMap is not specified, the default value is empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p></li>
+<li><p>If disabledDeviceUUIDs is not specified, the default value is empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p></li>
 </ul>
 <p>You can deploy the Furiosa Device Plugin by running the following commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>furiosa<span class="w"> </span>https://furiosa-ai.github.io/helm-charts
@@ -459,7 +473,12 @@ helm<span class="w"> </span>install<span class="w"> </span>furiosa-device-plugin
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-device-plugin">Furiosa Device Plugin</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#device-partitioning">Device Partitioning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#debug-mode">Debug Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#disable-device-experimental">Disable Device (Experimental)</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-furiosa-device-plugin-with-helm">Deploying Furiosa Device Plugin with Helm</a></li>
 </ul>
 </li>
