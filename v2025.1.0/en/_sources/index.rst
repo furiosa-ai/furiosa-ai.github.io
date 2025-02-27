@@ -60,6 +60,12 @@ deployment.
 
 Overview
 -------------------------------------------------
+
+.. figure:: _static/imgs/SW_stack_3D.png
+   :alt: FuriosaAI Software Stack
+   :width: 960px
+   :align: center
+
 * :ref:`RNGD`: RNGD Hardware Specification, and features
 * :ref:`SoftwareStack`: An overview of the FuriosaAI software stack
 * :ref:`SupportedModels`: A list of supported models

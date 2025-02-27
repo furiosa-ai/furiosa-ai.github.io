@@ -10,7 +10,7 @@ Here, we outline the software stack provided by FuriosaAI, explaining
 the roles of each component, along with guidelines and tutorials.
 The following diagram shows the software stack provided by FuriosaAI.
 
-.. figure:: ../_static/imgs/sw_stack.svg
+.. figure:: ../_static/imgs/sw_stack.png
   :alt: FuriosaAI Software Stack
   :width: 500px
   :align: center
