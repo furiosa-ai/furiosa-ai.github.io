@@ -393,7 +393,9 @@ The following table shows the available partitioning configurations and expected
 </section>
 <section id="disable-device-experimental">
 <h4>Disable Device (Experimental)<a class="headerlink" href="#disable-device-experimental" title="Link to this heading">#</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">disabledDeviceUUIDs</span></code> allows disabling specific devices on a per-node basis. This is structured as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">disabledDeviceUUIDs</span></code> allows disabling specific devices on a per-node basis.
+The UUID of the device can be obtained using the <a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">furiosa-smi info</span></a> command.
+The following is an example configuration:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">partitioning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
 <span class="w">  </span><span class="nt">debugMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
