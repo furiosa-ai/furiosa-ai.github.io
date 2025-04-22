@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>ArtifactBuilder &#8212; FuriosaAI Developer Center 2025.2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=24148a24" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=39353cc5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/reference/artifact_builder';</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="LLMEngine class" href="llm_engine.html" />
+    <link rel="prev" title="SamplingParams class" href="sampling_params.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.2.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">
+<div>
+📣 SDK <b>2025.2.0</b> has been released on Apr 25, 2025.
+Please checkout <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/index.html#furiosa-sdk-2025-2-0-beta2-2025-04-25">SDK Release Announcement of 2025.2.0</a>.
+</div>
+</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-artifacts-by-examples.html">Building Model Artifacts By Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../reference.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">ArtifactBuilder</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_chat_with_tools.html">Chat with tools</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ArtifactBuilder</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ArtifactBuilder</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactBuilder"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactBuilder.build"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.build()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact">Artifact</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact"><code class="docutils literal notranslate"><span class="pre">Artifact</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">Artifact.model_computed_fields</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_config"><code class="docutils literal notranslate"><span class="pre">Artifact.model_config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_fields"><code class="docutils literal notranslate"><span class="pre">Artifact.model_fields</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifactmetadata">ArtifactMetadata</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_computed_fields</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_config"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_fields"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_fields</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifactversion">ArtifactVersion</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="artifactbuilder">
+<span id="artifactbuilderclass"></span><h1>ArtifactBuilder<a class="headerlink" href="#artifactbuilder" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.artifact.</span></span><span class="sig-name descname"><span class="pre">ArtifactBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id_or_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor_parallel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_parallel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefill_buckets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_buckets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len_to_capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_prompt_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_hidden_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed_for_random_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculate_logit_only_for_last_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_bfloat16_cast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantize_artifact_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PathLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiler_config_overrides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_decompositions_for_model_rewrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_blockwise_compile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_blocks_per_supertask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embed_all_constants_into_graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_logit_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kv_cache_sharing_across_beams_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KvCacheSharingAcrossBeamsConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefill_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paged_attention_block_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trust_remote_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copies_from_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copies_from_local</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PathLike</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speculative_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#furiosa_llm.artifact.ArtifactBuilder" title="furiosa_llm.artifact.builder.ArtifactBuilder"><span class="pre">ArtifactBuilder</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_speculative_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_allow_empty_speculative_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_embedding_layer_as_single_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/artifact/builder.html#ArtifactBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.artifact.ArtifactBuilder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The artifact builder to use in the Furiosa LLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id_or_path</strong> – The Huggingface model id or a local path. This corresponds to
+pretrained_model_name_or_path in HuggingFace Transformers.</p></li>
+<li><p><strong>name</strong> – The name of the artifact to build.</p></li>
+<li><p><strong>tensor_parallel_size</strong> – The number of PEs for each tensor parallelism group. The default is 4.</p></li>
+<li><p><strong>pipeline_parallel_size</strong> – The pipeline parallel size that will be used when loading the model by default. The default value is 1.</p></li>
+<li><p><strong>prefill_buckets</strong> – Specify the bucket size for prefill</p></li>
+<li><p><strong>decode_buckets</strong> – Specify the bucket size for decode</p></li>
+<li><p><strong>max_seq_len_to_capture</strong> – Maximum sequence length covered by LLM engine. Sequence with larger context than this will not be covered.
+If no bucket is explicitly specified, a single batch bucket with a context length of this value is created.</p></li>
+<li><p><strong>max_prompt_len</strong> – Maximum prompt sequence length covered by LLM engine. Prompt larger than this cannot be handled.
+If not given, will be obtained from bucket and other configs.</p></li>
+<li><p><strong>num_hidden_layers</strong> – Number of hidden layers in the Transformer encoder.</p></li>
+<li><p><strong>seed_for_random_weight</strong> – The seed to initialize the random number generator
+for creating random weight.</p></li>
+<li><p><strong>calculate_logit_only_for_last_token</strong> – Whether the model has last block slice optimization applied.</p></li>
+<li><p><strong>auto_bfloat16_cast</strong> – Whether to cast the model to bfloat16 automatically. This option is required when neither the model is trained with bfloat16 nor quantized.</p></li>
+<li><p><strong>quantize_artifact_path</strong> – Specifies the path where quantization artifacts
+generated by the furiosa-model-compressor are saved.</p></li>
+<li><p><strong>compiler_config_overrides</strong> – Overrides for the compiler config.
+This is a dictionary that includes the configuration for the compiler.</p></li>
+<li><p><strong>do_decompositions_for_model_rewrite</strong> – Whether to decompose some ops to describe various parallelism strategies
+with mppp config. When the value is True, mppp config that matches with the decomposed FX graph should be given.</p></li>
+<li><p><strong>use_blockwise_compile</strong> – If True, each task will be compiled in the unit of transformer block,
+and compilation result for transformer block is generated once and reused. The default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>num_blocks_per_supertask</strong> – The number of transformer blocks that will be merged into one supertask. This option is valid
+only when <cite>use_blockwise_compile=True</cite>. The default is 1.</p></li>
+<li><p><strong>num_blocks_per_pp_stage</strong> – The number of transformers blocks per each pipeline parallelism stage. If not given, transformer blocks will be
+distributed equally.</p></li>
+<li><p><strong>embed_all_constants_into_graph</strong> – Whether to embed constant tensors into graph or make them as input of the graph and save them as separate files.
+The default is False.</p></li>
+<li><p><strong>optimize_logit_shape</strong> – Add logit slice or removal operation in the graph for optimized performance.</p></li>
+<li><p><strong>kv_cache_sharing_across_beams_config</strong> – Configuration for sharing kv cache across beams. This argument must be given if and only if
+the model is optimized to share kv cache across beams. If this argument is given, decode phase buckets with batch size of
+<code class="docutils literal notranslate"><span class="pre">batch_size</span></code> * <code class="docutils literal notranslate"><span class="pre">kv_cache_sharing_across_beams_config.beam_width</span></code> will be created.</p></li>
+<li><p><strong>prefill_chunk_size</strong> – Chunk size used for chunked prefill. If the value is <cite>None</cite>, chunked prefill is not used.</p></li>
+<li><p><strong>paged_attention_block_size</strong> – The maximum number of tokens that can be stored in a single paged attention block. This argument must be given
+if model uses paged attention.</p></li>
+<li><p><strong>trust_remote_code</strong> – Trust remote code when downloading the model and tokenizer from HuggingFace.</p></li>
+<li><p><strong>copies_from_model</strong> – Relative paths of files to copy from the model directory (e.g., LICENSE.txt)</p></li>
+<li><p><strong>copies_from_local</strong> – Relative paths of files to copy from the local directory (e.g., README.md)</p></li>
+<li><p><strong>speculative_model</strong> – Speculative model for speculative decoding. Note that speculative decoding is an experimental feature and the build may be unstable.</p></li>
+<li><p><strong>num_speculative_tokens</strong> – The number of tokens that specualtive model will generate speculatively during each iteration of the decoding process.
+Note that speculative decoding is an experimental feature and the build may be unstable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactBuilder.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PathLike</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_pipeline_builder_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_compile_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PathLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PosixPath('/root/.cache/furiosa/llm')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PathLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_saved_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'safetensors'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pt'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'safetensors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_cleanup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/artifact/builder.html#ArtifactBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.artifact.ArtifactBuilder.build" title="Link to this definition">#</a></dt>
+<dd><p>Build the artifacts for given model configurations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_dir</strong> – The path to save the artifacts. With artifacts, you can create <code class="docutils literal notranslate"><span class="pre">LLM</span></code> without quantizing or compiling the model again.</p></li>
+<li><p><strong>num_pipeline_builder_workers</strong> – The number of workers used for building pipelines (except for compilation). The default is 1 (no parallelism).
+Setting this value larger than 1 reduces pipeline building time, especially for large models, but requires much more memory.</p></li>
+<li><p><strong>num_compile_workers</strong> – The number of workers used for compilation. The default is 1 (no parallelism).</p></li>
+<li><p><strong>cache_dir</strong> – The cache directory for all generated files for this LLM instance.
+When its value is <code class="docutils literal notranslate"><span class="pre">None</span></code>, caching is disabled. The default is “$HOME/.cache/furiosa/llm”.</p></li>
+<li><p><strong>param_file_path</strong> – The path to the parameter file to use for pipeline generation.
+If not specified, the parameters will be saved in a temporary file which will be
+deleted when <code class="docutils literal notranslate"><span class="pre">LLM</span></code> is destroyed.</p></li>
+<li><p><strong>param_saved_format</strong> – The format of the parameter file. Only possible value is “safetensors” now.
+The default is “safetensors”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="artifact">
+<h1>Artifact<a class="headerlink" href="#artifact" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.Artifact">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.artifact.</span></span><span class="sig-name descname"><span class="pre">Artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#furiosa_llm.artifact.ArtifactMetadata" title="furiosa_llm.artifact.types.latest.ArtifactMetadata"><span class="pre">ArtifactMetadata</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ModelArtifact</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speculative_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ModelArtifact</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SchemaVersion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefill_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/artifact/types/latest.html#Artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.artifact.Artifact" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ArtifactBase</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.Artifact.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#furiosa_llm.artifact.Artifact.model_computed_fields" title="Link to this definition">#</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.Artifact.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#furiosa_llm.artifact.Artifact.model_config" title="Link to this definition">#</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.Artifact.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'metadata':</span> <span class="pre">FieldInfo(annotation=ArtifactMetadata,</span> <span class="pre">required=True),</span> <span class="pre">'model':</span> <span class="pre">FieldInfo(annotation=ModelArtifact,</span> <span class="pre">required=True),</span> <span class="pre">'prefill_chunk_size':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'speculative_model':</span> <span class="pre">FieldInfo(annotation=Union[ModelArtifact,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'version':</span> <span class="pre">FieldInfo(annotation=SchemaVersion,</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#furiosa_llm.artifact.Artifact.model_fields" title="Link to this definition">#</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo] objects.</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="artifactmetadata">
+<h1>ArtifactMetadata<a class="headerlink" href="#artifactmetadata" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactMetadata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.artifact.</span></span><span class="sig-name descname"><span class="pre">ArtifactMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">furiosa_llm_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">furiosa_compiler_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/artifact/types/latest.html#ArtifactMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.artifact.ArtifactMetadata" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactMetadata.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#furiosa_llm.artifact.ArtifactMetadata.model_computed_fields" title="Link to this definition">#</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactMetadata.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#furiosa_llm.artifact.ArtifactMetadata.model_config" title="Link to this definition">#</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa_llm.artifact.ArtifactMetadata.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'artifact_id':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'furiosa_compiler_version':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'furiosa_llm_version':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'name':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'timestamp':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#furiosa_llm.artifact.ArtifactMetadata.model_fields" title="Link to this definition">#</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo] objects.</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="artifactversion">
+<h1>ArtifactVersion<a class="headerlink" href="#artifactversion" title="Link to this heading">#</a></h1>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sampling_params.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SamplingParams class</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="llm_engine.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">LLMEngine class</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ArtifactBuilder</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactBuilder"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactBuilder.build"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.build()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact">Artifact</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact"><code class="docutils literal notranslate"><span class="pre">Artifact</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">Artifact.model_computed_fields</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_config"><code class="docutils literal notranslate"><span class="pre">Artifact.model_config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.Artifact.model_fields"><code class="docutils literal notranslate"><span class="pre">Artifact.model_fields</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifactmetadata">ArtifactMetadata</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_computed_fields</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_config"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa_llm.artifact.ArtifactMetadata.model_fields"><code class="docutils literal notranslate"><span class="pre">ArtifactMetadata.model_fields</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#artifactversion">ArtifactVersion</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
