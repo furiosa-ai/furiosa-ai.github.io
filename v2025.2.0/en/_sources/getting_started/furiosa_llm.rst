@@ -25,10 +25,10 @@ The minimum requirements for Furiosa-LLM are as follows:
 * A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * Python 3.9, 3.10, 3.11, or 3.12
 * PyTorch 2.5.1
-* Enough storage space for model weights (varies depending on the model size)
+* Sufficient storage space for model weights (varies depending on the model size)
 
 
-To install the ``furiosa-compiler`` package and the Furiosa-LLM,
+To install the ``furiosa-compiler`` package and Furiosa-LLM,
 run the following commands:
 
 .. code-block:: sh

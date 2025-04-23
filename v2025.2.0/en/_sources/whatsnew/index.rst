@@ -18,7 +18,7 @@ Furiosa SDK 2025.2.0 Beta2 (2025-04-25)
 
 RNGD SDK 2025.2.0 is the fourth major release, bringing a wide range of new features and significant improvements,
 including support for reasoning models, the metrics endpoint, the chat API, the Hugging Face Hub, the abort() API,
-and the chunked prefill feature. This release also enables direct building of bflo16, float32, and float16 models from
+and the chunked prefill feature. This release also enables direct building of bfloat16, float16, and float32 models from
 the Hugging Face Hub without a quantization step. Additionally, pre-compiled model artifacts are now available
 on the Hugging Face Hub, so you can use them immediately without having to build them yourself.
 
@@ -35,9 +35,9 @@ obtaining this update.
 * Fix a bug caused by duplicate buckets in ``furiosa-llm``.
 * Add support for ``/v1/models`` and ``/v1/models/{model_id}`` endpoints in ``furiosa-llm`` (see :ref:`ModelsEndpoint`).
 * Add support for ``/version`` endpoint in :ref:`OpenAIServer` (see :ref:`VersionEndpoint`).
-* Fix a bug that does not allow an interruption of a running :ref:`OpenAIServer`. by ``Ctrl+C``.
+* Fix a bug that prevented interruption of a running :ref:`OpenAIServer`. by ``Ctrl+C``.
 * Add support the chunked prefill feature in ``furiosa-llm`` (see :ref:`ChunkedPrefill`).
-* Enable direct building of bflo16/float32/float16 models without quantization step (see :ref:`AutoBfloat16Cast`).
+* Enable direct building of bfloat16/float16/float32 models without quantization step (see :ref:`AutoBfloat16Cast`).
 * Add support for the reasoning model parser in :ref:`OpenAIServer` (see :ref:`Reasoning`).
 * ``LLM`` API, ``furiosa-mlperf``, ``furiosa-llm serve`` now support loading artifacts from Hugging Face Hub.
 * Add support for ``npu_queue_limit`` option in ``furiosa-llm serve`` command to configure the NPU queue limit.
@@ -53,7 +53,7 @@ obtaining this update.
 
 🚨 Breaking Changes
 --------------------
-* The SDK 2025.2.0 cannot load artifacts built from 2025.1.x. Please use the artifact built from 2025.2.x, or build the model again with the new SDK.
+* The SDK 2025.2.0 cannot load artifacts built with 2025.1.x. Please use the artifact built with 2025.2.x, or rebuild the model again with the new SDK.
 
 
 Versions of components:

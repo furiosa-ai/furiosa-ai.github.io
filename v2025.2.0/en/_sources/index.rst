@@ -38,15 +38,6 @@ deployment.
 .. grid:: 2
    :padding: 0
 
-   .. grid-item-card:: 📊 Running MLPerf Benchmark
-      :link: getting_started/furiosa_mlperf
-      :link-type: doc
-      :columns: 6
-
-      This document describes how to reproduce the MLPerf™ Inference Benchmark
-      using the FuriosaAI Software Stack.
-
-
    .. grid-item-card:: 📋 Roadmap Overview
       :link: overview/roadmap
       :link-type: doc
@@ -54,6 +45,14 @@ deployment.
 
       See what's ahead for FuriosaAI with our planned releases and upcoming features.
       Stay informed on development progress and key milestones.
+
+   .. grid-item-card:: 🤗 Hugging Face Hub
+      :link: https://huggingface.co/furiosa-ai
+      :link-alt: https://huggingface.co/furiosa-ai
+      :columns: 6
+
+      Pre-optimized and pre-compiled models for FuriosaAI NPUs are available on the Hugging Face Hub.
+      Check out the latest models and their capabilities.
 
 
 

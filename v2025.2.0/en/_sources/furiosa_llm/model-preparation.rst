@@ -13,22 +13,10 @@ preparing a model artifact from an LLM model and deploying it.
   This section is intended for users who wish to prepare their own model artifacts
   for further optimization or customization. If you are looking for a quick start,
   please refer to the :ref:`GettingStartedFuriosaLLM` section.
-  Also, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
+  Additionally, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
   `Hugging Face Hub 🤗 - FuriosaAI organization <https://huggingface.co/furiosa-ai>`_.
-  You can use them to quickly run LLM models on the Furiosa NPU.
+  You can use these to quickly run LLM models on the Furiosa NPU.
 
-
-.. .. figure:: ../_static/imgs/model_preparation_workflow.png
-..   :alt: Model Preparation Workflow
-..   :width: 900px
-..   :class: only-light
-..   :align: center
-
-.. .. figure:: ../_static/imgs/model_preparation_workflow.png
-..   :alt: Model Preparation Workflow
-..   :width: 900px
-..   :class: only-dark
-..   :align: center
 
 Prerequisites
 =============
@@ -37,16 +25,15 @@ Ensure that you meet the following prerequisites before starting the model prepa
 * A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * An installation of :ref:`Furiosa-LLM <InstallingFuriosaLLM>`
 * A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>`
-* Sufficient storage space for model weights, e.g., about 100 GB for the
-  Llama 3.1 70B model
+* Sufficient storage space for model weights (varies depending on the model size)
 
 Authorizing Hugging Face Hub (Optional)
 =================================================
-Some models, such as meta-llama/Llama-3.1-8B, require a license to run.
-For these, you need to create a Hugging Face account, accept the model's
-license, and generate a token.
-You can create your token at https://huggingface.co/settings/tokens.
-Once you get a token, you can authenticate on the Hugging Face Hub as follows:
+Some models, such as ``meta-llama/Llama-3.1-8B``, require a license to run.
+For these models, you need to create a Hugging Face account, accept the model's
+license, and generate an access token.
+You can create your access token at https://huggingface.co/settings/tokens.
+Once you get the access token, you can authenticate on the Hugging Face Hub as follows:
 
 .. code-block::
 
@@ -73,12 +60,12 @@ for the Llama 3.1 8B model to the Hugging Face Hub cache directory.
 
 Optimize and Convert Models to a Model Artifact
 ===============================================
-Furiosa-LLM provides a command line tool ``furiosa-llm build`` to optimize and convert models
+Furiosa-LLM provides a command-line tool, ``furiosa-llm build``, to optimize and convert models
 into model artifacts.
 
 The following shows an example for building a model artifact for ``meta-llama/Llama-3.1-8B-Instruct``
-and save it to the ``./Output-Llama-3.1-8B-Instruct`` directory. ``-tp`` is the tensor parallelism degree,
-and ``--max-seq-len-to-capture`` is the maximum sequence length that the model can handle.
+and saving it to the ``./Output-Llama-3.1-8B-Instruct`` directory. The ``-tp`` option specifies the tensor parallelism degree,
+and ``--max-seq-len-to-capture`` defines the maximum sequence length that the model can handle.
 
 .. literalinclude:: ../../../examples/furiosa_llm_build_cmd.sh
   :language: sh
@@ -93,7 +80,7 @@ run the model using the :ref:`LLMClass` or the appropriate interface like :ref:`
     parallelism, please refer to the :ref:`ModelParallelism` section.
 
 
-You can also build a model artifact using either the :ref:`ArtifactBuilderClass` API.
+You can also build a model artifact using the :ref:`ArtifactBuilderClass` API.
 Here is an example using the :ref:`ArtifactBuilderClass` API.
 
 .. literalinclude:: ../../../examples/artifact_builder.py
@@ -114,7 +101,7 @@ by mapping the high-precision space of activations, weights, and KV cache to low
 such as INT8, FP8, or INT4 — while aiming to preserve model accuracy.
 
 It is typically applied when higher throughput or lower latency is needed. However, since quantization may affect
-model accuracy, it is important to perform thorough experimentation and accuracy comparisons.
+model accuracy, it is important to perform thorough experimentation and accuracy evaluations.
 
 Furiosa-LLM currently supports Post-Training Quantization (PTQ) for model quantization.
 To apply PTQ, you need to calibrate the model using a calibration dataset and then export the quantized model as a checkpoint.
@@ -125,9 +112,9 @@ Load a Model to Quantize
 -------------------------------------
 The first step is to prepare a model to quantize.
 The ``QuantizerForCausalLM`` class provides a simple API to load a
-model from either the Hugging Face Hub a local path.
+model from either the Hugging Face Hub or a local path.
 ``QuantizerForCausalLM`` is a subclass of `AutoModelForCausalLM <https://huggingface.co/docs/transformers/en/model_doc/auto#transformers.AutoModelForCausalLM>`_,
-so it finds automatically the model class from the Hugging Face model id in the same way as
+so it automatically determines the model class from the Hugging Face model ID in the same way as
 ``AutoModelForCausalLM``.
 
 .. code-block:: python
@@ -140,39 +127,36 @@ so it finds automatically the model class from the Hugging Face model id in the 
 
 Calibrate and Quantize the Model
 --------------------------------
-Once a model is loaded, you can calibrate and quantize the model by calling the
+Once a model is loaded, you can calibrate and quantize it by calling the
 ``QuantizerForCausalLM.quantize()`` method.
 
-The ``quantize()`` method takes the quantized model, a data loader, and a
-quantization configuration as arguments. The ``create_data_loader`` function creates a dataloader
-which feeds a quantization process with a proper sample dataset.
-When you create a data loader, you can specify the tokenizer, dataset name or path, the dataset split,
-the number of samples, and the maximum sample length. These options can impact the accuracy of a quantized model.
-So, you will need some experiments to find the best parameters for your model.
+The ``quantize()`` method takes as arguments the model to be quantized, a data loader, and a
+quantization configuration. The ``create_data_loader`` function helps generate a data loader
+that supplies the quantization process with an appropriate sample dataset.
+When creating a data loader, you can configure parameters such as the tokenizer, dataset name or path, dataset split, number of samples, and maximum sample length. These parameters can significantly impact the accuracy of the quantized model, so some experimentation is typically necessary to determine the optimal settings.
 
 .. tip::
 
     ``create_data_loader`` is based on the ``datasets`` library,
-    which provides easy access to datasets for audio, computer vision, and
-    natural language processing (NLP) tasks.
-    Learn more on the
+    which provides easy access to datasets for tasks in audio, computer vision, and
+    natural language processing (NLP).
+    Learn more in the
     `datasets documentation <https://huggingface.co/docs/datasets/en/index>`_
-    and explore the datasets at https://huggingface.co/datasets.
+    and explore the available datasets at https://huggingface.co/datasets.
 
-The following is an example of creating a data loader for the calibration dataset.
-The quantized model is stored to the ``save_dir`` directory.
+The following example demonstrates how to create a data loader for the calibration dataset.
+The quantized model will be saved to the ``save_dir`` directory.
 
 .. literalinclude:: ../../../examples/optimum_quantize.py
   :language: python
 
-The ``QuantizationConfig`` class allows you to specify various quantization options,
-and it also provides a set of pre-defined quantization configurations.
-``QuantizationConfig.w_f8_a_f8_kv_f8()`` is one of the pre-defined quantization configuration
-that quantizes the weights, activations, and KV cache to 8-bit floats (FP8).
+The ``QuantizationConfig`` class allows you to specify various quantization options
+and offers a set of pre-defined quantization configurations.
+For example, ``QuantizationConfig.w_f8_a_f8_kv_f8()``, quantizes the weights, activations, and KV cache to 8-bit floating-point (FP8).
 
-Once you have the quantized model, you can build a model artifact using the
-``ArtifactBuilder`` API or the ``furiosa-llm build`` command. The following is an example of using the
-``furiosa-llm build`` command to build a model artifact from the quantized model.
+Once you have the quantized model, you can create a model artifact using either the
+``ArtifactBuilder`` API or the ``furiosa-llm build`` command. Below is an example of using the
+``furiosa-llm build`` command to generate a model artifact from the quantized model.
 
 
 .. literalinclude:: ../../../examples/furiosa_llm_build_cmd.sh
@@ -181,12 +165,12 @@ Once you have the quantized model, you can build a model artifact using the
 
 Deploying Model Artifacts
 =========================
-Once you have a model artifact, you can copy and reuse it on any machine with a
+Once you have a model artifact, you can transfer and reuse it on any machine with a
 Furiosa NPU and Furiosa-LLM installed.
 To transfer a model artifact:
 
 1. Compress the model artifact directory using your preferred compression tool.
-2. Copy the file to the target host.
+2. Copy the compressed file to the target host.
 3. Uncompress it on the target machine.
 4. Run the model using either the :ref:`LLMClass` or the :ref:`OpenAIServer`.
 
