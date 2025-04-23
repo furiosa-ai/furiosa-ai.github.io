@@ -55,7 +55,7 @@ devices, run the following command:
    +------+--------+------------------+------------------+---------+---------+--------------+
 
 
-Upgrading Furiosa-LLM is done via pip:
+To upgrade Furiosa-LLM, use ``pip``:
 
 .. code-block::
 

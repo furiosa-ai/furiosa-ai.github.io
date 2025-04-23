@@ -108,7 +108,7 @@
   <div class="bd-header-announcement__content">
 <div>
 📣 SDK <b>2025.2.0</b> has been released on Apr 25, 2025.
-Please checkout <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/index.html#furiosa-sdk-2025-2-0-beta2-2025-04-25">SDK Release Announcement of 2025.2.0</a>.
+Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/index.html#furiosa-sdk-2025-2-0-beta2-2025-04-25">the SDK release announcement for version 2025.2.0</a>.
 </div>
 </div>
 </aside>
@@ -366,7 +366,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/inde
 <span id="release2025-2-0"></span><h2>Furiosa SDK 2025.2.0 Beta2 (2025-04-25)<a class="headerlink" href="#furiosa-sdk-2025-2-0-beta2-2025-04-25" title="Link to this heading">#</a></h2>
 <p>RNGD SDK 2025.2.0 is the fourth major release, bringing a wide range of new features and significant improvements,
 including support for reasoning models, the metrics endpoint, the chat API, the Hugging Face Hub, the abort() API,
-and the chunked prefill feature. This release also enables direct building of bflo16, float32, and float16 models from
+and the chunked prefill feature. This release also enables direct building of bfloat16, float16, and float32 models from
 the Hugging Face Hub without a quantization step. Additionally, pre-compiled model artifacts are now available
 on the Hugging Face Hub, so you can use them immediately without having to build them yourself.</p>
 <p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> section for instructions on
@@ -380,9 +380,9 @@ obtaining this update.</p>
 <li><p>Fix a bug caused by duplicate buckets in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code>.</p></li>
 <li><p>Add support for <code class="docutils literal notranslate"><span class="pre">/v1/models</span></code> and <code class="docutils literal notranslate"><span class="pre">/v1/models/{model_id}</span></code> endpoints in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> (see <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#modelsendpoint"><span class="std std-ref">Models Endpoint</span></a>).</p></li>
 <li><p>Add support for <code class="docutils literal notranslate"><span class="pre">/version</span></code> endpoint in <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a> (see <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#versionendpoint"><span class="std std-ref">Version Endpoint</span></a>).</p></li>
-<li><p>Fix a bug that does not allow an interruption of a running <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>. by <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>.</p></li>
+<li><p>Fix a bug that prevented interruption of a running <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>. by <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>.</p></li>
 <li><p>Add support the chunked prefill feature in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> (see <a class="reference internal" href="../furiosa_llm/build-artifacts-by-examples.html#chunkedprefill"><span class="std std-ref">Long-context Length and Chunked Prefill</span></a>).</p></li>
-<li><p>Enable direct building of bflo16/float32/float16 models without quantization step (see <a class="reference internal" href="../furiosa_llm/build-artifacts-by-examples.html#autobfloat16cast"><span class="std std-ref">Building Float16, Float32 Models</span></a>).</p></li>
+<li><p>Enable direct building of bfloat16/float16/float32 models without quantization step (see <a class="reference internal" href="../furiosa_llm/build-artifacts-by-examples.html#autobfloat16cast"><span class="std std-ref">Building Float16, Float32 Models</span></a>).</p></li>
 <li><p>Add support for the reasoning model parser in <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a> (see <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#reasoning"><span class="std std-ref">Reasoning Support</span></a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">LLM</span></code> API, <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code>, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> now support loading artifacts from Hugging Face Hub.</p></li>
 <li><p>Add support for <code class="docutils literal notranslate"><span class="pre">npu_queue_limit</span></code> option in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command to configure the NPU queue limit.</p></li>
@@ -400,7 +400,7 @@ obtaining this update.</p>
 <section id="breaking-changes">
 <h3>🚨 Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>The SDK 2025.2.0 cannot load artifacts built from 2025.1.x. Please use the artifact built from 2025.2.x, or build the model again with the new SDK.</p></li>
+<li><p>The SDK 2025.2.0 cannot load artifacts built with 2025.1.x. Please use the artifact built with 2025.2.x, or rebuild the model again with the new SDK.</p></li>
 </ul>
 <p>Versions of components:</p>
 <div class="pst-scrollable-table-container"><table class="table">
