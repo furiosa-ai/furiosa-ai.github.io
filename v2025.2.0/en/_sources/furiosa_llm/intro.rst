@@ -16,8 +16,10 @@ Key features of Furiosa-LLM include:
 * Support for data, tensor, and pipeline parallelism across multiple NPUs
 * OpenAI-compatible API server
 * Various decoding algorithms: greedy search, beam search, top-k/top-p, and
-  speculative decoding (planned for 2025.1)
+  speculative decoding (planned for 2025.3)
 * Support for context lengths of up to 32k
+* Tool calling and reasoning parser support
+* Chunked Prefill
 * Integration with Hugging Face models and hub support
 * Hugging Face PEFT support (planned)
 

@@ -1,3 +1,5 @@
+.. _Llama-2-70b-chat-hf-FP8-MLPerf: https://furiosa-public-artifacts.s3.ap-northeast-2.amazonaws.com/furiosa-llm-engine-artifacts/v2025.2.0/Llama-2-70b-chat-hf-FP8-MLPerf.tar.zst
+
 .. _GettingStartedFuriosaMLPerf:
 
 ***********************************
@@ -55,6 +57,8 @@ The ``furiosa-mlperf`` command provides the following subcommands:
     bert-server        Run BERT benchmark with server scenario
     gpt-j-offline      Run GPT-J benchmark with offline scenario
     gpt-j-server       Run GPT-J benchmark with server scenario
+    llama-2-offline    Run Llama 2 70B benchmark with offline scenario
+    llama-2-server     Run Llama 2 70B benchmark with server scenario
     llama-3.1-offline  Run Llama 3.1 benchmark with offline scenario
     llama-3.1-server   Run Llama 3.1 benchmark with server scenario
     help               Print this message or the help of the given subcommand(s)
@@ -71,15 +75,15 @@ Also, each subcommand has the following arguments:
   Usage: furiosa-mlperf <SUBCOMMAND> [OPTIONS] <ARTIFACT_PATH> <LOG_DIR>
 
   Arguments:
-    <LLM_ENGINE_ARTIFACTS>
-            A directory to cache LLM engine artifacts in
+    <MODEL_ID_OR_PATH>
+            Hugging Face model ID or local path to the model artifact
 
     <LOG_DIR>
             A directory to store MLPerf™ logs
 
 
-``<ARTIFACT_PATH>`` is the path to the model artifacts,
-and ``<LOG_DIR>`` is the directory to store the MLPerf™ logs.
+``<MODEL_ID_OR_PATH>`` can be a Hugging Face model ID or a local path to the model artifact.
+``<LOG_DIR>`` is the directory to store the MLPerf™ logs.
 Once the ``furiosa-mlperf`` command is executed, it will generate the logs
 into the specified directory.
 You can check the logs to see the results of the benchmark.
@@ -113,6 +117,55 @@ For example, you will be able to see the MLPerf™ results summary once you run 
     Min queries satisfied : Yes
     Early stopping satisfied: Yes
 
+.. _MLPerfArtifacts:
+
+MLPerf Model Artifacts
+----------------------
+``furiosa-mlperf`` command requires the model artifacts to run the benchmark.
+If you are not familiar with model artifacts, refer to
+:ref:`ModelPreparation` for more information.
+
+The following are MLPerf model artifacts that you can use them to run the
+MLPerf™ Inference Benchmark with the ``furiosa-mlperf`` command or Furiosa-LLM.
+
+Note that the Bert and GPT-J artifacts are available on the Hugging Face Hub,
+but Llama 2 70b provides HTTPS links to download the model artifacts.
+You can run Bert and GPT-J benchmarks directly with the Hugging Face Hub model ID.
+For Llama 2 70b, you need to download the model artifacts first and then run the benchmark.
+
+.. list-table::
+   :align: center
+   :header-rows: 1
+   :widths: 80 200 160
+
+   * - Model Name
+     - Link
+     - Description
+   * - `Bert <https://github.com/mlcommons/inference/blob/7bf5997/language/bert/README.md>`_
+     - `furiosa-ai/bert-large-uncased-INT8-MLPerf <https://huggingface.co/furiosa-ai/bert-large-uncased-INT8-MLPerf>`_
+     - Hugging Face Hub
+   * - `GPT-J <https://github.com/mlcommons/inference/tree/7bf59976b5f4eb7c5b8f30a88af832e028028446/language/gpt-j>`_
+     - `furiosa-ai/gpt-j-6b-FP8-MLPerf <https://huggingface.co/furiosa-ai/gpt-j-6b-FP8-MLPerf>`_
+     - Hugging Face Hub
+   * - `llama2-70b <https://github.com/mlcommons/inference/tree/7bf59976b5f4eb7c5b8f30a88af832e028028446/language/llama2-70b>`_
+     - `Llama-2-70b-chat-hf-FP8-MLPerf`_ (`SHA256 checksum <https://furiosa-public-artifacts.s3.ap-northeast-2.amazonaws.com/furiosa-llm-engine-artifacts/v2025.2.0/Llama-2-70b-chat-hf-FP8-MLPerf.tar.zst.sha256>`_)
+     - HTTPS
+
+.. note::
+
+  Llama 2 70b will be available on the Hugging Face Hub since 2025.3 release.
+
+For the Llama 2 70B artifact model, you can download and extract as follows:
+
+.. code-block:: sh
+
+  wget https://furiosa-public-artifacts.s3.ap-northeast-2.amazonaws.com/furiosa-llm-engine-artifacts/v2025.2.0/Llama-2-70b-chat-hf-FP8-MLPerf.tar.zst
+
+  # Validate the checksum
+  shasum -c Llama-2-70b-chat-hf-FP8-MLPerf.tar.zst
+
+  # Extract the model artifacts
+  tar --zstd -xvf Llama-2-70b-chat-hf-FP8-MLPerf.tar.zst
 
 Offline vs Server Scenario
 ------------------------------------
@@ -138,7 +191,7 @@ For example:
 
 .. code-block::
 
-  furiosa-mlperf bert-server ./mlperf-bert-large ./bert-server-result --user-conf ./user.conf
+  furiosa-mlperf bert-server furiosa-ai/bert-large-uncased-INT8-MLPerf ./bert-server-result --user-conf ./user.conf
 
 
 .. tip::
@@ -203,10 +256,9 @@ use the following command:
   ARTIFACT_DIR=./mlperf-gpt-j-6b
 
   docker run -it --rm --privileged \
-    -v $ARTIFACT_DIR/:/model \
     -v `pwd`/gptj-result:/result \
     furiosaai/furiosa-mlperf:latest \
-    gpt-j-offline --test-mode performance-only /model /result
+    gpt-j-offline --test-mode performance-only furiosa-ai/gpt-j-6b-FP8-MLPerf /result
 
 
 
@@ -227,7 +279,7 @@ Use the following command to run the offline scenario:
 
 .. code-block:: sh
 
-  furiosa-mlperf bert-offline ./mlperf-bert-large ./bert-offline-result \
+  furiosa-mlperf bert-offline furiosa-ai/bert-large-uncased-INT8-MLPerf ./bert-offline-result \
     --devices "npu:0"
 
 
@@ -250,7 +302,7 @@ Then, you can run the benchmark with a custom configuration as follows:
 
 .. code-block:: sh
 
-  furiosa-mlperf bert-server ./mlperf-bert-large ./bert-server-result \
+  furiosa-mlperf bert-server furiosa-ai/bert-large-uncased-INT8-MLPerf ./bert-server-result \
     --devices "npu:0" --user-conf ./user.conf
 
 
@@ -260,7 +312,7 @@ Then, you can run the benchmark with a custom configuration as follows:
 
   .. code-block:: sh
 
-    furiosa-mlperf bert-offline ./mlperf-bert-large ./bert-offline-result \
+    furiosa-mlperf bert-offline furiosa-ai/bert-large-uncased-INT8-MLPerf ./bert-offline-result \
       --devices "npu:0,npu:1" --user-conf ./user.conf
 
 
@@ -274,22 +326,23 @@ benchmarks, respectively:
 
 .. code-block:: sh
 
-  furiosa-mlperf gpt-j-server ./mlperf-gpt-j-6b ./gpt-j-server-result
+  furiosa-mlperf gpt-j-server furiosa-ai/gpt-j-6b-FP8-MLPerf ./gpt-j-server-result
 
-  furiosa-mlperf gpt-j-offline ./mlperf-gpt-j-6b ./gpt-j-offline-result
+  furiosa-mlperf gpt-j-offline furiosa-ai/gpt-j-6b-FP8-MLPerf ./gpt-j-offline-result
 
 
-Llama 3.1 70B benchmark
+Llama 2 70B benchmark
 -----------------------
 
-Llama 3.1 70B requires at least 2 RNGD cards.
-For the best performance, you will need 8 RNGD cards.
+Llama 2 70B requires at least 2 RNGD cards. For the best performance, you will need at least 4 RNGD cards.
+To run the Llama 2 70B benchmark, you need to download the model artifacts
+by following the instructions in :ref:`MLPerfArtifacts`.
 
-The following commands run the Llama 3.1 70B serving and offline inference
-benchmarks, respectively:
+Then, you can run the Llama 2 70B serving and offline inference
+benchmarks respectively as follows:
 
 .. code-block:: sh
 
-  furiosa-mlperf llama-3.1-server ./Llama-3.1-70B-Instruct ./llama-3.1-server-result
+  furiosa-mlperf llama-3.1-server ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-server-result
 
-  furiosa-mlperf llama-3.1-offline ./Llama-3.1-70B-Instruct ./llama-3.1-offline-result
+  furiosa-mlperf llama-3.1-offline ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-offline-result

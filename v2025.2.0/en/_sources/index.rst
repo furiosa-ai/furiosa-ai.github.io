@@ -83,7 +83,7 @@ Furiosa-LLM
 * :ref:`OpenAIServer`: More details about the OpenAI-compatible server and its features
 * :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM
 * :ref:`ModelParallelism`: Tensor/Pipeline/Data parallelism in Furiosa-LLM
-* :ref:`FuriosaLLMBuildCommand`: Command line tool for building model artifacts
+* :ref:`BuildingModelArtifactsByExamples`: A guide to building model artifacts through examples
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
 
