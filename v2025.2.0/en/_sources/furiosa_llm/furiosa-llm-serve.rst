@@ -21,7 +21,7 @@ and interact with the server using OpenAI API clients.
 
 .. warning::
 
-  This document is based on Furiosa SDK |release| (beta0).
+  This document is based on Furiosa SDK |release|.
   The features and APIs described herein are subject to change in the future.
 
 
@@ -148,11 +148,11 @@ Since start-of-reasoning and end-of-reasoning tokens are model-specific, we supp
 Currently, ``deepseek_r1`` parser is available. This parser expects ``<token>`` and ``</token>`` as the start-of-reasoning and end-of-reasoning tokens respectively.
 Any models that follow the same token scheme (such as Qwen QWQ) can use this parser.
 
-To launch a server with reasoning capabilities for Deepseek R1 series, use the following command:
+To launch a server with reasoning capabilities for Deepseek R1 series, use the following example command:
 
 .. code-block:: bash
 
-    furiosa-llm serve [ARTIFACT_PATH] --enable-reasoning --reasoning-parser deepseek_r1
+    furiosa-llm serve furiosa-ai/DeepSeek-R1-Distill-Llama-8B --enable-reasoning --reasoning-parser deepseek_r1
 
 You can access the reasoning content through these response fields:
 

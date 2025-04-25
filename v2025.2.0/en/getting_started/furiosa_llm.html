@@ -342,7 +342,7 @@ OpenAI’s API.
 This document explains how to install and use Furiosa-LLM.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2025.2.0 (beta0).
+<p>This document is based on Furiosa SDK 2025.2.0.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="installing-furiosa-llm">
@@ -389,9 +389,12 @@ The <code class="docutils literal notranslate"><span class="pre">LLM</span></cod
 <span class="c1"># You can specify various parameters for text generation</span>
 <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
+<span class="c1"># Prompt for the model</span>
+<span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}]</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="c1"># Generate text</span>
-<span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Say this is a test&quot;</span><span class="p">]</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">prompt</span><span class="p">],</span> <span class="n">sampling_params</span><span class="p">)</span>
 
 <span class="c1"># Print the output of the model</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -418,8 +421,11 @@ This method is asynchronous and returns a stream of tokens as they are generated
     <span class="c1"># You can specify various parameters for text generation</span>
     <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
+    <span class="c1"># Prompt for the model</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}]</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
     <span class="c1"># Generate text and print each token at a time</span>
-    <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Say this is a test&quot;</span>
     <span class="k">async</span> <span class="k">for</span> <span class="n">output_txt</span> <span class="ow">in</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">output_txt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 

@@ -359,7 +359,7 @@ artifact path, as follows:</p>
 and interact with the server using OpenAI API clients.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2025.2.0 (beta0).
+<p>This document is based on Furiosa SDK 2025.2.0.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="prerequisites">
@@ -407,7 +407,7 @@ API with <code class="docutils literal notranslate"><span class="pre">stream=Tru
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
     <span class="n">stream_chat_completion</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Say this is a test&quot;</span><span class="p">}],</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Where is the capital of France?&quot;</span><span class="p">}],</span>
         <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -520,8 +520,8 @@ Result: The temperature in San Francisco, CA is 70 °F
 <p>Since start-of-reasoning and end-of-reasoning tokens are model-specific, we support different reasoning parsers for different models.
 Currently, <code class="docutils literal notranslate"><span class="pre">deepseek_r1</span></code> parser is available. This parser expects <code class="docutils literal notranslate"><span class="pre">&lt;token&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;/token&gt;</span></code> as the start-of-reasoning and end-of-reasoning tokens respectively.
 Any models that follow the same token scheme (such as Qwen QWQ) can use this parser.</p>
-<p>To launch a server with reasoning capabilities for Deepseek R1 series, use the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--enable-reasoning<span class="w"> </span>--reasoning-parser<span class="w"> </span>deepseek_r1
+<p>To launch a server with reasoning capabilities for Deepseek R1 series, use the following example command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/DeepSeek-R1-Distill-Llama-8B<span class="w"> </span>--enable-reasoning<span class="w"> </span>--reasoning-parser<span class="w"> </span>deepseek_r1
 </pre></div>
 </div>
 <p>You can access the reasoning content through these response fields:</p>
