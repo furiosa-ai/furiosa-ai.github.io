@@ -110,11 +110,11 @@ designated parser implementation.
 At this time, only the ``llama3_json`` parser is available.
 Additional parsers will be introduced in future releases.
 
-The following command starts the server with tool calling enabled for Llama 3.1 models:
+The following example command starts the server with tool calling enabled for Llama 3.1 models:
 
 .. code-block:: bash
 
-    furiosa-llm serve [ARTIFACT_PATH] --enable-auto-tool-choice --tool-call-parser llama3_json
+    furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --enable-auto-tool-choice --tool-call-parser llama3_json
 
 To use the tool calling feature, specify the ``tools`` and ``tool_choice``
 parameters. Here's an example:
@@ -127,8 +127,8 @@ The expected output is as follows.
 .. code-block:: text
 
     Function called: get_weather
-    Arguments: {"location": "San Francisco, CA", "unit": "F"}
-    Result: The temperature in San Francisco, CA is 70 °F
+    Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
+    Result: Getting the weather for San Francisco, CA in fahrenheit...
 
 
 .. _Reasoning:
