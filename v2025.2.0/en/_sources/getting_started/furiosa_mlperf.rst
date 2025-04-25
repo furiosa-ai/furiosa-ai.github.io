@@ -343,6 +343,6 @@ benchmarks respectively as follows:
 
 .. code-block:: sh
 
-  furiosa-mlperf llama-3.1-server ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-server-result
+  furiosa-mlperf llama-2-server ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-server-result
 
-  furiosa-mlperf llama-3.1-offline ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-offline-result
+  furiosa-mlperf llama-2-offline ./Llama-2-70b-chat-hf-FP8-MLPerf ./llama-2-offline-result

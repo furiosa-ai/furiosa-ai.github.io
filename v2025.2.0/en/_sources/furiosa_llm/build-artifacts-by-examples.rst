@@ -58,7 +58,7 @@ You can find the default options by running ``furiosa-llm build --help``.
 .. code-block::
 
     furiosa-llm build meta-llama/Llama-3.1-8B-Instruct \
-        /path_to/artifact \
+        /path_to/artifact
 
 
 Specifying Context Length
@@ -131,7 +131,7 @@ you can specify ``--pipeline-parallel-size 4``.
 
     furiosa-llm build meta-llama/Llama-3.1-8B-Instruct \
         /path_to/artifact \
-        --pipeline-parallel-size 4
+        --pipeline-parallel-size 4 \
         --tensor-parallel-size 8
 
 
@@ -145,6 +145,8 @@ you can specify ``--pipeline-parallel-size 4``.
 To learn more about model parallelism, please refer to the :ref:`ModelParallelism` section.
 
 
+.. _TrustRemoteCode:
+
 Enabling ``trust_remote_code``
 ------------------------------
 ``trust_remote_code`` is an option in Hugging Face Transformers that allows you to trust remote code
@@ -153,7 +155,7 @@ from remote code on the Hugging Face Hub as follows:
 
 .. code-block::
 
-    LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct \
+    furiosa-llm build LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct \
         /path_to/artifact \
         --auto-bfloat16-cast \
         --trust-remote-code
@@ -165,15 +167,7 @@ Building Float16, Float32 Models
 Furiosa-LLM builds models in bfloat16 format by default. However, if you want to build a model
 in float16 or float32 format, you must explicitly request casting to bfloat16
 using the ``--auto-bfloat16-cast`` flag; otherwise, an error will occur.
-
-The following example shows how to build the ``SOLAR-10.7B-Instruct-v1.0`` model in float16 format.
-
-.. code-block::
-
-    furiosa-llm build upstage/SOLAR-10.7B-Instruct-v1.0 \
-        /path_to/artifact \
-        --auto-bfloat16-cast
-
+The example in :ref:`TrustRemoteCode`_ uses ``--auto-bfloat16-cast`` option because the EXAONE model is in float16 format.
 
 .. _ChunkedPrefill:
 

@@ -387,7 +387,7 @@ The second argument is the output path where the model artifact will be saved.</
 <p>The following command doesn’t have any options, so the model artifact will be built with the default options.
 You can find the default options by running <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span> <span class="pre">--help</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> <span class="n">meta</span><span class="o">-</span><span class="n">llama</span><span class="o">/</span><span class="n">Llama</span><span class="o">-</span><span class="mf">3.1</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
-    <span class="o">/</span><span class="n">path_to</span><span class="o">/</span><span class="n">artifact</span> \
+    <span class="o">/</span><span class="n">path_to</span><span class="o">/</span><span class="n">artifact</span>
 </pre></div>
 </div>
 </section>
@@ -448,7 +448,7 @@ For example, if you have 4 devices and want to use all of them for pipeline para
 you can specify <code class="docutils literal notranslate"><span class="pre">--pipeline-parallel-size</span> <span class="pre">4</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> <span class="n">meta</span><span class="o">-</span><span class="n">llama</span><span class="o">/</span><span class="n">Llama</span><span class="o">-</span><span class="mf">3.1</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
     <span class="o">/</span><span class="n">path_to</span><span class="o">/</span><span class="n">artifact</span> \
-    <span class="o">--</span><span class="n">pipeline</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="mi">4</span>
+    <span class="o">--</span><span class="n">pipeline</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="mi">4</span> \
     <span class="o">--</span><span class="n">tensor</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="mi">8</span>
 </pre></div>
 </div>
@@ -461,11 +461,11 @@ In contrast, the <code class="docutils literal notranslate"><span class="pre">--
 <p>To learn more about model parallelism, please refer to the <a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a> section.</p>
 </section>
 <section id="enabling-trust-remote-code">
-<h3>Enabling <code class="docutils literal notranslate"><span class="pre">trust_remote_code</span></code><a class="headerlink" href="#enabling-trust-remote-code" title="Link to this heading">#</a></h3>
+<span id="trustremotecode"></span><h3>Enabling <code class="docutils literal notranslate"><span class="pre">trust_remote_code</span></code><a class="headerlink" href="#enabling-trust-remote-code" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">trust_remote_code</span></code> is an option in Hugging Face Transformers that allows you to trust remote code
 when loading a model from the Hugging Face Hub. You can use this option when building a model artifact
 from remote code on the Hugging Face Hub as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LGAI</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">/</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> <span class="n">LGAI</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">/</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
     <span class="o">/</span><span class="n">path_to</span><span class="o">/</span><span class="n">artifact</span> \
     <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">bfloat16</span><span class="o">-</span><span class="n">cast</span> \
     <span class="o">--</span><span class="n">trust</span><span class="o">-</span><span class="n">remote</span><span class="o">-</span><span class="n">code</span>
@@ -476,13 +476,8 @@ from remote code on the Hugging Face Hub as follows:</p>
 <span id="autobfloat16cast"></span><h3>Building Float16, Float32 Models<a class="headerlink" href="#building-float16-float32-models" title="Link to this heading">#</a></h3>
 <p>Furiosa-LLM builds models in bfloat16 format by default. However, if you want to build a model
 in float16 or float32 format, you must explicitly request casting to bfloat16
-using the <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> flag; otherwise, an error will occur.</p>
-<p>The following example shows how to build the <code class="docutils literal notranslate"><span class="pre">SOLAR-10.7B-Instruct-v1.0</span></code> model in float16 format.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> <span class="n">upstage</span><span class="o">/</span><span class="n">SOLAR</span><span class="o">-</span><span class="mf">10.7</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span><span class="o">-</span><span class="n">v1</span><span class="mf">.0</span> \
-    <span class="o">/</span><span class="n">path_to</span><span class="o">/</span><span class="n">artifact</span> \
-    <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">bfloat16</span><span class="o">-</span><span class="n">cast</span>
-</pre></div>
-</div>
+using the <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> flag; otherwise, an error will occur.
+The example in <a href="#id1"><span class="problematic" id="id2">:ref:`TrustRemoteCode`_</span></a> uses <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> option because the EXAONE model is in float16 format.</p>
 </section>
 <section id="long-context-length-and-chunked-prefill">
 <span id="chunkedprefill"></span><h3>Long-context Length and Chunked Prefill<a class="headerlink" href="#long-context-length-and-chunked-prefill" title="Link to this heading">#</a></h3>
@@ -491,8 +486,8 @@ This is an experimental feature and is still under development.
 It does not yet support batching a single prefill with multiple decode requests.
 However, it can still be useful for long-context length models.
 To enable this feature, you need to specify the <code class="docutils literal notranslate"><span class="pre">--prefill-chunk-size</span> <span class="pre">CHUNK_SIZE</span></code> option as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> \
-    <span class="n">LGAI</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">/</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> <span class="o">./</span><span class="n">Output</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">build</span> <span class="n">LGAI</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">/</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
+    <span class="o">./</span><span class="n">Output</span><span class="o">-</span><span class="n">EXAONE</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="mf">7.8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> \
     <span class="o">-</span><span class="n">tp</span> <span class="mi">8</span> \
     <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">seq</span><span class="o">-</span><span class="nb">len</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">capture</span> <span class="mi">32768</span> \
     <span class="o">--</span><span class="n">prefill</span><span class="o">-</span><span class="n">chunk</span><span class="o">-</span><span class="n">size</span> <span class="mi">8192</span> \
