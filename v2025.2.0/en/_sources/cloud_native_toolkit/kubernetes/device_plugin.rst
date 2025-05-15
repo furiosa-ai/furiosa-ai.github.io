@@ -14,6 +14,24 @@ interface for FuriosaAI NPU devices, and its features are as follows:
 * Tracking the health of the devices and reporting to a Kubernetes cluster.
 * Running AI workload on the top of the Furiosa NPU devices within a Kubernetes cluster.
 
+Deploying Furiosa Device Plugin with Helm
+-----------------------------------------
+
+The Furiosa device plugin helm chart is available at https://github.com/furiosa-ai/helm-charts. To configure deployment as you need, you can modify ``charts/furiosa-device-plugin/values.yaml``.
+
+* If partitioning is not specified, the default value is ``"none"``.
+* If debugMode is not specified, the default value is ``false``.
+* If disabledDeviceUUIDs is not specified, the default value is empty list ``[]``.
+
+You can deploy the Furiosa Device Plugin by running the following commands:
+
+.. code-block:: sh
+
+  helm repo add furiosa https://furiosa-ai.github.io/helm-charts
+  helm repo update
+  helm install furiosa-device-plugin furiosa/furiosa-device-plugin -n kube-system
+
+
 Configuration
 ----------------------------------------------
 The configuration structure is as follows:
@@ -78,23 +96,4 @@ The following is an example configuration:
       node_b:
         - "uuid3"
         - "uuid4"
-
-
-
-Deploying Furiosa Device Plugin with Helm
------------------------------------------
-
-The Furiosa device plugin helm chart is available at https://github.com/furiosa-ai/helm-charts. To configure deployment as you need, you can modify ``charts/furiosa-device-plugin/values.yaml``.
-
-* If partitioning is not specified, the default value is ``"none"``.
-* If debugMode is not specified, the default value is ``false``.
-* If disabledDeviceUUIDs is not specified, the default value is empty list ``[]``.
-
-You can deploy the Furiosa Device Plugin by running the following commands:
-
-.. code-block:: sh
-
-  helm repo add furiosa https://furiosa-ai.github.io/helm-charts
-  helm repo update
-  helm install furiosa-device-plugin furiosa/furiosa-device-plugin -n kube-system
 

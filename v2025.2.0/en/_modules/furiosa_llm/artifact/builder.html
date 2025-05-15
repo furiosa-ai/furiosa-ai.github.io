@@ -341,7 +341,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.parallelize.mppp.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Device</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_list_with_no_dup_with_order_preserved</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..device</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUM_PES_PER_NPU</span><span class="p">,</span> <span class="n">get_device_mesh</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..device</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_device_mesh</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttentionType</span><span class="p">,</span> <span class="n">ModelMetadata</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..models.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">GeneratorConfig</span><span class="p">,</span>
@@ -358,7 +358,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
 <span class="kn">from</span><span class="w"> </span><span class="nn">..parallelize.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..parallelize.pipeline.builder.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_commit_id</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..parallelize.pipeline.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SuperTaskKind</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..parallelize.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">PARAM_FILE_CACHE_SUBDIR_NAME</span><span class="p">,</span> <span class="n">get_param_file_with_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..parallelize.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_param_file_with_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.helper</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">build_pipelines</span><span class="p">,</span>
     <span class="n">get_buckets_with_output_logits_size</span><span class="p">,</span>
@@ -398,14 +398,6 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
         <span class="s2">&quot;LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct&quot;</span><span class="p">,</span>
         <span class="s2">&quot;LGAI-EXAONE/EXAONE-3.5-32B-Instruct&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_tp_group_device</span><span class="p">(</span><span class="n">tp_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">tp_size</span> <span class="o">&lt;=</span> <span class="n">NUM_PES_PER_NPU</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Device</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;npu:</span><span class="si">{</span><span class="n">start_idx</span><span class="si">}</span><span class="s2">:0-</span><span class="si">{</span><span class="n">tp_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">tp_size</span> <span class="o">%</span> <span class="n">NUM_PES_PER_NPU</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">Device</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;npu:</span><span class="si">{</span><span class="n">start_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tp_size</span> <span class="o">//</span> <span class="n">NUM_PES_PER_NPU</span><span class="p">)]))</span>
 
 
 <div class="viewcode-block" id="ArtifactBuilder">
@@ -570,21 +562,12 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor_parallel_size</span> <span class="o">=</span> <span class="n">tensor_parallel_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_parallel_size</span> <span class="o">=</span> <span class="n">pipeline_parallel_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dummy_data_parallel_size</span> <span class="o">=</span> <span class="mi">1</span>
-
-        <span class="n">num_chip_per_tp_group</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor_parallel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">NUM_PES_PER_NPU</span> <span class="o">+</span> <span class="mi">1</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">dummy_normalized_mesh</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span><span class="n">dev</span> <span class="k">for</span> <span class="n">tp_group</span> <span class="ow">in</span> <span class="n">pp_tp_group</span> <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">tp_group</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">pp_tp_group</span> <span class="ow">in</span> <span class="n">get_device_mesh</span><span class="p">(</span>
                 <span class="p">[</span>
-                    <span class="n">get_tp_group_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor_parallel_size</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
-                        <span class="mi">0</span><span class="p">,</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">dummy_data_parallel_size</span>
-                        <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_parallel_size</span>
-                        <span class="o">*</span> <span class="n">num_chip_per_tp_group</span><span class="p">,</span>
-                        <span class="n">num_chip_per_tp_group</span><span class="p">,</span>
-                    <span class="p">)</span>
+                    <span class="n">Device</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;npu:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:0-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor_parallel_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy_data_parallel_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">)</span>
                 <span class="p">],</span>
                 <span class="n">tensor_parallel_size</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
@@ -844,7 +827,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">param_file_path</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">cache_dir</span> <span class="ow">and</span> <span class="n">model_creation_info</span><span class="o">.</span><span class="n">is_hashable</span><span class="p">():</span>
-                <span class="n">param_file_cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">PARAM_FILE_CACHE_SUBDIR_NAME</span>
+                <span class="n">param_file_cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;param_files&quot;</span>
                 <span class="n">param_file_path</span> <span class="o">=</span> <span class="n">get_param_file_with_cache</span><span class="p">(</span>
                     <span class="n">model_creation_info</span><span class="p">,</span> <span class="n">param_file_cache_dir</span>
                 <span class="p">)</span>

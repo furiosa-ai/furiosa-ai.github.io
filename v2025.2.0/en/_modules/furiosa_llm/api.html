@@ -380,7 +380,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
     <span class="n">TensorInfo</span><span class="p">,</span>
     <span class="n">load_partial_param</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.parallelize.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">PARAM_FILE_CACHE_SUBDIR_NAME</span><span class="p">,</span> <span class="n">get_param_file_with_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.parallelize.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_param_file_with_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.server.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_list_of</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">FURIOSA_LLM_VERSION</span><span class="p">,</span> <span class="n">FuriosaVersionInfo</span>
 
@@ -535,11 +535,12 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
 
 
 <span class="n">RELEASE_ARTIFACT_KEYS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;furiosa-ai/bert-large-uncased-INT8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;furiosa-ai/bert-large-uncased-INT8-MLPerf&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/DeepSeek-R1-Distill-Llama-8B&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/DeepSeek-R1-Distill-Llama-70B&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/EXAONE-3.5-7.8B-Instruct&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;furiosa-ai/Llama-2-70b-chat-hf-FP8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;furiosa-ai/gpt-j-6b-FP8-MLPerf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;furiosa-ai/Llama-2-70b-chat-hf-FP8-MLPerf&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8&quot;</span><span class="p">,</span>
     <span class="s2">&quot;furiosa-ai/Llama-3.3-70B-Instruct&quot;</span><span class="p">,</span>
@@ -2449,7 +2450,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
         <span class="c1"># and pipeline should be constructed.</span>
         <span class="k">if</span> <span class="n">param_file_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">backend</span><span class="o">.</span><span class="n">is_parallelism_supported</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">cache_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">is_hashable</span><span class="p">():</span>
-                <span class="n">param_file_cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">PARAM_FILE_CACHE_SUBDIR_NAME</span>
+                <span class="n">param_file_cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;param_files&quot;</span>
                 <span class="n">param_file_path</span> <span class="o">=</span> <span class="n">get_param_file_with_cache</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_file_cache_dir</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tmp_dir_path</span><span class="p">,</span> <span class="n">Path</span><span class="p">)</span>
@@ -3061,7 +3062,7 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
 
 <span class="sd">    Internally, this function calls :meth:`LLM.load_artifact`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;backend&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;backend&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">LLM</span><span class="o">.</span><span class="n">load_artifact</span><span class="p">(</span>
         <span class="n">model_id_or_path</span><span class="p">,</span>

@@ -316,8 +316,8 @@ Please check out <a href="https://developer.furiosa.ai/v2025.2.0/en/whatsnew/ind
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-feature-discovery-and-nfd">Furiosa Feature Discovery and NFD</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-furiosa-feature-discovery-with-helm">Deploying Furiosa Feature Discovery with Helm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 </ul>
 </li>
 </ul>
@@ -346,6 +346,17 @@ equipped with FuriosaAI NPUs.</p>
 <p class="admonition-title">Note</p>
 <p>If multiple versions of device-level components (like pert or firmware) exist on the same node, the related labels are removed to avoid conflicts.</p>
 </div>
+<section id="deploying-furiosa-feature-discovery-with-helm">
+<h3>Deploying Furiosa Feature Discovery with Helm<a class="headerlink" href="#deploying-furiosa-feature-discovery-with-helm" title="Link to this heading">#</a></h3>
+<p>With the helm chart you can easily install Furiosa feature discovery and NFD into your Kubernetes cluster.
+Following command shows how to install them.
+The Furiosa device plugin helm chart is available at <a class="github reference external" href="https://github.com/furiosa-ai/helm-charts">furiosa-ai/helm-charts</a>. To configure deployment as you need, you can modify <code class="docutils literal notranslate"><span class="pre">charts/furiosa-feature-discovery/values.yaml</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>furiosa<span class="w"> </span>https://furiosa-ai.github.io/helm-charts
+helm<span class="w"> </span>repo<span class="w"> </span>update
+helm<span class="w"> </span>install<span class="w"> </span>furiosa-feature-discovery<span class="w"> </span>furiosa/furiosa-feature-discovery<span class="w"> </span>-n<span class="w"> </span>kube-system
+</pre></div>
+</div>
+</section>
 <section id="labels">
 <h3>Labels<a class="headerlink" href="#labels" title="Link to this heading">#</a></h3>
 <p>The followings are the labels that the Furiosa Feature Discovery attaches and what they mean.</p>
@@ -438,17 +449,6 @@ equipped with FuriosaAI NPUs.</p>
 </table>
 </div>
 </section>
-<section id="deploying-furiosa-feature-discovery-with-helm">
-<h3>Deploying Furiosa Feature Discovery with Helm<a class="headerlink" href="#deploying-furiosa-feature-discovery-with-helm" title="Link to this heading">#</a></h3>
-<p>With the helm chart you can easily install Furiosa feature discovery and NFD into your Kubernetes cluster.
-Following command shows how to install them.
-The Furiosa device plugin helm chart is available at <a class="github reference external" href="https://github.com/furiosa-ai/helm-charts">furiosa-ai/helm-charts</a>. To configure deployment as you need, you can modify <code class="docutils literal notranslate"><span class="pre">charts/furiosa-feature-discovery/values.yaml</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>furiosa<span class="w"> </span>https://furiosa-ai.github.io/helm-charts
-helm<span class="w"> </span>repo<span class="w"> </span>update
-helm<span class="w"> </span>install<span class="w"> </span>furiosa-feature-discovery<span class="w"> </span>furiosa/furiosa-feature-discovery<span class="w"> </span>-n<span class="w"> </span>kube-system
-</pre></div>
-</div>
-</section>
 </section>
 </section>
 
@@ -499,8 +499,8 @@ helm<span class="w"> </span>install<span class="w"> </span>furiosa-feature-disco
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-feature-discovery-and-nfd">Furiosa Feature Discovery and NFD</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-furiosa-feature-discovery-with-helm">Deploying Furiosa Feature Discovery with Helm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 </ul>
 </li>
 </ul>
