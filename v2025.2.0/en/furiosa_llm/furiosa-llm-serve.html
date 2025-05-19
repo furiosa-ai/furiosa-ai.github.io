@@ -924,10 +924,10 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
 (replace <code class="docutils literal notranslate"><span class="pre">$HF_TOKEN</span></code> with your Hugging Face Hub token):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -it --rm --privileged \
     --env HF_TOKEN=$HF_TOKEN \
-    -v ./Llama-3.1-8B-Instruct:/model \
+    -v $HOME/.cache/huggingface:/root/.cache/huggingface \
     -p 8000:8000 \
     furiosaai/furiosa-llm:latest \
-    serve /model --devices &quot;npu:0&quot;
+    serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices &quot;npu:0&quot;
 </pre></div>
 </div>
 </section>
