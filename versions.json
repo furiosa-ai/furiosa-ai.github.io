@@ -1,5 +1,25 @@
 [
     {
+        "name": "2024.1.0",
+        "version": "2024.1.0",
+        "url": "https://developer.furiosa.ai/2024.1.0/"
+    },
+    {
+        "name": "2024.2.0",
+        "version": "2024.2.0",
+        "url": "https://developer.furiosa.ai/v2024.2.0/"
+    },
+    {
+        "name": "2024.2.1",
+        "version": "2024.2.1",
+        "url": "https://developer.furiosa.ai/v2024.2.1/"
+    },
+    {
+        "name": "2025.1.0",
+        "version": "2025.1.0",
+        "url": "https://developer.furiosa.ai/v2025.1.0/en/"
+    },
+    {
         "name": "2025.2.0-pre0",
         "version": "2025.2.0-pre0",
         "url": "https://developer.furiosa.ai/v2025.2.0-pre0/en/"
