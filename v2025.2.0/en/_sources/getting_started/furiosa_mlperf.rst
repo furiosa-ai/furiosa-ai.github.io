@@ -252,13 +252,13 @@ use the following command:
 
 .. code-block:: sh
 
-  # Please replace the path with the actual path to the model artifacts.
-  ARTIFACT_DIR=./mlperf-gpt-j-6b
+  # Please replace the model id by the one you want to run.
+  MODEL_ID=furiosa-ai/gpt-j-6b-FP8-MLPerf
 
   docker run -it --rm --privileged \
-    -v `pwd`/gptj-result:/result \
+    -v $HOME/.cache/huggingface:/root/.cache/huggingface \
     furiosaai/furiosa-mlperf:latest \
-    gpt-j-offline --test-mode performance-only furiosa-ai/gpt-j-6b-FP8-MLPerf /result
+    gpt-j-offline --test-mode performance-only $MODEL_ID /result --devices "npu:0"
 
 
 

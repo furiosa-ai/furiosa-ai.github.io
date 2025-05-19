@@ -560,13 +560,13 @@ to install the driver, firmware, and PERT on the host system.</p>
 </div>
 <p>To run the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container for the GPT-J 6B offline scenario,
 use the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please replace the path with the actual path to the model artifacts.</span>
-<span class="nv">ARTIFACT_DIR</span><span class="o">=</span>./mlperf-gpt-j-6b
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please replace the model id by the one you want to run.</span>
+<span class="nv">MODEL_ID</span><span class="o">=</span>furiosa-ai/gpt-j-6b-FP8-MLPerf
 
 docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--privileged<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/gptj-result:/result<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.cache/huggingface:/root/.cache/huggingface<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>furiosaai/furiosa-mlperf:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span>furiosa-ai/gpt-j-6b-FP8-MLPerf<span class="w"> </span>/result
+<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span><span class="nv">$MODEL_ID</span><span class="w"> </span>/result<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span>
 </pre></div>
 </div>
 <div class="admonition warning">

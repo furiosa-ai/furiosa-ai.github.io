@@ -496,7 +496,7 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
 
     docker run -it --rm --privileged \
         --env HF_TOKEN=$HF_TOKEN \
-        -v ./Llama-3.1-8B-Instruct:/model \
+        -v $HOME/.cache/huggingface:/root/.cache/huggingface \
         -p 8000:8000 \
         furiosaai/furiosa-llm:latest \
-        serve /model --devices "npu:0"
+        serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices "npu:0"
