@@ -2,7 +2,7 @@
     {
         "name": "2024.1.0",
         "version": "2024.1.0",
-        "url": "https://developer.furiosa.ai/2024.1.0/"
+        "url": "https://developer.furiosa.ai/v2024.1.0/"
     },
     {
         "name": "2024.2.0",
@@ -25,7 +25,7 @@
         "url": "https://developer.furiosa.ai/v2025.2.0-pre0/en/"
     },
     {
-        "name": "2025.2.0",
+        "name": "2025.2.0 (Latest)",
         "version": "2025.2.0",
         "url": "https://developer.furiosa.ai/v2025.2.0/en/",
         "preferred": true
