@@ -13,7 +13,7 @@ What's New
 
 .. _Release2025_2_0:
 
-Furiosa SDK 2025.2.0 Beta2 (2025-04-25)
+Furiosa SDK 2025.2.0 Beta2 (2025-05-19)
 =======================================
 
 RNGD SDK 2025.2.0 is the fourth major release, bringing a wide range of new features and significant improvements,
