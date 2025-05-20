@@ -145,7 +145,7 @@ The reasoning process follows this sequence:
 * Once reasoning is complete, the model outputs an end-of-reasoning token followed by the final answer.
 
 Since start-of-reasoning and end-of-reasoning tokens are model-specific, we support different reasoning parsers for different models.
-Currently, ``deepseek_r1`` parser is available. This parser expects ``<token>`` and ``</token>`` as the start-of-reasoning and end-of-reasoning tokens respectively.
+Currently, ``deepseek_r1`` parser is available. This parser expects ``<think>`` and ``</think>`` as the start-of-reasoning and end-of-reasoning tokens respectively.
 Any models that follow the same token scheme (such as Qwen QWQ) can use this parser.
 
 To launch a server with reasoning capabilities for Deepseek R1 series, use the following example command:
@@ -493,10 +493,13 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
 (replace ``$HF_TOKEN`` with your Hugging Face Hub token):
 
 .. code-block::
+    docker pull furiosaai/furiosa-llm:latest
 
-    docker run -it --rm --privileged \
-        --env HF_TOKEN=$HF_TOKEN \
-        -v $HOME/.cache/huggingface:/root/.cache/huggingface \
-        -p 8000:8000 \
-        furiosaai/furiosa-llm:latest \
-        serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices "npu:0"
+    docker run -it --rm \
+      --device /dev/rngd:/dev/rngd \
+      --security-opt seccomp=unconfined \
+      --env HF_TOKEN=$HF_TOKEN \
+      -v $HOME/.cache/huggingface:/root/.cache/huggingface \
+      -p 8000:8000 \
+      furiosaai/furiosa-llm:latest \
+      serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices "npu:0"

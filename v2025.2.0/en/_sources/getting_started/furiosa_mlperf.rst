@@ -252,13 +252,18 @@ use the following command:
 
 .. code-block:: sh
 
+  docker pull furiosaai/furiosa-mlperf:latest
+
   # Please replace the model id by the one you want to run.
   MODEL_ID=furiosa-ai/gpt-j-6b-FP8-MLPerf
 
-  docker run -it --rm --privileged \
+  docker run -it --rm \
+    --device /dev/rngd:/dev/rngd \
+    --security-opt seccomp=unconfined \
+    --env HF_TOKEN=$HF_TOKEN \
     -v $HOME/.cache/huggingface:/root/.cache/huggingface \
     furiosaai/furiosa-mlperf:latest \
-    gpt-j-offline --test-mode performance-only $MODEL_ID /result --devices "npu:0"
+    gpt-j-offline --test-mode performance-only furiosa-ai/gpt-j-6b-FP8-MLPerf /result --devices "npu:0"
 
 
 

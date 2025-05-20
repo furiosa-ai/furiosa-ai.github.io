@@ -518,7 +518,7 @@ Result: Getting the weather for San Francisco, CA in fahrenheit...
 <li><p>Once reasoning is complete, the model outputs an end-of-reasoning token followed by the final answer.</p></li>
 </ul>
 <p>Since start-of-reasoning and end-of-reasoning tokens are model-specific, we support different reasoning parsers for different models.
-Currently, <code class="docutils literal notranslate"><span class="pre">deepseek_r1</span></code> parser is available. This parser expects <code class="docutils literal notranslate"><span class="pre">&lt;token&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;/token&gt;</span></code> as the start-of-reasoning and end-of-reasoning tokens respectively.
+Currently, <code class="docutils literal notranslate"><span class="pre">deepseek_r1</span></code> parser is available. This parser expects <code class="docutils literal notranslate"><span class="pre">&lt;think&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;/think&gt;</span></code> as the start-of-reasoning and end-of-reasoning tokens respectively.
 Any models that follow the same token scheme (such as Qwen QWQ) can use this parser.</p>
 <p>To launch a server with reasoning capabilities for Deepseek R1 series, use the following example command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/DeepSeek-R1-Distill-Llama-8B<span class="w"> </span>--enable-reasoning<span class="w"> </span>--reasoning-parser<span class="w"> </span>deepseek_r1
@@ -922,14 +922,6 @@ The metrics endpoint can be enabled with <code class="docutils literal notransla
 <p>FuriosaAI offers a containerized server that can be used for faster deployment.
 Here is an example that launches the Furiosa-LLM server in a Docker container
 (replace <code class="docutils literal notranslate"><span class="pre">$HF_TOKEN</span></code> with your Hugging Face Hub token):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -it --rm --privileged \
-    --env HF_TOKEN=$HF_TOKEN \
-    -v $HOME/.cache/huggingface:/root/.cache/huggingface \
-    -p 8000:8000 \
-    furiosaai/furiosa-llm:latest \
-    serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices &quot;npu:0&quot;
-</pre></div>
-</div>
 </section>
 </section>
 

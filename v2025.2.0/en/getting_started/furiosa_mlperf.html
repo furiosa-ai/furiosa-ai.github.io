@@ -560,13 +560,18 @@ to install the driver, firmware, and PERT on the host system.</p>
 </div>
 <p>To run the <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> container for the GPT-J 6B offline scenario,
 use the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please replace the model id by the one you want to run.</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>furiosaai/furiosa-mlperf:latest
+
+<span class="c1"># Please replace the model id by the one you want to run.</span>
 <span class="nv">MODEL_ID</span><span class="o">=</span>furiosa-ai/gpt-j-6b-FP8-MLPerf
 
-docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--privileged<span class="w"> </span><span class="se">\</span>
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="w"> </span>/dev/rngd:/dev/rngd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--security-opt<span class="w"> </span><span class="nv">seccomp</span><span class="o">=</span>unconfined<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--env<span class="w"> </span><span class="nv">HF_TOKEN</span><span class="o">=</span><span class="nv">$HF_TOKEN</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.cache/huggingface:/root/.cache/huggingface<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>furiosaai/furiosa-mlperf:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span><span class="nv">$MODEL_ID</span><span class="w"> </span>/result<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span>
+<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span>furiosa-ai/gpt-j-6b-FP8-MLPerf<span class="w"> </span>/result<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span>
 </pre></div>
 </div>
 <div class="admonition warning">
