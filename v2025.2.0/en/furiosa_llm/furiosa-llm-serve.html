@@ -922,6 +922,21 @@ The metrics endpoint can be enabled with <code class="docutils literal notransla
 <p>FuriosaAI offers a containerized server that can be used for faster deployment.
 Here is an example that launches the Furiosa-LLM server in a Docker container
 (replace <code class="docutils literal notranslate"><span class="pre">$HF_TOKEN</span></code> with your Hugging Face Hub token):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker pull furiosaai/furiosa-llm:latest
+
+docker run -it --rm \
+  --device /dev/rngd:/dev/rngd \
+  --security-opt seccomp=unconfined \
+  --env HF_TOKEN=$HF_TOKEN \
+  -v $HOME/.cache/huggingface:/root/.cache/huggingface \
+  -p 8000:8000 \
+  furiosaai/furiosa-llm:latest \
+  serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices &quot;npu:0&quot;
+</pre></div>
+</div>
+<p>You can also specify additional options for the server and replace
+<code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">$HOME/.cache/huggingface:/root/.cache/huggingface</span></code> with the path to your
+Hugging Face cache directory.</p>
 </section>
 </section>
 

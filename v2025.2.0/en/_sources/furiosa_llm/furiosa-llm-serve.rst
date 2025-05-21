@@ -493,6 +493,7 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
 (replace ``$HF_TOKEN`` with your Hugging Face Hub token):
 
 .. code-block::
+
     docker pull furiosaai/furiosa-llm:latest
 
     docker run -it --rm \
@@ -503,3 +504,8 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
       -p 8000:8000 \
       furiosaai/furiosa-llm:latest \
       serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices "npu:0"
+
+
+You can also specify additional options for the server and replace
+``-v $HOME/.cache/huggingface:/root/.cache/huggingface`` with the path to your
+Hugging Face cache directory.

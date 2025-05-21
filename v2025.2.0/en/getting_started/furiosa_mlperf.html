@@ -562,7 +562,7 @@ to install the driver, firmware, and PERT on the host system.</p>
 use the following command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>furiosaai/furiosa-mlperf:latest
 
-<span class="c1"># Please replace the model id by the one you want to run.</span>
+<span class="c1"># Please replace the model id by one of other MLPerf models you want to run.</span>
 <span class="nv">MODEL_ID</span><span class="o">=</span>furiosa-ai/gpt-j-6b-FP8-MLPerf
 
 docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
@@ -571,13 +571,8 @@ docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </s
 <span class="w">  </span>--env<span class="w"> </span><span class="nv">HF_TOKEN</span><span class="o">=</span><span class="nv">$HF_TOKEN</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.cache/huggingface:/root/.cache/huggingface<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>furiosaai/furiosa-mlperf:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span>furiosa-ai/gpt-j-6b-FP8-MLPerf<span class="w"> </span>/result<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span>
+<span class="w">  </span>gpt-j-offline<span class="w"> </span>--test-mode<span class="w"> </span>performance-only<span class="w"> </span><span class="nv">$MODEL_ID</span><span class="w"> </span>/result<span class="w"> </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0&quot;</span>
 </pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The above example uses the <code class="docutils literal notranslate"><span class="pre">--privileged</span></code> option for simplicity, but it is not recommended for security reasons.
-If you use Kubernetes, please refer to <a class="reference internal" href="../cloud_native_toolkit/intro.html#cloudnativetoolkit"><span class="std std-ref">Cloud Native Toolkit</span></a> to learn more about best practices.</p>
 </div>
 </section>
 <section id="benchmark-examples">

@@ -252,9 +252,10 @@ use the following command:
 
 .. code-block:: sh
 
+
   docker pull furiosaai/furiosa-mlperf:latest
 
-  # Please replace the model id by the one you want to run.
+  # Please replace the model id by one of other MLPerf models you want to run.
   MODEL_ID=furiosa-ai/gpt-j-6b-FP8-MLPerf
 
   docker run -it --rm \
@@ -263,14 +264,7 @@ use the following command:
     --env HF_TOKEN=$HF_TOKEN \
     -v $HOME/.cache/huggingface:/root/.cache/huggingface \
     furiosaai/furiosa-mlperf:latest \
-    gpt-j-offline --test-mode performance-only furiosa-ai/gpt-j-6b-FP8-MLPerf /result --devices "npu:0"
-
-
-
-.. warning::
-
-  The above example uses the ``--privileged`` option for simplicity, but it is not recommended for security reasons.
-  If you use Kubernetes, please refer to :ref:`CloudNativeToolkit` to learn more about best practices.
+    gpt-j-offline --test-mode performance-only $MODEL_ID /result --devices "npu:0"
 
 
 Benchmark Examples

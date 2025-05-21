@@ -167,7 +167,7 @@ Building Float16, Float32 Models
 Furiosa-LLM builds models in bfloat16 format by default. However, if you want to build a model
 in float16 or float32 format, you must explicitly request casting to bfloat16
 using the ``--auto-bfloat16-cast`` flag; otherwise, an error will occur.
-The example in :ref:`TrustRemoteCode` uses ``--auto-bfloat16-cast`` option because the EXAONE model is in float16 format.
+The example in :ref:`TrustRemoteCode` uses ``--auto-bfloat16-cast`` option because the EXAONE model uses float16 as dtype.
 
 .. _ChunkedPrefill:
 

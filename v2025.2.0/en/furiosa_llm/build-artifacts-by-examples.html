@@ -477,7 +477,7 @@ from remote code on the Hugging Face Hub as follows:</p>
 <p>Furiosa-LLM builds models in bfloat16 format by default. However, if you want to build a model
 in float16 or float32 format, you must explicitly request casting to bfloat16
 using the <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> flag; otherwise, an error will occur.
-The example in <a class="reference internal" href="#trustremotecode"><span class="std std-ref">Enabling trust_remote_code</span></a> uses <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> option because the EXAONE model is in float16 format.</p>
+The example in <a class="reference internal" href="#trustremotecode"><span class="std std-ref">Enabling trust_remote_code</span></a> uses <code class="docutils literal notranslate"><span class="pre">--auto-bfloat16-cast</span></code> option because the EXAONE model uses float16 as dtype.</p>
 </section>
 <section id="long-context-length-and-chunked-prefill">
 <span id="chunkedprefill"></span><h3>Long-context Length and Chunked Prefill<a class="headerlink" href="#long-context-length-and-chunked-prefill" title="Link to this heading">#</a></h3>
