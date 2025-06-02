@@ -60,7 +60,7 @@ The Furiosa Model Compressor provides post-training quantization methods, such a
 * BF16 (W16A16)
 * INT8 Weight-Only (W8A16) (Planned)
 * FP8 (W8A8)
-* INT8 SmoothQuant (W8A8)
+* INT8 SmoothQuant (W8A8) (Planned)
 * INT4 Weight-Only (W4A16 AWQ / GPTQ) (Planned)
 
 

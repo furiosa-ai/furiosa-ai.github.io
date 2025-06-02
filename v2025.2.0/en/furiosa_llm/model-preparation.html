@@ -393,7 +393,7 @@ into model artifacts.</p>
 <p>The following shows an example for building a model artifact for <code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.1-8B-Instruct</span></code>
 and saving it to the <code class="docutils literal notranslate"><span class="pre">./Output-Llama-3.1-8B-Instruct</span></code> directory. The <code class="docutils literal notranslate"><span class="pre">-tp</span></code> option specifies the tensor parallelism degree,
 and <code class="docutils literal notranslate"><span class="pre">--max-seq-len-to-capture</span></code> defines the maximum sequence length that the model can handle.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>meta-llama/Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>./Output-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-tp<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">2048</span>
@@ -498,7 +498,7 @@ For example, <code class="docutils literal notranslate"><span class="pre">Quanti
 <p>Once you have the quantized model, you can create a model artifact using either the
 <code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> API or the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command. Below is an example of using the
 <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command to generate a model artifact from the quantized model.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>meta-llama/Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>./Output-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-tp<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">2048</span>

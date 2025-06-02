@@ -12,7 +12,7 @@ Key features of Furiosa-LLM include:
 * vLLM-compatible API (LLM, LLMEngine, AsyncLLMEngine API)
 * Efficient KV cache management with PagedAttention
 * Continuous batching of incoming requests
-* Quantization: INT4, INT8, FP8, GPTQ, AWQ
+* Quantization: FP8 (Planned: INT4, INT8, GPTQ, AWQ)
 * Support for data, tensor, and pipeline parallelism across multiple NPUs
 * OpenAI-compatible API server
 * Various decoding algorithms: greedy search, beam search, top-k/top-p, and

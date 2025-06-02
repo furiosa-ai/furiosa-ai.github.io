@@ -41,7 +41,7 @@ Decoder-only Models
      - ``EleutherAI/gpt-j-6b``
    * - Llama 2, Llama 3.1, Llama 3.3
      - ``LlamaForCausalLM``
-     - ``meta-llama/Llama-3.1-8B-Instruct``, ``meta-llama/Llama-3.1-70B-Instruct``, ``meta-llama/Llama-3.3-8B-Instruct``, ..
+     - ``meta-llama/Llama-3.1-8B-Instruct``, ``meta-llama/Llama-3.1-70B-Instruct``, ``meta-llama/Llama-3.3-70B-Instruct``, ..
    * - Solar
      - ``LlamaForCausalLM``
      - ``upstage/SOLAR-10.7B-v1.0``, ``upstage/SOLAR-10.7B-Instruct-v1.0``

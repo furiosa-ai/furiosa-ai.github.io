@@ -2828,11 +2828,11 @@ Please check out <a href="https://developer.furiosa.ai/latest/en/whatsnew/index.
                 <span class="p">)</span>
                 <span class="n">logprobs</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">logprobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># output: NativeCompletionOutput (not CompletionOutput)</span>
+                    <span class="c1"># output.logprobs: List[List[Tuple[int, float]]]</span>
+                    <span class="c1"># token_id_to_logprob: List[Tuple[int, float]]</span>
                     <span class="n">logprobs</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="p">{</span>
-                            <span class="n">token_id</span><span class="p">:</span> <span class="n">Logprob</span><span class="p">(</span><span class="n">logprob</span><span class="p">)</span>
-                            <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">logprob</span> <span class="ow">in</span> <span class="n">token_id_to_logprob</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                        <span class="p">}</span>
+                        <span class="p">{</span><span class="n">token_id</span><span class="p">:</span> <span class="n">Logprob</span><span class="p">(</span><span class="n">logprob</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">logprob</span> <span class="ow">in</span> <span class="n">token_id_to_logprob</span><span class="p">}</span>
                         <span class="k">for</span> <span class="n">token_id_to_logprob</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">logprobs</span>
                     <span class="p">]</span>
                 <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
