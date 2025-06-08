@@ -86,6 +86,7 @@ Furiosa-LLM
 * :ref:`BuildingModelArtifactsByExamples`: A guide to building model artifacts through examples
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
+* :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
 
 Cloud Native Toolkit
 -------------------------------------------------
@@ -144,6 +145,7 @@ Other Links
    /furiosa_llm/model-parallelism
    /furiosa_llm/reference
    /furiosa_llm/examples
+   /furiosa_llm/k8s_deployment
 
 
 .. toctree::

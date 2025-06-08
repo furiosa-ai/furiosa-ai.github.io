@@ -34,4 +34,5 @@ Documentation
 * :ref:`FuriosaLLMBuildCommand`: Command-line tool for building model artifacts
 * :ref:`FuriosaLLMReference`: Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
+* :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
 
