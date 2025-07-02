@@ -1,0 +1,640 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Model Preparation &#8212; FuriosaAI Developer Center 2025.2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=24148a24" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=39353cc5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/model-preparation';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building Model Artifacts By Examples" href="build-artifacts-by-examples.html" />
+    <link rel="prev" title="OpenAI-Compatible Server" href="furiosa-llm-serve.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.2.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">
+<div>
+📣 SDK <b>2025.2.0</b> has been released on May 19, 2025.
+Please check out <a href="https://developer.furiosa.ai/latest/en/whatsnew/index.html#furiosa-sdk-2025-2-0-beta2-2025-05-19">the SDK release announcement for version 2025.2.0</a>.
+</div>
+</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-artifacts-by-examples.html">Building Model Artifacts By Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Model Preparation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-a-model-from-hugging-face-hub-optional">Download a model from Hugging Face Hub (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-and-convert-models-to-a-model-artifact">Optimize and Convert Models to a Model Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-quantization-optional">Model Quantization (Optional)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-model-to-quantize">Load a Model to Quantize</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calibrate-and-quantize-the-model">Calibrate and Quantize the Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-model-artifacts">Deploying Model Artifacts</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="model-preparation">
+<span id="modelpreparation"></span><h1>Model Preparation<a class="headerlink" href="#model-preparation" title="Link to this heading">#</a></h1>
+<p>To run an LLM model on the Furiosa NPU, Furiosa-LLM must convert the model into a model artifact.
+During the conversion process, Furiosa-LLM applies a variety of
+optimizations to enable high-performance inference. This document describes the overall workflow for
+preparing a model artifact from an LLM model and deploying it.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This section is intended for users who wish to prepare their own model artifacts
+for further optimization or customization. If you are looking for a quick start,
+please refer to the <a class="reference internal" href="../getting_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a> section.
+Additionally, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
+<a class="reference external" href="https://huggingface.co/furiosa-ai">Hugging Face Hub 🤗 - FuriosaAI organization</a>.
+You can use these to quickly run LLM models on the Furiosa NPU.</p>
+</div>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<p>Ensure that you meet the following prerequisites before starting the model preparation workflow:</p>
+<ul class="simple">
+<li><p>A system with the prerequisites installed (see <a class="reference internal" href="../getting_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
+<li><p>An installation of <a class="reference internal" href="../getting_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa-LLM</span></a></p></li>
+<li><p>A <a class="reference internal" href="../getting_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
+<li><p>Sufficient storage space for model weights (varies depending on the model size)</p></li>
+</ul>
+</section>
+<section id="authorizing-hugging-face-hub-optional">
+<h2>Authorizing Hugging Face Hub (Optional)<a class="headerlink" href="#authorizing-hugging-face-hub-optional" title="Link to this heading">#</a></h2>
+<p>Some models, such as <code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.1-8B</span></code>, require a license to run.
+For these models, you need to create a Hugging Face account, accept the model’s
+license, and generate an access token.
+You can create your access token at <a class="reference external" href="https://huggingface.co/settings/tokens">https://huggingface.co/settings/tokens</a>.
+Once you get the access token, you can authenticate on the Hugging Face Hub as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade &quot;huggingface_hub[cli]&quot;
+huggingface-cli login --token $HF_TOKEN
+</pre></div>
+</div>
+</section>
+<section id="download-a-model-from-hugging-face-hub-optional">
+<h2>Download a model from Hugging Face Hub (Optional)<a class="headerlink" href="#download-a-model-from-hugging-face-hub-optional" title="Link to this heading">#</a></h2>
+<p>When using a model from the Hugging Face Hub, Furiosa-LLM automatically downloads the model weights
+during the artifact building process.
+However, depending on your network environment, downloading the model weights may take a long time.
+If you want to download a model from the Hugging Face Hub in advance, you can do so using the
+<code class="docutils literal notranslate"><span class="pre">huggingface-cli</span></code> command.</p>
+<p>The following command downloads the model weights and configuration files
+for the Llama 3.1 8B model to the Hugging Face Hub cache directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="optimize-and-convert-models-to-a-model-artifact">
+<span id="buildingmodelartifact"></span><h2>Optimize and Convert Models to a Model Artifact<a class="headerlink" href="#optimize-and-convert-models-to-a-model-artifact" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM provides a command-line tool, <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code>, to optimize and convert models
+into model artifacts.</p>
+<p>The following shows an example for building a model artifact for <code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.1-8B-Instruct</span></code>
+and saving it to the <code class="docutils literal notranslate"><span class="pre">./Output-Llama-3.1-8B-Instruct</span></code> directory. The <code class="docutils literal notranslate"><span class="pre">-tp</span></code> option specifies the tensor parallelism degree,
+and <code class="docutils literal notranslate"><span class="pre">--max-seq-len-to-capture</span></code> defines the maximum sequence length that the model can handle.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>./Output-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tp<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">2048</span>
+</pre></div>
+</div>
+<p>Once a model artifact is built, you can deploy it to any machine equipped with FuriosaAI RNGD and
+run the model using the <a class="reference internal" href="reference/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or the appropriate interface like <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To achieve better performance or to run LLM models on multiple NPUs,
+you can take advantage of model parallelism in Furiosa-LLM. To learn more about model
+parallelism, please refer to the <a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a> section.</p>
+</div>
+<p>You can also build a model artifact using the <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API.
+Here is an example using the <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./Output-Llama-3.1-8B-Instruct&quot;</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
+        <span class="n">quantized_model</span><span class="p">,</span>
+        <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
+<span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">compiled_model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Both <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> and <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API offer a variety of options to customize the model artifact.
+You can specify the tensor parallelism degree, pipeline parallelism degree, data parallelism degree,
+prefill and decode bucket sizes, and other options. Please refer to
+<a class="reference internal" href="build-artifacts-by-examples.html#buildingmodelartifactsbyexamples"><span class="std std-ref">Building Model Artifacts By Examples</span></a> section for more examples and details.</p>
+</section>
+<section id="model-quantization-optional">
+<span id="modelquantization"></span><h2>Model Quantization (Optional)<a class="headerlink" href="#model-quantization-optional" title="Link to this heading">#</a></h2>
+<p>Quantization is a widely used technique to reduce the computational and memory requirements for inference
+by mapping the high-precision space of activations, weights, and KV cache to lower-precision formats
+such as INT8, FP8, or INT4 — while aiming to preserve model accuracy.</p>
+<p>It is typically applied when higher throughput or lower latency is needed. However, since quantization may affect
+model accuracy, it is important to perform thorough experimentation and accuracy evaluations.</p>
+<p>Furiosa-LLM currently supports Post-Training Quantization (PTQ) for model quantization.
+To apply PTQ, you need to calibrate the model using a calibration dataset and then export the quantized model as a checkpoint.
+The following sections explain the PTQ workflow with Furiosa-LLM.</p>
+<section id="load-a-model-to-quantize">
+<h3>Load a Model to Quantize<a class="headerlink" href="#load-a-model-to-quantize" title="Link to this heading">#</a></h3>
+<p>The first step is to prepare a model to quantize.
+The <code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> class provides a simple API to load a
+model from either the Hugging Face Hub or a local path.
+<code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM</span></code> is a subclass of <a class="reference external" href="https://huggingface.co/docs/transformers/en/model_doc/auto#transformers.AutoModelForCausalLM">AutoModelForCausalLM</a>,
+so it automatically determines the model class from the Hugging Face model ID in the same way as
+<code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantizerForCausalLM</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">QuantizerForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="calibrate-and-quantize-the-model">
+<h3>Calibrate and Quantize the Model<a class="headerlink" href="#calibrate-and-quantize-the-model" title="Link to this heading">#</a></h3>
+<p>Once a model is loaded, you can calibrate and quantize it by calling the
+<code class="docutils literal notranslate"><span class="pre">QuantizerForCausalLM.quantize()</span></code> method.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">quantize()</span></code> method takes as arguments the model to be quantized, a data loader, and a
+quantization configuration. The <code class="docutils literal notranslate"><span class="pre">create_data_loader</span></code> function helps generate a data loader
+that supplies the quantization process with an appropriate sample dataset.
+When creating a data loader, you can configure parameters such as the tokenizer, dataset name or path, dataset split, number of samples, and maximum sample length. These parameters can significantly impact the accuracy of the quantized model, so some experimentation is typically necessary to determine the optimal settings.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">create_data_loader</span></code> is based on the <code class="docutils literal notranslate"><span class="pre">datasets</span></code> library,
+which provides easy access to datasets for tasks in audio, computer vision, and
+natural language processing (NLP).
+Learn more in the
+<a class="reference external" href="https://huggingface.co/docs/datasets/en/index">datasets documentation</a>
+and explore the available datasets at <a class="reference external" href="https://huggingface.co/datasets">https://huggingface.co/datasets</a>.</p>
+</div>
+<p>The following example demonstrates how to create a data loader for the calibration dataset.
+The quantized model will be saved to the <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum.dataset_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_data_loader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantizerForCausalLM</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+
+<span class="c1"># Create a dataloader for calibration</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">create_data_loader</span><span class="p">(</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+    <span class="n">dataset_name_or_path</span><span class="o">=</span><span class="s2">&quot;mit-han-lab/pile-val-backup&quot;</span><span class="p">,</span>
+    <span class="n">dataset_split</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">,</span>
+    <span class="n">num_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="c1"># Increase this number for better calibration</span>
+    <span class="n">max_sample_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
+<span class="c1"># Load a pre-trained model from Hugging Face model hub</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">QuantizerForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+<span class="c1"># Calibrate, quantize the model, and save the quantized model</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">QuantizationConfig</span><span class="o">.</span><span class="n">w_f8_a_f8_kv_f8</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">QuantizationConfig</span></code> class allows you to specify various quantization options
+and offers a set of pre-defined quantization configurations.
+For example, <code class="docutils literal notranslate"><span class="pre">QuantizationConfig.w_f8_a_f8_kv_f8()</span></code>, quantizes the weights, activations, and KV cache to 8-bit floating-point (FP8).</p>
+<p>Once you have the quantized model, you can create a model artifact using either the
+<code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> API or the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command. Below is an example of using the
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command to generate a model artifact from the quantized model.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>./Output-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tp<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">2048</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="deploying-model-artifacts">
+<h2>Deploying Model Artifacts<a class="headerlink" href="#deploying-model-artifacts" title="Link to this heading">#</a></h2>
+<p>Once you have a model artifact, you can transfer and reuse it on any machine with a
+Furiosa NPU and Furiosa-LLM installed.
+To transfer a model artifact:</p>
+<ol class="arabic simple">
+<li><p>Compress the model artifact directory using your preferred compression tool.</p></li>
+<li><p>Copy the compressed file to the target host.</p></li>
+<li><p>Uncompress it on the target machine.</p></li>
+<li><p>Run the model using either the <a class="reference internal" href="reference/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or the <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p></li>
+</ol>
+<p>For quick examples of loading and running model artifacts, refer to the
+<a class="reference internal" href="../getting_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a> section.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="furiosa-llm-serve.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">OpenAI-Compatible Server</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="build-artifacts-by-examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Building Model Artifacts By Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-a-model-from-hugging-face-hub-optional">Download a model from Hugging Face Hub (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-and-convert-models-to-a-model-artifact">Optimize and Convert Models to a Model Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-quantization-optional">Model Quantization (Optional)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-model-to-quantize">Load a Model to Quantize</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calibrate-and-quantize-the-model">Calibrate and Quantize the Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-model-artifacts">Deploying Model Artifacts</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
