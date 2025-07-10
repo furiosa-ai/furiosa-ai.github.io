@@ -324,7 +324,6 @@ Please check out <a href="https://developer.furiosa.ai/latest/en/whatsnew/index.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-installed-devices">Checking for Installed Devices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-apt">Setting up APT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-prerequisite-packages">Installing Prerequisite Packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-user-to-the-furiosa-group">Adding a user to the furiosa Group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-npu-device-installation">Verifying NPU Device Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-device-firmware">Upgrading Device Firmware</a></li>
 </ul>
@@ -397,23 +396,6 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-pert-rngd<span class="w"> </span>furiosa-smi
 </pre></div>
 </div>
-</section>
-<section id="adding-a-user-to-the-furiosa-group">
-<h2>Adding a user to the furiosa Group<a class="headerlink" href="#adding-a-user-to-the-furiosa-group" title="Link to this heading">#</a></h2>
-<p>Linux is a multi-user operating system that enables file and device access for
-both the owner and users within a specific group. The RNGD device driver creates
-a group called <code class="docutils literal notranslate"><span class="pre">furiosa</span></code> and restricts access to RNGD devices exclusively to users
-who are members of the <code class="docutils literal notranslate"><span class="pre">furiosa</span></code> group. To add a user to a member of furiosa group,
-please run as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>furiosa<span class="w"> </span>&lt;username&gt;
-</pre></div>
-</div>
-<p>Replace &lt;username&gt; with the name of the user you want to add to the furiosa group.
-For example, in order to add the current user (i.e., $USER) to the furiosa group, you can run as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>furiosa<span class="w"> </span><span class="nv">$USER</span>
-</pre></div>
-</div>
-<p>Upon logging out and logging back in, the change to the group membership will take effect.</p>
 </section>
 <section id="verifying-npu-device-installation">
 <h2>Verifying NPU Device Installation<a class="headerlink" href="#verifying-npu-device-installation" title="Link to this heading">#</a></h2>
@@ -503,7 +485,6 @@ the device may become unusable. In this case, please contact FuriosaAI support f
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-installed-devices">Checking for Installed Devices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-apt">Setting up APT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-prerequisite-packages">Installing Prerequisite Packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-user-to-the-furiosa-group">Adding a user to the furiosa Group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-npu-device-installation">Verifying NPU Device Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-device-firmware">Upgrading Device Firmware</a></li>
 </ul>
