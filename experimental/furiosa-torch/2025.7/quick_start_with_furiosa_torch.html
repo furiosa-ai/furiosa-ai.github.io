@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quick Start with Furiosa-Torch &#8212; furiosa_torch 0.1.0-dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=24148a24" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=c8519b9d"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'quick_start_with_furiosa_torch';</script>
+    <link rel="icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Intro to Furiosa-Torch" href="furiosa_torch/torch/index.html" />
+    <link rel="prev" title="FuriosaAI RNGD Extension for PyTorch" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/doc-logo-dark.svg" class="logo__image only-light" alt="furiosa_torch 0.1.0-dev documentation - Home"/>
+    <script>document.write(`<img src="_static/doc-logo-light.svg" class="logo__image only-dark" alt="furiosa_torch 0.1.0-dev documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quick Start with Furiosa-Torch</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-Torch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="furiosa_torch/torch/index.html">Intro to Furiosa-Torch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa_torch/torch/tensor.html">torch.Tensor in RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa_torch/torch/device_configuration.html">Device Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_torch/compile/index.html">Compiling PyTorch Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/compile/torch_compile.html">Compiling nn.Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/compile/graph_module.html">Compiling fx.GraphModule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/compile/torch_export.html">Exporting Compiled Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/compile/profile.html">Profiling Compiled Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa_torch/torch/custom_extension.html">Custom Operator Extension</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_torch/examples/index.html">PyTorch x RNGD examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/examples/llama.html">Llama</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-HAL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_torch/hal/index.html">HAL (Hardware Abstraction Layer)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/program.html">Basic use of HAL Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/pe_program.html">Basic use of HAL PeProgram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/notify_await.html">Notify-await synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/out_of_order.html">Out-of-order execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/edf_execution.html">EDF (RNGD binary &amp; metadata) execution using HAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/hal/isa.html">ISA &amp; TuCommand</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLA</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_torch/lla/index.html">LLA (Low-Level API)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/tu_exec.html">TuExec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/dma.html">DMA (DRAM &lt;&gt; SRAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/fetch_engine.html">Fetch Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/tensor_engine.html">Tensor Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/global_adder_tree_engine.html">Global Adder Tree Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/vector_engine.html">Vector Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/cast_compaction_engine.html">Cast Compaction Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/transpose_engine.html">Trasnspose Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_torch/lla/commit_engine.html">Commit Engine</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="api_references/native_torch/index.html">native_torch</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/native_torch.html">furiosa.native_torch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/ir.html">furiosa.native_torch.ir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/compiler.html">furiosa.native_torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/hal.html">furiosa.native_torch.hal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/hal_pert.html">furiosa.native_torch.hal.pert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/hal_pert_isa.html">furiosa.native_torch.hal.pert.isa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/hal_stream.html">furiosa.native_torch.hal.stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/lla.html">furiosa.native_torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/lla_vector_engine.html">furiosa.native_torch.lla.vector_engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/native_torch/profile.html">furiosa.native_torch.profile</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api_references/torch/index.html">torch</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/torch/backend.html">furiosa.torch.backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/torch/compiler.html">furiosa.torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/torch/executor.html">furiosa.torch.executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/torch/lla.html">furiosa.torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/torch/profiler.html">furiosa.torch.profiler</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quick Start with Furiosa-Torch</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosaai-rngd-extension">Installing FuriosaAI RNGD Extension</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-the-installation">Verifying the Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-basic-calculation-on-rngd">Perform a basic calculation on RNGD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-a-simple-pytorch-model-to-rngd">Compile a simple PyTorch model to RNGD</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quick-start-with-furiosa-torch">
+<span id="quickstartwithfuriosatorch"></span><h1>Quick Start with Furiosa-Torch<a class="headerlink" href="#quick-start-with-furiosa-torch" title="Link to this heading">#</a></h1>
+<section id="installing-furiosaai-rngd-extension">
+<h2>Installing FuriosaAI RNGD Extension<a class="headerlink" href="#installing-furiosaai-rngd-extension" title="Link to this heading">#</a></h2>
+<p>This section describes how to install the prerequisite packages
+and the FuriosaAI RNGD extension for PyTorch.</p>
+<p>The minimum requirements are as follows:</p>
+<ul class="simple">
+<li><p>Ubuntu 22.04 LTS (or Debian Bookworm) or later</p></li>
+<li><p>Linux Kernel 6.3 or later</p></li>
+<li><p>Administrator privileges (root)</p></li>
+</ul>
+<p>Please follow the instructions in the official FuriosaAI documentation to install the necessary prerequisites at
+<a class="reference external" href="https://developer.furiosa.ai/latest/en/getting_started/prerequisites.html#installing-prerequisites">Furiosa Docs - Installing Prerequisites</a>.</p>
+<p>After installing the prerequisites, you can install the FuriosaAI RNGD extension for PyTorch using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PIP_EXTRA_INDEX_URL</span><span class="o">=</span>https://pypi.corp.furiosa.ai/simple<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>furiosa-torch
+pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>furiosa-torch
+<span class="c1"># shows</span>
+<span class="c1"># furiosa-torch                 x.x.x.yyyzzzzzz</span>
+<span class="c1"># furiosa-torch-cpp-ext         x.x.x.yyyzzzzzz</span>
+</pre></div>
+</div>
+</section>
+<section id="verifying-the-installation">
+<h2>Verifying the Installation<a class="headerlink" href="#verifying-the-installation" title="Link to this heading">#</a></h2>
+<p>To verify that the pre-requisites and the FuriosaAI RNGD extension for PyTorch are installed correctly, you can run the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>furiosa-smi<span class="w"> </span>info
+
++-------+------+--------+---------------+---------------+---------+---------+--------------+
+<span class="p">|</span><span class="w"> </span>Index<span class="w"> </span><span class="p">|</span><span class="w"> </span>Arch<span class="w"> </span><span class="p">|</span><span class="w"> </span>Device<span class="w"> </span><span class="p">|</span><span class="w"> </span>Firmware<span class="w">      </span><span class="p">|</span><span class="w"> </span>PERT<span class="w">          </span><span class="p">|</span><span class="w"> </span>Temp.<span class="w">   </span><span class="p">|</span><span class="w"> </span>Power<span class="w">   </span><span class="p">|</span><span class="w"> </span>PCI-BDF<span class="w">      </span><span class="p">|</span>
++-------+------+--------+---------------+---------------+---------+---------+--------------+
+<span class="p">|</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="p">|</span><span class="w"> </span>rngd<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu0<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>.2.0+25b24d3<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0</span>.1.0+52e5705<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">34</span>.41°C<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">36</span>.48<span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:17:00.0<span class="w"> </span><span class="p">|</span>
++-------+------+--------+---------------+---------------+---------+---------+--------------+
+<span class="p">|</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="p">|</span><span class="w"> </span>rngd<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu1<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>.2.0+25b24d3<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0</span>.1.0+52e5705<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">32</span>.59°C<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">37</span>.44<span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:2a:00.0<span class="w"> </span><span class="p">|</span>
++-------+------+--------+---------------+---------------+---------+---------+--------------+
+...
+
+$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from furiosa import native_torch;print(native_torch.version())&quot;</span>
+<span class="m">0</span>.1.0-dev
+</pre></div>
+</div>
+</section>
+<section id="perform-a-basic-calculation-on-rngd">
+<h2>Perform a basic calculation on RNGD<a class="headerlink" href="#perform-a-basic-calculation-on-rngd" title="Link to this heading">#</a></h2>
+<p>To perform a basic calculation using the FuriosaAI RNGD extension for PyTorch, you can use the following example code.
+Note that <code class="docutils literal notranslate"><span class="pre">torch.device(&quot;rngd:0&quot;)</span></code> is used to define the RNGD device, and
+<code class="docutils literal notranslate"><span class="pre">a.to(device)</span></code> is used to move the tensor to the RNGD device.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">furiosa.torch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;rngd:0&quot;</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># run on RNGD</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span> <span class="o">==</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compile-a-simple-pytorch-model-to-rngd">
+<h2>Compile a simple PyTorch model to RNGD<a class="headerlink" href="#compile-a-simple-pytorch-model-to-rngd" title="Link to this heading">#</a></h2>
+<p>To compile a PyTorch model for RNGD and run on RNGD, you can use the following example code.
+Here, <code class="docutils literal notranslate"><span class="pre">furiosa.torch.backend</span></code> allows you to compile the model for RNGD.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">furiosa.torch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">furiosa.torch.backend</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">model</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">furiosa</span><span class="o">.</span><span class="n">torch</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">backend</span><span class="p">)</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;rngd:0&quot;</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">b</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">FuriosaAI RNGD Extension for PyTorch</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="furiosa_torch/torch/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Intro to Furiosa-Torch</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-furiosaai-rngd-extension">Installing FuriosaAI RNGD Extension</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-the-installation">Verifying the Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-basic-calculation-on-rngd">Perform a basic calculation on RNGD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-a-simple-pytorch-model-to-rngd">Compile a simple PyTorch model to RNGD</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
