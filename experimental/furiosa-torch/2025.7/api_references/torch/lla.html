@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>furiosa.torch.lla &#8212; furiosa_torch 0.1.0-dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=24148a24" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=c8519b9d"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_references/torch/lla';</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="furiosa.torch.profiler" href="profiler.html" />
+    <link rel="prev" title="furiosa.torch.executor" href="executor.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt="furiosa_torch 0.1.0-dev documentation - Home"/>
+    <script>document.write(`<img src="../../_static/doc-logo-light.svg" class="logo__image only-dark" alt="furiosa_torch 0.1.0-dev documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../quick_start_with_furiosa_torch.html">Quick Start with Furiosa-Torch</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-Torch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/index.html">Intro to Furiosa-Torch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/tensor.html">torch.Tensor in RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/device_configuration.html">Device Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/compile/index.html">Compiling PyTorch Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/torch_compile.html">Compiling nn.Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/graph_module.html">Compiling fx.GraphModule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/torch_export.html">Exporting Compiled Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/profile.html">Profiling Compiled Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/custom_extension.html">Custom Operator Extension</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/examples/index.html">PyTorch x RNGD examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/examples/llama.html">Llama</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-HAL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/hal/index.html">HAL (Hardware Abstraction Layer)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/program.html">Basic use of HAL Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/pe_program.html">Basic use of HAL PeProgram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/notify_await.html">Notify-await synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/out_of_order.html">Out-of-order execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/edf_execution.html">EDF (RNGD binary &amp; metadata) execution using HAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/isa.html">ISA &amp; TuCommand</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLA</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/lla/index.html">LLA (Low-Level API)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/tu_exec.html">TuExec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/dma.html">DMA (DRAM &lt;&gt; SRAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/fetch_engine.html">Fetch Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/tensor_engine.html">Tensor Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/global_adder_tree_engine.html">Global Adder Tree Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/vector_engine.html">Vector Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/cast_compaction_engine.html">Cast Compaction Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/transpose_engine.html">Trasnspose Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/commit_engine.html">Commit Engine</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../native_torch/index.html">native_torch</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/native_torch.html">furiosa.native_torch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/ir.html">furiosa.native_torch.ir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/compiler.html">furiosa.native_torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/hal.html">furiosa.native_torch.hal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/hal_pert.html">furiosa.native_torch.hal.pert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/hal_pert_isa.html">furiosa.native_torch.hal.pert.isa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/hal_stream.html">furiosa.native_torch.hal.stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/lla.html">furiosa.native_torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/lla_vector_engine.html">furiosa.native_torch.lla.vector_engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../native_torch/profile.html">furiosa.native_torch.profile</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">torch</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="backend.html">furiosa.torch.backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html">furiosa.torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html">furiosa.torch.executor</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">furiosa.torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiler.html">furiosa.torch.profiler</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>furiosa.torch.lla</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.empty_sram"><code class="docutils literal notranslate"><span class="pre">empty_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.empty_like_sram"><code class="docutils literal notranslate"><span class="pre">empty_like_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.tensor_to_sram"><code class="docutils literal notranslate"><span class="pre">tensor_to_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.tensor_to_dram"><code class="docutils literal notranslate"><span class="pre">tensor_to_dram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.compile_and_load_tu_exec"><code class="docutils literal notranslate"><span class="pre">compile_and_load_tu_exec()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.execute_sfr"><code class="docutils literal notranslate"><span class="pre">execute_sfr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.execute_lla_as_edf"><code class="docutils literal notranslate"><span class="pre">execute_lla_as_edf()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-furiosa.torch.lla">
+<span id="furiosa-torch-lla"></span><h1>furiosa.torch.lla<a class="headerlink" href="#module-furiosa.torch.lla" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.empty_sram">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">empty_sram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.torch.lla.empty_sram" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.empty_like_sram">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">empty_like_sram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.torch.lla.empty_like_sram" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.tensor_to_sram">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">tensor_to_sram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.torch.lla.tensor_to_sram" title="Link to this definition">#</a></dt>
+<dd><p>Copies a tensor to SRAM on an RNGD device.</p>
+<p>RNGD’s SRAM is partitioned per Processing Element (PE), and each PE’s SRAM is further
+divided into slices. Currently, an RNGD PE has <cite>num_slices_per_pe</cite> (64) slices.
+If two PEs are fused, the effective number of slices becomes 128.</p>
+<p>To be copied to SRAM, the <strong>product of the first ‘N’ dimensions</strong> of the tensor
+must equal the total number of target slices (<cite>num_slices_per_pe</cite> * <cite>fusion_factor</cite>).
+Additionally, the <strong>length of each slice</strong> (i.e., the product of the remaining dimensions)
+must be a multiple of <cite>SRAM_DMA_UNIT_BYTES</cite> (256 bytes).</p>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa</span><span class="w"> </span><span class="kn">import</span> <span class="n">native_torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.native_torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">lla</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.native_torch.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoweredShape</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.torch.lla</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;rngd:0&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="c1"># The examples below assume a fusion factor of 1, so total slices = 64.</span>
+
+<span class="c1"># x_sram = tensor_to_sram(x.view([1024, 1024]))  # INVALID: 1024 != 64 (slices mismatch)</span>
+<span class="n">x_sram</span> <span class="o">=</span> <span class="n">tensor_to_sram</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="mi">64</span><span class="p">,</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">]))</span> <span class="c1"># VALID: 64 == 64 (slices match), 16*1024 * 2 bytes is multiple of 256</span>
+<span class="n">x_sram</span> <span class="o">=</span> <span class="n">tensor_to_sram</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">]))</span> <span class="c1"># VALID: 8 * 8 == 64 (slices match), 16*1024 * 2 bytes is multiple of 256</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;rngd:0&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">y_sram</span> <span class="o">=</span> <span class="n">tensor_to_sram</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="c1"># VALID: 128 * 2 bytes = 256 bytes, which is a multiple of 256</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">64</span><span class="p">,</span> <span class="mi">130</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;rngd:0&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="c1"># y_sram = tensor_to_sram(y) # INVALID: 130 * 2 bytes = 260 bytes, which is NOT a multiple of 256</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>torch.Tensor</em>) – The tensor to copy. Its shape must conform to the SRAM slicing rules.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>torch.Tensor</em> – The tensor copied to RNGD’s SRAM.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.tensor_to_dram">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">tensor_to_dram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.torch.lla.tensor_to_dram" title="Link to this definition">#</a></dt>
+<dd><p>Copies tensor to DRAM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>torch.Tensor</em>) – Tensor to copy</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.compile_and_load_tu_exec">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">compile_and_load_tu_exec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tu_exec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../native_torch/lla.html#furiosa.native_torch.lla.TuExec" title="furiosa.native_torch.lla.TuExec"><span class="pre">TuExec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../native_torch/native_torch.html#furiosa.native_torch.DeviceAddress" title="furiosa.native_torch.DeviceAddress"><span class="pre">DeviceAddress</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../native_torch/hal_pert_isa.html#furiosa.native_torch.hal.pert.isa.FetchTypeConversion.None" title="furiosa.native_torch.hal.pert.isa.FetchTypeConversion.None"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#furiosa.torch.lla.compile_and_load_tu_exec" title="Link to this definition">#</a></dt>
+<dd><p>Compiles TuExec and loads it to the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tu_exec</strong> (<a class="reference internal" href="../native_torch/lla.html#furiosa.native_torch.lla.TuExec" title="furiosa.native_torch.lla.TuExec"><em>TuExec</em></a>) – TuExec instance to compile and load</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em>) – Device to load the compiled TuExec</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>tuple[DeviceAddress, int, int, Optional[int]]</em> – Tuple containing the address of the SFR tensor and the subunit bitmap</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.execute_sfr">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">execute_sfr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sfr_addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../native_torch/native_torch.html#furiosa.native_torch.DeviceAddress" title="furiosa.native_torch.DeviceAddress"><span class="pre">DeviceAddress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfr_size_in_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subunit_bitmap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#furiosa.torch.lla.execute_sfr" title="Link to this definition">#</a></dt>
+<dd><p>Python wrapper for TuExec and it’s execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sfr_addr</strong> (<a class="reference internal" href="../native_torch/native_torch.html#furiosa.native_torch.DeviceAddress" title="furiosa.native_torch.DeviceAddress"><em>DeviceAddress</em></a>) – Address of the SFR tensor loaded in the instruction memory</p></li>
+<li><p><strong>subunit_bitmap</strong> (<em>int</em>) – Subunit bitmap for the TuExec</p></li>
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em><em> | </em><em>Tuple</em><em>[</em><em>torch.Tensor</em><em>, </em><em>torch.Tensor</em><em>, </em><em>int</em><em>]</em>) – Input tensors in SRAM</p></li>
+<li><p><strong>output</strong> (<em>torch.Tensor</em><em> | </em><em>Tuple</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>, </em><em>torch.dtype</em><em>]</em>) – Output tensor or shape and dtype tuple for the output SRAM tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>torch.Tensor</em> – Output SRAM tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="furiosa.torch.lla.execute_lla_as_edf">
+<span class="sig-prename descclassname"><span class="pre">furiosa.torch.lla.</span></span><span class="sig-name descname"><span class="pre">execute_lla_as_edf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tu_exec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../native_torch/lla.html#furiosa.native_torch.lla.TuExec" title="furiosa.native_torch.lla.TuExec"><span class="pre">TuExec</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#furiosa.torch.lla.execute_lla_as_edf" title="Link to this definition">#</a></dt>
+<dd><p>Python wrapper for TuExec and it’s execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em>[</em><em>torch.Tensor</em><em>]</em>)</p></li>
+<li><p><strong>tu_exec</strong> (<a class="reference internal" href="../native_torch/lla.html#furiosa.native_torch.lla.TuExec" title="furiosa.native_torch.lla.TuExec"><em>TuExec</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>torch.Tensor</em> – Output SRAM tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="executor.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">furiosa.torch.executor</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="profiler.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">furiosa.torch.profiler</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.empty_sram"><code class="docutils literal notranslate"><span class="pre">empty_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.empty_like_sram"><code class="docutils literal notranslate"><span class="pre">empty_like_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.tensor_to_sram"><code class="docutils literal notranslate"><span class="pre">tensor_to_sram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.tensor_to_dram"><code class="docutils literal notranslate"><span class="pre">tensor_to_dram()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.compile_and_load_tu_exec"><code class="docutils literal notranslate"><span class="pre">compile_and_load_tu_exec()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.execute_sfr"><code class="docutils literal notranslate"><span class="pre">execute_sfr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.torch.lla.execute_lla_as_edf"><code class="docutils literal notranslate"><span class="pre">execute_lla_as_edf()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

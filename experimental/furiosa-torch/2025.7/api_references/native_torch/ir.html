@@ -1,0 +1,828 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>furiosa.native_torch.ir &#8212; furiosa_torch 0.1.0-dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=24148a24" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=c8519b9d"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_references/native_torch/ir';</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="furiosa.native_torch.compiler" href="compiler.html" />
+    <link rel="prev" title="furiosa.native_torch" href="native_torch.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt="furiosa_torch 0.1.0-dev documentation - Home"/>
+    <script>document.write(`<img src="../../_static/doc-logo-light.svg" class="logo__image only-dark" alt="furiosa_torch 0.1.0-dev documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../quick_start_with_furiosa_torch.html">Quick Start with Furiosa-Torch</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-Torch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/index.html">Intro to Furiosa-Torch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/tensor.html">torch.Tensor in RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/device_configuration.html">Device Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/compile/index.html">Compiling PyTorch Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/torch_compile.html">Compiling nn.Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/graph_module.html">Compiling fx.GraphModule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/torch_export.html">Exporting Compiled Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/compile/profile.html">Profiling Compiled Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_torch/torch/custom_extension.html">Custom Operator Extension</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/examples/index.html">PyTorch x RNGD examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/examples/llama.html">Llama</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-HAL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/hal/index.html">HAL (Hardware Abstraction Layer)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/program.html">Basic use of HAL Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/pe_program.html">Basic use of HAL PeProgram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/notify_await.html">Notify-await synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/out_of_order.html">Out-of-order execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/edf_execution.html">EDF (RNGD binary &amp; metadata) execution using HAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/hal/isa.html">ISA &amp; TuCommand</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLA</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_torch/lla/index.html">LLA (Low-Level API)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/tu_exec.html">TuExec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/dma.html">DMA (DRAM &lt;&gt; SRAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/fetch_engine.html">Fetch Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/tensor_engine.html">Tensor Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/global_adder_tree_engine.html">Global Adder Tree Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/vector_engine.html">Vector Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/cast_compaction_engine.html">Cast Compaction Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/transpose_engine.html">Trasnspose Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_torch/lla/commit_engine.html">Commit Engine</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">native_torch</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="native_torch.html">furiosa.native_torch</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">furiosa.native_torch.ir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler.html">furiosa.native_torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hal.html">furiosa.native_torch.hal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hal_pert.html">furiosa.native_torch.hal.pert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hal_pert_isa.html">furiosa.native_torch.hal.pert.isa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hal_stream.html">furiosa.native_torch.hal.stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lla.html">furiosa.native_torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lla_vector_engine.html">furiosa.native_torch.lla.vector_engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html">furiosa.native_torch.profile</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../torch/index.html">torch</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../torch/backend.html">furiosa.torch.backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../torch/compiler.html">furiosa.torch.compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../torch/executor.html">furiosa.torch.executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../torch/lla.html">furiosa.torch.lla</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../torch/profiler.html">furiosa.torch.profiler</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>furiosa.native_torch.ir</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis"><code class="docutils literal notranslate"><span class="pre">LoweredAxis</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.buffer_stride"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.buffer_stride</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.label"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.label</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.size"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.size</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.stride"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.stride</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape"><code class="docutils literal notranslate"><span class="pre">LoweredShape</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.cluster"><code class="docutils literal notranslate"><span class="pre">LoweredShape.cluster</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.from_lowered_axis"><code class="docutils literal notranslate"><span class="pre">LoweredShape.from_lowered_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.from_tensor"><code class="docutils literal notranslate"><span class="pre">LoweredShape.from_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.in_slice"><code class="docutils literal notranslate"><span class="pre">LoweredShape.in_slice</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.partitioning"><code class="docutils literal notranslate"><span class="pre">LoweredShape.partitioning</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.shape"><code class="docutils literal notranslate"><span class="pre">LoweredShape.shape()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.stride"><code class="docutils literal notranslate"><span class="pre">LoweredShape.stride()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer"><code class="docutils literal notranslate"><span class="pre">Sequencer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.axes"><code class="docutils literal notranslate"><span class="pre">Sequencer.axes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.from_tensor"><code class="docutils literal notranslate"><span class="pre">Sequencer.from_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.volume"><code class="docutils literal notranslate"><span class="pre">Sequencer.volume</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf"><code class="docutils literal notranslate"><span class="pre">Edf</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.build_io_operands_and_commits"><code class="docutils literal notranslate"><span class="pre">Edf.build_io_operands_and_commits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.deserialize"><code class="docutils literal notranslate"><span class="pre">Edf.deserialize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.input_shapes"><code class="docutils literal notranslate"><span class="pre">Edf.input_shapes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.npu_node"><code class="docutils literal notranslate"><span class="pre">Edf.npu_node</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.output_shapes"><code class="docutils literal notranslate"><span class="pre">Edf.output_shapes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.serialize"><code class="docutils literal notranslate"><span class="pre">Edf.serialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode"><code class="docutils literal notranslate"><span class="pre">NpuNode</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.binaries"><code class="docutils literal notranslate"><span class="pre">NpuNode.binaries</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.build_tuc_profile_spans"><code class="docutils literal notranslate"><span class="pre">NpuNode.build_tuc_profile_spans()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.profile_tensors_shape"><code class="docutils literal notranslate"><span class="pre">NpuNode.profile_tensors_shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.stack_sizes"><code class="docutils literal notranslate"><span class="pre">NpuNode.stack_sizes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.weight"><code class="docutils literal notranslate"><span class="pre">NpuNode.weight</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-furiosa.native_torch.ir">
+<span id="furiosa-native-torch-ir"></span><h1>furiosa.native_torch.ir<a class="headerlink" href="#module-furiosa.native_torch.ir" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredAxis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa.native_torch.ir.</span></span><span class="sig-name descname"><span class="pre">LoweredAxis</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredAxis" title="Link to this definition">#</a></dt>
+<dd><p>A <cite>LoweredAxis</cite> specifies how a multi-dimensional tensor’s axis maps to this linear memory.</p>
+<p>It is defined as a tuple of four values:
+<cite>(axis_label, axis_stride, size, buffer_stride)</cite></p>
+<ul class="simple">
+<li><p><cite>axis_label</cite>: A label for this axis. If generated by the compiler (e.g., via <cite>AxisProj</cite>), its value should be preserved. Otherwise, it can be used for annotation.</p></li>
+<li><p><cite>axis_stride</cite>: The stride value specific to this axis unit. If generated by the compiler, its value should be preserved. Otherwise, it should be set to 1.</p></li>
+<li><p><cite>size</cite>: The number of elements along this axis.</p></li>
+<li><p><cite>buffer_stride</cite>: The number of <em>items</em> (not bytes) to skip in the one-dimensional memory buffer to access the next element along this axis.</p></li>
+</ul>
+<p><cite>LoweredAxis</cite> instances are typically not constructed directly by users. Instead, they are generated internally or passed as part of other configurations (e.g., in a <cite>Sequencer</cite>).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredAxis.buffer_stride">
+<span class="sig-name descname"><span class="pre">buffer_stride</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredAxis.buffer_stride" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredAxis.label">
+<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredAxis.label" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredAxis.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredAxis.size" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredAxis.stride">
+<span class="sig-name descname"><span class="pre">stride</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredAxis.stride" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa.native_torch.ir.</span></span><span class="sig-name descname"><span class="pre">LoweredShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partitioning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_slice</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape" title="Link to this definition">#</a></dt>
+<dd><p><cite>LoweredShape</cite> consist of separated shapes for cluster, partitioning, and in_slice.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.native_torch.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoweredShape</span>
+<span class="c1"># 64 x 8 tensor with two separated shapes, partitioning shape represents RNGD slice wise shape,</span>
+<span class="c1"># in_slice shape represents in-slice shape</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="n">LoweredShape</span><span class="p">(</span><span class="n">partitioning</span><span class="o">=</span><span class="p">[</span><span class="mi">64</span><span class="p">],</span> <span class="n">in_slice</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.cluster" title="Link to this definition">#</a></dt>
+<dd><p>represents cluster wise distributed shape,
+<code class="docutils literal notranslate"><span class="pre">math.prod(map(lambda</span> <span class="pre">x:</span> <span class="pre">x[2],</span> <span class="pre">self.clusters))</span> <span class="pre">==</span> <span class="pre">len(num</span> <span class="pre">RNGD</span> <span class="pre">clusters)</span></code>, not supported yet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[str | int, int, int, int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.from_lowered_axis">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_lowered_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partitioning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_slice</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.from_lowered_axis" title="Link to this definition">#</a></dt>
+<dd><p>It takes (axis tag, axis stride, size, buffer stride) as a shape to describe lowered shape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.from_tensor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.from_tensor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.in_slice">
+<span class="sig-name descname"><span class="pre">in_slice</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.in_slice" title="Link to this definition">#</a></dt>
+<dd><p>represents in-slice shape (per slice shape),
+the last axis alignment must be 8 due to hardware constraint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[str | int, int, int, int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.partitioning">
+<span class="sig-name descname"><span class="pre">partitioning</span></span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.partitioning" title="Link to this definition">#</a></dt>
+<dd><p>represents slice wise distributed shape
+<code class="docutils literal notranslate"><span class="pre">math.prod(map(lambda</span> <span class="pre">x:</span> <span class="pre">x[2],</span> <span class="pre">self.partitioning))</span> <span class="pre">==</span> <span class="pre">len(num</span> <span class="pre">RNGD</span> <span class="pre">slices)</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[str | int, int, int, int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.shape" title="Link to this definition">#</a></dt>
+<dd><p>Get the shape of the LoweredShape</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list[int]</em> – flatten shape of the LoweredShape</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.LoweredShape.stride">
+<span class="sig-name descname"><span class="pre">stride</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.LoweredShape.stride" title="Link to this definition">#</a></dt>
+<dd><p>Get the stride of the LoweredShape</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list[int]</em> – flattened stride of the LoweredShape</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Sequencer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa.native_torch.ir.</span></span><span class="sig-name descname"><span class="pre">Sequencer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.Sequencer" title="Link to this definition">#</a></dt>
+<dd><p>Defines the memory access order of a Tensor using a sequence of <cite>LoweredAxis</cite> definitions.</p>
+<p>Regardless of its logical shape, every Tensor exists as a one-dimensional array in memory space.
+The memory access order for each axis of a multi-dimensional tensor is specified by the <cite>Sequencer</cite>.</p>
+<p>A <cite>Sequencer</cite> is essentially a list (or sequence) of <cite>LoweredAxis</cite> tuples.
+Each <cite>LoweredAxis</cite> tuple provides specific details for one dimension’s memory layout:
+<cite>(axis_label, axis_stride, size, buffer_stride)</cite></p>
+<p>For a detailed explanation of each <cite>LoweredAxis</cite> component, refer to the <cite>LoweredAxis</cite> documentation.</p>
+<p>The following example demonstrates copying the first two elements of each column of a 4x5 tensor to an 8-element DRAM tensor.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">furiosa.torch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa</span><span class="w"> </span><span class="kn">import</span> <span class="n">native_torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.native_torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">hal</span><span class="p">,</span> <span class="n">ir</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;rngd:0&#39;</span><span class="p">)</span>
+<span class="n">cpu_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">dram_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">8</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">program</span> <span class="o">=</span> <span class="n">hal</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+    <span class="n">cpu_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+    <span class="n">dram_tensor</span><span class="p">,</span>
+    <span class="c1"># src, dst sequencer (`LoweredAxis`)</span>
+    <span class="n">sequencer</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">ir</span><span class="o">.</span><span class="n">Sequencer</span><span class="p">([(</span><span class="s1">&#39;srow&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;scol&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span>
+        <span class="n">ir</span><span class="o">.</span><span class="n">Sequencer</span><span class="p">([(</span><span class="s1">&#39;drow&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+<span class="k">await</span> <span class="n">native_torch</span><span class="o">.</span><span class="n">get_device</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">program</span><span class="p">)</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">expected</span> <span class="o">==</span> <span class="n">dram_tensor</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Sequencer.axes">
+<span class="sig-name descname"><span class="pre">axes</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Sequencer.axes" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Sequencer.from_tensor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dram_partition_by_pe</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.Sequencer.from_tensor" title="Link to this definition">#</a></dt>
+<dd><p>Create a <cite>Sequencer</cite> from the same memory access pattern defined by the given tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> (<em>TorchTensor</em>) – input tensor</p></li>
+<li><p><strong>dram_partition_by_pe</strong> (<em>bool</em>) – partition DRAM tensor by PEs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequencer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Sequencer.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Sequencer.volume" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa.native_torch.ir.</span></span><span class="sig-name descname"><span class="pre">Edf</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Edf" title="Link to this definition">#</a></dt>
+<dd><p>Compiled EDF (Executable Dependency Format)</p>
+<p>EDF contains binaries, weight, and stack_sizes (which is required DRAM empty space to run EDF.)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.build_io_operands_and_commits">
+<span class="sig-name descname"><span class="pre">build_io_operands_and_commits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stacks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.build_io_operands_and_commits" title="Link to this definition">#</a></dt>
+<dd><p>build io operands and commits, create outputs if needed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight</strong> (<em>Optional</em><em>[</em><em>Tensor</em><em>]</em>) – weight tensor, if None, it will be allocated in DRAM</p></li>
+<li><p><strong>stack</strong> (<em>Optional</em><em>[</em><em>Tensor</em><em>]</em>) – stack tensor, if None, it will be allocated in DRAM</p></li>
+<li><p><strong>inputs</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – input tensors</p></li>
+<li><p><strong>outputs</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>Tensor</em><em>]</em><em>]</em>) – output tensors, if None, it will be allocated in DRAM</p></li>
+<li><p><strong>device_index</strong> (<em>int</em>) – device index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>(list[Tensor], Value, Value)</em> – output tensors, operands, commit addresses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.deserialize">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.deserialize" title="Link to this definition">#</a></dt>
+<dd><p>Deserialize EDF from bytes</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.input_shapes">
+<span class="sig-name descname"><span class="pre">input_shapes</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.input_shapes" title="Link to this definition">#</a></dt>
+<dd><p>input shape, strides &amp; dtype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Tuple[list[int], list[int], torch.dtype]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.npu_node">
+<span class="sig-name descname"><span class="pre">npu_node</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.npu_node" title="Link to this definition">#</a></dt>
+<dd><p>NPU node info, if exists</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.output_shapes">
+<span class="sig-name descname"><span class="pre">output_shapes</span></span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.output_shapes" title="Link to this definition">#</a></dt>
+<dd><p>outputs shape, strides &amp; dtype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Tuple[list[int], list[int], torch.dtype]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.Edf.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.Edf.serialize" title="Link to this definition">#</a></dt>
+<dd><p>Serialize EDF from bytes</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa.native_torch.ir.</span></span><span class="sig-name descname"><span class="pre">NpuNode</span></span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode" title="Link to this definition">#</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode.binaries">
+<span class="sig-name descname"><span class="pre">binaries</span></span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode.binaries" title="Link to this definition">#</a></dt>
+<dd><p>binaries of task, all binaries must be run sequentially, and wihtout interferes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode.build_tuc_profile_spans">
+<span class="sig-name descname"><span class="pre">build_tuc_profile_spans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_finished</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode.build_tuc_profile_spans" title="Link to this definition">#</a></dt>
+<dd><p>Create a list of <cite>FunctionEvent</cite> instance from profiled data in tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_idx</strong> (<em>int</em>) – Index of the device where profile data was obtained from.</p></li>
+<li><p><strong>profiles</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – List of tensors containing profiled data.</p></li>
+<li><p><strong>task_finished</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Time when the task finished in nanoseconds, relative to the profiler context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>List[FunctionEvent]</em> – A list of <cite>FunctionEvent</cite>, containig NPU profile data.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the tensor is not on CPU or if the profile data is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode.profile_tensors_shape">
+<span class="sig-name descname"><span class="pre">profile_tensors_shape</span></span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode.profile_tensors_shape" title="Link to this definition">#</a></dt>
+<dd><p>profile tneosr size &amp; dtype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Tuple[int, torch.dtype]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode.stack_sizes">
+<span class="sig-name descname"><span class="pre">stack_sizes</span></span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode.stack_sizes" title="Link to this definition">#</a></dt>
+<dd><p>stack_sizes which should be allocated in dram</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="furiosa.native_torch.ir.NpuNode.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#furiosa.native_torch.ir.NpuNode.weight" title="Link to this definition">#</a></dt>
+<dd><p>weight tensor which should be written in dram</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="native_torch.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">furiosa.native_torch</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="compiler.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">furiosa.native_torch.compiler</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis"><code class="docutils literal notranslate"><span class="pre">LoweredAxis</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.buffer_stride"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.buffer_stride</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.label"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.label</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.size"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.size</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredAxis.stride"><code class="docutils literal notranslate"><span class="pre">LoweredAxis.stride</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape"><code class="docutils literal notranslate"><span class="pre">LoweredShape</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.cluster"><code class="docutils literal notranslate"><span class="pre">LoweredShape.cluster</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.from_lowered_axis"><code class="docutils literal notranslate"><span class="pre">LoweredShape.from_lowered_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.from_tensor"><code class="docutils literal notranslate"><span class="pre">LoweredShape.from_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.in_slice"><code class="docutils literal notranslate"><span class="pre">LoweredShape.in_slice</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.partitioning"><code class="docutils literal notranslate"><span class="pre">LoweredShape.partitioning</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.shape"><code class="docutils literal notranslate"><span class="pre">LoweredShape.shape()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.LoweredShape.stride"><code class="docutils literal notranslate"><span class="pre">LoweredShape.stride()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer"><code class="docutils literal notranslate"><span class="pre">Sequencer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.axes"><code class="docutils literal notranslate"><span class="pre">Sequencer.axes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.from_tensor"><code class="docutils literal notranslate"><span class="pre">Sequencer.from_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Sequencer.volume"><code class="docutils literal notranslate"><span class="pre">Sequencer.volume</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf"><code class="docutils literal notranslate"><span class="pre">Edf</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.build_io_operands_and_commits"><code class="docutils literal notranslate"><span class="pre">Edf.build_io_operands_and_commits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.deserialize"><code class="docutils literal notranslate"><span class="pre">Edf.deserialize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.input_shapes"><code class="docutils literal notranslate"><span class="pre">Edf.input_shapes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.npu_node"><code class="docutils literal notranslate"><span class="pre">Edf.npu_node</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.output_shapes"><code class="docutils literal notranslate"><span class="pre">Edf.output_shapes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.Edf.serialize"><code class="docutils literal notranslate"><span class="pre">Edf.serialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode"><code class="docutils literal notranslate"><span class="pre">NpuNode</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.binaries"><code class="docutils literal notranslate"><span class="pre">NpuNode.binaries</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.build_tuc_profile_spans"><code class="docutils literal notranslate"><span class="pre">NpuNode.build_tuc_profile_spans()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.profile_tensors_shape"><code class="docutils literal notranslate"><span class="pre">NpuNode.profile_tensors_shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.stack_sizes"><code class="docutils literal notranslate"><span class="pre">NpuNode.stack_sizes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa.native_torch.ir.NpuNode.weight"><code class="docutils literal notranslate"><span class="pre">NpuNode.weight</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Furiosa AI.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
