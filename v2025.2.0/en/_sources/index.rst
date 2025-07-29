@@ -101,7 +101,7 @@ Device Management
 
 Tutorials and Examples
 ---------------------------------------------------
-* `FuriosaAI SDK CookBook <https://forums.furiosa.ai>`_: A collection of OSS projects for AI-driven solutions using FuriosaAI NPUs.
+* `FuriosaAI SDK CookBook <https://github.com/furiosa-ai/sdk-cookbook>`_: A collection of OSS projects for AI-driven solutions using FuriosaAI NPUs.
 
 Customer Support
 -----------------------------------------------
@@ -173,7 +173,7 @@ Other Links
    :hidden:
    :caption: Tutorials and Examples
 
-   FuriosaAI SDK CookBook <https://forums.furiosa.ai>
+   FuriosaAI SDK CookBook <https://github.com/furiosa-ai/sdk-cookbook>
 
 
 .. toctree::
