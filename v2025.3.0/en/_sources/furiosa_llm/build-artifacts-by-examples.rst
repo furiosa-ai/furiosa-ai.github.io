@@ -20,14 +20,14 @@ Command-Line Tool vs. ArtifactBuilder API
 =====================================================
 There are two ways to build model artifacts using Furiosa-LLM:
 
-* The :ref:`ArtifactBuilder` API
+* The :ref:`ArtifactBuilderClass` API
 * The ``furiosa-llm build`` command-line tool
 
-The :ref:`ArtifactBuilder` API is a Python interface that enables you to build model artifacts
+The :ref:`ArtifactBuilderClass` API is a Python interface that enables you to build model artifacts
 with Furiosa-LLM, offering greater programmability and flexibility.
 
 The ``furiosa-llm build`` command is a command-line tool that provides the same functionality
-as the :ref:`ArtifactBuilder` API. It offers a simpler and more convenient way to build model artifacts
+as the :ref:`ArtifactBuilderClass` API. It offers a simpler and more convenient way to build model artifacts
 without writing any code. Its syntax is as follows:
 
 .. code-block:: sh
@@ -37,12 +37,12 @@ without writing any code. Its syntax is as follows:
 
 You can see more options by running ``furiosa-llm build --help``.
 Essentially, it is a wrapper around the ``ArtifactBuilder`` API,
-so you can find details about the options in the reference for the :ref:`ArtifactBuilder` API.
+so you can find details about the options in the reference for the :ref:`ArtifactBuilderClass` API.
 
 Examples
 =====================================================
 The examples in this section are based on ``furiosa-llm build`` command and the Llama 3.1 8B model.
-You can also implement the same examples using the :ref:`ArtifactBuilder` API.
+You can also implement the same examples using the :ref:`ArtifactBuilderClass` API.
 
 Basic Examples
 -----------------

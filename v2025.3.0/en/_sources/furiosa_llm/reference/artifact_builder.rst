@@ -24,10 +24,3 @@ ArtifactMetadata
     :members:
     :show-inheritance:
 
-**********************************
-ArtifactVersion
-**********************************
-
-.. autoclass:: furiosa_llm.artifact.ArtifactVersion
-    :members:
-    :show-inheritance:

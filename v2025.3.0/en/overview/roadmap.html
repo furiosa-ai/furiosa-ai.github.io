@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'overview/roadmap';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/jinwookbok/furiosa-ai.github.io/refs/heads/version/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
@@ -196,7 +196,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
@@ -210,7 +209,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
-
 
 
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
@@ -334,8 +332,9 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q2">Upcoming Releases 2025 Q2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1">2025 Q1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q4">Upcoming Releases 2025 Q4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q3">Upcoming Releases 2025 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-2025-q2">2025 Q1 - 2025 Q2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q4">2024 Q4</a></li>
 </ul>
             </nav>
@@ -357,19 +356,34 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
 <p class="admonition-title">Note</p>
 <p>The latest release is 2025.3.0. You can find the release notes <a class="reference internal" href="../whatsnew/index.html#whatsnew"><span class="std std-ref">here</span></a>.</p>
 </div>
-<section id="upcoming-releases-2025-q2">
-<h2>Upcoming Releases 2025 Q2<a class="headerlink" href="#upcoming-releases-2025-q2" title="Link to this heading">#</a></h2>
+<section id="upcoming-releases-2025-q4">
+<h2>Upcoming Releases 2025 Q4<a class="headerlink" href="#upcoming-releases-2025-q4" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>🔨 Tensor Parallelism support Phase 2: Inter-chip (planned for 2025.3.0 release)</p></li>
-<li><p>🔨 Speculating with a draft model (planned for 2025.3.0 release)</p></li>
-<li><p>🔨 Embedding API support in Furiosa-LLM (planned for 2025.2.0 release)</p></li>
-<li><p>🔨 CPU memory swapping of KV cache in Furiosa-LLM (planned for 2025.3.0 release)</p></li>
-<li><p>🔨 <code class="docutils literal notranslate"><span class="pre">torch.compile()</span></code> backend (planned for 2025.3.0 release)</p></li>
-<li><p>🔨 Prefix-caching support in Furiosa-LLM</p></li>
+<li><p>🔨 Hybrid batching support</p></li>
+<li><p>🔨 Qwen3 MoE model support in Furiosa-LLM</p></li>
+<li><p>🔨 Speculating with a draft model</p></li>
+<li><p>🔨 CPU memory swapping of KV cache in Furiosa-LLM</p></li>
+<li><p>🔨 <code class="docutils literal notranslate"><span class="pre">torch.compile()</span></code> backend</p></li>
 </ul>
 </section>
-<section id="q1">
-<h2>2025 Q1<a class="headerlink" href="#q1" title="Link to this heading">#</a></h2>
+<section id="upcoming-releases-2025-q3">
+<h2>Upcoming Releases 2025 Q3<a class="headerlink" href="#upcoming-releases-2025-q3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>🔨 Qwen3 support in Furiosa-LLM</p></li>
+<li><p>🔨 Guided-decoding support in Furiosa-LLM</p></li>
+<li><p>🔨 Prefix-caching support in Furiosa-LLM</p></li>
+<li><p>🔨 Pooling Model support in Furiosa-LLM</p></li>
+<li><p>🔨 NPU operator support for Kubernetes</p></li>
+<li><p>✅ Tensor Parallelism support Phase 2: Inter-chip</p></li>
+<li><p>✅ Dramatic performance improvements in Furiosa-LLM (7x higher throughput than 2025.1.0 release)</p></li>
+<li><p>✅ Hugging Face Hub support in Furiosa-LLM</p></li>
+<li><p>✅ Pre-compiled artifacts on Hugging Face Hub</p></li>
+<li><p>✅ Qwen2 and Qwen2.5 model support in Furiosa-LLM</p></li>
+<li><p>✅ EXAONE3 model support in Furiosa-LLM</p></li>
+</ul>
+</section>
+<section id="q1-2025-q2">
+<h2>2025 Q1 - 2025 Q2<a class="headerlink" href="#q1-2025-q2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>✅ Tool-calling support in Furiosa-LLM (2025.1.0 release)</p></li>
 <li><p>✅ Device remapping support (e.g., /dev/rngd/npu2pe0-3 -&gt; /dev/rngd/npu0pe0-3) for container (2025.1.0 release)</p></li>
@@ -445,8 +459,9 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q2">Upcoming Releases 2025 Q2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1">2025 Q1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q4">Upcoming Releases 2025 Q4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2025-q3">Upcoming Releases 2025 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-2025-q2">2025 Q1 - 2025 Q2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q4">2024 Q4</a></li>
 </ul>
   </nav></div>

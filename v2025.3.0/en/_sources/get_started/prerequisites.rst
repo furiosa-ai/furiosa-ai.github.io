@@ -78,28 +78,6 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
   sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
 
 
-Adding a user to the furiosa Group
-==================================
-Linux is a multi-user operating system that enables file and device access for
-both the owner and users within a specific group. The RNGD device driver creates
-a group called ``furiosa`` and restricts access to RNGD devices exclusively to users
-who are members of the ``furiosa`` group. To add a user to a member of furiosa group,
-please run as follows:
-
-.. code-block:: sh
-
-  sudo usermod -aG furiosa <username>
-
-Replace <username> with the name of the user you want to add to the furiosa group.
-For example, in order to add the current user (i.e., $USER) to the furiosa group, you can run as follows:
-
-.. code-block:: sh
-
-  sudo usermod -aG furiosa $USER
-
-Upon logging out and logging back in, the change to the group membership will take effect.
-
-
 Verifying NPU Device Installation
 =================================
 

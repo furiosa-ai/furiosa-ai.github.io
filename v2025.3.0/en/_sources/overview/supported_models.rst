@@ -36,38 +36,21 @@ Decoder-only Models
    * - EXAONE 3.0, EXAONE 3.5
      - ``ExaoneForCausalLM``
      - ``LGAI-EXAONE/EXAONE-3.0-7.8B-Instruct``, ``LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct``
-   * - GPT-J
-     - ``GPTJForCausalLM``
-     - ``EleutherAI/gpt-j-6b``
    * - Llama 2, Llama 3.1, Llama 3.3
      - ``LlamaForCausalLM``
      - ``meta-llama/Llama-3.1-8B-Instruct``, ``meta-llama/Llama-3.1-70B-Instruct``, ``meta-llama/Llama-3.3-70B-Instruct``, ..
    * - Solar
      - ``LlamaForCausalLM``
      - ``upstage/SOLAR-10.7B-v1.0``, ``upstage/SOLAR-10.7B-Instruct-v1.0``
-
-
-Encoder-only Models
-===================
-
-.. list-table::
-   :align: center
-   :header-rows: 1
-   :widths: 130 120 300
-
-   * - Model Name
-     - Architecture
-     - Example Hugging Face Models
-   * - Bert
-     - ``BertForQuestionAnswering``
-     - ``google-bert/bert-large-uncased``, ``google-bert/bert-base-uncased``, ..
+   * - Qwen 2, Qwen 2.5
+     - ``Qwen2ForCausalLM``
+     - ``Qwen/Qwen2.5-Coder-32B-Instruct``, ``Qwen/QwQ-32B``
 
 
 Planned Models for Future Releases
 ===============================================
 (The order of the models listed below indicate the priority of support.)
 
-* Qwen/QwQ-32B
 * gemma-3
 * Llama 4
 * Mistral-7B-v0.1, Mistral-7B-Instruct-v0.1
