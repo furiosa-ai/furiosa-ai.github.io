@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="OpenAI-Compatible Server" href="furiosa-llm-serve.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -469,23 +469,18 @@ However, when using DP within a single FuriosaAI device, the weights of replicas
 can be shared due to the shared memory architecture of the device.</p>
 <section id="configuring-model-parallelism-in-furiosa-llm">
 <h3>Configuring Model Parallelism in Furiosa LLM<a class="headerlink" href="#configuring-model-parallelism-in-furiosa-llm" title="Link to this heading">#</a></h3>
-<p>The ArtifactBuilder API and the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command provides the
-following options to configure model parallelism:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>: the number of devices/slices for splitting each layer</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>: the number of devices to split the model vertically</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>: the number of model replicas</p></li>
-</ul>
-<p>Each option specifies the degree of parallelism for the respective parallelism
-type.
-By default, the parallelism degrees are automatically inferred based on the
-total number of devices on the machine.</p>
+<p>The ArtifactBuilder API and the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command allows to configure the degree of tensor parallelism
+by specifying the <code class="docutils literal notranslate"><span class="pre">--tensor_parallel_size</span></code> or <code class="docutils literal notranslate"><span class="pre">-tp</span></code> option.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code> can be configured when loading a model artifact.
+For example, when you run <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>, <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command,
+you can specify <code class="docutils literal notranslate"><span class="pre">--pipeline-parallel-size</span></code> (or <code class="docutils literal notranslate"><span class="pre">-pp</span></code>) and <code class="docutils literal notranslate"><span class="pre">--data-parallel-size</span></code> (or <code class="docutils literal notranslate"><span class="pre">-dp</span></code>) options.
+Similarily, <code class="docutils literal notranslate"><span class="pre">LLMEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">AsyncLLMEngine</span></code> allows to specify the degree of pipeline parallelism and data parallelism.</p>
 </section>
 <section id="best-practices-for-furiosa-llm">
 <h3>Best Practices for Furiosa LLM<a class="headerlink" href="#best-practices-for-furiosa-llm" title="Link to this heading">#</a></h3>
 <p>Each parallelism type has its own characteristics and constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> parameter can be at most the number of devices.
-The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2024.2 release;
+The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2025.1.0 release;
 future releases will lift this limitation.</p>
 <p>The product of <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>
 should be equal to the total number of PEs in your machine.</p>

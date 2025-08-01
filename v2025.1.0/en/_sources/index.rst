@@ -11,7 +11,7 @@ deployment.
 
 .. warning::
 
-   This document is based on the Furiosa SDK |release| (beta0) version.
+   This document is based on the Furiosa SDK |release| (beta 1) version.
    The features and APIs described herein are subject to change in the future.
 
 .. grid:: 3
@@ -20,10 +20,10 @@ deployment.
       :link: /whatsnew/index
       :link-type: doc
 
-      2024.2.1 is the latest SDK release for RNGD.
+      |release| is the latest SDK release for RNGD.
       This document provides an overview of the new features and changes in the latest release.
       +++
-      :ref:`Learn more <Release2024_2_1>`
+      :ref:`Learn more <Release2025_1_0>`
 
     .. grid-item-card:: 🚀 Quick Start with Furiosa LLM
       :link: /getting_started/furiosa_llm

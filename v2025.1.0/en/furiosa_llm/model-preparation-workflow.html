@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Preparation Workflow &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>Model Preparation Workflow &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Furiosa LLM" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -413,7 +413,7 @@ At a high level, the workflow consists of the following four steps:</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The latest release 2024.2.1 always requires the calibration and quantization steps for all
+<p>The latest release 2025.1.0 always requires the calibration and quantization steps for all
 models. The 2025.2 release will allow BF16 models to run on Furiosa LLM
 without the calibration and quantization steps.
 The 2nd step will be required only for INT8, FP8, and INT4 models.</p>
@@ -505,7 +505,7 @@ that quantizes the weights, activations, and KV cache to 8-bit floats (FP8).
 The quantized model is stored to the <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> directory.</p>
 </section>
 <section id="building-a-model-artifact">
-<h2>Building a Model Artifact<a class="headerlink" href="#building-a-model-artifact" title="Link to this heading">#</a></h2>
+<span id="buildingmodelartifact"></span><h2>Building a Model Artifact<a class="headerlink" href="#building-a-model-artifact" title="Link to this heading">#</a></h2>
 <p>The next step is to build a model artifact, which is a set of files required to
 run the model on the Furiosa LLM engine.
 A model artifact includes model weights, configuration files, compiled NPU
@@ -518,14 +518,11 @@ Here is an example using the <a class="reference internal" href="reference/artif
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span>
 
 <span class="n">quantized_model</span> <span class="o">=</span> <span class="s2">&quot;./quantized_model&quot;</span>
-<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./Llama-3.1-8B-Instruct&quot;</span>
+<span class="n">compiled_model</span> <span class="o">=</span> <span class="s2">&quot;./Output-Llama-3.1-8B-Instruct&quot;</span>
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
         <span class="n">quantized_model</span><span class="p">,</span>
-        <span class="s2">&quot;npu:0:*&quot;</span><span class="p">,</span>
         <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-        <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">paged_attention_num_blocks</span><span class="o">=</span><span class="mi">80000</span><span class="p">,</span> <span class="c1"># Number of blocks for paged attention</span>
         <span class="n">max_seq_len_to_capture</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="c1"># Maximum sequence length covered by LLM engine</span>
 <span class="p">)</span>
 <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">compiled_model</span><span class="p">)</span>
@@ -538,17 +535,10 @@ decode buckets, etc. You can find more details about the arguments in the
 <p>Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command to build a model
 artifact.
 Below is an example that produces an artifact that uses 4-way tensor
-parallelism.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>path/to/artifacts<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--model-id<span class="w"> </span>meta-llama/Meta-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--devices<span class="w"> </span><span class="s2">&quot;npu:0:*&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>mlperf-llama3-1-8b-fp8<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-tp<span class="w"> </span><span class="m">4</span><span class="w"> </span>-pp<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-pb<span class="w"> </span><span class="m">1</span>,512<span class="w"> </span>-pb<span class="w"> </span><span class="m">1</span>,1024<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-db<span class="w"> </span><span class="m">1</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">8</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">16</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">64</span>,2048<span class="w"> </span>-db<span class="w"> </span><span class="m">128</span>,2048<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--quantization-artifact-path<span class="w"> </span>path/to/quantized_artifacts<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--paged-attention-num-blocks<span class="w"> </span><span class="m">512000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--additional-model-config<span class="w"> </span><span class="nv">calculate_logit_only_for_last_token</span><span class="o">=</span>True<span class="w"> </span><span class="se">\</span>
+parallelism and will save the compiled artifact into the <code class="docutils literal notranslate"><span class="pre">./Llama-3.1-8B-Instruct</span></code> directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>./quantized_model<span class="w"> </span>./Output-Llama-3.1-8B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tp<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--max-seq-len-to-capture<span class="w"> </span><span class="m">1024</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--num-pipeline-builder-workers<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--num-compile-workers<span class="w"> </span><span class="m">4</span>
 </pre></div>

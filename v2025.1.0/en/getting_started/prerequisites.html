@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Installing Prerequisites &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>Installing Prerequisites &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Roadmap" href="../overview/roadmap.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -455,7 +455,9 @@ curl<span class="w"> </span>https://packages.cloud.google.com/apt/doc/apt-key.gp
 <p>After registering FuriosaAI’s APT server as described above, you can now
 install the required packages: the device driver, the PE Runtime, and optionally
 the device control/information tool (<a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">furiosa-smi</span></a>).</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-pert-rngd<span class="w"> </span>furiosa-smi
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>linux-modules-extra-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span><span class="w"> </span>linux-headers-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-pert-rngd<span class="w"> </span>furiosa-smi
 </pre></div>
 </div>
 </section>

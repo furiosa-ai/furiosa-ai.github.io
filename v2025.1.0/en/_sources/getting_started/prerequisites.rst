@@ -73,7 +73,9 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
 
 .. code-block:: sh
 
-  sudo apt update && sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
+  sudo apt update
+  sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
+  sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
 
 
 

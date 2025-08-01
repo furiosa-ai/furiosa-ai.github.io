@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="ArtifactBuilder" href="artifact_builder.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -419,7 +419,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineArtifactArgs</span><span class="p">,</span> <span class="n">LLMEngine</span><span class="p">,</span> <span class="n">RequestOutput</span><span class="p">,</span> <span class="n">SamplingParams</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineArgs</span><span class="p">,</span> <span class="n">LLMEngine</span><span class="p">,</span> <span class="n">RequestOutput</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">create_test_prompts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">]]:</span>
@@ -457,8 +457,8 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_engine</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LLMEngine</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the LLMEngine from the command line arguments.&quot;&quot;&quot;</span>
-    <span class="n">engine_args</span> <span class="o">=</span> <span class="n">EngineArtifactArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">LLMEngine</span><span class="o">.</span><span class="n">from_engine_artifact_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
+    <span class="n">engine_args</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">LLMEngine</span><span class="o">.</span><span class="n">from_engine_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
@@ -471,53 +471,44 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Demo on using the LLMEngine class directly&#39;</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArtifactArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The script can be executed with various arguments defined in EngineArgs, as shown in the following example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>llm_engine.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0:*
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>llm_engine.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0
 </pre></div>
 </div>
 <p>For a comprehensive list of available arguments for EngineArgs, please refer to the section below.</p>
 </section>
 <section id="arguments-supported-by-llmengine">
 <span id="llmengineargs"></span><h2>Arguments supported by LLMEngine<a class="headerlink" href="#arguments-supported-by-llmengine" title="Link to this heading">#</a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: llm_engine.py [-h] --model MODEL [--num-speculative-tokens NUM_SPECULATIVE_TOKENS] [--tokenizer TOKENIZER]
-                     [--tokenizer-mode TOKENIZER_MODE] [--seed SEED] [--devices DEVICES] [--data-parallel-size DATA_PARALLEL_SIZE]
-                     [--cache-dir CACHE_DIR] [--backend BACKEND] [--paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS]
-                     [--npu-queue-limit NPU_QUEUE_LIMIT] [--max-processing-samples MAX_PROCESSING_SAMPLES]
-                     [--spare-blocks-ratio SPARE_BLOCKS_RATIO] [--is-offline IS_OFFLINE]
-                     [--use-speculative-decoding-if-possible USE_SPECULATIVE_DECODING_IF_POSSIBLE]
-                     [--speculative-model-paged-attention-num-blocks SPECULATIVE_MODEL_PAGED_ATTENTION_NUM_BLOCKS]
-                     [--packing-type PACKING_TYPE]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: llm_engine.py [-h] --model MODEL [--tokenizer TOKENIZER] [--tokenizer-mode TOKENIZER_MODE] [--seed SEED] [--devices DEVICES] [--pipeline-parallel-size PIPELINE_PARALLEL_SIZE]
+                     [--data-parallel-size DATA_PARALLEL_SIZE] [--cache-dir CACHE_DIR] [--paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS] [--npu-queue-limit NPU_QUEUE_LIMIT]
+                     [--max-processing-samples MAX_PROCESSING_SAMPLES] [--spare-blocks-ratio SPARE_BLOCKS_RATIO] [--is-offline IS_OFFLINE]
+
+Demo on using the LLMEngine class directly
 
 options:
   -h, --help            show this help message and exit
   --model MODEL         Path to the LLM engine artifact (Pretrained id will be supported in the future releases).
-  --num-speculative-tokens NUM_SPECULATIVE_TOKENS
-                        The number of tokens that specualtive model will generate speculatively during each iteration of the decoding
-                        process.
   --tokenizer TOKENIZER
                         The name or path of a HuggingFace Transformers tokenizer.
   --tokenizer-mode TOKENIZER_MODE
-                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if available, and &quot;slow&quot; will always use the slow
-                        tokenizer.
+                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if available, and &quot;slow&quot; will always use the slow tokenizer.
   --seed SEED           The seed to initialize the random number generator for sampling.
-  --devices DEVICES     The devices to run the model. It can be a single device or a list of devices. Each device can be either &quot;npu:X&quot;
-                        or &quot;npu:X:*&quot; where X is a specific device index. If not given, available devices will be used.
+  --devices DEVICES     The devices to run the model. It can be a single device or a list of devices. Each device can be either &quot;npu:X&quot; or &quot;npu:X:*&quot; where X is a specific device index.
+                        If not given, available devices will be used.
+  --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
+                        The size of the pipeline parallelism group. If not given, it will use the default pp value of the artifact.
   --data-parallel-size DATA_PARALLEL_SIZE
-                        The size of the data parallelism group. If not given, it will be inferred from total avaialble PEs and other
-                        parallelism degrees.
+                        The size of the data parallelism group. If not given, it will be inferred from total avaialble PEs and other parallelism degrees.
   --cache-dir CACHE_DIR
-                        The cache directory for all generated files for this LLM instance. When its value is ``None``, caching is
-                        disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.
-  --backend BACKEND     The backend implementation to run forward() of a model for the LLM. If not specified, the backend will be
-                        chosen based on the device kind.
+                        The cache directory for temporarily generated files for this LLM instance. When its value is ``None``, caching is disabled. The default is
+                        &quot;$HOME/.cache/furiosa/llm&quot;.
   --paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS
-                        The maximum number of blocks that each k/v storage per layer can store. This argument must be given if model
-                        uses paged attention.
+                        The maximum number of blocks that each k/v storage per layer can store. This argument must be given if model uses paged attention.
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES
@@ -526,14 +517,6 @@ options:
                         The spare blocks ratio. Used as an hint for the scheduler.
   --is-offline IS_OFFLINE
                         If True, the scheduler will assume the workload will be offline scenario.
-  --use-speculative-decoding-if-possible USE_SPECULATIVE_DECODING_IF_POSSIBLE
-                        If True, speculative decoding will be used if possible (`speculative_model` is given or there&#39;s artifacts for
-                        specualtive model in the artifacts.). Otherwise, speculative decoding will not be used.
-  --speculative-model-paged-attention-num-blocks SPECULATIVE_MODEL_PAGED_ATTENTION_NUM_BLOCKS
-                        The maximum number of blocks that each k/v storage per layer can store for the specualtive model. This argument
-                        must be given if the specualtive model uses paged attention.
-  --packing-type PACKING_TYPE
-                        Packing algorithm. Possible values are &quot;IDENTITY&quot; only for now
 </pre></div>
 </div>
 </section>
@@ -541,7 +524,7 @@ options:
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="furiosa_llm.LLMEngine">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">LLMEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NativeLLMEngine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PreTrainedTokenizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PreTrainedTokenizerFast</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_max_seq_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len_to_capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RequestOutputKind</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">RequestOutputKind.CUMULATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/llm_engine.html#LLMEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.LLMEngine" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">LLMEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NativeLLMEngine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PreTrainedTokenizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PreTrainedTokenizerFast</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_max_seq_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len_to_capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/llm_engine.html#LLMEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.LLMEngine" title="Link to this definition">#</a></dt>
 <dd><p>LLMEngine receives requests and generates texts.
 Implements the API interface compatible with vLLM’s <cite>LLMEngine</cite>, but this class is based on furiosa-runtime and FuriosaAI NPU.</p>
 <p>The request scheduling approach of this engine is different from that of vLLM’s . While vLLM provides

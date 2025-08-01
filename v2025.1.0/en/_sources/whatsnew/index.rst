@@ -11,10 +11,12 @@ What's New
 
 .. _Release2025_1_0:
 
-Furiosa SDK 2025.1.0 Beta0 (2025-02-??)
+Furiosa SDK 2025.1.0 Beta1 (2025-02-24)
 ==============================================
 
-2025.1.0 is the third major SDK release for RNGD.
+2025.1.0 is the third major SDK release for RNGD. This release includes a lot of new features and significant
+improvements, including significant LLM latency optimization, tool-calling support in Furiosa LLM,
+the device remapping support for container environment, command line tools improvements, and bug fixes.
 
 Please refer to the :ref:`UpgradeGuide` section for instructions on
 obtaining this update.
@@ -23,23 +25,35 @@ obtaining this update.
 
 🚀 Highlights
 -------------
-* ..
+* LLM Latency Optimization (Up to 11.66% TTFT, 11.45% TPOT improvement for 30k inputs, 1k outputs)
+* Support Tool-calling in Furiosa LLM (:ref:`ToolCalling`)
+* Support Device remapping (e.g., ``/dev/rngd/npu2pe0-3`` -> ``/dev/rngd/npu0pe0-3``) for container
+* Add the new command line tool ``furiosa-llm build`` to build easily an artifact from Hugging Face model (:ref:`BuildingModelArtifact`)
+* Fix continuous batch scheduling bugs which occur in certain ranges of sequence lengths and batch sizes
+* Automatic configuration of the maximum KV-cache memory allocation
+* Reduce the fragmentations of runtime memory allocation
+* Allow ``furiosa-mlperf`` command to specify ``pipeline_parallel_size`` and ``data_parallel_size``
+* Add ``--allowed-origins`` argument to ``furiosa-llm serve`` (:ref:`OpenAIServer`)
+* Fix ``trust_remote_code`` support bug in furiosa-llm
+* Support Min-p sampling in ``SamplingParams`` (:ref:`SamplingParams`)
+* Allow ``npu:X`` in addition to ``npu:X:*`` in ``devices`` option
+    * e.g., ``furiosa-llm serve ./model --devices "npu:0"``
+* ``fuiorsa-mlperf`` command supports ``npu_queue_limit``, ``spare_blocks_ratio``, allowing to optimize the performance
 
 ⚠️ Deprecations & Upcoming Changes
--------------------------------
-* LLM.from_artifacts() API will be deprecated from the 2025.3.0 release.
-  Please use LLM.load_artifact() instead.
+----------------------------------
+* ``LLM.from_artifacts()`` API will be deprecated from the 2025.2.0 release. Please use ``LLM.load_artifact()`` instead (:ref:`LLMClass`).
 
 👎 Breaking Changes
-----------------------------------
-* ``--model`` option of ``furiosa-llm serve` become a positional argument.
-  So, run ``furiosa-llm serve <ARTIFACT_PATH>`` instead of ```furiosa-llm serve --model <ARTIFACT_PATH>``.
-  
+--------------------
+* ``--model`` option of ``furiosa-llm serve`` become a positional argument.
+  Please use ``furiosa-llm serve <model>`` instead of ``furiosa-llm serve --model <model>``. (:ref:`OpenAIServer`)
+
 
 .. _Release2024_2_1:
 
 Furiosa SDK 2024.2.1 Beta0 (2025-01-10)
-==============================================
+=======================================
 
 2024.2.1 is a minor release based on 2024.2.0 major release.
 
@@ -49,7 +63,7 @@ obtaining this update.
 .. _Release2024_2_1_Highlights:
 
 🚀 Highlights
-----------------------
+-------------
 * Support for context lengths of up to 32k in furiosa-llm for various models, including LLaMA 3.1, and EXAONE
 * Artifacts with the same ``tensor_parallel_size`` are compatible even with any ``pipeline_parallel_size``
 
@@ -101,7 +115,7 @@ Versions of components:
 .. _Release2024_2_0:
 
 Furiosa SDK 2024.2.0 Beta0 (2024-12-23)
-==============================================
+=======================================
 
 2024.2.0 is the second major SDK release for RNGD.
 This release includes a lot of new features and significant improvements,
@@ -116,7 +130,7 @@ obtaining this update.
 .. _Release2024_2_0_Highlights:
 
 🚀 Highlights
-----------------------
+-------------
 * New Model support: Solar, EXAONE-3.0, CodeLLaMA2, Vicuna
 * Up to 8k context length support in models, such as LLaMA 3.1
 * Tensor Parallelism support (``tensor_parallel_size <= 8``)
@@ -133,7 +147,7 @@ obtaining this update.
     * e.g., 3580 tokens/sec in LLaMA 3.1 8B model with a single RNGD card
 
 👎 Breaking Changes
-----------------------------------
+-------------------
 * LLM.from_artifacts() API has been deprecated. Please use LLM.load_artifacts() instead.
 * The artifacts built from 2024.1.x is not compatible with 2024.2.x. Please use the artifact built from 2024.2.x.
 
@@ -183,7 +197,7 @@ obtaining this update.
    <hr>
 
 Furiosa SDK 2024.1.0 Alpha (2024-10-11)
-==============================================
+=======================================
 
 2024.1.0 is the first SDK release for RNGD. This release is alpha release,
 and the features and APIs described in this document may change in the future.

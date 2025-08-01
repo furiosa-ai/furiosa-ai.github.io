@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Model Preparation Workflow" href="model-preparation-workflow.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -416,7 +416,7 @@ artifact path, as follows:</p>
 and interact with the server using OpenAI API clients.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2024.2.1 (beta0).
+<p>This document is based on Furiosa SDK 2025.1.0 (beta0).
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="prerequisites">
@@ -503,7 +503,7 @@ the default, you can specify one using the <code class="docutils literal notrans
 </div>
 </section>
 <section id="tool-calling">
-<h2>Tool Calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h2>
+<span id="toolcalling"></span><h2>Tool Calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h2>
 <p>Furiosa LLM supports tool calling (also known as function calling) for models
 trained with this capability.</p>
 <p>Within the <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> options supported by the
@@ -576,6 +576,12 @@ output tokens.</p>
 <p>In the 2024.2 release, <code class="docutils literal notranslate"><span class="pre">n</span></code> works only for beam search. This limitation
 will be fixed in the next release.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> parameter in the Chat API has been deprecated in favor of
+<code class="docutils literal notranslate"><span class="pre">max_completion_tokens</span></code>. While both parameters are currently supported for
+backwards compatibility, <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> will be removed in a future release.</p>
+</div>
 <p>Parameters supported by both the
 <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">Completions</a> and
 <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat</a> APIs:</p>
@@ -586,15 +592,16 @@ will be fixed in the next release.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">top_k</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">early_stopping</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">length_penalty</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_tokens</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">best_of</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_tokens</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code></p></li>
 </ul>
 <p>Parameters supported by the
 <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">Chat API</a> only:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_completion_tokens</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tool_choice</span></code></p></li>
 </ul>
@@ -609,7 +616,7 @@ Here is an example that launches the Furiosa LLM server in a Docker container
     -v ./Llama-3.1-8B-Instruct:/model \
     -p 8000:8000 \
     furiosaai/furiosa-llm:latest \
-    serve /model --devices &quot;npu:0:*&quot;
+    serve /model --devices &quot;npu:0&quot;
 </pre></div>
 </div>
 </section>

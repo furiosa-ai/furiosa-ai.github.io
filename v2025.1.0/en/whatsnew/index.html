@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>What’s New &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
+    <title>What’s New &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=26b13ac1"></script>
+    <script src="../_static/documentation_options.js?v=e72a64b0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.1.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Supported Models" href="../overview/supported_models.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2024.2.1" />
+  <meta name="docsearch:version" content="2025.1.0" />
   </head>
   
   
@@ -152,8 +152,8 @@
       
     
     
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
-    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
+    <img src="../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2025.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -384,7 +384,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-sdk-2025-1-0-beta0-2025-02">Furiosa SDK 2025.1.0 Beta0 (2025-02-??)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-sdk-2025-1-0-beta1-2025-02-24">Furiosa SDK 2025.1.0 Beta1 (2025-02-24)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">🚀 Highlights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations-upcoming-changes">⚠️ Deprecations &amp; Upcoming Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">👎 Breaking Changes</a></li>
@@ -419,35 +419,54 @@
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#furiosa-sdk-2025-1-0-beta0-2025-02" id="id7">Furiosa SDK 2025.1.0 Beta0 (2025-02-??)</a></p></li>
+<li><p><a class="reference internal" href="#furiosa-sdk-2025-1-0-beta1-2025-02-24" id="id7">Furiosa SDK 2025.1.0 Beta1 (2025-02-24)</a></p></li>
 <li><p><a class="reference internal" href="#furiosa-sdk-2024-2-1-beta0-2025-01-10" id="id8">Furiosa SDK 2024.2.1 Beta0 (2025-01-10)</a></p></li>
 <li><p><a class="reference internal" href="#furiosa-sdk-2024-2-0-beta0-2024-12-23" id="id9">Furiosa SDK 2024.2.0 Beta0 (2024-12-23)</a></p></li>
 <li><p><a class="reference internal" href="#furiosa-sdk-2024-1-0-alpha-2024-10-11" id="id10">Furiosa SDK 2024.1.0 Alpha (2024-10-11)</a></p></li>
 </ul>
 </nav>
-<section id="furiosa-sdk-2025-1-0-beta0-2025-02">
-<span id="release2025-1-0"></span><h2>Furiosa SDK 2025.1.0 Beta0 (2025-02-??)<a class="headerlink" href="#furiosa-sdk-2025-1-0-beta0-2025-02" title="Link to this heading">#</a></h2>
-<p>2025.1.0 is the third major SDK release for RNGD.</p>
+<section id="furiosa-sdk-2025-1-0-beta1-2025-02-24">
+<span id="release2025-1-0"></span><h2>Furiosa SDK 2025.1.0 Beta1 (2025-02-24)<a class="headerlink" href="#furiosa-sdk-2025-1-0-beta1-2025-02-24" title="Link to this heading">#</a></h2>
+<p>2025.1.0 is the third major SDK release for RNGD. This release includes a lot of new features and significant
+improvements, including significant LLM latency optimization, tool-calling support in Furiosa LLM,
+the device remapping support for container environment, command line tools improvements, and bug fixes.</p>
 <p>Please refer to the <a class="reference internal" href="../getting_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> section for instructions on
 obtaining this update.</p>
 <section id="highlights">
 <span id="release2025-2-0-highlights"></span><h3>🚀 Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li></li>
+<li><p>LLM Latency Optimization (Up to 11.66% TTFT, 11.45% TPOT improvement for 30k inputs, 1k outputs)</p></li>
+<li><p>Support Tool-calling in Furiosa LLM (<a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#toolcalling"><span class="std std-ref">Tool Calling</span></a>)</p></li>
+<li><p>Support Device remapping (e.g., <code class="docutils literal notranslate"><span class="pre">/dev/rngd/npu2pe0-3</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">/dev/rngd/npu0pe0-3</span></code>) for container</p></li>
+<li><p>Add the new command line tool <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> to build easily an artifact from Hugging Face model (<a class="reference internal" href="../furiosa_llm/model-preparation-workflow.html#buildingmodelartifact"><span class="std std-ref">Building a Model Artifact</span></a>)</p></li>
+<li><p>Fix continuous batch scheduling bugs which occur in certain ranges of sequence lengths and batch sizes</p></li>
+<li><p>Automatic configuration of the maximum KV-cache memory allocation</p></li>
+<li><p>Reduce the fragmentations of runtime memory allocation</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">furiosa-mlperf</span></code> command to specify <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">--allowed-origins</span></code> argument to <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> (<a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>)</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">trust_remote_code</span></code> support bug in furiosa-llm</p></li>
+<li><p>Support Min-p sampling in <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> (<a class="reference internal" href="../furiosa_llm/reference/sampling_params.html#samplingparams"><span class="std std-ref">SamplingParams class</span></a>)</p></li>
+<li><dl class="simple">
+<dt>Allow <code class="docutils literal notranslate"><span class="pre">npu:X</span></code> in addition to <code class="docutils literal notranslate"><span class="pre">npu:X:*</span></code> in <code class="docutils literal notranslate"><span class="pre">devices</span></code> option</dt><dd><ul>
+<li><p>e.g., <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">./model</span> <span class="pre">--devices</span> <span class="pre">&quot;npu:0&quot;</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fuiorsa-mlperf</span></code> command supports <code class="docutils literal notranslate"><span class="pre">npu_queue_limit</span></code>, <code class="docutils literal notranslate"><span class="pre">spare_blocks_ratio</span></code>, allowing to optimize the performance</p></li>
 </ul>
 </section>
 <section id="deprecations-upcoming-changes">
 <h3>⚠️ Deprecations &amp; Upcoming Changes<a class="headerlink" href="#deprecations-upcoming-changes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>LLM.from_artifacts() API will be deprecated from the 2025.3.0 release.
-Please use LLM.load_artifact() instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LLM.from_artifacts()</span></code> API will be deprecated from the 2025.2.0 release. Please use <code class="docutils literal notranslate"><span class="pre">LLM.load_artifact()</span></code> instead (<a class="reference internal" href="../furiosa_llm/reference/llm.html#llmclass"><span class="std std-ref">LLM class</span></a>).</p></li>
 </ul>
 </section>
 <section id="breaking-changes">
 <h3>👎 Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code> option of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve`</span> <span class="pre">become</span> <span class="pre">a</span> <span class="pre">positional</span> <span class="pre">argument.</span>
-<span class="pre">So,</span> <span class="pre">run</span> <span class="pre">``furiosa-llm</span> <span class="pre">serve</span> <span class="pre">&lt;ARTIFACT_PATH&gt;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">`furiosa-llm</span> <span class="pre">serve</span> <span class="pre">--model</span> <span class="pre">&lt;ARTIFACT_PATH&gt;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code> option of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> become a positional argument.
+Please use <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">&lt;model&gt;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">--model</span> <span class="pre">&lt;model&gt;</span></code>. (<a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>)</p></li>
 </ul>
 </section>
 </section>
@@ -808,7 +827,7 @@ and the features and APIs described in this document may change in the future.</
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-sdk-2025-1-0-beta0-2025-02">Furiosa SDK 2025.1.0 Beta0 (2025-02-??)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-sdk-2025-1-0-beta1-2025-02-24">Furiosa SDK 2025.1.0 Beta1 (2025-02-24)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">🚀 Highlights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations-upcoming-changes">⚠️ Deprecations &amp; Upcoming Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">👎 Breaking Changes</a></li>

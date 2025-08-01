@@ -93,6 +93,8 @@ To launch the server with a custom chat template, use the following command:
     furiosa-llm serve [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
 
 
+.. _ToolCalling:
+
 Tool Calling
 ============
 Furiosa LLM supports tool calling (also known as function calling) for models
@@ -143,6 +145,12 @@ Below are the API parameters currently supported by Furiosa LLM:
     In the 2024.2 release, ``n`` works only for beam search. This limitation
     will be fixed in the next release.
 
+.. warning::
+    
+    The ``max_tokens`` parameter in the Chat API has been deprecated in favor of
+    ``max_completion_tokens``. While both parameters are currently supported for
+    backwards compatibility, ``max_tokens`` will be removed in a future release.
+
 Parameters supported by both the
 `Completions <https://platform.openai.com/docs/api-reference/completions>`_ and
 `Chat <https://platform.openai.com/docs/api-reference/chat>`_ APIs:
@@ -153,15 +161,16 @@ Parameters supported by both the
 * ``top_k``
 * ``early_stopping``
 * ``length_penalty``
-* ``max_tokens``
-* ``min_tokens``
 * ``use_beam_search``
 * ``best_of``
 * ``stream``
+* ``min_tokens``
+* ``max_tokens``
 
 Parameters supported by the
 `Chat API <https://platform.openai.com/docs/api-reference/chat>`_ only:
 
+* ``max_completion_tokens``
 * ``tools``
 * ``tool_choice``
 
@@ -180,4 +189,4 @@ Here is an example that launches the Furiosa LLM server in a Docker container
         -v ./Llama-3.1-8B-Instruct:/model \
         -p 8000:8000 \
         furiosaai/furiosa-llm:latest \
-        serve /model --devices "npu:0:*"
+        serve /model --devices "npu:0"
