@@ -93,6 +93,10 @@ Device Management
 * :ref:`FuriosaSMICLI`: A command line utility for managing FuriosaAI NPUs
 * :ref:`FuriosaSMILIB`: A library for managing FuriosaAI NPUs
 
+Tutorials and Examples
+---------------------------------------------------
+* `FuriosaAI SDK CookBook <https://github.com/furiosa-ai/sdk-cookbook>`_: A collection of OSS projects for AI-driven solutions using FuriosaAI NPUs.
+
 Customer Support
 --------------------------------------------------
 * `FuriosaAI Forum <https://forums.furiosa.ai>`_
@@ -157,6 +161,12 @@ Other Links
 
    /device_management/system_management_interface
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Tutorials and Examples
+
+   FuriosaAI SDK CookBook <https://github.com/furiosa-ai/sdk-cookbook>
 
 .. toctree::
    :maxdepth: 1
