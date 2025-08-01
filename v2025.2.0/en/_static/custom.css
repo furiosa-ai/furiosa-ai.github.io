@@ -56,7 +56,23 @@
   --pst-color-table-row-zebra-high-bg: #151515!important;
 }
 
+/* Announcement */
+#bd-header-version-warning{
+    background-color: var(--furiosa-highlight)!important;
+    color: #222832;
+    padding: .125rem 12.5%;
+}
 
+.bd-header-announcement__content .pst-button-link-to-stable-version{
+  font-size: smaller;
+  padding: 0.2rem 0.75rem;
+  background-color: #d72d47!important;
+  color: white!important;
+}
+
+#bd-header-version-warning path.svg-inline--fa{
+  color: black!important;
+}
 
 /* Title */
 .navbar-brand{
@@ -93,7 +109,7 @@
 
 .prev-next-area .fa-angle-right,.prev-next-area .fa-angle-left{
   display: none !important;
-} 
+}
 
 .prev-next-info .prev-next-subtitle{
   color: inherit !important;
@@ -110,7 +126,7 @@
 
 /* Search */
 .btn{
-  --bs-btn-focus-box-shadow: none !important; 
+  --bs-btn-focus-box-shadow: none !important;
 }
 
 .search-button-field{
@@ -196,7 +212,7 @@ nav.bd-links li>a.reference.external:after {
 
 .admonition-title{
   padding: 0.4rem 1.2rem 0.4rem 1.2rem !important;
-  
+
   margin-left: -.6rem !important;
   margin-right: -.6rem !important;
 }
@@ -281,7 +297,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 /*card*/
-.sd-card{ 
+.sd-card{
   background-color: var(--color-code-bg-btn)!important;
 }
 .sd-card-body{
