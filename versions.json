@@ -20,14 +20,14 @@
         "url": "https://developer.furiosa.ai/v2025.1.0/en/"
     },
     {
-        "name": "2025.2.0-pre0",
-        "version": "2025.2.0-pre0",
-        "url": "https://developer.furiosa.ai/v2025.2.0-pre0/en/"
-    },
-    {
         "name": "2025.2.0 (Latest)",
         "version": "2025.2.0",
         "url": "https://developer.furiosa.ai/v2025.2.0/en/",
         "preferred": true
+    },
+    {
+        "name": "2025.3.0",
+        "version": "2025.3.0",
+        "url": "https://developer.furiosa.ai/v2025.3.0/en/"
     }
 ]
