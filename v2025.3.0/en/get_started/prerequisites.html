@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/prerequisites';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/jinwookbok/furiosa-ai.github.io/refs/heads/version/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
@@ -196,7 +196,6 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
@@ -210,7 +209,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
-
 
 
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
@@ -338,7 +336,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-installed-devices">Checking for Installed Devices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-apt">Setting up APT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-prerequisite-packages">Installing Prerequisite Packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-user-to-the-furiosa-group">Adding a user to the furiosa Group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-npu-device-installation">Verifying NPU Device Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-device-firmware">Upgrading Device Firmware</a></li>
 </ul>
@@ -411,23 +408,6 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-pert-rngd<span class="w"> </span>furiosa-smi
 </pre></div>
 </div>
-</section>
-<section id="adding-a-user-to-the-furiosa-group">
-<h2>Adding a user to the furiosa Group<a class="headerlink" href="#adding-a-user-to-the-furiosa-group" title="Link to this heading">#</a></h2>
-<p>Linux is a multi-user operating system that enables file and device access for
-both the owner and users within a specific group. The RNGD device driver creates
-a group called <code class="docutils literal notranslate"><span class="pre">furiosa</span></code> and restricts access to RNGD devices exclusively to users
-who are members of the <code class="docutils literal notranslate"><span class="pre">furiosa</span></code> group. To add a user to a member of furiosa group,
-please run as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>furiosa<span class="w"> </span>&lt;username&gt;
-</pre></div>
-</div>
-<p>Replace &lt;username&gt; with the name of the user you want to add to the furiosa group.
-For example, in order to add the current user (i.e., $USER) to the furiosa group, you can run as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>furiosa<span class="w"> </span><span class="nv">$USER</span>
-</pre></div>
-</div>
-<p>Upon logging out and logging back in, the change to the group membership will take effect.</p>
 </section>
 <section id="verifying-npu-device-installation">
 <h2>Verifying NPU Device Installation<a class="headerlink" href="#verifying-npu-device-installation" title="Link to this heading">#</a></h2>
@@ -517,7 +497,6 @@ the device may become unusable. In this case, please contact FuriosaAI support f
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-installed-devices">Checking for Installed Devices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-apt">Setting up APT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-prerequisite-packages">Installing Prerequisite Packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-user-to-the-furiosa-group">Adding a user to the furiosa Group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-npu-device-installation">Verifying NPU Device Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-device-firmware">Upgrading Device Firmware</a></li>
 </ul>

@@ -14,7 +14,7 @@ What's New
 
 Furiosa SDK 2025.3.0 Beta3 (2025-08-04)
 =======================================
-The 2025.3.0 release primarily focused on inter-chip tensor parallelism and performance optimizations.
+The 2025.3.0 release primarily focuses on inter-chip tensor parallelism and performance optimizations.
 The efforts have resulted in dramatic performance improvements, including up to 3x throughput increase
 for Llama 3.1 70B and up to 55% reduction in first-token latency for Llama 3.1 8B.
 This release also introduces support for the Qwen 2 and 2.5 models, as well as W8A16 quantization.
@@ -41,13 +41,10 @@ Major Features & Improvements
 
 * Compiler and Runtime Optimizations
 
-  * **Enhanced Global Compiler Optimization**: The FuriosaAI compiler's global optimization
+  * Enhanced Global Compiler Optimization: Furiosa compiler's global optimization
     capabilities were enhanced to maximize SRAM reuse between transformer blocks.
     This reduces memory access latency and boosts overall throughput.
-  * **Prefix Caching (Experimental)**: Introduced an initial implementation of prefix caching.
-    This feature is currently experimental and primarily focuses on reducing KV cache memory usage.
-    Further improvements are planned for future releases.
-  * **Runtime Optimization**: Further optimized the runtime by reducing interference
+  * Runtime Optimization: Further optimized the runtime by reducing interference
     between the host and NPU, improving synchronization across devices, and
     minimizing overhead between consecutive decoding steps.
 
@@ -65,22 +62,27 @@ to the previous release 2025.2:
 Expanded Model Support
 ^^^^^^^^^^^^^^^^^^^^^^
 
-* **New Model Families**: Added support for Qwen 2 and 2.5 models
+* New Model Families: Added support for Qwen 2 and 2.5 models
   (e.g., `Qwen2.5-Coder-32B-Instruct <https://huggingface.co/furiosa-ai/Qwen2.5-Coder-32B-Instruct>`_).
-* **New Quantization Support**: Added support for W8A16 quantization
+* New Quantization Support: Added support for W8A16 quantization
   (e.g., `Llama-3.3-70B-Instruct-INT8 <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8>`_).
 * New pre-compiled artifacts are available on the Hugging Face Hub:
-
+  * `EXAONE-3.5-32B-Instruct <https://huggingface.co/furiosa-ai/EXAONE-3.5-32B-Instruct>`_
   * `DeepSeek-R1-Distill-Llama-70B <https://huggingface.co/furiosa-ai/DeepSeek-R1-Distill-Llama-70B>`_
   * `Llama-3.3-70B-Instruct <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct>`_
   * `Llama-3.3-70B-Instruct-INT8 <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8>`_
   * `Qwen-2.5-Coder-32B <https://huggingface.co/furiosa-ai/Qwen-2.5-Coder-32B>`_
+* Longer Context Lengths: all pre-compiled artifacts on Hugging Face Hub now support
+  context lengths of up to 32k tokens.
 
 
 🚨 Breaking Changes
 --------------------
-* The SDK 2025.2.0 cannot load artifacts built with 2025.2.x.
+* The SDK 2025.2.0 cannot load artifacts built with 2025.3.x.
   Please use the artifact built with 2025.3.x, or rebuild the model again with the new SDK.
+* furiosa-mlperf is deprecated and is removed from this release.
+  Please use other benchmark tools, such as `vLLM benchmark <https://github.com/vllm-project/vllm/tree/main/benchmarks>`_
+  or `LLMPerf <https://github.com/ray-project/llmperf>`_.
 
 .. _Release2025_2_0:
 
@@ -125,6 +127,7 @@ obtaining this update.
 🚨 Breaking Changes
 --------------------
 * The SDK 2025.2.0 cannot load artifacts built with 2025.1.x. Please use the artifact built with 2025.2.x, or rebuild the model again with the new SDK.
+* The `furiosa` group is no longer required to access NPU devices on Linux systems.
 
 
 Versions of components:

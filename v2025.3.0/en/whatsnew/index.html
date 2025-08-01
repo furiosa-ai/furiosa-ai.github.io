@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'whatsnew/index';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/jinwookbok/furiosa-ai.github.io/refs/heads/version/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
@@ -196,7 +196,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
@@ -210,7 +209,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
-
 
 
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
@@ -394,7 +392,7 @@
 </nav>
 <section id="furiosa-sdk-2025-3-0-beta3-2025-08-04">
 <span id="release2025-3-0"></span><h2>Furiosa SDK 2025.3.0 Beta3 (2025-08-04)<a class="headerlink" href="#furiosa-sdk-2025-3-0-beta3-2025-08-04" title="Link to this heading">#</a></h2>
-<p>The 2025.3.0 release primarily focused on inter-chip tensor parallelism and performance optimizations.
+<p>The 2025.3.0 release primarily focuses on inter-chip tensor parallelism and performance optimizations.
 The efforts have resulted in dramatic performance improvements, including up to 3x throughput increase
 for Llama 3.1 70B and up to 55% reduction in first-token latency for Llama 3.1 8B.
 This release also introduces support for the Qwen 2 and 2.5 models, as well as W8A16 quantization.</p>
@@ -416,13 +414,10 @@ and compiler tactics that overlap inter-chip DMA with computation.</p></li>
 </li>
 <li><p>Compiler and Runtime Optimizations</p>
 <ul>
-<li><p><strong>Enhanced Global Compiler Optimization</strong>: The FuriosaAI compiler’s global optimization
+<li><p>Enhanced Global Compiler Optimization: Furiosa compiler’s global optimization
 capabilities were enhanced to maximize SRAM reuse between transformer blocks.
 This reduces memory access latency and boosts overall throughput.</p></li>
-<li><p><strong>Prefix Caching (Experimental)</strong>: Introduced an initial implementation of prefix caching.
-This feature is currently experimental and primarily focuses on reducing KV cache memory usage.
-Further improvements are planned for future releases.</p></li>
-<li><p><strong>Runtime Optimization</strong>: Further optimized the runtime by reducing interference
+<li><p>Runtime Optimization: Further optimized the runtime by reducing interference
 between the host and NPU, improving synchronization across devices, and
 minimizing overhead between consecutive decoding steps.</p></li>
 </ul>
@@ -443,26 +438,29 @@ Time-to-First-Token (TTFT).</p></li>
 <section id="expanded-model-support">
 <h4>Expanded Model Support<a class="headerlink" href="#expanded-model-support" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p><strong>New Model Families</strong>: Added support for Qwen 2 and 2.5 models
+<li><p>New Model Families: Added support for Qwen 2 and 2.5 models
 (e.g., <a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen2.5-Coder-32B-Instruct">Qwen2.5-Coder-32B-Instruct</a>).</p></li>
-<li><p><strong>New Quantization Support</strong>: Added support for W8A16 quantization
+<li><p>New Quantization Support: Added support for W8A16 quantization
 (e.g., <a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8">Llama-3.3-70B-Instruct-INT8</a>).</p></li>
-<li><p>New pre-compiled artifacts are available on the Hugging Face Hub:</p>
-<ul>
-<li><p><a class="reference external" href="https://huggingface.co/furiosa-ai/DeepSeek-R1-Distill-Llama-70B">DeepSeek-R1-Distill-Llama-70B</a></p></li>
-<li><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct">Llama-3.3-70B-Instruct</a></p></li>
-<li><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8">Llama-3.3-70B-Instruct-INT8</a></p></li>
-<li><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen-2.5-Coder-32B">Qwen-2.5-Coder-32B</a></p></li>
-</ul>
-</li>
+<li><p>New pre-compiled artifacts are available on the Hugging Face Hub:
+* <a class="reference external" href="https://huggingface.co/furiosa-ai/EXAONE-3.5-32B-Instruct">EXAONE-3.5-32B-Instruct</a>
+* <a class="reference external" href="https://huggingface.co/furiosa-ai/DeepSeek-R1-Distill-Llama-70B">DeepSeek-R1-Distill-Llama-70B</a>
+* <a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct">Llama-3.3-70B-Instruct</a>
+* <a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8">Llama-3.3-70B-Instruct-INT8</a>
+* <a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen-2.5-Coder-32B">Qwen-2.5-Coder-32B</a></p></li>
+<li><p>Longer Context Lengths: all pre-compiled artifacts on Hugging Face Hub now support
+context lengths of up to 32k tokens.</p></li>
 </ul>
 </section>
 </section>
 <section id="breaking-changes">
 <h3>🚨 Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>The SDK 2025.2.0 cannot load artifacts built with 2025.2.x.
+<li><p>The SDK 2025.2.0 cannot load artifacts built with 2025.3.x.
 Please use the artifact built with 2025.3.x, or rebuild the model again with the new SDK.</p></li>
+<li><p>furiosa-mlperf is deprecated and is removed from this release.
+Please use other benchmark tools, such as <a class="reference external" href="https://github.com/vllm-project/vllm/tree/main/benchmarks">vLLM benchmark</a>
+or <a class="reference external" href="https://github.com/ray-project/llmperf">LLMPerf</a>.</p></li>
 </ul>
 </section>
 </section>
@@ -505,6 +503,7 @@ obtaining this update.</p>
 <h3>🚨 Breaking Changes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>The SDK 2025.2.0 cannot load artifacts built with 2025.1.x. Please use the artifact built with 2025.2.x, or rebuild the model again with the new SDK.</p></li>
+<li><p>The <cite>furiosa</cite> group is no longer required to access NPU devices on Linux systems.</p></li>
 </ul>
 <p>Versions of components:</p>
 <div class="pst-scrollable-table-container"><table class="table">

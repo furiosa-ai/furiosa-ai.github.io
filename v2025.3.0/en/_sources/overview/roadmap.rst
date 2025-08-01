@@ -11,14 +11,26 @@ This page shows the forward-looking roadmap of ongoing & upcoming projects and w
 .. note::
     The latest release is |release|. You can find the release notes :ref:`here <WhatsNew>`.
 
-Upcoming Releases 2025 Q2
+Upcoming Releases
 ==========================================
-* 🔨 Tensor Parallelism support Phase 2: Inter-chip (planned for 2025.3.0 release)
-* 🔨 Speculating with a draft model (planned for 2025.3.0 release)
-* 🔨 Embedding API support in Furiosa-LLM (planned for 2025.2.0 release)
-* 🔨 CPU memory swapping of KV cache in Furiosa-LLM (planned for 2025.3.0 release)
-* 🔨 ``torch.compile()`` backend (planned for 2025.3.0 release)
+* 🔨 Speculating with a draft model
+* 🔨 Embedding API support in Furiosa-LLM
+* 🔨 CPU memory swapping of KV cache in Furiosa-LLM
+* 🔨 ``torch.compile()`` backend
 * 🔨 Prefix-caching support in Furiosa-LLM
+* 🔨 Guided-decoding support in Furiosa-LLM
+* 🔨 NPU operator support
+
+2025 Q2
+==========================================
+* ✅ Tensor Parallelism support Phase 2: Inter-chip
+* ✅ Dramatic performance improvements in Furiosa-LLM (7x higher throughput than 2025.1.0 release)
+* ✅ Hugging Face Hub support in Furiosa-LLM
+* ✅ Pre-compiled artifacts on Hugging Face Hub
+* ✅ Qwen2 and Qwen2.5 model support in Furiosa-LLM
+* ✅ EXAONE3 model support in Furiosa-LLM
+* ✅ Add support for ``abort()`` in Furiosa-LLM
+
 
 2025 Q1
 ==========================================

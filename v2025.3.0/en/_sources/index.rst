@@ -70,7 +70,6 @@ Get Started
 * :ref:`InstallingPrerequisites`: How to install the prerequisites for FuriosaAI Software Stack
 * :ref:`UpgradeGuide`: How to upgrade the FuriosaAI Software Stack
 * :ref:`GettingStartedFuriosaLLM`
-* :ref:`GettingStartedFuriosaMLPerf`
 
 Furiosa-LLM
 -------------------------------------------------
@@ -125,7 +124,6 @@ Other Links
 
    /get_started/prerequisites
    /get_started/furiosa_llm
-   /get_started/furiosa_mlperf
    /get_started/upgrade_guide
 
 .. toctree::

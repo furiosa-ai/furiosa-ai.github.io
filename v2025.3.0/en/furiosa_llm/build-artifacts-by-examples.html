@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/build-artifacts-by-examples';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/jinwookbok/furiosa-ai.github.io/refs/heads/version/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2025.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
@@ -196,7 +196,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_mlperf.html">Running MLPerf™ Inference Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
@@ -210,7 +209,6 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
-
 
 
 <li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
@@ -377,25 +375,25 @@ please refer to the <a class="reference internal" href="model-preparation.html#m
 <h2>Command-Line Tool vs. ArtifactBuilder API<a class="headerlink" href="#command-line-tool-vs-artifactbuilder-api" title="Link to this heading">#</a></h2>
 <p>There are two ways to build model artifacts using Furiosa-LLM:</p>
 <ul class="simple">
-<li><p>The <span class="xref std std-ref">ArtifactBuilder</span> API</p></li>
+<li><p>The <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command-line tool</p></li>
 </ul>
-<p>The <span class="xref std std-ref">ArtifactBuilder</span> API is a Python interface that enables you to build model artifacts
+<p>The <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API is a Python interface that enables you to build model artifacts
 with Furiosa-LLM, offering greater programmability and flexibility.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command is a command-line tool that provides the same functionality
-as the <span class="xref std std-ref">ArtifactBuilder</span> API. It offers a simpler and more convenient way to build model artifacts
+as the <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API. It offers a simpler and more convenient way to build model artifacts
 without writing any code. Its syntax is as follows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>build<span class="w"> </span>&lt;MODEL_ID_OR_PATH&gt;<span class="w"> </span>&lt;OUTPUT_PATH&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </pre></div>
 </div>
 <p>You can see more options by running <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span> <span class="pre">--help</span></code>.
 Essentially, it is a wrapper around the <code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> API,
-so you can find details about the options in the reference for the <span class="xref std std-ref">ArtifactBuilder</span> API.</p>
+so you can find details about the options in the reference for the <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API.</p>
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <p>The examples in this section are based on <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command and the Llama 3.1 8B model.
-You can also implement the same examples using the <span class="xref std std-ref">ArtifactBuilder</span> API.</p>
+You can also implement the same examples using the <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API.</p>
 <section id="basic-examples">
 <h3>Basic Examples<a class="headerlink" href="#basic-examples" title="Link to this heading">#</a></h3>
 <p>Below is a basic example of building a model artifact using the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> command.
