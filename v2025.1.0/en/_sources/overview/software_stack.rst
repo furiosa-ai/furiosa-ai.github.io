@@ -10,12 +10,12 @@ Here, we outline the software stack provided by FuriosaAI, explaining
 the roles of each component, along with guidelines and tutorials.
 The following diagram shows the software stack provided by FuriosaAI.
 
-.. figure:: ../_static/imgs/sw_stack.png
+.. figure:: ../_static/imgs/sw_stack.svg
   :alt: FuriosaAI Software Stack
   :width: 500px
   :align: center
 
-  
+
 Kernel Driver, Firmware, and PE Runtime
 =======================================
 The kernel device driver enables the Linux operating system to recognize NPU devices and
@@ -58,10 +58,10 @@ cost, inference latency, and power consumption.
 The Furiosa Model Compressor provides post-training quantization methods, such as:
 
 * BF16 (W16A16)
-* INT8 Weight-Only (W8A16) (Planned)
+* INT8 Weight-Only (W8A16)
 * FP8 (W8A8)
 * INT8 SmoothQuant (W8A8)
-* INT4 Weight-Only (W4A16 AWQ / GPTQ) (Planned)
+* INT4 Weight-Only (W4A16 AWQ / GPTQ) (Planned in release 2024.2)
 
 
 Furiosa LLM

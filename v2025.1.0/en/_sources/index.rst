@@ -1,8 +1,8 @@
 ****************************************************
-Welcome to Furiosa Docs
+FuriosaAI Developer Center
 ****************************************************
 
-Welcome!
+Welcome to the FuriosaAI Developer Center!
 FuriosaAI offers a streamlined software stack designed for deep learning model
 inference on FuriosaAI NPUs.
 This guide covers the entire workflow for creating inference applications,
@@ -11,61 +11,41 @@ deployment.
 
 .. warning::
 
-   This document is based on the Furiosa SDK |release| (beta 1) version.
+   This document is based on the Furiosa SDK |release| (beta0) version.
    The features and APIs described herein are subject to change in the future.
 
-.. grid:: 2
-   :padding: 0
+.. grid:: 3
 
-
-   .. grid-item-card:: 📢 Latest Release |release|
+    .. grid-item-card:: 📢 Latest Release |release|
       :link: /whatsnew/index
       :link-type: doc
-      :columns: 6
 
-      Stay up to date with the newest features, improvements, and fixes in the latest release.
-      Version |release| (beta 0)
+      2024.2.1 is the latest SDK release for RNGD.
+      This document provides an overview of the new features and changes in the latest release.
+      +++
+      :ref:`Learn more <Release2024_2_1>`
 
-
-   .. grid-item-card:: 🚀 Quick Start with Furiosa LLM
+    .. grid-item-card:: 🚀 Quick Start with Furiosa LLM
       :link: /getting_started/furiosa_llm
       :link-type: doc
-      :columns: 6
 
       Furiosa LLM is a high-performance inference engine for LLM models.
       This document explains how to install and use Furiosa LLM.
+      +++
+      :ref:`Learn more <GettingStartedFuriosaLLM>`
 
-   
-.. grid:: 2
-   :padding: 0
-
-   .. grid-item-card:: 📊 Running MLPerf Benchmark
+    .. grid-item-card:: 📊 Running MLPerf Benchmark
       :link: getting_started/furiosa_mlperf
       :link-type: doc
-      :columns: 6
 
       This document describes how to reproduce the MLPerf™ Inference Benchmark
       using the FuriosaAI Software Stack.
-
-
-   .. grid-item-card:: 📋 Roadmap Overview
-      :link: overview/roadmap
-      :link-type: doc      
-      :columns: 6
-      
-      See what's ahead for FuriosaAI with our planned releases and upcoming features. 
-      Stay informed on development progress and key milestones.
-
+      +++
+      :ref:`Learn more <GettingStartedFuriosaMLPerf>`
 
 
 Overview
 -------------------------------------------------
-
-.. figure:: _static/imgs/SW_stack_3D.png
-   :alt: FuriosaAI Software Stack
-   :width: 960px
-   :align: center
-
 * :ref:`RNGD`: RNGD Hardware Specification, and features
 * :ref:`SoftwareStack`: An overview of the FuriosaAI software stack
 * :ref:`SupportedModels`: A list of supported models
@@ -164,8 +144,8 @@ Other Links
    :hidden:
    :caption: Customer Support
 
-   Forums <https://forums.furiosa.ai>
-   Customer Support <https://furiosa-ai.atlassian.net/servicedesk/customer/portals/>
+   FuriosaAI Forum <https://forums.furiosa.ai>
+   FuriosaAI Customer Portal <https://furiosa-ai.atlassian.net/servicedesk/customer/portals/>
 
 
 .. toctree::
@@ -174,4 +154,4 @@ Other Links
    :caption: Other Links
 
    FuriosaAI Homepage <https://furiosa.ai>
-   Furiosa Gen 1 NPU SDK Doc <https://furiosa-ai.github.io/docs/latest/en/>
+   FuriosaAI Warboy SDK Document <https://furiosa-ai.github.io/docs/latest/en/>

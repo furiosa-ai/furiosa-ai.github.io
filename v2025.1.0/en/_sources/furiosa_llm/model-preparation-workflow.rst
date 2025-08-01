@@ -22,13 +22,13 @@ At a high level, the workflow consists of the following four steps:
 
 .. figure:: ../_static/imgs/model_preparation_workflow.png
   :alt: Model Preparation Workflow
-  :width: 900px
+  :width: 720px
   :class: only-light
   :align: center
 
 .. figure:: ../_static/imgs/model_preparation_workflow.png
   :alt: Model Preparation Workflow
-  :width: 900px
+  :width: 720px
   :class: only-dark
   :align: center
 
@@ -97,9 +97,6 @@ Here is an example of quantizing a model:
 that quantizes the weights, activations, and KV cache to 8-bit floats (FP8).
 The quantized model is stored to the ``save_dir`` directory.
 
-
-.. _BuildingModelArtifact:
-
 Building a Model Artifact
 =========================
 The next step is to build a model artifact, which is a set of files required to
@@ -125,11 +122,23 @@ decode buckets, etc. You can find more details about the arguments in the
 Alternatively, you can use the ``furiosa-llm build`` command to build a model
 artifact.
 Below is an example that produces an artifact that uses 4-way tensor
-parallelism and will save the compiled artifact into the ``./Llama-3.1-8B-Instruct`` directory.
+parallelism.
 
+.. code-block:: sh
 
-.. literalinclude:: ../../../examples/furiosa_llm_build_cmd.sh
-  :language: sh
+    furiosa-llm build path/to/artifacts \
+        --model-id meta-llama/Meta-Llama-3.1-8B-Instruct \
+        --devices "npu:0:*" \
+        --name mlperf-llama3-1-8b-fp8 \
+        -tp 4 -pp 1 \
+        -pb 1,512 -pb 1,1024 \
+        -db 1,2048 -db 8,2048 -db 16,2048 -db 64,2048 -db 128,2048 \
+        --quantization-artifact-path path/to/quantized_artifacts \
+        --paged-attention-num-blocks 512000 \
+        --additional-model-config calculate_logit_only_for_last_token=True \
+        --num-pipeline-builder-workers 4 \
+        --num-compile-workers 4
+
 
 .. tip::
 

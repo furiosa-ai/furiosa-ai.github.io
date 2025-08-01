@@ -73,31 +73,8 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
 
 .. code-block:: sh
 
-  sudo apt update
-  sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
-  sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
+  sudo apt update && sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
 
-
-Adding a user to the furiosa Group
-==================================
-Linux is a multi-user operating system that enables file and device access for
-both the owner and users within a specific group. The RNGD device driver creates
-a group called ``furiosa`` and restricts access to RNGD devices exclusively to users
-who are members of the ``furiosa`` group. To add a user to a member of furiosa group,
-please run as follows:
-
-.. code-block:: sh
-
-  sudo usermod -aG friosa <username>
-
-Replace <username> with the name of the user you want to add to the furiosa group.
-For example, in order to add the current user (i.e., $USER) to the furiosa group, you can run as follows:
-
-.. code-block:: sh
-
-  sudo usermod -aG furiosa $USER
-
-Upon logging out and logging back in, the change to the group membership will take effect.
 
 
 Verifying NPU Device Installation
@@ -141,9 +118,7 @@ Installing the ``furiosa-firmware-image-rngd`` package will automatically upgrad
 The process takes 3 to 5 minutes per device to complete.
 The firmware upgrade process may require a reboot to complete the installation.
 
-.. note::
+.. warning::
 
-  Please remember to cold reboot the system after the firmware upgrade process is completed.
-  For more information about the firmware upgrade process. If the firmware upgrade process is interrupted,
-  the device may become unusable. In this case, please contact FuriosaAI support for assistance.
-
+  If the firmware upgrade process is interrupted, the device may become unusable.
+  In this case, please contact FuriosaAI support for assistance.

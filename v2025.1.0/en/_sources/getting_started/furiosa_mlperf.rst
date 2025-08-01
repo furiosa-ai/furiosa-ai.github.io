@@ -228,7 +228,7 @@ Use the following command to run the offline scenario:
 .. code-block:: sh
 
   furiosa-mlperf bert-offline ./mlperf-bert-large ./bert-offline-result \
-    --devices "npu:0"
+    --devices "npu:0:*"
 
 
 To run the BERT-large server scenario, you need to specify the target QPS
@@ -251,7 +251,7 @@ Then, you can run the benchmark with a custom configuration as follows:
 .. code-block:: sh
 
   furiosa-mlperf bert-server ./mlperf-bert-large ./bert-server-result \
-    --devices "npu:0" --user-conf ./user.conf
+    --devices "npu:0:*" --user-conf ./user.conf
 
 
 .. tip::
@@ -261,7 +261,7 @@ Then, you can run the benchmark with a custom configuration as follows:
   .. code-block:: sh
 
     furiosa-mlperf bert-offline ./mlperf-bert-large ./bert-offline-result \
-      --devices "npu:0,npu:1" --user-conf ./user.conf
+      --devices "npu:0:*,npu:1:*" --user-conf ./user.conf
 
 
 GPT-J 6B benchmark

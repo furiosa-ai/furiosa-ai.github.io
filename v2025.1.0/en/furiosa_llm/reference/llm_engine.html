@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2025.1.0 documentation</title>
+    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2024.2.1 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=b15d34b7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0cbe815c" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=e72a64b0"></script>
+    <script src="../../_static/documentation_options.js?v=26b13ac1"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,6 +59,13 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/reference/llm_engine';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.2.1';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -66,7 +73,7 @@
     <link rel="prev" title="ArtifactBuilder" href="artifact_builder.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.0" />
+  <meta name="docsearch:version" content="2024.2.1" />
   </head>
   
   
@@ -104,14 +111,6 @@
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-<aside class="bd-header-announcement" aria-label="Announcement">
-  <div class="bd-header-announcement__content">
-<div>
-📣 SDK <b>2025.1.0</b> has been released on Feb 24, 2025.
-Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/index.html#furiosa-sdk-2025-1-0-beta1-2025-02-24">SDK Release Announcement of 2025.1.0</a>.
-</div>
-</div>
-</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -153,17 +152,30 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
       
     
     
-    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
-    <img src="../../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-light" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
+    <img src="../../_static/furiosa-logo.webp" class="logo__image only-dark pst-js-only" alt="FuriosaAI Developer Center 2024.2.1 documentation - Home"/>
   
-  
-    <p class="title logo__title">
-            <div class='sidebar-title mr-auto'>            
-                Furiosa Docs
-            </div>
-        </p>
   
 </a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
@@ -202,10 +214,11 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Support</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/scheduling_npus.html">Scheduling NPUs</a></li>
 </ul>
 </details></li>
 </ul>
@@ -219,13 +232,13 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">FuriosaAI Forum</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">FuriosaAI Customer Portal</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">FuriosaAI Warboy SDK Document</a></li>
 </ul>
 
     </div>
@@ -234,16 +247,13 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
       <div class="sidebar-primary-item">
-
-  <p class="copyright">
-    
-      © Copyright 2025 FuriosaAI Inc.
-      <br/>
-    
-  </p>
-</div>
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
 
 
@@ -274,21 +284,87 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
       
         <div class="header-article-item">
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button></div>
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
       
-        <div class="header-article-item">
+      
+      
+      <li><a href="../../_sources/furiosa_llm/reference/llm_engine.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
 
 <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
   <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
   <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
-      
-        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button></div>
+</button>
+</div></div>
       
     </div>
   
@@ -304,7 +380,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
         <div id="jb-print-toc">
             
             <div>
-                <h2>  </h2>
+                <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
@@ -343,7 +419,7 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineArgs</span><span class="p">,</span> <span class="n">LLMEngine</span><span class="p">,</span> <span class="n">RequestOutput</span><span class="p">,</span> <span class="n">SamplingParams</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineArtifactArgs</span><span class="p">,</span> <span class="n">LLMEngine</span><span class="p">,</span> <span class="n">RequestOutput</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">create_test_prompts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">]]:</span>
@@ -381,8 +457,8 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_engine</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LLMEngine</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the LLMEngine from the command line arguments.&quot;&quot;&quot;</span>
-    <span class="n">engine_args</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">LLMEngine</span><span class="o">.</span><span class="n">from_engine_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
+    <span class="n">engine_args</span> <span class="o">=</span> <span class="n">EngineArtifactArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">LLMEngine</span><span class="o">.</span><span class="n">from_engine_artifact_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
@@ -395,44 +471,53 @@ Please checkout <a href="https://developer.furiosa.ai/v2025.1.0/en/whatsnew/inde
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Demo on using the LLMEngine class directly&#39;</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArtifactArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The script can be executed with various arguments defined in EngineArgs, as shown in the following example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>llm_engine.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>llm_engine.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0:*
 </pre></div>
 </div>
 <p>For a comprehensive list of available arguments for EngineArgs, please refer to the section below.</p>
 </section>
 <section id="arguments-supported-by-llmengine">
 <span id="llmengineargs"></span><h2>Arguments supported by LLMEngine<a class="headerlink" href="#arguments-supported-by-llmengine" title="Link to this heading">#</a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: llm_engine.py [-h] --model MODEL [--tokenizer TOKENIZER] [--tokenizer-mode TOKENIZER_MODE] [--seed SEED] [--devices DEVICES] [--pipeline-parallel-size PIPELINE_PARALLEL_SIZE]
-                     [--data-parallel-size DATA_PARALLEL_SIZE] [--cache-dir CACHE_DIR] [--paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS] [--npu-queue-limit NPU_QUEUE_LIMIT]
-                     [--max-processing-samples MAX_PROCESSING_SAMPLES] [--spare-blocks-ratio SPARE_BLOCKS_RATIO] [--is-offline IS_OFFLINE]
-
-Demo on using the LLMEngine class directly
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: llm_engine.py [-h] --model MODEL [--num-speculative-tokens NUM_SPECULATIVE_TOKENS] [--tokenizer TOKENIZER]
+                     [--tokenizer-mode TOKENIZER_MODE] [--seed SEED] [--devices DEVICES] [--data-parallel-size DATA_PARALLEL_SIZE]
+                     [--cache-dir CACHE_DIR] [--backend BACKEND] [--paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS]
+                     [--npu-queue-limit NPU_QUEUE_LIMIT] [--max-processing-samples MAX_PROCESSING_SAMPLES]
+                     [--spare-blocks-ratio SPARE_BLOCKS_RATIO] [--is-offline IS_OFFLINE]
+                     [--use-speculative-decoding-if-possible USE_SPECULATIVE_DECODING_IF_POSSIBLE]
+                     [--speculative-model-paged-attention-num-blocks SPECULATIVE_MODEL_PAGED_ATTENTION_NUM_BLOCKS]
+                     [--packing-type PACKING_TYPE]
 
 options:
   -h, --help            show this help message and exit
   --model MODEL         Path to the LLM engine artifact (Pretrained id will be supported in the future releases).
+  --num-speculative-tokens NUM_SPECULATIVE_TOKENS
+                        The number of tokens that specualtive model will generate speculatively during each iteration of the decoding
+                        process.
   --tokenizer TOKENIZER
                         The name or path of a HuggingFace Transformers tokenizer.
   --tokenizer-mode TOKENIZER_MODE
-                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if available, and &quot;slow&quot; will always use the slow tokenizer.
+                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if available, and &quot;slow&quot; will always use the slow
+                        tokenizer.
   --seed SEED           The seed to initialize the random number generator for sampling.
-  --devices DEVICES     The devices to run the model. It can be a single device or a list of devices. Each device can be either &quot;npu:X&quot; or &quot;npu:X:*&quot; where X is a specific device index.
-                        If not given, available devices will be used.
-  --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
-                        The size of the pipeline parallelism group. If not given, it will use the default pp value of the artifact.
+  --devices DEVICES     The devices to run the model. It can be a single device or a list of devices. Each device can be either &quot;npu:X&quot;
+                        or &quot;npu:X:*&quot; where X is a specific device index. If not given, available devices will be used.
   --data-parallel-size DATA_PARALLEL_SIZE
-                        The size of the data parallelism group. If not given, it will be inferred from total avaialble PEs and other parallelism degrees.
+                        The size of the data parallelism group. If not given, it will be inferred from total avaialble PEs and other
+                        parallelism degrees.
   --cache-dir CACHE_DIR
-                        The cache directory for temporarily generated files for this LLM instance. When its value is ``None``, caching is disabled. The default is
-                        &quot;$HOME/.cache/furiosa/llm&quot;.
+                        The cache directory for all generated files for this LLM instance. When its value is ``None``, caching is
+                        disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.
+  --backend BACKEND     The backend implementation to run forward() of a model for the LLM. If not specified, the backend will be
+                        chosen based on the device kind.
   --paged-attention-num-blocks PAGED_ATTENTION_NUM_BLOCKS
-                        The maximum number of blocks that each k/v storage per layer can store. This argument must be given if model uses paged attention.
+                        The maximum number of blocks that each k/v storage per layer can store. This argument must be given if model
+                        uses paged attention.
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES
@@ -441,6 +526,14 @@ options:
                         The spare blocks ratio. Used as an hint for the scheduler.
   --is-offline IS_OFFLINE
                         If True, the scheduler will assume the workload will be offline scenario.
+  --use-speculative-decoding-if-possible USE_SPECULATIVE_DECODING_IF_POSSIBLE
+                        If True, speculative decoding will be used if possible (`speculative_model` is given or there&#39;s artifacts for
+                        specualtive model in the artifacts.). Otherwise, speculative decoding will not be used.
+  --speculative-model-paged-attention-num-blocks SPECULATIVE_MODEL_PAGED_ATTENTION_NUM_BLOCKS
+                        The maximum number of blocks that each k/v storage per layer can store for the specualtive model. This argument
+                        must be given if the specualtive model uses paged attention.
+  --packing-type PACKING_TYPE
+                        Packing algorithm. Possible values are &quot;IDENTITY&quot; only for now
 </pre></div>
 </div>
 </section>
@@ -448,7 +541,7 @@ options:
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="furiosa_llm.LLMEngine">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">LLMEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NativeLLMEngine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PreTrainedTokenizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PreTrainedTokenizerFast</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_max_seq_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len_to_capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/llm_engine.html#LLMEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.LLMEngine" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">LLMEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NativeLLMEngine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PreTrainedTokenizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PreTrainedTokenizerFast</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_max_seq_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len_to_capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RequestOutputKind</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">RequestOutputKind.CUMULATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/llm_engine.html#LLMEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.LLMEngine" title="Link to this definition">#</a></dt>
 <dd><p>LLMEngine receives requests and generates texts.
 Implements the API interface compatible with vLLM’s <cite>LLMEngine</cite>, but this class is based on furiosa-runtime and FuriosaAI NPU.</p>
 <p>The request scheduling approach of this engine is different from that of vLLM’s . While vLLM provides
@@ -540,7 +633,7 @@ The decoding iteration starts immediately after adding the request.</p>
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 
+    <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
@@ -581,7 +674,7 @@ By FuriosaAI, Inc.
 
   <p class="copyright">
     
-      © Copyright 2025 FuriosaAI Inc.
+      © Copyright 2025, FuriosaAI, Inc..
       <br/>
     
   </p>

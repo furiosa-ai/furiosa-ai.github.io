@@ -8,11 +8,17 @@ FuriosaAI's second-generation Neural Processing Unit (NPU), RNGD, is a chip desi
 supporting high-performance Large Language Models (LLM), Multi-Modal LLM, Vision models,
 and other deep learning models.
 
-.. figure:: ../_static/imgs/Furiosa_RNGD_image.png
+.. figure:: ../_static/imgs/rngd_card.avif
   :alt: FuriosaAI RNGD
-  :width: 960px
+  :class: only-dark
+  :width: 650px
   :align: center
 
+.. figure:: ../_static/imgs/rngd_card.avif
+  :alt: FuriosaAI RNGD
+  :class: only-light
+  :width: 650px
+  :align: center
 
 RNGD is based the Tensor Contraction Processor (TCP) architecture which
 utilizes TSMC's 5nm process node, and operates at 1.0 GHz. It offers 512 TOPS and 1024 TOPS of INT8 and INT4

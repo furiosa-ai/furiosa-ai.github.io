@@ -40,7 +40,7 @@ ArtifactBuilder API
 
     builder = ArtifactBuilder(
         "meta-llama/Meta-Llama-3.1-8B-Instruct",
-        "npu:0",
+        "npu:0:*",
         "mlperf-llama3-1-8b-fp8",
         tensor_parallel_size=4,
         pipeline_parallel_size=1,
@@ -96,7 +96,7 @@ The following is the list of options and arguments for the serve command:
     -h, --help            show this help message and exit
     --model-id MODEL_ID   The Hugging Face pretrained id (e.g., "meta-llama/Meta-Llama-3.1-8B-Instruct").
     --name NAME           The name of the artifact to build.
-    --devices DEVICES     Devices to use (e.g., "npu:0,npu:1"). If not specified, the artifact will be built using only one device.
+    --devices DEVICES     Devices to use (e.g., "npu:0:*,npu:1:*"). If not specified, the artifact will be built using only one device.
     -tp TENSOR_PARALLEL_SIZE, --tensor-parallel-size TENSOR_PARALLEL_SIZE
                             The number of PEs for each tensor parallelism group. (default: 4)
     -pp PIPELINE_PARALLEL_SIZE, --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
@@ -127,7 +127,7 @@ The following is the list of options and arguments for the serve command:
 
     furiosa-llm build /path/to/artifacts \
         --model-id meta-llama/Meta-Llama-3.1-8B-Instruct \
-        --devices "npu:0" \
+        --devices "npu:0:*" \
         --name mlperf-llama3-1-8b-fp8 \
         -tp 4 -pp 1 \
         -pb 1,512 -pb 1,1024 \
