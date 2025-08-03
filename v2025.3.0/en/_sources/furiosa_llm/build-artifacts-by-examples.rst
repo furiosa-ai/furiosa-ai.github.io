@@ -55,10 +55,8 @@ The second argument is the output path where the model artifact will be saved.
 The following command doesn't have any options, so the model artifact will be built with the default options.
 You can find the default options by running ``furiosa-llm build --help``.
 
-.. code-block::
-
-    furiosa-llm build meta-llama/Llama-3.1-8B-Instruct \
-        /path_to/artifact
+.. literalinclude:: ../../../examples/build-artifact-basic.sh
+  :language: sh
 
 
 Specifying Context Length
@@ -66,11 +64,8 @@ Specifying Context Length
 The ``--max-seq-len-to-capture`` option specifies the maximum sequence length supported by the Furiosa-LLM engine.
 You can adjust this value according to your model and use case, as it affects how the model is optimized.
 
-.. code-block::
-
-    furiosa-llm build meta-llama/Llama-3.1-8B-Instruct \
-        /path_to/artifact \
-        --max-seq-len-to-capture 4096
+.. literalinclude:: ../../../examples/build-artifact-specifying-context-length.sh
+  :language: sh
 
 
 Specifying Buckets
