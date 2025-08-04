@@ -58,6 +58,11 @@ to the previous release 2025.2:
   Time-to-First-Token (TTFT).
 * Llama 3.1 70B: Up to 3x average throughput improvement and up to a 35% average reduction in
   Time-to-First-Token (TTFT).
+* The experiment configuration is as follows:
+
+  * input lengths: 1k ~ 12k
+  * output lengths: 128 ~ 10k
+  * batch size: 1 ~ 128
 
 Expanded Model Support
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -72,9 +77,9 @@ Expanded Model Support
   * `DeepSeek-R1-Distill-Llama-70B <https://huggingface.co/furiosa-ai/DeepSeek-R1-Distill-Llama-70B>`_
   * `Llama-3.3-70B-Instruct <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct>`_
   * `Llama-3.3-70B-Instruct-INT8 <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8>`_
-  * `Qwen-2.5-Coder-32B <https://huggingface.co/furiosa-ai/Qwen-2.5-Coder-32B>`_
+  * `Qwen2.5-Coder-32B-Instruct <https://huggingface.co/furiosa-ai/Qwen2.5-Coder-32B-Instruct>`_
 
-* Longer Context Lengths: all pre-compiled artifacts on Hugging Face Hub now support
+* Longer Context Lengths: all pre-compiled artifacts on `Hugging Face Hub <https://huggingface.co/furiosa-ai>`_ now support
   context lengths of up to 32k tokens.
 
 
