@@ -66,12 +66,14 @@ Expanded Model Support
   (e.g., `Qwen2.5-Coder-32B-Instruct <https://huggingface.co/furiosa-ai/Qwen2.5-Coder-32B-Instruct>`_).
 * New Quantization Support: Added support for W8A16 quantization
   (e.g., `Llama-3.3-70B-Instruct-INT8 <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8>`_).
-* New pre-compiled artifacts are available on the Hugging Face Hub:
+* New pre-compiled artifacts are available on the `Hugging Face Hub <https://huggingface.co/furiosa-ai>`_:
+
   * `EXAONE-3.5-32B-Instruct <https://huggingface.co/furiosa-ai/EXAONE-3.5-32B-Instruct>`_
   * `DeepSeek-R1-Distill-Llama-70B <https://huggingface.co/furiosa-ai/DeepSeek-R1-Distill-Llama-70B>`_
   * `Llama-3.3-70B-Instruct <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct>`_
   * `Llama-3.3-70B-Instruct-INT8 <https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct-INT8>`_
   * `Qwen-2.5-Coder-32B <https://huggingface.co/furiosa-ai/Qwen-2.5-Coder-32B>`_
+
 * Longer Context Lengths: all pre-compiled artifacts on Hugging Face Hub now support
   context lengths of up to 32k tokens.
 
