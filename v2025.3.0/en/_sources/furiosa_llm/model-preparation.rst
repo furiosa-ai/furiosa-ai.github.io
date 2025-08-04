@@ -67,7 +67,7 @@ The following shows an example for building a model artifact for ``meta-llama/Ll
 and saving it to the ``./Output-Llama-3.1-8B-Instruct`` directory. The ``-tp`` option specifies the tensor parallelism degree,
 and ``--max-seq-len-to-capture`` defines the maximum sequence length that the model can handle.
 
-.. literalinclude:: ../../../examples/model-prep-build.sh
+.. literalinclude:: ../../../examples/model-prep-build-cmd.sh
   :language: sh
 
 Once a model artifact is built, you can deploy it to any machine equipped with FuriosaAI RNGD and
@@ -83,7 +83,7 @@ run the model using the :ref:`LLMClass` or the appropriate interface like :ref:`
 You can also build a model artifact using the :ref:`ArtifactBuilderClass` API.
 Here is an example using the :ref:`ArtifactBuilderClass` API.
 
-.. literalinclude:: ../../../examples/artifact_builder.py
+.. literalinclude:: ../../../examples/model-prep-build-api.py
   :language: python
 
 
