@@ -14,8 +14,9 @@ What's New
 
 Furiosa SDK 2025.3.1 Beta3 (2025-08-25)
 =======================================
-Even though 2025.3.1 is a minor feature, it introduces a couple of significant feature
-improvements and bug fixes.
+The 2025.3.1 release is a minor update but introduces several important new features.
+Because these features are added at the Furiosa-LLM frontend, they do not introduce
+any breaking changes. This release also includes a number of bug fixes.
 
 Please refer to the :ref:`UpgradeGuide` section for instructions on
 obtaining this update.
