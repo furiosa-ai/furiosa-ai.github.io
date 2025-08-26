@@ -59,4 +59,4 @@ To upgrade Furiosa-LLM, use ``pip``:
 
 .. code-block::
 
-   pip install --upgrade furiosa-llm
+   pip install --upgrade --upgrade-strategy eager furiosa-llm
