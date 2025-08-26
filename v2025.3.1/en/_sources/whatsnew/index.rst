@@ -36,7 +36,7 @@ Features & Improvements
 * Support the structured output with ``guided_choice``, ``guided_regex``, ``guided_json``, and ``guided_grammar`` (see :ref:`StructuredOutput`).
 * Add llguidance as the default guided decoding backend.
 * Bundle a set of NPU programs as a single zip file.
-* Allow to quantize and build the fine-tuned models
+* Allow to quantize and build the fine-tuned models.
 
 Expanded Model Support
 ^^^^^^^^^^^^^^^^^^^^^^
