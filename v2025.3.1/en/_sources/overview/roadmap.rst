@@ -18,14 +18,16 @@ Upcoming Releases 2025 Q4
 * 🔨 Speculating with a draft model
 * 🔨 CPU memory swapping of KV cache in Furiosa-LLM
 * 🔨 ``torch.compile()`` backend
+* 🔨 llm-d integration
 
 Upcoming Releases 2025 Q3
 ==========================================
 * 🔨 Qwen3 support in Furiosa-LLM
-* 🔨 Guided-decoding support in Furiosa-LLM
+* ✅ Guided-decoding support in Furiosa-LLM
 * 🔨 Prefix-caching support in Furiosa-LLM
 * 🔨 Pooling Model support in Furiosa-LLM
 * 🔨 NPU operator support for Kubernetes
+* ✅ Fine-tuned model support in Furiosa-LLM
 * ✅ Tensor Parallelism support Phase 2: Inter-chip
 * ✅ Dramatic performance improvements in Furiosa-LLM (7x higher throughput than 2025.1.0 release)
 * ✅ Hugging Face Hub support in Furiosa-LLM
