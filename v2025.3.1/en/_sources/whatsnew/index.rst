@@ -31,7 +31,7 @@ Features & Improvements
 
 * Print out the log of average throughput, KV cache usages, and running/waiting requests regularly.
 * Expose the more production metrics (running/waiting requests, total KV cache and usage) through ``/metrics`` endpoint.
-* Fix the compilation error of small LLMs like Qwen 2.5 0.5B/1.5B.
+* Fix the compilation error of small LLMs like Qwen2.5 7B, 14B.
 * Fix the bug that occurs when initializing the runtime multiple times in the same Python interpreter.
 * Support ``tool_choice: "required"`` and ``tool_choice`` with a named function.
 * Support the structured output with ``guided_choice``, ``guided_regex``, ``guided_json``, and ``guided_grammar`` (see :ref:`StructuredOutput`).
