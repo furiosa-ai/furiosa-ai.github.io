@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Announcing Furiosa SDK Release 2026.1 &#8212; FuriosaAI Developer Center 2026.1.0 documentation</title>
+    <title>Furiosa SDK Release 2026.1 &#8212; FuriosaAI Developer Center 2026.1.0rc2 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d0d2eeda"></script>
+    <script src="../_static/documentation_options.js?v=780fad11"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0rc2';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="What’s New" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.1.0rc2" />
   </head>
   
   
@@ -190,7 +190,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/supported_models.html">Supported Models</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">What’s New</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Announcing Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Furiosa SDK Release 2026.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
@@ -340,7 +340,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Announcing Furiosa SDK Release 2026.1</h1>
+    <h1>Furiosa SDK Release 2026.1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -369,8 +369,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="announcing-furiosa-sdk-release-2026-1">
-<span id="release2026-1-0"></span><h1>Announcing Furiosa SDK Release 2026.1<a class="headerlink" href="#announcing-furiosa-sdk-release-2026-1" title="Link to this heading">#</a></h1>
+  <section id="furiosa-sdk-release-2026-1">
+<span id="release2026-1-0"></span><h1>Furiosa SDK Release 2026.1<a class="headerlink" href="#furiosa-sdk-release-2026-1" title="Link to this heading">#</a></h1>
 <p>This release brings major architectural improvements focusing on throughput, efficiency, and scalability.
 Key introductions include Hybrid Batching to balance high throughput with low latency, Prefix Caching
 for reduced latency in multi-turn applications, and comprehensive support for Pooling Models (Embeddings, Scoring, Reranking).
@@ -386,7 +386,7 @@ obtaining this update.</p>
 <li><p><strong>Hybrid Batching</strong></p>
 <ul>
 <li><p>Introduced hybrid batching capabilities that intelligently combine multiple prefill and decode requests within a single batch.</p></li>
-<li><p>This feature boosts throughput while maintaining low tail latency, achieving up to X times higher requests per second compared to traditional batching methods.</p></li>
+<li><p>This feature boosts throughput while maintaining low tail latency, achieving up to significantly higher requests per second compared to the previous versions.</p></li>
 </ul>
 </li>
 <li><p><strong>Prefix Caching</strong></p>

@@ -1,7 +1,7 @@
 .. _Release2026_1_0:
 
 ********************************************
-Announcing Furiosa SDK Release 2026.1
+Furiosa SDK Release 2026.1
 ********************************************
 
 This release brings major architectural improvements focusing on throughput, efficiency, and scalability.
@@ -25,7 +25,7 @@ Major Features & Improvements
 * **Hybrid Batching**
 
   * Introduced hybrid batching capabilities that intelligently combine multiple prefill and decode requests within a single batch.
-  * This feature boosts throughput while maintaining low tail latency, achieving up to X times higher requests per second compared to traditional batching methods.
+  * This feature boosts throughput while maintaining low tail latency, achieving up to significantly higher requests per second compared to the previous versions.
 
 * **Prefix Caching**
 
