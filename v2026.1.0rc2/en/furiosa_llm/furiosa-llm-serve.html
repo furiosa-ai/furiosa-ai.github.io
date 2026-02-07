@@ -1,0 +1,1401 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=d0d2eeda"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/furiosa-llm-serve';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Structured Output" href="structured-output.html" />
+    <link rel="prev" title="Furiosa-LLM" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.html">Announcing Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/online_chat_completion_logprobs.html">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>OpenAI-Compatible Server</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-apis">Supported APIs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-choice-options">Tool Choice Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harmony-response-format">Harmony Response Format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-endpoints">Additional Endpoints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-the-openai-compatible-server">Monitoring the OpenAI-Compatible Server</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server-container">Launching the OpenAI-Compatible Server Container</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="openai-compatible-server">
+<span id="openaiserver"></span><h1>OpenAI-Compatible Server<a class="headerlink" href="#openai-compatible-server" title="Link to this heading">#</a></h1>
+<p>Furiosa-LLM offers an OpenAI-compatible server that hosts a single model
+and provides OpenAI-compatible chat, completions and embedding APIs along
+with some additional pooling API support.</p>
+<p>To launch the server, use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command with the model
+artifact path, as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This document is based on Furiosa SDK 2026.1.0.
+The features and APIs described herein are subject to change in the future.</p>
+</div>
+<section id="supported-apis">
+<h2>Supported APIs<a class="headerlink" href="#supported-apis" title="Link to this heading">#</a></h2>
+<p>We currently support the following APIs:</p>
+<ul class="simple">
+<li><p>Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</p>
+<ul>
+<li><p>Applicable to text generation models.</p></li>
+</ul>
+</li>
+<li><p>Chat Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</p>
+<ul>
+<li><p>Applicable to text generation models with a <a class="reference internal" href="#chattemplates"><span class="std std-ref">chat template</span></a>.</p></li>
+</ul>
+</li>
+<li><p>Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</p>
+<ul>
+<li><p>Applicable to embedding models.</p></li>
+</ul>
+</li>
+</ul>
+<p>In addition, we have the following vLLM-compatible APIs for pooling models:</p>
+<ul class="simple">
+<li><p>Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</p>
+<ul>
+<li><p>Currently supported only for Qwen3-Rerank models.</p></li>
+</ul>
+</li>
+<li><p>Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</p>
+<ul>
+<li><p>Currently supported only for Qwen3-Rerank models.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<p>To use the OpenAI-Compatible server, you need the following:</p>
+<ul class="simple">
+<li><p>A system with the prerequisites installed (see <a class="reference internal" href="../get_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
+<li><p>An installation of <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa-LLM</span></a></p></li>
+<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
+<li><p>A model artifact</p></li>
+<li><p>A chat template for chat applications (optional)</p></li>
+</ul>
+</section>
+<section id="using-the-openai-api">
+<h2>Using the OpenAI API<a class="headerlink" href="#using-the-openai-api" title="Link to this heading">#</a></h2>
+<p>Once the server is running, you can interact with it using an HTTP client,
+as shown in the following example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;: &quot;EMPTY&quot;,</span>
+<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
+<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+</pre></div>
+</div>
+<p>You can also use the OpenAI client to interact with the server.
+To use the OpenAI client, you need to install the <code class="docutils literal notranslate"><span class="pre">openai</span></code> package first:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>openai
+</pre></div>
+</div>
+<p>The following is an example using OpenAI client to call <code class="docutils literal notranslate"><span class="pre">chat.completions</span></code> API
+with streaming mode:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
+    <span class="n">stream_chat_completion</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}],</span>
+        <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream_chat_completion</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">run</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="chat-templates">
+<span id="chattemplates"></span><h2>Chat Templates<a class="headerlink" href="#chat-templates" title="Link to this heading">#</a></h2>
+<p>To use a language model in a chat application, we need to prepare a structured
+string to give as input.
+This is essential because the model must understand the conversation’s context,
+including the speaker’s role (e.g., “user” and “assistant”) and the
+message content.
+Just as different models require distinct tokenization methods, they also have
+varying input formats for chat.
+This is why a chat template is necessary.</p>
+<p>Furiosa-LLM supports chat templates based on the Jinja2 template engine, similar
+to Hugging Face Transformers.
+If the model’s tokenizer includes a built-in chat template,
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> will automatically use it.
+However, if the tokenizer lacks a built-in template, or if you want to override
+the default, you can specify one using the <code class="docutils literal notranslate"><span class="pre">--chat-template</span></code> parameter.</p>
+<p>For reference, you can find a well-structured example of a chat template in the
+<a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
+<p>To launch the server with a custom chat template, use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="tool-calling-support">
+<span id="toolcalling"></span><h2>Tool Calling Support<a class="headerlink" href="#tool-calling-support" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM supports tool calling (also known as function calling) for models
+trained with this capability.</p>
+<p>The system converts model outputs into the OpenAI response format through a
+designated parser implementation.
+You can check the help text’s <code class="docutils literal notranslate"><span class="pre">--tool-call-parser</span></code> description to see which tool parsers are supported.</p>
+<p>The following example command starts the server with tool calling enabled for Llama 3.1 models:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-32B-FP8<span class="w"> </span>--enable-auto-tool-choice<span class="w"> </span>--tool-call-parser<span class="w"> </span>hermes
+</pre></div>
+</div>
+<p>To use tool calling, specify the <code class="docutils literal notranslate"><span class="pre">tools</span></code> and <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code>
+parameters. Here’s an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">...&quot;</span>
+<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;get_weather&quot;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
+
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;City and state, e.g., &#39;San Francisco, CA&#39;&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}]</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span>
+<span class="p">)</span>
+
+<span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The expected output is as follows.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Function called: get_weather
+Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot;: &quot;fahrenheit&quot;}
+Result: Getting the weather for San Francisco, CA in fahrenheit...
+</pre></div>
+</div>
+<section id="tool-choice-options">
+<h3>Tool Choice Options<a class="headerlink" href="#tool-choice-options" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> parameter controls how the model selects tools to call. Furiosa-LLM supports the following options:</p>
+<ul class="simple">
+<li><p><strong>``”auto”`` (default)</strong>: The model decides whether to call a tool or respond directly based on the conversation context.</p></li>
+<li><p><strong>``”required”``</strong>: Forces the model to call at least one tool. The model cannot respond without making a tool call.</p></li>
+<li><p><strong>``{“type”: “function”, “function”: {“name”: “&lt;function_name&gt;”}}``</strong>: Forces the model to call a specific named function.</p></li>
+</ul>
+<p><strong>Example with required tool calling:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama-3.1-8b&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like?&quot;</span><span class="p">}],</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>  <span class="c1"># Your tool definitions</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span>  <span class="c1"># Force tool calling</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Example with specific function selection:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama-3.1-8b&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Get weather information&quot;</span><span class="p">}],</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">}}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="reasoning-support">
+<span id="reasoning"></span><h2>Reasoning Support<a class="headerlink" href="#reasoning-support" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM provides support for models with reasoning capabilities such as Deepseek R1.
+These models follow a structured approach by first conducting reasoning steps and then providing a final answer.</p>
+<p>The reasoning process follows this sequence:</p>
+<ol class="arabic simple">
+<li><p>The model-specific start-of-reasoning token is appended to the input prompt through the chat template.</p></li>
+<li><p>The model generates its reasoning.</p></li>
+<li><p>Once reasoning is done, the model outputs an end-of-reasoning token followed by the final answer.</p></li>
+</ol>
+<p>Since start-of-reasoning and end-of-reasoning tokens differ across models, we support different reasoning parsers for different models.
+You can check the help text’s <code class="docutils literal notranslate"><span class="pre">--reasoning-parser</span></code> description to see which reasoning parsers are supported.</p>
+<p>To launch a server with reasoning capabilities for Deepseek R1 series, use the following example command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-32B-FP8<span class="w"> </span>--reasoning-parser<span class="w"> </span>qwen3
+</pre></div>
+</div>
+<p>You can access the reasoning content through these response fields:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">response.choices[].message.reasoning_content</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response.choices[].delta.reasoning_content</span></code></p></li>
+</ul>
+<p>Here’s an example that demonstrates how to access the reasoning content:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
+
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;9.11 and 9.8, which is greater?&quot;</span><span class="p">}]</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;reasoning_content&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">reasoning_content</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reasoning_content</span></code> field is a Furiosa-LLM-specific extension and is not part of the standard OpenAI API.
+This field will appear only in responses that contain reasoning content, and
+attempting to access this field in responses without reasoning content will raise an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>.</p>
+</div>
+<section id="harmony-response-format">
+<h3>Harmony Response Format<a class="headerlink" href="#harmony-response-format" title="Link to this heading">#</a></h3>
+<p>Furiosa-LLM supports the “harmony” response format for reasoning models, which provides a structured way to return both reasoning and final answer content. This format is compatible with models that follow the reasoning pattern described above.</p>
+<p>When using reasoning models, the response includes:</p>
+<ul class="simple">
+<li><p><strong>reasoning_content</strong>: The model’s internal reasoning steps</p></li>
+<li><p><strong>content</strong>: The final answer after reasoning</p></li>
+</ul>
+<p>Both fields are available in:</p>
+<ul class="simple">
+<li><p>Non-streaming responses: <code class="docutils literal notranslate"><span class="pre">response.choices[].message.reasoning_content</span></code> and <code class="docutils literal notranslate"><span class="pre">response.choices[].message.content</span></code></p></li>
+<li><p>Streaming responses: <code class="docutils literal notranslate"><span class="pre">response.choices[].delta.reasoning_content</span></code> and <code class="docutils literal notranslate"><span class="pre">response.choices[].delta.content</span></code></p></li>
+</ul>
+<p>The harmony format ensures proper token usage accounting:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reasoning_tokens</span></code>: Number of tokens used for reasoning</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">completion_tokens</span></code>: Number of tokens in the final answer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">total_tokens</span></code>: Sum of prompt, reasoning, and completion tokens</p></li>
+</ul>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> together with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not
+allowed because beam search requires the whole sequence to produce the
+output tokens.</p>
+</div>
+<p id="chatcompletionsapireference">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">OpenAI Chat API</a>.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>model</p></td>
+<td><p>string</p></td>
+<td></td>
+<td><p>Required by the client, but the value is ignored on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>messages</p></td>
+<td><p>array</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>stream</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>stream_options</p></td>
+<td><p>object</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>n</p></td>
+<td><p>integer</p></td>
+<td><p>1</p></td>
+<td><p>Currently limited to 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p>temperature</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>top_p</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>best_of</p></td>
+<td><p>integer</p></td>
+<td><p>1</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>use_beam_search</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>top_k</p></td>
+<td><p>integer</p></td>
+<td><p>-1</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>min_p</p></td>
+<td><p>float</p></td>
+<td><p>0.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>length_penalty</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>repetition_penalty</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<td><p>array[integer]</p></td>
+<td><p>[]</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>ignore_eos</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>early_stopping</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>skip_special_tokens</p></td>
+<td><p>boolean</p></td>
+<td><p>true</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>return_token_ids</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>When true, includes token IDs in the response (<code class="docutils literal notranslate"><span class="pre">prompt_token_ids</span></code> and <code class="docutils literal notranslate"><span class="pre">token_ids</span></code> fields).</p></td>
+</tr>
+<tr class="row-even"><td><p>min_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>Legacy parameter superseded by <code class="docutils literal notranslate"><span class="pre">max_completion_tokens</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>max_completion_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>If null, the server will use the maximum possible length considering the prompt.
+The sum of this value and the prompt length must not exceed the model’s maximum context length.</p></td>
+</tr>
+<tr class="row-odd"><td><p>tools</p></td>
+<td><p>array</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>tool_choice</p></td>
+<td><p>string or object</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>functions</p></td>
+<td><p>array</p></td>
+<td><p>null</p></td>
+<td><p>Legacy parameter superseded by <code class="docutils literal notranslate"><span class="pre">tools</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>function_call</p></td>
+<td><p>string or object</p></td>
+<td><p>null</p></td>
+<td><p>Legacy parameter superseded by <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>logprobs (experimental)</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>top_logprobs (experimental)</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="completionsapireference">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">OpenAI Completions API</a>.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>model</p></td>
+<td><p>string</p></td>
+<td><p>required</p></td>
+<td><p>Required by the client, but the value is ignored on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>prompt</p></td>
+<td><p>string or array</p></td>
+<td><p>required</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>stream</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>stream_options</p></td>
+<td><p>object</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>n</p></td>
+<td><p>integer</p></td>
+<td><p>1</p></td>
+<td><p>Currently limited to 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p>best_of</p></td>
+<td><p>integer</p></td>
+<td><p>1</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>temperature</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>top_p</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>use_beam_search</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>top_k</p></td>
+<td><p>integer</p></td>
+<td><p>-1</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>min_p</p></td>
+<td><p>float</p></td>
+<td><p>0.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>length_penalty</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>repetition_penalty</p></td>
+<td><p>float</p></td>
+<td><p>1.0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<td><p>array[integer]</p></td>
+<td><p>[]</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>ignore_eos</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>early_stopping</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>skip_special_tokens</p></td>
+<td><p>boolean</p></td>
+<td><p>true</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>min_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>0</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>max_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>16</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>return_token_ids</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>When true, includes token IDs in the response (<code class="docutils literal notranslate"><span class="pre">prompt_token_ids</span></code> and <code class="docutils literal notranslate"><span class="pre">token_ids</span></code> fields).</p></td>
+</tr>
+<tr class="row-even"><td><p>logprobs (experimental)</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="embeddingsapi">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/embeddings/create">OpenAI Embeddings API</a>.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>model</p></td>
+<td><p>string</p></td>
+<td><p>required</p></td>
+<td><p>Required by the client, but the value is ignored on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>input</p></td>
+<td><p>string or array</p></td>
+<td><p>required</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>truncate_prompt_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>normalize</p></td>
+<td><p>boolean</p></td>
+<td><p>true</p></td>
+<td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="scoreapi">This API provides text pair scoring functionality, calculating similarity scores between pairs of texts.
+This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
+For details on the API specification, refer to the <a class="reference external" href="https://docs.vllm.ai/en/latest/serving/openai_compatible_server/#score-api">vLLM’s Score API documentation</a>.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>model</p></td>
+<td><p>string</p></td>
+<td><p>required</p></td>
+<td><p>Required by the client, but the value is ignored on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>text_1</p></td>
+<td><p>string or array</p></td>
+<td><p>required</p></td>
+<td><p>The text to be scored as the first input.</p></td>
+</tr>
+<tr class="row-even"><td><p>text_2</p></td>
+<td><p>string or array</p></td>
+<td><p>required</p></td>
+<td><p>The second input text to be scored.
+If <code class="docutils literal notranslate"><span class="pre">text_1</span></code> is a string, <code class="docutils literal notranslate"><span class="pre">text_2</span></code> can be either a string or an array,
+allowing 1:N scoring relationships.
+If <code class="docutils literal notranslate"><span class="pre">text_1</span></code> is an array, <code class="docutils literal notranslate"><span class="pre">text_2</span></code> must be an array of the same length,
+and scores are calculated element-wise.</p></td>
+</tr>
+<tr class="row-odd"><td><p>truncate_prompt_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>use_qwen3_template</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="#qwen3templating"><span class="std std-ref">Qwen3 Templating</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="rerankapi">This API provides document reranking functionality, ordering documents by relevance to a given query.
+This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
+For details on the API specification, refer to the <a class="reference external" href="https://docs.vllm.ai/en/latest/serving/openai_compatible_server/#re-rank-api">vLLM’s Rerank API documentation</a>.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>model</p></td>
+<td><p>string</p></td>
+<td><p>required</p></td>
+<td><p>Required by the client, but the value is ignored on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>query</p></td>
+<td><p>string</p></td>
+<td><p>required</p></td>
+<td><p>The query text to rank documents against.</p></td>
+</tr>
+<tr class="row-even"><td><p>documents</p></td>
+<td><p>array</p></td>
+<td><p>required</p></td>
+<td><p>The list of documents to be reranked.
+Documents are ranked by their relevance to the query,
+with the most relevant documents appearing first in the response.</p></td>
+</tr>
+<tr class="row-odd"><td><p>top_n</p></td>
+<td><p>integer</p></td>
+<td></td>
+<td><p>The number of top-ranked documents to return.
+If not specified, all documents are returned in ranked order.</p></td>
+</tr>
+<tr class="row-even"><td><p>truncate_prompt_tokens</p></td>
+<td><p>integer</p></td>
+<td><p>null</p></td>
+<td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>use_qwen3_template</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>See <a class="reference internal" href="#qwen3templating"><span class="std std-ref">Qwen3 Templating</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="qwen3templating">The Qwen3-Reranker model uses a generation task under the hood for scoring and reranking.
+The model does not provide a built-in score template, therefore typical inference engines like vLLM
+just concatenate the query with documents. Therefore, to achieve optimal accuracy with these kinds of systems,
+the user must provide a specific input format that mimics the model’s score template, as follows:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-XPOST<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8000/v1/rerank&#39;</span><span class="w"> </span>-H<span class="w"> </span>...<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;model&quot;: &quot;Qwen/Qwen3-Reranker-8B&quot;,</span>
+<span class="s1">  &quot;query&quot;: &quot;&lt;|im_start|&gt;system\nJudge whether the Document meets the requirements based on the Query and the Instruct provided. Note that the answer can only be \&quot;yes\&quot; or \&quot;no\&quot;.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user\n&lt;Instruct&gt;: Given a web search query, retrieve relevant passages that answer the query\n&lt;Query&gt;: What is the capital of France?\n&quot;,</span>
+<span class="s1">  &quot;documents&quot;: [</span>
+<span class="s1">    &quot;&lt;Document&gt;: The capital of Brazil is Brasilia.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;,</span>
+<span class="s1">    &quot;&lt;Document&gt;: The capital of France is Paris.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;,</span>
+<span class="s1">    &quot;&lt;Document&gt;: Horses and cows are both animals.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;</span>
+<span class="s1">  ]</span>
+<span class="s1">}&#39;</span>
+</pre></div>
+</div>
+<p>Furiosa-LLM provides a designated parameter <code class="docutils literal notranslate"><span class="pre">use_qwen3_template</span></code> that handles this
+formatting automatically for Qwen3-Reranker models.
+When this parameter is set to true, the server automatically formats the input query and documents.
+The following API call is equivalent to the above example, simplifying the use of Qwen3-Reranker models:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-XPOST<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8000/v1/rerank&#39;</span><span class="w"> </span>-H<span class="w"> </span>...<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;model&quot;: &quot;Qwen/Qwen3-Reranker-8B&quot;,</span>
+<span class="s1">  &quot;query&quot;: &quot;What is the capital of France?&quot;,</span>
+<span class="s1">  &quot;documents&quot;: [</span>
+<span class="s1">    &quot;The capital of Brazil is Brasilia.&quot;,</span>
+<span class="s1">    &quot;The capital of France is Paris.&quot;,</span>
+<span class="s1">    &quot;Horses and cows are both animals&quot;</span>
+<span class="s1">  ],</span>
+<span class="s1">  &quot;use_qwen3_template&quot;: true</span>
+<span class="s1">}&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="additional-endpoints">
+<h2>Additional Endpoints<a class="headerlink" href="#additional-endpoints" title="Link to this heading">#</a></h2>
+<p>In addition to the above APIs, the Furiosa-LLM server supports the following endpoints.</p>
+<p id="modelsendpoint">The Models API enables you to retrieve information about available models through endpoints that are compatible with OpenAI’s <a class="reference external" href="https://platform.openai.com/docs/api-reference/models">Models API</a>. The following endpoints are supported:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/v1/models</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/v1/models/{model_id}</span></code></p></li>
+</ul>
+<p>You can access these endpoints using the OpenAI client’s <code class="docutils literal notranslate"><span class="pre">models.list()</span></code> and <code class="docutils literal notranslate"><span class="pre">models.retrieve()</span></code> methods.</p>
+<p>The response includes the standard <a class="reference external" href="https://platform.openai.com/docs/api-reference/models/object">model object</a> as defined by OpenAI, along with the following Furiosa-LLM-specific extensions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">artifact_id</span></code>: Unique identifier for the model artifact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_prompt_len</span></code>: Maximum allowed length of input prompts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_context_len</span></code>: Maximum allowed length of the total context window.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">runtime_config</span></code>: Model runtime configuration parameters, including bucket specifications.</p></li>
+</ul>
+<p id="versionendpoint"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/version</span></code></p>
+<p>Exposes version information for the Furiosa SDK components.</p>
+<p id="metricsendpoint"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/metrics</span></code></p>
+<p>Exposes Prometheus-compatible metrics for monitoring server performance and health.</p>
+<p>See <a class="reference internal" href="#monitoringopenaicompatibleserver"><span class="std std-ref">Monitoring the OpenAI-Compatible Server</span></a> for detailed information about available metrics and their usage.</p>
+</section>
+<section id="monitoring-the-openai-compatible-server">
+<span id="monitoringopenaicompatibleserver"></span><h2>Monitoring the OpenAI-Compatible Server<a class="headerlink" href="#monitoring-the-openai-compatible-server" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM exposes a Prometheus-compatible metrics endpoint at /metrics,
+which provides various metrics compatible with vLLM. These metrics can be
+used to monitor LLM serving workloads and the system health.</p>
+<p>The following table shows Furiosa-LLM-specific collectors and metrics:</p>
+<div class="pst-scrollable-table-container"><table class="table table-center">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Metric Labels</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_num_requests_running</span></code></p></td>
+<td><p>Gauge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of requests currently running on RNGD.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_num_requests_waiting</span></code></p></td>
+<td><p>Gauge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of requests waiting to be processed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_kv_cache_usage_percent</span></code></p></td>
+<td><p>Gauge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>KV-cache usage. 1 means 100 percent usage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_prefix_cache_hits</span></code></p></td>
+<td><p>Counter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Prefix cache hits, in terms of number of cached tokens.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_prefix_cache_queries</span></code></p></td>
+<td><p>Counter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Prefix cache queries, in terms of number of queried tokens.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_prompt_tokens_total</span></code></p></td>
+<td><p>Counter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of prefill tokens processed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_generation_tokens_total</span></code></p></td>
+<td><p>Counter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of generation tokens processed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_request_success_total</span></code></p></td>
+<td><p>Counter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code>, <code class="docutils literal notranslate"><span class="pre">finished_reason</span></code></p></td>
+<td><p>Count of successfully processed requests.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_request_prompt_tokens</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of prefill tokens processed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_request_generation_tokens</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Number of generation tokens processed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_request_params_n</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of the n request parameter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_request_params_max_tokens</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of the max_tokens request parameter.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_time_to_first_token_seconds</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of time to first token in seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_inter_token_latency_seconds</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of inter-token latency in seconds.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_e2e_request_latency_seconds</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of end to end request latency in seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p>(Experimental) <code class="docutils literal notranslate"><span class="pre">furiosa_llm_wire_hit_rate</span></code></p></td>
+<td><p>Gauge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Wire pipeline hit rate.</p></td>
+</tr>
+<tr class="row-even"><td><p>(Experimental) <code class="docutils literal notranslate"><span class="pre">furiosa_llm_jit_wire_compilation_time_seconds</span></code></p></td>
+<td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_name</span></code>, <code class="docutils literal notranslate"><span class="pre">leader_device</span></code></p></td>
+<td><p>Histogram of time spent on JIT wire compilations in seconds.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="launching-the-openai-compatible-server-container">
+<h2>Launching the OpenAI-Compatible Server Container<a class="headerlink" href="#launching-the-openai-compatible-server-container" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM offers a containerized server that can be used for faster deployment.
+Here is an example that launches the Furiosa-LLM server in a Docker container
+(replace <code class="docutils literal notranslate"><span class="pre">$HF_TOKEN</span></code> with your Hugging Face Hub token):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker pull furiosaai/furiosa-llm:latest
+
+docker run -it --rm \
+  --device /dev/rngd:/dev/rngd \
+  --security-opt seccomp=unconfined \
+  --env HF_TOKEN=$HF_TOKEN \
+  -v $HOME/.cache/huggingface:/root/.cache/huggingface \
+  -p 8000:8000 \
+  furiosaai/furiosa-llm:latest \
+  serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices &quot;npu:0&quot;
+</pre></div>
+</div>
+<p>You can also specify additional options for the server and replace
+<code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">$HOME/.cache/huggingface:/root/.cache/huggingface</span></code> with the path to your
+Hugging Face cache directory.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Furiosa-LLM</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="structured-output.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Structured Output</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-apis">Supported APIs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-choice-options">Tool Choice Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harmony-response-format">Harmony Response Format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-endpoints">Additional Endpoints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-the-openai-compatible-server">Monitoring the OpenAI-Compatible Server</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-openai-compatible-server-container">Launching the OpenAI-Compatible Server Container</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
