@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Quick Start with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.1.0 documentation</title>
+    <title>Quick Start with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.1.0rc2 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d0d2eeda"></script>
+    <script src="../_static/documentation_options.js?v=780fad11"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0rc2';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Installing Prerequisites" href="prerequisites.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.1.0rc2" />
   </head>
   
   
@@ -377,7 +377,7 @@ OpenAI’s API.
 This document explains how to install and use Furiosa-LLM.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.1.0.
+<p>This document is based on Furiosa SDK 2026.1.0rc2.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="installing-furiosa-llm">
@@ -391,12 +391,10 @@ The features and APIs described herein are subject to change in the future.</p>
 </ul>
 <p>To install the <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code> package and Furiosa-LLM,
 run the following commands:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-compiler
+<pre class="literal-block">sudo apt install -y furiosa-compiler
 
-pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w"> </span>setuptools<span class="w"> </span>wheel
-pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>furiosa-llm
-</pre></div>
-</div>
+pip install --upgrade pip setuptools wheel uv
+uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.1.0rc2</pre>
 <section id="authorizing-hugging-face-hub-optional">
 <span id="authorizinghuggingfacehub"></span><h3>Authorizing Hugging Face Hub (Optional)<a class="headerlink" href="#authorizing-hugging-face-hub-optional" title="Link to this heading">#</a></h3>
 <p>Some models, such as meta-llama/Llama-3.1-8B, require a license to run.
