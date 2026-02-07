@@ -36,8 +36,8 @@
         "preferred": true
     },
     {
-        "name": "2026.1.0 (rc2)",
-        "version": "2026.1.0",
-        "url": "https://developer.furiosa.ai/v2026.1.0/en/"
+        "name": "2026.1.0-rc2",
+        "version": "2026.1.0rc2",
+        "url": "https://developer.furiosa.ai/v2026.1.0-rc2/en/"
     }
 ]
