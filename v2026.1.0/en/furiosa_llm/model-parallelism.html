@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.1.0 documentation</title>
+    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.1.0rc2 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d0d2eeda"></script>
+    <script src="../_static/documentation_options.js?v=780fad11"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0rc2';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Model Preparation" href="model-preparation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.1.0rc2" />
   </head>
   
   
@@ -446,7 +446,7 @@ Similarly, <code class="docutils literal notranslate"><span class="pre">LLM</spa
 <h3>Best Practices for Furiosa-LLM<a class="headerlink" href="#best-practices-for-furiosa-llm" title="Link to this heading">#</a></h3>
 <p>Each parallelism type has its own characteristics and constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> parameter can be at most the number of devices.
-The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.1.0 release;
+The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.1.0rc2 release;
 future releases will lift this limitation.</p>
 <p>The product of <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>
 should be equal to the total number of PEs in your machine.</p>

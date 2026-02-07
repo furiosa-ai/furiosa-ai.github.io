@@ -31,12 +31,23 @@ The minimum requirements for Furiosa-LLM are as follows:
 To install the ``furiosa-compiler`` package and Furiosa-LLM,
 run the following commands:
 
-.. code-block:: sh
+.. only:: stable
 
-  sudo apt install -y furiosa-compiler
+  .. code-block:: sh
 
-  pip install --upgrade pip setuptools wheel
-  pip install --upgrade furiosa-llm
+    sudo apt install -y furiosa-compiler
+
+    pip install --upgrade pip setuptools wheel uv
+    uv pip install --upgrade --torch-backend=auto furiosa-llm
+
+.. only:: prerelease
+
+  .. parsed-literal::
+
+    sudo apt install -y furiosa-compiler
+
+    pip install --upgrade pip setuptools wheel uv
+    uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==\ |release|
 
 
 .. _AuthorizingHuggingFaceHub:
