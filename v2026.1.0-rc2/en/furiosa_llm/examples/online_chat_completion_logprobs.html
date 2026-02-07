@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>OpenAI-Compatible API with Logprobs &#8212; FuriosaAI Developer Center 2026.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=d0d2eeda"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/examples/online_chat_completion_logprobs';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deploying Furiosa-LLM on Kubernetes" href="../k8s_deployment.html" />
+    <link rel="prev" title="Reranking (Document Reranking)" href="llm_rerank.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.html">Announcing Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../examples.html">Examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_chat_with_tools.html">Chat with tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/llm_d.html">Deploying Furiosa-LLM with llm-d</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>OpenAI-Compatible API with Logprobs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-completion-api-example">Chat Completion API Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output">Example Output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-parameters">Key Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-token-logprobs-standard-openai">Generated Token Logprobs (Standard OpenAI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-token-logprobs-vllm-extension">Prompt Token Logprobs (vLLM Extension)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#response-structure">Response Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-token-logprobs">Generated Token Logprobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-token-logprobs">Prompt Token Logprobs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-output">Understanding the Output</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Generated Token Logprobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Prompt Token Logprobs</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="openai-compatible-api-with-logprobs">
+<span id="furiosallmexamplesopenailogprobs"></span><h1>OpenAI-Compatible API with Logprobs<a class="headerlink" href="#openai-compatible-api-with-logprobs" title="Link to this heading">#</a></h1>
+<p>This example demonstrates how to retrieve log probabilities (logprobs) using the
+OpenAI-compatible Chat Completion API. There are two types of logprobs available:</p>
+<ol class="arabic simple">
+<li><p><strong>Generated Token Logprobs</strong> (Standard OpenAI): Shows the model’s probability
+distribution over tokens during text generation.</p></li>
+<li><p><strong>Prompt Token Logprobs</strong> (vLLM Extension): Shows the model’s probability
+distribution over tokens for each position in the input prompt.</p></li>
+</ol>
+<section id="chat-completion-api-example">
+<h2>Chat Completion API Example<a class="headerlink" href="#chat-completion-api-example" title="Link to this heading">#</a></h2>
+<p>The following example shows how to use both <code class="docutils literal notranslate"><span class="pre">logprobs</span></code> (for generated tokens)
+and <code class="docutils literal notranslate"><span class="pre">prompt_logprobs</span></code> (for prompt tokens) in a single request.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example of using Chat Completion API with logprobs and prompt_logprobs</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">OpenAI-Compatible Server - Chat Completion API with Logprobs Example</span>
+
+<span class="sd">This example demonstrates how to use both:</span>
+<span class="sd">1. logprobs: Log probabilities for generated tokens (standard OpenAI parameter)</span>
+<span class="sd">2. prompt_logprobs: Log probabilities for prompt tokens (vLLM extension)</span>
+
+<span class="sd">Model: Any model available on the server</span>
+<span class="sd">Endpoint: http://localhost:8000</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+
+<span class="c1"># Get available model</span>
+<span class="n">models</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using model: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Chat completion request with both logprobs and prompt_logprobs</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful assistant.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="c1"># Standard OpenAI parameter: logprobs for generated tokens</span>
+    <span class="n">logprobs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">top_logprobs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># Return top 3 alternatives for each generated token</span>
+    <span class="c1"># vLLM/Furiosa-LLM extension parameters</span>
+    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;prompt_logprobs&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Top 3 logprobs per prompt token</span>
+        <span class="s2">&quot;return_token_ids&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Return prompt token IDs</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># Print generated text</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># =========================================================================</span>
+<span class="c1"># Section 1: Generated Token Logprobs (Standard OpenAI)</span>
+<span class="c1"># =========================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Generated Token Logprobs (Standard OpenAI) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These show the model&#39;s confidence for each token it generated.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">logprobs_content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logprobs</span>
+<span class="k">if</span> <span class="n">logprobs_content</span> <span class="ow">and</span> <span class="n">logprobs_content</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">token_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">logprobs_content</span><span class="o">.</span><span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Position </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">: &#39;</span><span class="si">{</span><span class="n">token_info</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&#39; (logprob=</span><span class="si">{</span><span class="n">token_info</span><span class="o">.</span><span class="n">logprob</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Show alternative tokens the model considered</span>
+        <span class="k">if</span> <span class="n">token_info</span><span class="o">.</span><span class="n">top_logprobs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">token_info</span><span class="o">.</span><span class="n">top_logprobs</span><span class="p">:</span>
+                <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot; &lt;-- chosen&quot;</span> <span class="k">if</span> <span class="n">alt</span><span class="o">.</span><span class="n">token</span> <span class="o">==</span> <span class="n">token_info</span><span class="o">.</span><span class="n">token</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    &#39;</span><span class="si">{</span><span class="n">alt</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&#39;: logprob=</span><span class="si">{</span><span class="n">alt</span><span class="o">.</span><span class="n">logprob</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}{</span><span class="n">marker</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No logprobs in response&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># =========================================================================</span>
+<span class="c1"># Section 2: Prompt Token Logprobs (vLLM Extension)</span>
+<span class="c1"># =========================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Prompt Token Logprobs (vLLM Extension) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These show how likely each prompt token was, given the preceding context.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Access vLLM extension fields directly from response object</span>
+<span class="n">prompt_logprobs</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">prompt_logprobs</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">prompt_token_ids</span>  <span class="c1"># type: ignore[attr-defined]</span>
+
+<span class="k">if</span> <span class="n">prompt_logprobs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">token_logprobs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">prompt_logprobs</span><span class="p">):</span>
+        <span class="n">actual_token_id</span> <span class="o">=</span> <span class="n">prompt_token_ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">prompt_token_ids</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">token_logprobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># First token has no logprobs (no prior context)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Position </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">: token_id=</span><span class="si">{</span><span class="n">actual_token_id</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;-&gt; None (first token, no prior context)&quot;</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Position </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">: token_id=</span><span class="si">{</span><span class="n">actual_token_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># token_logprobs is in dict[token_id, Logprob] format</span>
+        <span class="k">for</span> <span class="n">token_id_str</span><span class="p">,</span> <span class="n">logprob_info</span> <span class="ow">in</span> <span class="n">token_logprobs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">token_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">token_id_str</span><span class="p">)</span>
+            <span class="n">logprob</span> <span class="o">=</span> <span class="n">logprob_info</span><span class="p">[</span><span class="s2">&quot;logprob&quot;</span><span class="p">]</span>
+            <span class="n">rank</span> <span class="o">=</span> <span class="n">logprob_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+            <span class="n">decoded_token</span> <span class="o">=</span> <span class="n">logprob_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decoded_token&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">escaped_token</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">decoded_token</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">is_actual</span> <span class="o">=</span> <span class="n">token_id</span> <span class="o">==</span> <span class="n">actual_token_id</span>
+            <span class="n">actual_marker</span> <span class="o">=</span> <span class="s2">&quot; &lt;-- actual&quot;</span> <span class="k">if</span> <span class="n">is_actual</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;    token_id=</span><span class="si">{</span><span class="n">token_id</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;token=&#39;</span><span class="si">{</span><span class="n">escaped_token</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;logprob=</span><span class="si">{</span><span class="n">logprob</span><span class="si">:</span><span class="s2">&gt;10.6f</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;rank=</span><span class="si">{</span><span class="n">rank</span><span class="si">}{</span><span class="n">actual_marker</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No prompt_logprobs in response (vLLM extension field)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<section id="example-output">
+<h3>Example Output<a class="headerlink" href="#example-output" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Using model: Qwen/Qwen2.5-0.5B
+
+================================================================================
+Generated text: The capital of France is Paris.
+
+================================================================================
+
+=== Generated Token Logprobs (Standard OpenAI) ===
+These show the model&#39;s confidence for each token it generated.
+
+Position 0: &#39;The&#39; (logprob=-0.298153)
+    &#39;The&#39;: logprob=-0.298153 &lt;-- chosen
+    &#39;Paris&#39;: logprob=-1.551574
+    &#39;As&#39;: logprob=-4.550769
+
+Position 1: &#39; capital&#39; (logprob=-0.003914)
+    &#39; capital&#39;: logprob=-0.003914 &lt;-- chosen
+    &#39; current&#39;: logprob=-6.505387
+    &#39; Capital&#39;: logprob=-8.506357
+
+Position 2: &#39; of&#39; (logprob=-0.011788)
+    &#39; of&#39;: logprob=-0.011788 &lt;-- chosen
+    &#39; city&#39;: logprob=-4.769587
+    &#39; and&#39;: logprob=-8.139359
+
+Position 3: &#39; France&#39; (logprob=-0.003914)
+    &#39; France&#39;: logprob=-0.003914 &lt;-- chosen
+    &#39; the&#39;: logprob=-10.007491
+    &#39;France&#39;: logprob=-11.007912
+
+Position 4: &#39; is&#39; (logprob=-0.003914)
+    &#39; is&#39;: logprob=-0.003914 &lt;-- chosen
+    &#39;,&#39;: logprob=-5.880869
+    &#39; (&#39;: logprob=-9.756177
+
+Position 5: &#39; Paris&#39; (logprob=-0.007843)
+    &#39; Paris&#39;: logprob=-0.007843 &lt;-- chosen
+    &#39; Lyon&#39;: logprob=-6.015181
+    &#39;巴黎&#39;: logprob=-6.947220
+
+...
+
+=== Prompt Token Logprobs (vLLM Extension) ===
+These show how likely each prompt token was, given the preceding context.
+
+Position 0: token_id=151644 -&gt; None (first token, no prior context)
+Position 1: token_id=8948
+    token_id=  8948, token=&#39;system&#39;, logprob=-11.958041, rank=8063 &lt;-- actual
+    token_id= 72030, token=&#39;/API&#39;, logprob= -1.378512, rank=1
+    token_id= 16731, token=&#39;/T&#39;, logprob= -3.065493, rank=2
+    token_id= 59981, token=&#39;/block&#39;, logprob= -3.948318, rank=3
+Position 2: token_id=198
+    token_id=   198, token=&#39;\n&#39;, logprob= -1.947865, rank=1 &lt;-- actual
+    token_id=   271, token=&#39;\n\n&#39;, logprob= -2.263327, rank=2
+    token_id= 69425, token=&#39; 发&#39;, logprob= -2.448469, rank=3
+...
+</pre></div>
+</div>
+</section>
+</section>
+<section id="key-parameters">
+<h2>Key Parameters<a class="headerlink" href="#key-parameters" title="Link to this heading">#</a></h2>
+<section id="generated-token-logprobs-standard-openai">
+<h3>Generated Token Logprobs (Standard OpenAI)<a class="headerlink" href="#generated-token-logprobs-standard-openai" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">logprobs</span></code> (bool): When True, returns log probabilities for generated tokens.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_logprobs</span></code> (int): Number of top alternative tokens to return.</p></li>
+</ul>
+<p>These parameters are part of the standard OpenAI Chat Completion API and show
+what alternatives the model considered when generating each token.</p>
+</section>
+<section id="prompt-token-logprobs-vllm-extension">
+<h3>Prompt Token Logprobs (vLLM Extension)<a class="headerlink" href="#prompt-token-logprobs-vllm-extension" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">prompt_logprobs</span></code> (int): Number of top log probabilities to return for each
+prompt token. Pass via <code class="docutils literal notranslate"><span class="pre">extra_body</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return_token_ids</span></code> (bool): When True, returns the token IDs of the prompt
+tokens. Pass via <code class="docutils literal notranslate"><span class="pre">extra_body</span></code>.</p></li>
+</ul>
+<p>These parameters are vLLM extensions and show how likely each token in your
+prompt was, given the preceding context.</p>
+</section>
+</section>
+<section id="response-structure">
+<h2>Response Structure<a class="headerlink" href="#response-structure" title="Link to this heading">#</a></h2>
+<section id="generated-token-logprobs">
+<h3>Generated Token Logprobs<a class="headerlink" href="#generated-token-logprobs" title="Link to this heading">#</a></h3>
+<p>Located in the standard response structure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logprobs</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">token</span>       <span class="c1"># The chosen token</span>
+<span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logprobs</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">logprob</span>     <span class="c1"># Its log probability</span>
+<span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">logprobs</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">top_logprobs</span>  <span class="c1"># Alternative tokens</span>
+</pre></div>
+</div>
+</section>
+<section id="prompt-token-logprobs">
+<h3>Prompt Token Logprobs<a class="headerlink" href="#prompt-token-logprobs" title="Link to this heading">#</a></h3>
+<p>Located in the vLLM extension fields, accessible directly on the response object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">prompt_logprobs</span>    <span class="c1"># List of logprobs per prompt position</span>
+<span class="n">response</span><span class="o">.</span><span class="n">prompt_token_ids</span>   <span class="c1"># List of actual token IDs in the prompt</span>
+</pre></div>
+</div>
+<p>Each logprob entry contains:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">logprob</span></code>: The log probability value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code>: The rank of this token among all possibilities (1 = most likely)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">decoded_token</span></code>: The string representation of the token</p></li>
+</ul>
+</section>
+</section>
+<section id="understanding-the-output">
+<h2>Understanding the Output<a class="headerlink" href="#understanding-the-output" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Generated Token Logprobs<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>For generated tokens, a logprob closer to 0 indicates higher confidence:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">logprob=-0.003914</span></code>: <span class="math notranslate nohighlight">\(e^{-0.003914}\)</span> ≈ 99.6% probability (very confident)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logprob=-2.0</span></code> ≈ 13.5% probability (less confident)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logprob=-5.0</span></code> ≈ 0.7% probability (unlikely alternative)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Prompt Token Logprobs<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>For prompt tokens, the <code class="docutils literal notranslate"><span class="pre">rank</span></code> field shows where the actual token ranked among
+all possible tokens. A high rank (e.g., 8063) with a low logprob indicates that
+the model found that token “surprising” given the context - this is expected for prompt
+tokens since they are user-provided.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="llm_rerank.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Reranking (Document Reranking)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../k8s_deployment.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Deploying Furiosa-LLM on Kubernetes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-completion-api-example">Chat Completion API Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output">Example Output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-parameters">Key Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-token-logprobs-standard-openai">Generated Token Logprobs (Standard OpenAI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-token-logprobs-vllm-extension">Prompt Token Logprobs (vLLM Extension)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#response-structure">Response Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-token-logprobs">Generated Token Logprobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-token-logprobs">Prompt Token Logprobs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-output">Understanding the Output</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Generated Token Logprobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Prompt Token Logprobs</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
