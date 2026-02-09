@@ -30,7 +30,7 @@ Decoder-only Models (Text Generation)
    * - DeepSeek R1
      - ``LlamaForCausalLM``
      - ``deepseek-ai/DeepSeek-R1-Distill-Llama-8B``, ``deepseek-ai/DeepSeek-R1-Distill-Llama-70B``
-   * - EXAONE 3.0, 3.5, 4.0
+   * - EXAONE 4.0
      - ``Exaone4ForCausalLM``
      - ``LGAI-EXAONE/EXAONE-4.0-32B``, ``LGAI-EXAONE/EXAONE-4.0-32B-FP8``
    * - Llama 3.1, Llama 3.3

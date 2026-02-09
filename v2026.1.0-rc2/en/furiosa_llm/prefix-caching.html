@@ -368,20 +368,9 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximizing-cache-hits">Maximizing Cache Hits</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-doesn-t-work">What Doesn’t Work</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-effectiveness">Cache Effectiveness</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics">Advanced Topics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-cache-eviction">Prefix Cache Eviction</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-coherency">Cache Coherency</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-more-information">For More Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a></li>
 </ul>
             </nav>
         </div>
@@ -490,14 +479,16 @@ Request 2: [System prompt] + [User message B]
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
-<p>Prefix caching is <strong>enabled by default</strong> in Furiosa-LLM with no configuration required.</p>
+<p>Prefix caching is not <strong>enabled by default</strong> in Furiosa-LLM. To enable prefix caching, set <code class="docutils literal notranslate"><span class="pre">--enable-prefix-caching</span></code> option in the Furiosa-LLM server settings:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>--enable-prefix-caching<span class="w"> </span>...
+</pre></div>
+</div>
 <section id="memory-management">
 <h3>Memory Management<a class="headerlink" href="#memory-management" title="Link to this heading">#</a></h3>
 <p>The prefix cache shares memory with the KV cache pool. The scheduler automatically:</p>
 <ul class="simple">
 <li><p>Allocates cache entries from available KV cache memory</p></li>
 <li><p>Evicts cached prefixes when memory pressure increases</p></li>
-<li><p>Balances cache retention with active request memory needs</p></li>
 </ul>
 <p>No manual tuning of cache size or eviction policies is necessary.</p>
 </section>
@@ -528,65 +519,14 @@ Request 2: [System prompt] + [User message B]
 </pre></div>
 </div>
 </section>
-<section id="what-doesn-t-work">
-<h3>What Doesn’t Work<a class="headerlink" href="#what-doesn-t-work" title="Link to this heading">#</a></h3>
-<p>Prefix caching <strong>will not match</strong> when:</p>
-<ul class="simple">
-<li><p>Tokenization differs (e.g., different tokenizer configurations)</p></li>
-<li><p>Token sequences differ at any position before the divergence point</p></li>
-<li><p>Prompts are presented in different formats (chat vs. completion)</p></li>
-</ul>
-</section>
 </section>
 <section id="monitoring">
 <h2>Monitoring<a class="headerlink" href="#monitoring" title="Link to this heading">#</a></h2>
-<section id="cache-effectiveness">
-<h3>Cache Effectiveness<a class="headerlink" href="#cache-effectiveness" title="Link to this heading">#</a></h3>
 <p>To monitor prefix caching effectiveness, observe:</p>
 <ul class="simple">
+<li><p><strong>Prefix cache hit ratio</strong>: Higher ratios indicate better reuse of cached prefixes. You can find this in the server logs.</p></li>
 <li><p><strong>Time-to-First-Token (TTFT)</strong>: Should decrease for requests with cached prefixes</p></li>
-<li><p><strong>KV Cache utilization</strong>: Prefix cache uses a portion of total KV cache memory</p></li>
 <li><p><strong>Request latency patterns</strong>: Requests following similar prompts should show consistent speedups</p></li>
-</ul>
-<p>The Furiosa-LLM server logs include prefix cache statistics when detailed logging is enabled.</p>
-</section>
-</section>
-<section id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>Memory overhead</strong>: Cached prefixes consume KV cache memory</p></li>
-<li><p><strong>Exact matching only</strong>: Small prompt variations prevent cache hits</p></li>
-<li><p><strong>Token-level granularity</strong>: Partial token matches are not supported</p></li>
-<li><p><strong>Single-model scope</strong>: Cache is not shared across different model instances</p></li>
-</ul>
-</section>
-<section id="advanced-topics">
-<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading">#</a></h2>
-<section id="prefix-cache-eviction">
-<h3>Prefix Cache Eviction<a class="headerlink" href="#prefix-cache-eviction" title="Link to this heading">#</a></h3>
-<p>The cache uses a <strong>Least Recently Used (LRU)</strong> eviction strategy:</p>
-<ul class="simple">
-<li><p>Recently used prefixes are retained longer</p></li>
-<li><p>Infrequently accessed prefixes are evicted first when memory is needed</p></li>
-<li><p>The eviction happens automatically during request scheduling</p></li>
-</ul>
-</section>
-<section id="cache-coherency">
-<h3>Cache Coherency<a class="headerlink" href="#cache-coherency" title="Link to this heading">#</a></h3>
-<p>Prefix caching is coherent across concurrent requests:</p>
-<ul class="simple">
-<li><p>Multiple requests can share the same cached prefix simultaneously</p></li>
-<li><p>Cache entries remain valid until explicitly evicted</p></li>
-<li><p>No synchronization overhead for read-only cache access</p></li>
-</ul>
-</section>
-</section>
-<section id="for-more-information">
-<h2>For More Information<a class="headerlink" href="#for-more-information" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>See <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI Server API</span></a> for server usage</p></li>
-<li><p>See <a class="reference internal" href="reference/llm.html#llmclass"><span class="std std-ref">LLM class reference</span></a> for Python API details</p></li>
-<li><p>See <a class="reference internal" href="../overview/supported_models.html#supportedmodels"><span class="std std-ref">Supported Models</span></a> for compatible models</p></li>
 </ul>
 </section>
 </section>
@@ -655,20 +595,9 @@ Request 2: [System prompt] + [User message B]
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximizing-cache-hits">Maximizing Cache Hits</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-doesn-t-work">What Doesn’t Work</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-effectiveness">Cache Effectiveness</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics">Advanced Topics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-cache-eviction">Prefix Cache Eviction</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-coherency">Cache Coherency</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-more-information">For More Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a></li>
 </ul>
   </nav></div>
 
