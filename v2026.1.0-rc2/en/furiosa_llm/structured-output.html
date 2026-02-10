@@ -70,7 +70,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Prefix Caching" href="prefix-caching.html" />
-    <link rel="prev" title="OpenAI-Compatible Server" href="furiosa-llm-serve.html" />
+    <link rel="prev" title="Tool Calling" href="toolcalling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.1.0rc2" />
@@ -206,8 +206,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -598,12 +599,12 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="furiosa-llm-serve.html"
+       href="toolcalling.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">OpenAI-Compatible Server</p>
+        <p class="prev-next-title">Tool Calling</p>
       </div>
     </a>
     <a class="right-next"

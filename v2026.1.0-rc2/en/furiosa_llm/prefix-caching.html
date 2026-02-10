@@ -69,7 +69,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model Preparation" href="model-preparation.html" />
+    <link rel="next" title="Hybrid KV Cache Management" href="hybrid-kv-cache.html" />
     <link rel="prev" title="Structured Output" href="structured-output.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -206,8 +206,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -352,8 +353,9 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-level-matching">Token-Level Matching</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-management">Automatic Management</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-level-matching">Token-Level Matching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-attention-models">Hybrid Attention Models</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-benefits">Performance Benefits</a><ul class="nav section-nav flex-column">
@@ -404,26 +406,57 @@
 </section>
 <section id="how-it-works">
 <h2>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h2>
-<section id="token-level-matching">
-<h3>Token-Level Matching<a class="headerlink" href="#token-level-matching" title="Link to this heading">#</a></h3>
-<p>Furiosa-LLM’s prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Request 1: [System prompt] + [User message A]
-           └─ KV cache stored ─┘
-
-Request 2: [System prompt] + [User message B]
-           └─ Reused cache! ─┘  └─ New computation ─┘
-</pre></div>
-</div>
-</section>
 <section id="automatic-management">
 <h3>Automatic Management<a class="headerlink" href="#automatic-management" title="Link to this heading">#</a></h3>
 <p>The prefix cache is managed automatically by the scheduler:</p>
 <ul class="simple">
 <li><p><strong>Cache Population</strong>: KV cache entries are stored after each forward pass</p></li>
 <li><p><strong>Cache Matching</strong>: New requests are checked against the cache tree</p></li>
-<li><p><strong>Cache Eviction</strong>: Least recently used entries are evicted when memory is needed</p></li>
+<li><p><strong>Cache Eviction</strong>: Least recently used, non-active entries are evicted when memory is needed (starting from leaf suffixes)</p></li>
 <li><p><strong>Cache Invalidation</strong>: No manual invalidation required</p></li>
 </ul>
+</section>
+<section id="token-level-matching">
+<h3>Token-Level Matching<a class="headerlink" href="#token-level-matching" title="Link to this heading">#</a></h3>
+<p>Furiosa-LLM’s prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Request 1: [S1] + [A]
+       │
+       │    ┌──────────────┐   ┌──────────────┐
+       └──► │ new compute  │ + │ new compute  │
+            └──────────────┘   └──────────────┘
+       Cache: ROOT ── [S1] ── [A]
+
+Request 2: [S1] + [B]
+       │
+       │    ┌──────────────┐   ┌──────────────┐
+       └──► │  cache hit   │ + │ new compute  │
+            └──────────────┘   └──────────────┘
+       Cache: ROOT ── [S1] ──┬── [A]
+                             └── [B]
+</pre></div>
+</div>
+<p>In the standard radix-cache flow (non-hybrid attention), Furiosa-LLM:</p>
+<ul class="simple">
+<li><p>Finds the <strong>longest token-exact prefix</strong> from the start of the prompt</p></li>
+<li><p>Reuses all matched KV blocks from that prefix</p></li>
+<li><p>Computes and caches only the unmatched suffix</p></li>
+</ul>
+<p>If a request diverges in the middle of an existing branch, the cache can split that branch internally so future requests can still reuse the shared portion precisely.</p>
+</section>
+<section id="hybrid-attention-models">
+<span id="prefixcachinghybridattentionmodels"></span><h3>Hybrid Attention Models<a class="headerlink" href="#hybrid-attention-models" title="Link to this heading">#</a></h3>
+<p>Prefix caching fully supports hybrid attention models that use both global attention and sliding-window attention.
+For these models, a prefix is reusable only when both cache types are valid for the same matched range:</p>
+<ul class="simple">
+<li><p>Tokens match from the beginning of the prompt</p></li>
+<li><p>Global KV cache entries are present for that range</p></li>
+<li><p>Sliding-window KV entries are available as a valid contiguous window for the current position</p></li>
+</ul>
+<p>If the token match continues but the sliding-window requirement is no longer satisfied, Furiosa-LLM reuses only the longest safe prefix and computes the rest.
+This keeps results correct while still maximizing reuse.</p>
+<p>In practice, this means cache hits in hybrid models may be shorter than raw token overlap, especially when recent-window context differs across requests or has been evicted.</p>
+<p>This behavior is also affected by eviction policy. For sliding-window attention, Furiosa-LLM intentionally allows sliding-window blocks to be evicted independently of global blocks, including at intermediate (non-leaf) prefix-tree nodes.
+The rationale is memory efficiency: blocks outside the frequently reused window are treated as stale and can be reclaimed earlier to make room for more useful cache content. However, under high memory pressure, this might cause a scenario where token-prefix matching continues while sliding-window validity ends sooner; in that case, Furiosa-LLM safely reuses the longest prefix that still has a valid window.</p>
 </section>
 </section>
 <section id="performance-benefits">
@@ -502,7 +535,6 @@ Request 2: [System prompt] + [User message B]
 <li><p><strong>Use consistent system prompts</strong>: Keep system prompts identical across requests</p></li>
 <li><p><strong>Maintain token-exact matching</strong>: Even small changes (punctuation, whitespace) break the match</p></li>
 <li><p><strong>Order messages consistently</strong>: The cache matches from the beginning of the prompt sequence</p></li>
-<li><p><strong>Batch similar requests</strong>: Process requests with shared prefixes together when possible</p></li>
 </ol>
 <p>Example - Consistent Prompting:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good: Exact same system prompt</span>
@@ -552,11 +584,11 @@ Request 2: [System prompt] + [User message B]
       </div>
     </a>
     <a class="right-next"
-       href="model-preparation.html"
+       href="hybrid-kv-cache.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Preparation</p>
+        <p class="prev-next-title">Hybrid KV Cache Management</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -579,8 +611,9 @@ Request 2: [System prompt] + [User message B]
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-level-matching">Token-Level Matching</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-management">Automatic Management</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-level-matching">Token-Level Matching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-attention-models">Hybrid Attention Models</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-benefits">Performance Benefits</a><ul class="nav section-nav flex-column">

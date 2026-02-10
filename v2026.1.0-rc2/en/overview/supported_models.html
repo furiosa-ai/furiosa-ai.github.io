@@ -206,8 +206,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -351,7 +352,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder-only-models-text-generation">Decoder-only Models (Text Generation)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-and-reranking-models">Embedding and Reranking Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pooling-models">Pooling Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#planned-models-for-future-releases">Planned Models for Future Releases</a></li>
 </ul>
             </nav>
@@ -419,27 +420,31 @@ You can download and run them quickly with Furiosa-LLM.</p>
 </table>
 </div>
 </section>
-<section id="embedding-and-reranking-models">
-<h2>Embedding and Reranking Models<a class="headerlink" href="#embedding-and-reranking-models" title="Link to this heading">#</a></h2>
+<section id="pooling-models">
+<h2>Pooling Models<a class="headerlink" href="#pooling-models" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
-<col style="width: 23.6%" />
-<col style="width: 21.8%" />
-<col style="width: 54.5%" />
+<col style="width: 19.4%" />
+<col style="width: 17.9%" />
+<col style="width: 17.9%" />
+<col style="width: 44.8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Model Name</p></th>
 <th class="head"><p>Architecture</p></th>
+<th class="head"><p>Task</p></th>
 <th class="head"><p>Example Hugging Face Models</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Qwen 3 Embedding</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3Model</span></code></p></td>
+<td><p>Embedding</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Embedding-4B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Embedding-8B</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Qwen 3 Reranker</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3ForSequenceClassification</span></code></p></td>
+<td><p>Reranking</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Reranker-4B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Reranker-8B</span></code></p></td>
 </tr>
 </tbody>
@@ -450,14 +455,10 @@ You can download and run them quickly with Furiosa-LLM.</p>
 <h2>Planned Models for Future Releases<a class="headerlink" href="#planned-models-for-future-releases" title="Link to this heading">#</a></h2>
 <p>(The order of the models listed below indicate the priority of support.)</p>
 <ul class="simple">
-<li><p>gemma-3</p></li>
-<li><p>Llama 4</p></li>
-<li><p>Mistral-7B-v0.1, Mistral-7B-Instruct-v0.1</p></li>
-<li><p>Mixtral-8x7B-v0.1, Mixtral-8x7B-Instruct-v0.1</p></li>
-<li><p>Phi-3, Phi-3.5,</p></li>
-<li><p>Phi-3.5-MoE</p></li>
-<li><p>DeepSeek-Coder-V2-Instruct</p></li>
-<li><p>Stable Diffusion XL</p></li>
+<li><p>GPT-OSS</p></li>
+<li><p>K-EXAONE</p></li>
+<li><p>Qwen3 MoE</p></li>
+<li><p>Qwen3 VL</p></li>
 </ul>
 </section>
 </section>
@@ -509,7 +510,7 @@ You can download and run them quickly with Furiosa-LLM.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder-only-models-text-generation">Decoder-only Models (Text Generation)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-and-reranking-models">Embedding and Reranking Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pooling-models">Pooling Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#planned-models-for-future-releases">Planned Models for Future Releases</a></li>
 </ul>
   </nav></div>

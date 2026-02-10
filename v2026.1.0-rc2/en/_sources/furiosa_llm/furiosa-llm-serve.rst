@@ -111,14 +111,12 @@ To launch the server with a custom chat template, use the following command:
 
 Tool Calling Support
 ====================
-Furiosa-LLM supports tool calling (also known as function calling) for models
-trained with this capability.
+Tool calling (also known as function calling) enables models to interact with external tools and APIs.
+Furiosa-LLM supports tool calling for models trained with this capability.
 
-The system converts model outputs into the OpenAI response format through a
-designated parser implementation.
-You can check the help text's ``--tool-call-parser`` description to see which tool parsers are supported.
-
-The following example command starts the server with tool calling enabled for Llama 3.1 models:
+To start the server with tool calling enabled, use the ``--tool-call-parser`` option
+to specify the appropriate parser for your model. For example, to enable tool calling
+for EXAONE-4.0 models:
 
 .. code-block:: bash
 
@@ -138,42 +136,7 @@ The expected output is as follows.
     Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
     Result: Getting the weather for San Francisco, CA in fahrenheit...
 
-Tool Choice Options
-~~~~~~~~~~~~~~~~~~~
-
-The ``tool_choice`` parameter controls how the model selects tools to call. Furiosa-LLM supports the following options:
-
-* **``"auto"`` (default)**: The model decides whether to call a tool or respond directly based on the conversation context.
-
-* **``"required"``**: Forces the model to call at least one tool. The model cannot respond without making a tool call.
-
-* **``{"type": "function", "function": {"name": "<function_name>"}}``**: Forces the model to call a specific named function.
-
-**Example with required tool calling:**
-
-.. code-block:: python
-
-    from openai import OpenAI
-
-    client = OpenAI(base_url="http://localhost:8000/v1", api_key="dummy")
-
-    response = client.chat.completions.create(
-        model="furiosa-ai/Qwen3-32B-FP8",
-        messages=[{"role": "user", "content": "What's the weather like?"}],
-        tools=[...],  # Your tool definitions
-        tool_choice="required"  # Force tool calling
-    )
-
-**Example with specific function selection:**
-
-.. code-block:: python
-
-    response = client.chat.completions.create(
-        model="furiosa-ai/Qwen3-32B-FP8",
-        messages=[{"role": "user", "content": "Get weather information"}],
-        tools=[...],
-        tool_choice={"type": "function", "function": {"name": "get_weather"}}
-    )
+For detailed information on tool calling parsers, tool choice options, and additional examples, see :ref:`ToolCalling`.
 
 .. _Reasoning:
 
@@ -215,7 +178,7 @@ Here's an example that demonstrates how to access the reasoning content:
     attempting to access this field in responses without reasoning content will raise an ``AttributeError``.
 
 API Reference
-===============================
+=============
 
 .. warning::
 
@@ -226,7 +189,7 @@ API Reference
 .. _ChatCompletionsAPIReference:
 
 Chat API (``/v1/chat/completions``)
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in `OpenAI Chat API <https://platform.openai.com/docs/api-reference/chat>`_.
 
@@ -352,7 +315,7 @@ Parameters without descriptions inherit their behavior and functionality from th
 .. _CompletionsAPIReference:
 
 Completions API (``/v1/completions``)
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in `OpenAI Completions API <https://platform.openai.com/docs/api-reference/completions>`_.
 
@@ -453,7 +416,7 @@ Parameters without descriptions inherit their behavior and functionality from th
 .. _EmbeddingsAPI:
 
 Embeddings API (``/v1/embeddings``)
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in `OpenAI Embeddings API <https://platform.openai.com/docs/api-reference/embeddings/create>`_.
 
@@ -486,7 +449,7 @@ Parameters without descriptions inherit their behavior and functionality from th
 .. _ScoreAPI:
 
 Score API (``/score``, ``/v1/score``)
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This API provides text pair scoring functionality, calculating similarity scores between pairs of texts.
 This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
@@ -521,15 +484,11 @@ For details on the API specification, refer to the `vLLM's Score API documentati
      - integer
      - null
      - See :ref:`Pooling Params <PoolingParams>`.
-   * - use_qwen3_template
-     - boolean
-     - false
-     - See :ref:`Qwen3 Templating <Qwen3Templating>`.
 
 .. _RerankAPI:
 
 Rerank API (``/rerank``, ``/v1/rerank``, ``/v2/rerank``)
---------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This API provides document reranking functionality, ordering documents by relevance to a given query.
 This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
@@ -567,51 +526,6 @@ For details on the API specification, refer to the `vLLM's Rerank API documentat
      - integer
      - null
      - See :ref:`Pooling Params <PoolingParams>`.
-   * - use_qwen3_template
-     - boolean
-     - false
-     - See :ref:`Qwen3 Templating <Qwen3Templating>`.
-
-
-.. _Qwen3Templating:
-
-Using Qwen3 Reranker Model's Score Templating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Qwen3-Reranker model uses a generation task under the hood for scoring and reranking.
-The model does not provide a built-in score template, therefore typical inference engines like vLLM
-just concatenate the query with documents. Therefore, to achieve optimal accuracy with these kinds of systems,
-the user must provide a specific input format that mimics the model's score template, as follows:
-
-.. code-block:: sh
-
-  curl -XPOST 'http://127.0.0.1:8000/v1/rerank' -H ... '{
-    "model": "Qwen/Qwen3-Reranker-8B",
-    "query": "<|im_start|>system\nJudge whether the Document meets the requirements based on the Query and the Instruct provided. Note that the answer can only be \"yes\" or \"no\".<|im_end|>\n<|im_start|>user\n<Instruct>: Given a web search query, retrieve relevant passages that answer the query\n<Query>: What is the capital of France?\n",
-    "documents": [
-      "<Document>: The capital of Brazil is Brasilia.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
-      "<Document>: The capital of France is Paris.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
-      "<Document>: Horses and cows are both animals.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
-    ]
-  }'
-
-Furiosa-LLM provides a designated parameter ``use_qwen3_template`` that handles this
-formatting automatically for Qwen3-Reranker models.
-When this parameter is set to true, the server automatically formats the input query and documents.
-The following API call is equivalent to the above example, simplifying the use of Qwen3-Reranker models:
-
-.. code-block:: sh
-
-  curl -XPOST 'http://127.0.0.1:8000/v1/rerank' -H ... '{
-    "model": "Qwen/Qwen3-Reranker-8B",
-    "query": "What is the capital of France?",
-    "documents": [
-      "The capital of Brazil is Brasilia.",
-      "The capital of France is Paris.",
-      "Horses and cows are both animals"
-    ],
-    "use_qwen3_template": true
-  }'
 
 
 Additional Endpoints
@@ -764,7 +678,7 @@ Here is an example that launches the Furiosa-LLM server in a Docker container
       -v $HOME/.cache/huggingface:/root/.cache/huggingface \
       -p 8000:8000 \
       furiosaai/furiosa-llm:latest \
-      serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices "npu:0"
+      serve furiosa-ai/Qwen2.5-0.5B-Instruct
 
 You can also specify additional options for the server and replace
 ``-v $HOME/.cache/huggingface:/root/.cache/huggingface`` with the path to your

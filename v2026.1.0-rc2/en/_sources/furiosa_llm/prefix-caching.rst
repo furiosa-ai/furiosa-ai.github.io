@@ -26,19 +26,6 @@ This can dramatically improve performance for scenarios with:
 How It Works
 ============
 
-Token-Level Matching
---------------------
-
-Furiosa-LLM's prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:
-
-.. code-block:: text
-
-    Request 1: [System prompt] + [User message A]
-               └─ KV cache stored ─┘
-
-    Request 2: [System prompt] + [User message B]
-               └─ Reused cache! ─┘  └─ New computation ─┘
-
 Automatic Management
 --------------------
 
@@ -46,8 +33,58 @@ The prefix cache is managed automatically by the scheduler:
 
 * **Cache Population**: KV cache entries are stored after each forward pass
 * **Cache Matching**: New requests are checked against the cache tree
-* **Cache Eviction**: Least recently used entries are evicted when memory is needed
+* **Cache Eviction**: Least recently used, non-active entries are evicted when memory is needed (starting from leaf suffixes)
 * **Cache Invalidation**: No manual invalidation required
+
+Token-Level Matching
+--------------------
+
+Furiosa-LLM's prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:
+
+.. code-block:: text
+
+    Request 1: [S1] + [A]
+           │
+           │    ┌──────────────┐   ┌──────────────┐
+           └──► │ new compute  │ + │ new compute  │
+                └──────────────┘   └──────────────┘
+           Cache: ROOT ── [S1] ── [A]
+
+    Request 2: [S1] + [B]
+           │
+           │    ┌──────────────┐   ┌──────────────┐
+           └──► │  cache hit   │ + │ new compute  │
+                └──────────────┘   └──────────────┘
+           Cache: ROOT ── [S1] ──┬── [A]
+                                 └── [B]
+
+In the standard radix-cache flow (non-hybrid attention), Furiosa-LLM:
+
+* Finds the **longest token-exact prefix** from the start of the prompt
+* Reuses all matched KV blocks from that prefix
+* Computes and caches only the unmatched suffix
+
+If a request diverges in the middle of an existing branch, the cache can split that branch internally so future requests can still reuse the shared portion precisely.
+
+.. _PrefixCachingHybridAttentionModels:
+
+Hybrid Attention Models
+-----------------------
+
+Prefix caching fully supports hybrid attention models that use both global attention and sliding-window attention.
+For these models, a prefix is reusable only when both cache types are valid for the same matched range:
+
+* Tokens match from the beginning of the prompt
+* Global KV cache entries are present for that range
+* Sliding-window KV entries are available as a valid contiguous window for the current position
+
+If the token match continues but the sliding-window requirement is no longer satisfied, Furiosa-LLM reuses only the longest safe prefix and computes the rest.
+This keeps results correct while still maximizing reuse.
+
+In practice, this means cache hits in hybrid models may be shorter than raw token overlap, especially when recent-window context differs across requests or has been evicted.
+
+This behavior is also affected by eviction policy. For sliding-window attention, Furiosa-LLM intentionally allows sliding-window blocks to be evicted independently of global blocks, including at intermediate (non-leaf) prefix-tree nodes. 
+The rationale is memory efficiency: blocks outside the frequently reused window are treated as stale and can be reclaimed earlier to make room for more useful cache content. However, under high memory pressure, this might cause a scenario where token-prefix matching continues while sliding-window validity ends sooner; in that case, Furiosa-LLM safely reuses the longest prefix that still has a valid window.
 
 Performance Benefits
 ====================
@@ -135,7 +172,6 @@ To get the most benefit from prefix caching:
 1. **Use consistent system prompts**: Keep system prompts identical across requests
 2. **Maintain token-exact matching**: Even small changes (punctuation, whitespace) break the match
 3. **Order messages consistently**: The cache matches from the beginning of the prompt sequence
-4. **Batch similar requests**: Process requests with shared prefixes together when possible
 
 Example - Consistent Prompting:
 

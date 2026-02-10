@@ -46,35 +46,32 @@ Decoder-only Models (Text Generation)
      - ``Qwen3ForCausalLM``
      - ``Qwen/Qwen3-0.5B-Instruct``, ``Qwen/Qwen3-32B-Instruct``
 
-Embedding and Reranking Models
+Pooling Models
 ================================
 
 .. list-table::
    :align: center
    :header-rows: 1
-   :widths: 130 120 300
+   :widths: 130 120 120 300
 
    * - Model Name
      - Architecture
+     - Task
      - Example Hugging Face Models
    * - Qwen 3 Embedding
      - ``Qwen3Model``
+     - Embedding
      - ``Qwen/Qwen3-Embedding-4B``, ``Qwen/Qwen3-Embedding-8B``
    * - Qwen 3 Reranker
      - ``Qwen3ForSequenceClassification``
+     - Reranking
      - ``Qwen/Qwen3-Reranker-4B``, ``Qwen/Qwen3-Reranker-8B``
-
 
 Planned Models for Future Releases
 ===============================================
 (The order of the models listed below indicate the priority of support.)
 
-* gemma-3
-* Llama 4
-* Mistral-7B-v0.1, Mistral-7B-Instruct-v0.1
-* Mixtral-8x7B-v0.1, Mixtral-8x7B-Instruct-v0.1
-* Phi-3, Phi-3.5,
-* Phi-3.5-MoE
-* DeepSeek-Coder-V2-Instruct
-* Stable Diffusion XL
-
+* GPT-OSS
+* K-EXAONE
+* Qwen3 MoE
+* Qwen3 VL

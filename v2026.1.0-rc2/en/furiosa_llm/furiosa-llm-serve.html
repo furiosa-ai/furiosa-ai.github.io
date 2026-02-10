@@ -69,7 +69,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Structured Output" href="structured-output.html" />
+    <link rel="next" title="Tool Calling" href="toolcalling.html" />
     <link rel="prev" title="Furiosa-LLM" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -206,8 +206,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -354,13 +355,14 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-choice-options">Tool Choice Options</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-qwen3-reranker-model-s-score-templating">Using Qwen3 Reranker Model’s Score Templating</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-endpoints">Additional Endpoints</a><ul class="nav section-nav flex-column">
@@ -512,12 +514,11 @@ the default, you can specify one using the <code class="docutils literal notrans
 </section>
 <section id="tool-calling-support">
 <span id="toolcalling"></span><h2>Tool Calling Support<a class="headerlink" href="#tool-calling-support" title="Link to this heading">#</a></h2>
-<p>Furiosa-LLM supports tool calling (also known as function calling) for models
-trained with this capability.</p>
-<p>The system converts model outputs into the OpenAI response format through a
-designated parser implementation.
-You can check the help text’s <code class="docutils literal notranslate"><span class="pre">--tool-call-parser</span></code> description to see which tool parsers are supported.</p>
-<p>The following example command starts the server with tool calling enabled for Llama 3.1 models:</p>
+<p>Tool calling (also known as function calling) enables models to interact with external tools and APIs.
+Furiosa-LLM supports tool calling for models trained with this capability.</p>
+<p>To start the server with tool calling enabled, use the <code class="docutils literal notranslate"><span class="pre">--tool-call-parser</span></code> option
+to specify the appropriate parser for your model. For example, to enable tool calling
+for EXAONE-4.0 models:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/EXAONE-4.0-32B-FP8<span class="w"> </span>--enable-auto-tool-choice<span class="w"> </span>--tool-call-parser<span class="w"> </span>hermes
 </pre></div>
 </div>
@@ -570,37 +571,7 @@ Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot
 Result: Getting the weather for San Francisco, CA in fahrenheit...
 </pre></div>
 </div>
-<section id="tool-choice-options">
-<h3>Tool Choice Options<a class="headerlink" href="#tool-choice-options" title="Link to this heading">#</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code> parameter controls how the model selects tools to call. Furiosa-LLM supports the following options:</p>
-<ul class="simple">
-<li><p><strong>``”auto”`` (default)</strong>: The model decides whether to call a tool or respond directly based on the conversation context.</p></li>
-<li><p><strong>``”required”``</strong>: Forces the model to call at least one tool. The model cannot respond without making a tool call.</p></li>
-<li><p><strong>``{“type”: “function”, “function”: {“name”: “&lt;function_name&gt;”}}``</strong>: Forces the model to call a specific named function.</p></li>
-</ul>
-<p><strong>Example with required tool calling:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Qwen3-32B-FP8&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like?&quot;</span><span class="p">}],</span>
-    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>  <span class="c1"># Your tool definitions</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span>  <span class="c1"># Force tool calling</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p><strong>Example with specific function selection:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Qwen3-32B-FP8&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Get weather information&quot;</span><span class="p">}],</span>
-    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">}}</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</section>
+<p>For detailed information on tool calling parsers, tool choice options, and additional examples, see <a class="reference internal" href="toolcalling.html#toolcalling"><span class="std std-ref">Tool Calling</span></a>.</p>
 </section>
 <section id="reasoning-support">
 <span id="reasoning"></span><h2>Reasoning Support<a class="headerlink" href="#reasoning-support" title="Link to this heading">#</a></h2>
@@ -666,7 +637,9 @@ attempting to access this field in responses without reasoning content will rais
 allowed because beam search requires the whole sequence to produce the
 output tokens.</p>
 </div>
-<p id="chatcompletionsapireference">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">OpenAI Chat API</a>.</p>
+<section id="chat-api-v1-chat-completions">
+<span id="chatcompletionsapireference"></span><h3>Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)<a class="headerlink" href="#chat-api-v1-chat-completions" title="Link to this heading">#</a></h3>
+<p>Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/chat">OpenAI Chat API</a>.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 20.0%" />
@@ -821,7 +794,10 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 </tbody>
 </table>
 </div>
-<p id="completionsapireference">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">OpenAI Completions API</a>.</p>
+</section>
+<section id="completions-api-v1-completions">
+<span id="completionsapireference"></span><h3>Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)<a class="headerlink" href="#completions-api-v1-completions" title="Link to this heading">#</a></h3>
+<p>Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/completions">OpenAI Completions API</a>.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 20.0%" />
@@ -945,7 +921,10 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 </tbody>
 </table>
 </div>
-<p id="embeddingsapi">Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/embeddings/create">OpenAI Embeddings API</a>.</p>
+</section>
+<section id="embeddings-api-v1-embeddings">
+<span id="embeddingsapi"></span><h3>Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)<a class="headerlink" href="#embeddings-api-v1-embeddings" title="Link to this heading">#</a></h3>
+<p>Parameters without descriptions inherit their behavior and functionality from the corresponding parameters in <a class="reference external" href="https://platform.openai.com/docs/api-reference/embeddings/create">OpenAI Embeddings API</a>.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 20.0%" />
@@ -984,7 +963,10 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 </tbody>
 </table>
 </div>
-<p id="scoreapi">This API provides text pair scoring functionality, calculating similarity scores between pairs of texts.
+</section>
+<section id="score-api-score-v1-score">
+<span id="scoreapi"></span><h3>Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)<a class="headerlink" href="#score-api-score-v1-score" title="Link to this heading">#</a></h3>
+<p>This API provides text pair scoring functionality, calculating similarity scores between pairs of texts.
 This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
 For details on the API specification, refer to the <a class="reference external" href="https://docs.vllm.ai/en/latest/serving/openai_compatible_server/#score-api">vLLM’s Score API documentation</a>.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
@@ -1026,15 +1008,13 @@ and scores are calculated element-wise.</p></td>
 <td><p>null</p></td>
 <td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>use_qwen3_template</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="#qwen3templating"><span class="std std-ref">Qwen3 Templating</span></a>.</p></td>
-</tr>
 </tbody>
 </table>
 </div>
-<p id="rerankapi">This API provides document reranking functionality, ordering documents by relevance to a given query.
+</section>
+<section id="rerank-api-rerank-v1-rerank-v2-rerank">
+<span id="rerankapi"></span><h3>Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)<a class="headerlink" href="#rerank-api-rerank-v1-rerank-v2-rerank" title="Link to this heading">#</a></h3>
+<p>This API provides document reranking functionality, ordering documents by relevance to a given query.
 This is an extension to the standard OpenAI API specification, originally introduced by vLLM.
 For details on the API specification, refer to the <a class="reference external" href="https://docs.vllm.ai/en/latest/serving/openai_compatible_server/#re-rank-api">vLLM’s Rerank API documentation</a>.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
@@ -1080,46 +1060,8 @@ If not specified, all documents are returned in ranked order.</p></td>
 <td><p>null</p></td>
 <td><p>See <a class="reference internal" href="reference/pooling_params.html#poolingparams"><span class="std std-ref">Pooling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>use_qwen3_template</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="#qwen3templating"><span class="std std-ref">Qwen3 Templating</span></a>.</p></td>
-</tr>
 </tbody>
 </table>
-</div>
-<section id="using-qwen3-reranker-model-s-score-templating">
-<span id="qwen3templating"></span><h3>Using Qwen3 Reranker Model’s Score Templating<a class="headerlink" href="#using-qwen3-reranker-model-s-score-templating" title="Link to this heading">#</a></h3>
-<p>The Qwen3-Reranker model uses a generation task under the hood for scoring and reranking.
-The model does not provide a built-in score template, therefore typical inference engines like vLLM
-just concatenate the query with documents. Therefore, to achieve optimal accuracy with these kinds of systems,
-the user must provide a specific input format that mimics the model’s score template, as follows:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-XPOST<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8000/v1/rerank&#39;</span><span class="w"> </span>-H<span class="w"> </span>...<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;model&quot;: &quot;Qwen/Qwen3-Reranker-8B&quot;,</span>
-<span class="s1">  &quot;query&quot;: &quot;&lt;|im_start|&gt;system\nJudge whether the Document meets the requirements based on the Query and the Instruct provided. Note that the answer can only be \&quot;yes\&quot; or \&quot;no\&quot;.&lt;|im_end|&gt;\n&lt;|im_start|&gt;user\n&lt;Instruct&gt;: Given a web search query, retrieve relevant passages that answer the query\n&lt;Query&gt;: What is the capital of France?\n&quot;,</span>
-<span class="s1">  &quot;documents&quot;: [</span>
-<span class="s1">    &quot;&lt;Document&gt;: The capital of Brazil is Brasilia.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;,</span>
-<span class="s1">    &quot;&lt;Document&gt;: The capital of France is Paris.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;,</span>
-<span class="s1">    &quot;&lt;Document&gt;: Horses and cows are both animals.&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n\n&lt;/think&gt;\n\n&quot;</span>
-<span class="s1">  ]</span>
-<span class="s1">}&#39;</span>
-</pre></div>
-</div>
-<p>Furiosa-LLM provides a designated parameter <code class="docutils literal notranslate"><span class="pre">use_qwen3_template</span></code> that handles this
-formatting automatically for Qwen3-Reranker models.
-When this parameter is set to true, the server automatically formats the input query and documents.
-The following API call is equivalent to the above example, simplifying the use of Qwen3-Reranker models:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-XPOST<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:8000/v1/rerank&#39;</span><span class="w"> </span>-H<span class="w"> </span>...<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;model&quot;: &quot;Qwen/Qwen3-Reranker-8B&quot;,</span>
-<span class="s1">  &quot;query&quot;: &quot;What is the capital of France?&quot;,</span>
-<span class="s1">  &quot;documents&quot;: [</span>
-<span class="s1">    &quot;The capital of Brazil is Brasilia.&quot;,</span>
-<span class="s1">    &quot;The capital of France is Paris.&quot;,</span>
-<span class="s1">    &quot;Horses and cows are both animals&quot;</span>
-<span class="s1">  ],</span>
-<span class="s1">  &quot;use_qwen3_template&quot;: true</span>
-<span class="s1">}&#39;</span>
-</pre></div>
 </div>
 </section>
 </section>
@@ -1278,7 +1220,7 @@ docker run -it --rm \
   -v $HOME/.cache/huggingface:/root/.cache/huggingface \
   -p 8000:8000 \
   furiosaai/furiosa-llm:latest \
-  serve furiosa-ai/Llama-3.1-8B-Instruct-FP8 --devices &quot;npu:0&quot;
+  serve furiosa-ai/Qwen2.5-0.5B-Instruct
 </pre></div>
 </div>
 <p>You can also specify additional options for the server and replace
@@ -1308,11 +1250,11 @@ Hugging Face cache directory.</p>
       </div>
     </a>
     <a class="right-next"
-       href="structured-output.html"
+       href="toolcalling.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Structured Output</p>
+        <p class="prev-next-title">Tool Calling</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1337,13 +1279,14 @@ Hugging Face cache directory.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-choice-options">Tool Choice Options</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-qwen3-reranker-model-s-score-templating">Using Qwen3 Reranker Model’s Score Templating</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-endpoints">Additional Endpoints</a><ul class="nav section-nav flex-column">
