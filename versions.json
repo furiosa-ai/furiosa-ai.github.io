@@ -30,14 +30,14 @@
         "url": "https://developer.furiosa.ai/v2025.3.0/en/"
     },
     {
-        "name": "2025.3.1 (Latest)",
+        "name": "2025.3.1",
         "version": "2025.3.1",
-        "url": "https://developer.furiosa.ai/v2025.3.1/en/",
-        "preferred": true
+        "url": "https://developer.furiosa.ai/v2025.3.1/en/"
     },
     {
-        "name": "2026.1.0-rc2",
-        "version": "2026.1.0rc2",
-        "url": "https://developer.furiosa.ai/v2026.1.0-rc2/en/"
+        "name": "2026.1.0 (Latest)",
+        "version": "2026.1.0",
+        "url": "https://developer.furiosa.ai/v2026.1.0/en/",
+        "preferred": true
     }
 ]
