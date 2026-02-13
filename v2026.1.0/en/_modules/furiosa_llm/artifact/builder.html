@@ -205,8 +205,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -222,7 +224,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../furiosa_llm/examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../furiosa_llm/examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -379,6 +380,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">more_itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">zip_equal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoConfig</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.native_llm_common</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_limits</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.types.config</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ArtifactConfig</span><span class="p">,</span>
     <span class="n">BucketConfig</span><span class="p">,</span>
@@ -390,7 +392,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.types.next_gen</span><span class="w"> </span><span class="kn">import</span> <span class="n">Artifact</span> <span class="k">as</span> <span class="n">NextGenArtifact</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact.types.next_gen</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelArtifact</span> <span class="k">as</span> <span class="n">NextGenModelArtifact</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">tasks</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.models.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">BucketWithOutputLogitsSize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.models.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BucketWithOutputLogitsSize</span><span class="p">,</span>
+    <span class="n">TokenwiseBucket</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.models.next_gen_config_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ComposableKernelMetadata</span><span class="p">,</span> <span class="n">CompositionType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum.model_configs</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_canonical_model_id</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.optimum.modeling</span><span class="w"> </span><span class="kn">import</span> <span class="n">FURIOSA_CONFIG_JSON</span>
@@ -868,6 +873,26 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_config</span><span class="o">.</span><span class="n">trust_remote_code</span><span class="p">:</span>
             <span class="n">prestep_for_remote_code_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_metadata</span><span class="p">,</span> <span class="n">num_pipeline_builder_workers</span><span class="p">)</span>
+
+        <span class="n">bucket_limits</span> <span class="o">=</span> <span class="n">compute_limits</span><span class="p">(</span>
+            <span class="n">tokenwise_buckets</span><span class="o">=</span><span class="p">[</span><span class="n">TokenwiseBucket</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bucket_config</span><span class="o">.</span><span class="n">tokenwise_seq_lens</span><span class="p">],</span>
+            <span class="n">attention_buckets</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="n">prefill_buckets</span><span class="p">,</span> <span class="n">decode_buckets</span><span class="p">,</span> <span class="n">other_buckets</span><span class="p">)),</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The computed bucket limits are </span><span class="si">{</span><span class="n">bucket_limits</span><span class="o">.</span><span class="n">max_executable_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">max_model_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_metadata</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;max_position_embeddings&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">max_model_len</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to determine &#39;max_model_len&#39; from the provided model configuration.&quot;</span>
+                <span class="s2">&quot;Skipping validation for the artifact&#39;s supported model length limits.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">max_model_len</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_model_len</span> <span class="o">&lt;</span> <span class="n">bucket_limits</span><span class="o">.</span><span class="n">max_executable_len</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The maximum executable length </span><span class="si">{</span><span class="n">bucket_limits</span><span class="o">.</span><span class="n">max_executable_len</span><span class="si">}</span><span class="s2"> derived from bucket configuration &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;exceeds the model&#39;s maximum position embeddings </span><span class="si">{</span><span class="n">max_model_len</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Please reduce the bucket sizes or adjust tokenwise_seq_lens to fit within the model&#39;s limit.&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">_use_composable_kernel</span><span class="p">:</span>
             <span class="n">pipeline</span> <span class="o">=</span> <span class="n">next_gen</span><span class="o">.</span><span class="n">build_pipeline</span><span class="p">(</span>

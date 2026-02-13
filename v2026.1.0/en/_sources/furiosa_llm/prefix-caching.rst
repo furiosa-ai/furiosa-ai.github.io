@@ -26,19 +26,6 @@ This can dramatically improve performance for scenarios with:
 How It Works
 ============
 
-Token-Level Matching
---------------------
-
-Furiosa-LLM's prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:
-
-.. code-block:: text
-
-    Request 1: [System prompt] + [User message A]
-               └─ KV cache stored ─┘
-
-    Request 2: [System prompt] + [User message B]
-               └─ Reused cache! ─┘  └─ New computation ─┘
-
 Automatic Management
 --------------------
 
@@ -46,8 +33,58 @@ The prefix cache is managed automatically by the scheduler:
 
 * **Cache Population**: KV cache entries are stored after each forward pass
 * **Cache Matching**: New requests are checked against the cache tree
-* **Cache Eviction**: Least recently used entries are evicted when memory is needed
+* **Cache Eviction**: Least recently used, non-active entries are evicted when memory is needed (starting from leaf suffixes)
 * **Cache Invalidation**: No manual invalidation required
+
+Token-Level Matching
+--------------------
+
+Furiosa-LLM's prefix caching operates at the token level, using a radix tree data structure for efficient prefix matching:
+
+.. code-block:: text
+
+    Request 1: [S1] + [A]
+           │
+           │    ┌──────────────┐   ┌──────────────┐
+           └──► │ new compute  │ + │ new compute  │
+                └──────────────┘   └──────────────┘
+           Cache: ROOT ── [S1] ── [A]
+
+    Request 2: [S1] + [B]
+           │
+           │    ┌──────────────┐   ┌──────────────┐
+           └──► │  cache hit   │ + │ new compute  │
+                └──────────────┘   └──────────────┘
+           Cache: ROOT ── [S1] ──┬── [A]
+                                 └── [B]
+
+In the standard radix-cache flow (non-hybrid attention), Furiosa-LLM:
+
+* Finds the **longest token-exact prefix** from the start of the prompt
+* Reuses all matched KV blocks from that prefix
+* Computes and caches only the unmatched suffix
+
+If a request diverges in the middle of an existing branch, the cache can split that branch internally so future requests can still reuse the shared portion precisely.
+
+.. _PrefixCachingHybridAttentionModels:
+
+Hybrid Attention Models
+-----------------------
+
+Prefix caching fully supports hybrid attention models that use both global attention and sliding-window attention.
+For these models, a prefix is reusable only when both cache types are valid for the same matched range:
+
+* Tokens match from the beginning of the prompt
+* Global KV cache entries are present for that range
+* Sliding-window KV entries are available as a valid contiguous window for the current position
+
+If the token match continues but the sliding-window requirement is no longer satisfied, Furiosa-LLM reuses only the longest safe prefix and computes the rest.
+This keeps results correct while still maximizing reuse.
+
+In practice, this means cache hits in hybrid models may be shorter than raw token overlap, especially when recent-window context differs across requests or has been evicted.
+
+This behavior is also affected by eviction policy. For sliding-window attention, Furiosa-LLM intentionally allows sliding-window blocks to be evicted independently of global blocks, including at intermediate (non-leaf) prefix-tree nodes. 
+The rationale is memory efficiency: blocks outside the frequently reused window are treated as stale and can be reclaimed earlier to make room for more useful cache content. However, under high memory pressure, this might cause a scenario where token-prefix matching continues while sliding-window validity ends sooner; in that case, Furiosa-LLM safely reuses the longest prefix that still has a valid window.
 
 Performance Benefits
 ====================
@@ -107,7 +144,12 @@ By reducing computation per request:
 Configuration
 =============
 
-Prefix caching is **enabled by default** in Furiosa-LLM with no configuration required.
+Prefix caching is not **enabled by default** in Furiosa-LLM. To enable prefix caching, set ``--enable-prefix-caching`` option in the Furiosa-LLM server settings:
+
+.. code-block:: bash
+
+    furiosa-llm serve --enable-prefix-caching ...
+
 
 Memory Management
 -----------------
@@ -116,7 +158,6 @@ The prefix cache shares memory with the KV cache pool. The scheduler automatical
 
 * Allocates cache entries from available KV cache memory
 * Evicts cached prefixes when memory pressure increases
-* Balances cache retention with active request memory needs
 
 No manual tuning of cache size or eviction policies is necessary.
 
@@ -131,7 +172,6 @@ To get the most benefit from prefix caching:
 1. **Use consistent system prompts**: Keep system prompts identical across requests
 2. **Maintain token-exact matching**: Even small changes (punctuation, whitespace) break the match
 3. **Order messages consistently**: The cache matches from the beginning of the prompt sequence
-4. **Batch similar requests**: Process requests with shared prefixes together when possible
 
 Example - Consistent Prompting:
 
@@ -139,7 +179,7 @@ Example - Consistent Prompting:
 
     # Good: Exact same system prompt
     system_prompt = "You are a helpful AI assistant."
-    
+
     response1 = llm.generate([{"role": "system", "content": system_prompt}, ...])
     response2 = llm.generate([{"role": "system", "content": system_prompt}, ...])
     # ✓ Cache hit
@@ -149,61 +189,11 @@ Example - Consistent Prompting:
     response4 = llm.generate([{"role": "system", "content": "You are a helpful assistant."}, ...])
     # ✗ Cache miss due to difference
 
-What Doesn't Work
------------------
-
-Prefix caching **will not match** when:
-
-* Tokenization differs (e.g., different tokenizer configurations)
-* Token sequences differ at any position before the divergence point
-* Prompts are presented in different formats (chat vs. completion)
-
 Monitoring
 ==========
 
-Cache Effectiveness
--------------------
-
 To monitor prefix caching effectiveness, observe:
 
+* **Prefix cache hit ratio**: Higher ratios indicate better reuse of cached prefixes. You can find this in the server logs.
 * **Time-to-First-Token (TTFT)**: Should decrease for requests with cached prefixes
-* **KV Cache utilization**: Prefix cache uses a portion of total KV cache memory
 * **Request latency patterns**: Requests following similar prompts should show consistent speedups
-
-The Furiosa-LLM server logs include prefix cache statistics when detailed logging is enabled.
-
-Limitations
-===========
-
-* **Memory overhead**: Cached prefixes consume KV cache memory
-* **Exact matching only**: Small prompt variations prevent cache hits
-* **Token-level granularity**: Partial token matches are not supported
-* **Single-model scope**: Cache is not shared across different model instances
-
-Advanced Topics
-===============
-
-Prefix Cache Eviction
-----------------------
-
-The cache uses a **Least Recently Used (LRU)** eviction strategy:
-
-* Recently used prefixes are retained longer
-* Infrequently accessed prefixes are evicted first when memory is needed
-* The eviction happens automatically during request scheduling
-
-Cache Coherency
----------------
-
-Prefix caching is coherent across concurrent requests:
-
-* Multiple requests can share the same cached prefix simultaneously
-* Cache entries remain valid until explicitly evicted
-* No synchronization overhead for read-only cache access
-
-For More Information
-====================
-
-* See :ref:`OpenAI Server API <OpenAIServer>` for server usage
-* See :ref:`LLM class reference <LLMClass>` for Python API details
-* See :ref:`Supported Models <SupportedModels>` for compatible models

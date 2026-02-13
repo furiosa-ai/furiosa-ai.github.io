@@ -16,7 +16,7 @@ Upcoming Releases 2026 Q1
 * 🔨 Qwen3 MoE, GPT-OSS, K-EXAONE model support
 * 🔨 Qwen3 VL and multi-modal model support
 * 🔨 KV cache offloading support
-* 🔨 OpenAI Response format support
+* 🔨 OpenResponse support
 * 🔨 Speculative decoding support
 * 🔨 PyTorch eager mode support
 

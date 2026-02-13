@@ -206,8 +206,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -375,9 +376,7 @@ Key features of Furiosa-LLM include:</p>
 <li><p>Quantization: FP8 (Planned: INT4, INT8, GPTQ, AWQ)</p></li>
 <li><p>Support for data, tensor, and pipeline parallelism across multiple NPUs</p></li>
 <li><p>OpenAI-compatible API server</p></li>
-<li><p>Various decoding algorithms: greedy search, beam search, top-k/top-p, and
-speculative decoding (planned for 2025.3)</p></li>
-<li><p>Support for context lengths of up to 32k</p></li>
+<li><p>Various decoding algorithms: greedy search, top-k/top-p, and speculative decoding (planned for 2026.3)</p></li>
 <li><p>Tool calling and reasoning parser support</p></li>
 <li><p>Structured output generation with guided decoding (guided_choice, guided_regex, guided_json, guided_grammar)</p></li>
 <li><p>Chunked Prefill</p></li>
@@ -389,8 +388,10 @@ speculative decoding (planned for 2025.3)</p></li>
 <ul class="simple">
 <li><p><a class="reference internal" href="../get_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a>: A quick start guide to Furiosa-LLM</p></li>
 <li><p><a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>: Details about the OpenAI-compatible server and its features</p></li>
+<li><p><a class="reference internal" href="toolcalling.html#toolcalling"><span class="std std-ref">Tool Calling</span></a>: Guide to tool calling with parsers and choice options</p></li>
 <li><p><a class="reference internal" href="structured-output.html#structuredoutput"><span class="std std-ref">Structured Output</span></a>: Guide to structured output generation with guided decoding</p></li>
 <li><p><a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a>: Guide to prefix caching for improved performance</p></li>
+<li><p><a class="reference internal" href="hybrid-kv-cache.html#hybridkvcache"><span class="std std-ref">Hybrid KV Cache Management</span></a>: Understanding hybrid KV cache management</p></li>
 <li><p><a class="reference internal" href="model-preparation.html#modelpreparation"><span class="std std-ref">Model Preparation</span></a>: How to prepare LLM models to be served by Furiosa-LLM</p></li>
 <li><p><a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a>: A guide to model parallelism in Furiosa-LLM</p></li>
 <li><p><a class="reference internal" href="reference.html#furiosallmreference"><span class="std std-ref">API Reference</span></a>: Python API reference for Furiosa-LLM</p></li>

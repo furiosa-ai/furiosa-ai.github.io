@@ -9,7 +9,6 @@ Examples
    :maxdepth: 1
 
    /furiosa_llm/examples/llm_chat
-   /furiosa_llm/examples/llm_chat_with_tools
    /furiosa_llm/examples/llm_embed
    /furiosa_llm/examples/llm_score
    /furiosa_llm/examples/llm_rerank

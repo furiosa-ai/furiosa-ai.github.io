@@ -206,8 +206,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -557,7 +558,7 @@ obtaining this update.</p>
 <span id="id7"></span><h3>🚀 Highlights<a class="headerlink" href="#release2025-2-0-highlights" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Add support for <a class="reference external" href="https://community.openai.com/t/usage-stats-now-available-when-using-streaming-with-the-chat-completions-api-or-completions-api/738156">stream_options.include_usage</a> in <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p></li>
-<li><p>Introduce <code class="docutils literal notranslate"><span class="pre">LLM.chat()</span></code> API to support chat-based models (see <a class="reference internal" href="../furiosa_llm/examples/llm_chat.html#furiosallmexampleschat"><span class="std std-ref">Chat</span></a>, <a class="reference internal" href="../furiosa_llm/examples/llm_chat_with_tools.html#furiosallmexampleschatwithtools"><span class="std std-ref">Chat with tools</span></a>).</p></li>
+<li><p>Introduce <code class="docutils literal notranslate"><span class="pre">LLM.chat()</span></code> API to support chat-based models (see <a class="reference internal" href="../furiosa_llm/examples/llm_chat.html#furiosallmexampleschat"><span class="std std-ref">Chat</span></a>, <span class="xref std std-ref">FuriosaLLMExamplesChatWithTools</span>).</p></li>
 <li><p>Mitigate out-of-memory issue by setting the default value of <code class="docutils literal notranslate"><span class="pre">spare_block_ratio=0</span></code> in <a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p></li>
 <li><p>Fix a bug caused by duplicate buckets in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code>.</p></li>
 <li><p>Add support for <code class="docutils literal notranslate"><span class="pre">/v1/models</span></code> and <code class="docutils literal notranslate"><span class="pre">/v1/models/{model_id}</span></code> endpoints in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> (see <a class="reference external" href="https://developer.furiosa.ai/v2025.3.1/furiosa_llm/furiosa-llm-serve.html#models-endpoint">Models Endpoint</a>).</p></li>

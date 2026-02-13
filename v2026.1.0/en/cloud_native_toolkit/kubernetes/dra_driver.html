@@ -206,8 +206,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/intro.html">Furiosa-LLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -223,7 +225,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/examples/llm_chat.html">Chat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/examples/llm_chat_with_tools.html">Chat with tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
@@ -444,7 +445,7 @@ NPU resources by running the following command:</p>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="w">          </span><span class="nt">numaNode</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">          </span><span class="nt">pcieBusID</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">resource.kubernetes.io/pciBusID</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000:17:00.0&quot;</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pcieRoot</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pci0000:16&quot;</span>
@@ -465,7 +466,7 @@ NPU resources by running the following command:</p>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">          </span><span class="nt">numaNode</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">          </span><span class="nt">pcieBusID</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">resource.kubernetes.io/pciBusID</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000:43:00.0&quot;</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pcieRoot</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pci0000:42&quot;</span>
@@ -491,7 +492,7 @@ NPU resources by running the following command:</p>
 <p>Below table lists available attributes for FuriosaAI NPU devices.</p>
 <p>You need to attach <code class="docutils literal notranslate"><span class="pre">npu.furiosa.ai</span></code> at the front of each attribute key when you use them in <code class="docutils literal notranslate"><span class="pre">ResourceClaimTemplate</span></code>.</p>
 <ul class="simple">
-<li><p>Only exception is <code class="docutils literal notranslate"><span class="pre">resource.kubernetes.io/pcieRoot</span></code>, which is a standard attribute defined by Kubernetes.</p></li>
+<li><p>The only exceptions are <code class="docutils literal notranslate"><span class="pre">resource.kubernetes.io/pcieRoot</span></code> and <code class="docutils literal notranslate"><span class="pre">resource.kubernetes.io/pciBusID</span></code>, which are standard attributes defined by Kubernetes.</p></li>
 </ul>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
@@ -526,7 +527,7 @@ NPU resources by running the following command:</p>
 <td><p>int</p></td>
 <td><p>The NUMA node value that NPU device belongs to</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pcieBusID</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">resource.kubernetes.io/pciBusID</span></code></p></td>
 <td><p>string</p></td>
 <td><p>The PCIe bus ID of the NPU device</p></td>
 </tr>

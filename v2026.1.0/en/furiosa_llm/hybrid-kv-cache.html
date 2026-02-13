@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Preparation &#8212; FuriosaAI Developer Center 2026.1.0rc2 documentation</title>
+    <title>Hybrid KV Cache Management &#8212; FuriosaAI Developer Center 2026.1.0rc2 documentation</title>
   
   
   
@@ -58,7 +58,7 @@
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/model-preparation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/hybrid-kv-cache';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
@@ -69,8 +69,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model Parallelism" href="model-parallelism.html" />
-    <link rel="prev" title="Hybrid KV Cache Management" href="hybrid-kv-cache.html" />
+    <link rel="next" title="Model Preparation" href="model-preparation.html" />
+    <link rel="prev" title="Prefix Caching" href="prefix-caching.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.1.0rc2" />
@@ -209,8 +209,8 @@
 <li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Preparation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hybrid KV Cache Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
@@ -341,7 +341,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Model Preparation</h1>
+    <h1>Hybrid KV Cache Management</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -351,12 +351,15 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-a-model-from-hugging-face-hub-optional">Download a model from Hugging Face Hub (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-quantization-optional">Model Quantization (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-a-model-to-a-model-artifact">Converting a Model to a Model Artifact</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-model-artifacts">Deploying Model Artifacts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pool-partitioning">Pool Partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#request-lifecycle">Request Lifecycle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-with-prefix-caching">Interaction with Prefix Caching</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-is-efficient">Why It Is Efficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-tuning">Optional Tuning</a></li>
 </ul>
             </nav>
         </div>
@@ -368,150 +371,74 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="model-preparation">
-<span id="modelpreparation"></span><h1>Model Preparation<a class="headerlink" href="#model-preparation" title="Link to this heading">#</a></h1>
-<p>To run a trained model, fine-tuned model or quantized model by yourself,
-Furiosa-LLM needs to convert the model into a model artifact.
-Also, if you want to apply specific optimization configurations or parallelization
-strategies for your workload, you must perform this model preparation step.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>This section is intended for users who wish to prepare their own model artifacts
-for further optimization or customization. If you are looking for a quick start,
-please refer to the <a class="reference internal" href="../get_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a> section.
-Additionally, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
-<a class="reference external" href="https://huggingface.co/furiosa-ai">Hugging Face Hub 🤗 - FuriosaAI organization</a>.
-You can use these to quickly run LLM models on the Furiosa NPU.</p>
-</div>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
-<p>Ensure that you meet the following prerequisites before starting the model preparation workflow:</p>
+  <section id="hybrid-kv-cache-management">
+<span id="hybridkvcache"></span><h1>Hybrid KV Cache Management<a class="headerlink" href="#hybrid-kv-cache-management" title="Link to this heading">#</a></h1>
+<p>Hybrid KV cache management is an internal optimization for models that mix global attention and sliding-window attention layers.
+Instead of treating all layers as if they had the same memory behavior, Furiosa-LLM manages them with separate KV cache pools and coordinated allocation logic.</p>
+<p>This feature is applied automatically when the model uses hybrid attention; no extra user configuration is required.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In hybrid models, global-attention layers and sliding-window layers have different cache growth patterns:</p>
 <ul class="simple">
-<li><p>A system with the prerequisites installed (see <a class="reference internal" href="../get_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
-<li><p>An installation of <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa-LLM</span></a></p></li>
-<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
-<li><p>Sufficient storage space for model weights (varies depending on the model size)</p></li>
+<li><p><strong>Global attention</strong> grows with full sequence length</p></li>
+<li><p><strong>Sliding-window attention</strong> is bounded by the window size</p></li>
 </ul>
+<p>Using one undifferentiated pool can over-provision memory for sliding-window layers, especially for long-context workloads.
+Hybrid KV cache management avoids this by separating the two memory paths.</p>
 </section>
-<section id="authorizing-hugging-face-hub-optional">
-<h2>Authorizing Hugging Face Hub (Optional)<a class="headerlink" href="#authorizing-hugging-face-hub-optional" title="Link to this heading">#</a></h2>
-<p>Some models, such as <code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.1-8B</span></code>, require a license to run.
-For these models, you need to create a Hugging Face account, accept the model’s
-license, and generate an access token.
-You can create your access token at <a class="reference external" href="https://huggingface.co/settings/tokens">https://huggingface.co/settings/tokens</a>.
-Once you get the access token, you can authenticate on the Hugging Face Hub as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade &quot;huggingface_hub[cli]&quot;
-huggingface-cli login --token $HF_TOKEN
+<section id="how-it-works">
+<h2>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h2>
+<section id="pool-partitioning">
+<h3>Pool Partitioning<a class="headerlink" href="#pool-partitioning" title="Link to this heading">#</a></h3>
+<p>At initialization, Furiosa-LLM partitions KV cache memory into:</p>
+<ul class="simple">
+<li><p>A <strong>global-attention pool</strong></p></li>
+<li><p>A <strong>sliding-window attention pool</strong></p></li>
+</ul>
+<p>Each pool is then assigned to the corresponding KV cache space for that attention type.
+The partitioning logic is attention-aware, so memory is distributed according to expected global vs windowed usage instead of a one-size-fits-all split.</p>
+</section>
+<section id="request-lifecycle">
+<h3>Request Lifecycle<a class="headerlink" href="#request-lifecycle" title="Link to this heading">#</a></h3>
+<p>For each request phase, the scheduler coordinates both pools together:</p>
+<ul class="simple">
+<li><p><strong>Prefill</strong>: allocates write blocks in global and sliding-window pools for incoming tokens</p></li>
+<li><p><strong>Extend / Decode</strong>: loads existing cached blocks and allocates new write blocks for new tokens</p></li>
+<li><p><strong>Cleanup</strong>: eagerly releases sliding-window blocks that moved out of the valid window, while keeping global blocks reusable for full-prefix history</p></li>
+</ul>
+<p>This is a key efficiency point: sliding-window cache entries outside the active window are reclaimed early instead of occupying memory until request completion.</p>
+</section>
+<section id="interaction-with-prefix-caching">
+<h3>Interaction with Prefix Caching<a class="headerlink" href="#interaction-with-prefix-caching" title="Link to this heading">#</a></h3>
+<p>When prefix caching is enabled, hybrid cache management works with hybrid prefix matching to deduplicate both global and sliding-window blocks.
+If part of a matched prefix no longer has valid sliding-window cache, Furiosa-LLM still reuses the valid portion and computes only what is needed.
+For details on hybrid prefix-match behavior, see <a class="reference internal" href="prefix-caching.html#prefixcachinghybridattentionmodels"><span class="std std-ref">Hybrid Attention Models</span></a> in <a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a>.</p>
+</section>
+</section>
+<section id="why-it-is-efficient">
+<h2>Why It Is Efficient<a class="headerlink" href="#why-it-is-efficient" title="Link to this heading">#</a></h2>
+<p>Compared to a single pooled approach, hybrid KV cache management provides:</p>
+<ul class="simple">
+<li><p><strong>Lower memory waste</strong> in models with sparse or mixed attention patterns</p></li>
+<li><p><strong>Higher effective cache capacity</strong> for long-context global attention</p></li>
+<li><p><strong>Reduced eviction pressure</strong> by reclaiming stale sliding-window blocks earlier</p></li>
+<li><p><strong>Stable serving behavior</strong> without requiring users to manually tune per-attention memory pools</p></li>
+</ul>
+<p>For end users, the main benefit is straightforward: better KV memory utilization and more consistent performance on hybrid-attention models, automatically.</p>
+</section>
+<section id="optional-tuning">
+<h2>Optional Tuning<a class="headerlink" href="#optional-tuning" title="Link to this heading">#</a></h2>
+<p>For hybrid-attention models, you can optionally set the <code class="docutils literal notranslate"><span class="pre">EXPECTED_AVERAGE_SEQ_LENGTH</span></code> environment variable to guide how much KV memory is reserved for global attention versus sliding-window attention.</p>
+<p>This is useful when your workload has a stable prompt-length pattern (for example, consistently very long prompts), and you want memory partitioning to better match that pattern.</p>
+<ul class="simple">
+<li><p>If unset, Furiosa-LLM uses a default ratio based on the model’s global-attention and sliding-window attention cache requirements.</p></li>
+<li><p>If set, Furiosa-LLM uses the provided expected sequence length to compute a more workload-aware split.</p></li>
+<li><p>The value must be a positive integer.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">EXPECTED_AVERAGE_SEQ_LENGTH</span><span class="o">=</span><span class="m">8192</span>
+furiosa-llm<span class="w"> </span>serve<span class="w"> </span>...
 </pre></div>
 </div>
-</section>
-<section id="download-a-model-from-hugging-face-hub-optional">
-<h2>Download a model from Hugging Face Hub (Optional)<a class="headerlink" href="#download-a-model-from-hugging-face-hub-optional" title="Link to this heading">#</a></h2>
-<p>When using a model from the Hugging Face Hub, Furiosa-LLM automatically downloads the model weights
-during the artifact building process.
-However, depending on your network environment, this download may take a significant amount of time.
-If you prefer to download the model in advance, you can do so using the
-<code class="docutils literal notranslate"><span class="pre">huggingface-cli</span></code> command.</p>
-<p>The following command downloads the model weights and configuration files
-for the Llama 3.1 8B model to the Hugging Face Hub cache directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
-</pre></div>
-</div>
-</section>
-<section id="model-quantization-optional">
-<span id="modelquantization"></span><h2>Model Quantization (Optional)<a class="headerlink" href="#model-quantization-optional" title="Link to this heading">#</a></h2>
-<p>Quantization is a widely used technique to reduce the computational and memory requirements for inference
-by mapping the high-precision space of activations, weights, and KV cache to lower-precision formats
-such as INT8, FP8, or INT4 — while aiming to preserve model accuracy.</p>
-<p>It is typically applied when higher throughput or lower latency is needed. However, since quantization may affect
-model accuracy, it is important to perform thorough experimentation and accuracy evaluations.</p>
-<p>Furiosa-LLM currently supports fine-grained FP8 dynamic quantization for causal language models.
-We plan to support more quantization schemes based on llm-compressor in the next releases.</p>
-<p>To quantize a model, you first need to load it using the
-<code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM.from_pretrained()</span></code> method from the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> library.
-When loading the model, you can specify the <code class="docutils literal notranslate"><span class="pre">quantization_config</span></code> parameter to define
-the quantization scheme to be applied. Below is an example of loading and quantizing the Qwen3-32B model
-using fine-grained FP8 dynamic quantization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">FineGrainedFP8Config</span>
-
-<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;Qwen/Qwen3-32B&quot;</span>
-<span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;./qwen3-32b-fp8-dynamic&quot;</span>
-
-<span class="c1"># FineGrained FP8 Quantization Example</span>
-<span class="c1"># Using Block-wise(128x128) Dynamic FP8 Quantization for weights</span>
-<span class="n">quantization_config</span> <span class="o">=</span> <span class="n">FineGrainedFP8Config</span><span class="p">(</span>
-    <span class="n">activation_scheme</span><span class="o">=</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span>
-    <span class="n">weight_block_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># Loading the model with quantization configuration</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
-    <span class="n">model_id</span><span class="p">,</span>
-    <span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">quantization_config</span><span class="o">=</span><span class="n">quantization_config</span><span class="p">,</span>
-    <span class="n">torch_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span>
-<span class="p">)</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
-
-<span class="c1"># Saving the quantized model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
-<span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="converting-a-model-to-a-model-artifact">
-<span id="buildingmodelartifact"></span><h2>Converting a Model to a Model Artifact<a class="headerlink" href="#converting-a-model-to-a-model-artifact" title="Link to this heading">#</a></h2>
-<p>The Furiosa-LLM <a class="reference internal" href="reference/artifact_builder.html#artifactbuilderclass"><span class="std std-ref">ArtifactBuilder</span></a> API offers a variety of options to customize the model artifact.
-The <code class="docutils literal notranslate"><span class="pre">model_id_or_path</span></code> parameter accepts either a Hugging Face model ID (e.g., <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B</span></code>)
-or a local path, allowing you to build artifacts from pre-trained, fine-tuned, or quantized models.</p>
-<p>Additionally, the API allows you to define bucket configurations for prefill and decode phases,
-as well as token-wise sequence lengths to optimize the model performance based on your workload.
-You can also specify parallelization strategies such as tensor parallelism and pipeline parallelism
-to efficiently utilize multiple NPUs for inference.</p>
-<p>The following example demonstrates how to create a model artifact from a quantized model
-with specific bucket configurations and tensor parallelism settings.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span><span class="p">,</span> <span class="n">BucketConfig</span><span class="p">,</span> <span class="n">ParallelConfig</span>
-
-<span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
-    <span class="c1"># Path to the quantized model directory or model ID from Hugging Face Hub</span>
-    <span class="n">model_id_or_path</span><span class="o">=</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic&quot;</span><span class="p">,</span>
-    <span class="n">bucket_config</span><span class="o">=</span><span class="n">BucketConfig</span><span class="p">(</span>
-        <span class="n">prefill_buckets</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)],</span>  <span class="c1"># Prefill bucket configuration</span>
-        <span class="n">decode_buckets</span><span class="o">=</span><span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">256</span><span class="p">)],</span>   <span class="c1"># Decode bucket configuration</span>
-        <span class="n">tokenwise_seq_lens</span><span class="o">=</span><span class="p">[</span><span class="mi">128</span><span class="p">],</span>    <span class="c1"># Token-wise sequence lengths</span>
-    <span class="p">),</span>
-    <span class="n">parallel_config</span><span class="o">=</span><span class="n">ParallelConfig</span><span class="p">(</span>
-        <span class="n">tensor_parallel_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>   <span class="c1"># Tensor parallelism degree (32 PEs means 4 NPUs)</span>
-        <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># Pipeline parallelism degree (default: 1)</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic-artifact&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Once a model artifact is built, you can deploy it to any machine equipped with FuriosaAI RNGD and
-run the model using the <a class="reference internal" href="reference/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or the appropriate interface like <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>To achieve better performance or to run LLM models on multiple NPUs,
-you can take advantage of model parallelism in Furiosa-LLM. To learn more about model
-parallelism, please refer to the <a class="reference internal" href="model-parallelism.html#modelparallelism"><span class="std std-ref">Model Parallelism</span></a> section.</p>
-</div>
-</section>
-<section id="deploying-model-artifacts">
-<h2>Deploying Model Artifacts<a class="headerlink" href="#deploying-model-artifacts" title="Link to this heading">#</a></h2>
-<p>Once you have a model artifact, you can transfer and reuse it on any machine with a
-Furiosa NPU and Furiosa-LLM installed.
-To transfer a model artifact:</p>
-<ol class="arabic simple">
-<li><p>Compress the model artifact directory using your preferred compression tool.</p></li>
-<li><p>Copy the compressed file to the target host.</p></li>
-<li><p>Uncompress it on the target machine.</p></li>
-<li><p>Run the model using either the <a class="reference internal" href="reference/llm.html#llmclass"><span class="std std-ref">LLM class</span></a> or the <a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>.</p></li>
-</ol>
-<p>For quick examples of loading and running model artifacts, refer to the
-<a class="reference internal" href="../get_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a> section.</p>
 </section>
 </section>
 
@@ -527,20 +454,20 @@ To transfer a model artifact:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hybrid-kv-cache.html"
+       href="prefix-caching.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Hybrid KV Cache Management</p>
+        <p class="prev-next-title">Prefix Caching</p>
       </div>
     </a>
     <a class="right-next"
-       href="model-parallelism.html"
+       href="model-preparation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Parallelism</p>
+        <p class="prev-next-title">Model Preparation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -561,12 +488,15 @@ To transfer a model artifact:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authorizing-hugging-face-hub-optional">Authorizing Hugging Face Hub (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-a-model-from-hugging-face-hub-optional">Download a model from Hugging Face Hub (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-quantization-optional">Model Quantization (Optional)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-a-model-to-a-model-artifact">Converting a Model to a Model Artifact</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-model-artifacts">Deploying Model Artifacts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pool-partitioning">Pool Partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#request-lifecycle">Request Lifecycle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-with-prefix-caching">Interaction with Prefix Caching</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-is-efficient">Why It Is Efficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-tuning">Optional Tuning</a></li>
 </ul>
   </nav></div>
 

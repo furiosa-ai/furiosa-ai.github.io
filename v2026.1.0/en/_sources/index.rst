@@ -75,8 +75,10 @@ Furiosa-LLM
 -------------------------------------------------
 * :ref:`FuriosaLLM`: An introduction to Furiosa-LLM
 * :ref:`OpenAIServer`: More details about the OpenAI-compatible server and its features
+* :ref:`ToolCalling`: Guide to tool calling with parsers and choice options
 * :ref:`StructuredOutput`: Guide to structured output generation with guided decoding
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
+* :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM
 * :ref:`ModelParallelism`: Tensor/Pipeline/Data parallelism in Furiosa-LLM
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
@@ -140,8 +142,10 @@ Other Links
 
    /furiosa_llm/intro
    /furiosa_llm/furiosa-llm-serve
+   /furiosa_llm/toolcalling
    /furiosa_llm/structured-output
    /furiosa_llm/prefix-caching
+   /furiosa_llm/hybrid-kv-cache
    /furiosa_llm/model-preparation
    /furiosa_llm/model-parallelism
    /furiosa_llm/reference

@@ -82,7 +82,7 @@ NPU resources by running the following command:
                int: 0
              numaNode:
                int: 0
-             pcieBusID:
+             resource.kubernetes.io/pciBusID:
                string: "0000:17:00.0"
              resource.kubernetes.io/pcieRoot:
                string: "pci0000:16"
@@ -103,7 +103,7 @@ NPU resources by running the following command:
                int: 1
              numaNode:
                int: 0
-             pcieBusID:
+             resource.kubernetes.io/pciBusID:
                string: "0000:43:00.0"
              resource.kubernetes.io/pcieRoot:
                string: "pci0000:42"
@@ -130,7 +130,7 @@ Below table lists available attributes for FuriosaAI NPU devices.
 
 You need to attach ``npu.furiosa.ai`` at the front of each attribute key when you use them in ``ResourceClaimTemplate``.
 
-- Only exception is ``resource.kubernetes.io/pcieRoot``, which is a standard attribute defined by Kubernetes.
+- The only exceptions are ``resource.kubernetes.io/pcieRoot`` and ``resource.kubernetes.io/pciBusID``, which are standard attributes defined by Kubernetes.
 
 .. list-table::
    :align: center
@@ -155,7 +155,7 @@ You need to attach ``npu.furiosa.ai`` at the front of each attribute key when yo
    * - ``numaNode``
      - int
      - The NUMA node value that NPU device belongs to
-   * - ``pcieBusID``
+   * - ``resource.kubernetes.io/pciBusID``
      - string
      - The PCIe bus ID of the NPU device
    * - ``resource.kubernetes.io/pcieRoot``
