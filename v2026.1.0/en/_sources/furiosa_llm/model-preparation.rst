@@ -37,8 +37,8 @@ Once you get the access token, you can authenticate on the Hugging Face Hub as f
 
 .. code-block::
 
-  pip install --upgrade "huggingface_hub[cli]"
-  huggingface-cli login --token $HF_TOKEN
+  pip install --upgrade huggingface_hub
+  hf auth login --token $HF_TOKEN
 
 Download a model from Hugging Face Hub (Optional)
 =================================================
@@ -46,14 +46,14 @@ When using a model from the Hugging Face Hub, Furiosa-LLM automatically download
 during the artifact building process.
 However, depending on your network environment, this download may take a significant amount of time.
 If you prefer to download the model in advance, you can do so using the
-``huggingface-cli`` command.
+``hf`` CLI command.
 
 The following command downloads the model weights and configuration files
 for the Llama 3.1 8B model to the Hugging Face Hub cache directory.
 
 .. code-block::
 
-  huggingface-cli download "meta-llama/Llama-3.1-8B-Instruct"
+  hf download "meta-llama/Llama-3.1-8B-Instruct"
 
 
 .. _ModelQuantization:

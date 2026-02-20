@@ -151,7 +151,7 @@ obtaining this update.
 🚀 Highlights
 -------------
 * Add support for `stream_options.include_usage <https://community.openai.com/t/usage-stats-now-available-when-using-streaming-with-the-chat-completions-api-or-completions-api/738156>`_ in :ref:`OpenAIServer`.
-* Introduce ``LLM.chat()`` API to support chat-based models (see :ref:`FuriosaLLMExamplesChat`, :ref:`FuriosaLLMExamplesChatWithTools`).
+* Introduce ``LLM.chat()`` API to support chat-based models (see `Chat Example <https://developer.furiosa.ai/v2025.3.1/furiosa_llm/examples/llm_chat.html>`_, `Tool Calling Guide <https://developer.furiosa.ai/v2025.3.1/furiosa_llm/toolcalling.html>`_).
 * Mitigate out-of-memory issue by setting the default value of ``spare_block_ratio=0`` in :ref:`OpenAIServer`.
 * Fix a bug caused by duplicate buckets in ``furiosa-llm``.
 * Add support for ``/v1/models`` and ``/v1/models/{model_id}`` endpoints in ``furiosa-llm`` (see `Models Endpoint <https://developer.furiosa.ai/v2025.3.1/furiosa_llm/furiosa-llm-serve.html#models-endpoint>`_).
@@ -241,7 +241,7 @@ obtaining this update.
 🚀 Highlights
 -------------
 * LLM Latency Optimization (Up to 11.66% TTFT, 11.45% TPOT improvement for 30k inputs, 1k outputs)
-* Support Tool-calling in Furiosa-LLM (`Tool Calling <https://developer.furiosa.ai/v2025.1.0/en/furiosa_llm/furiosa-llm-serve.html#tool-calling>`_)
+* Support Tool-calling in Furiosa-LLM (`Tool Calling <https://developer.furiosa.ai/v2025.3.1/en/furiosa_llm/furiosa-llm-serve.html#tool-calling>`_)
 * Support Device remapping (e.g., ``/dev/rngd/npu2pe0-3`` -> ``/dev/rngd/npu0pe0-3``) for container
 * Add the new command line tool ``furiosa-llm build`` to build easily an artifact from Hugging Face model (`Building a Model Artifact <https://developer.furiosa.ai/v2025.1.0/en/furiosa_llm/model-preparation-workflow.html#building-a-model-artifact>`_)
 * Fix continuous batch scheduling bugs which occur in certain ranges of sequence lengths and batch sizes

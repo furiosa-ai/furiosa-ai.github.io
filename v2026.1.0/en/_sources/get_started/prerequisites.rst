@@ -5,8 +5,7 @@ Installing Prerequisites
 ************************
 
 This article describes how to install the prerequisite packages necessary
-for the FuriosaAI software stack, namely the device driver, firmware,
-and PE Runtime.
+for the FuriosaAI software stack, namely the device driver, and firmware.
 These packages are available for Debian and Ubuntu systems.
 
 Requirements
@@ -75,7 +74,7 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
 
   sudo apt update
   sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
-  sudo apt install furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
+  sudo apt install furiosa-driver-rngd furiosa-smi
 
 
 Verifying NPU Device Installation

@@ -387,7 +387,7 @@ The features and APIs described herein are subject to change in the future.</p>
 <ul class="simple">
 <li><p>A system with the prerequisites installed (see <a class="reference internal" href="prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
 <li><p>Python 3.10, 3.11, or 3.12</p></li>
-<li><p>PyTorch 2.5.1</p></li>
+<li><p>PyTorch 2.7.x</p></li>
 <li><p>Sufficient storage space for model weights (varies depending on the model size)</p></li>
 </ul>
 <p>To install the <code class="docutils literal notranslate"><span class="pre">furiosa-compiler</span></code> package and Furiosa-LLM,
@@ -405,8 +405,8 @@ For these, you need to create a Hugging Face account, accept the model’s
 license, and generate a token.
 You can create your token at <a class="reference external" href="https://huggingface.co/settings/tokens">https://huggingface.co/settings/tokens</a>.
 Once you get a token, you can authenticate on the Hugging Face Hub as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade &quot;huggingface_hub[cli]&quot;
-huggingface-cli login --token $HF_TOKEN
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade huggingface_hub
+hf auth login --token $HF_TOKEN
 </pre></div>
 </div>
 </section>
@@ -479,7 +479,7 @@ and invokes the <code class="docutils literal notranslate"><span class="pre">gen
 <p>For detailed examples of using the chat API, refer to:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../furiosa_llm/examples/llm_chat.html#furiosallmexampleschat"><span class="std std-ref">Chat</span></a></p></li>
-<li><p><span class="xref std std-ref">FuriosaLLMExamplesChatWithTools</span></p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/toolcalling.html#toolcalling"><span class="std std-ref">Tool Calling</span></a></p></li>
 </ul>
 </section>
 <section id="launching-the-openai-compatible-server">

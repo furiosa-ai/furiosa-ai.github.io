@@ -146,3 +146,8 @@ API & Usability Improvements
 * **Removed Beam Search Support**:
 
   * Beam search decoding has been removed from the LLM engine. **Migration**: Use sampling-based decoding methods such as top-k, top-p, or temperature sampling.
+
+* **Removed ``furiosa-pert-rngd`` Package**:
+
+  * The ``furiosa-pert-rngd`` package has been removed. PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.
+  * **Migration**: See the :ref:`UpgradeGuide` for details.

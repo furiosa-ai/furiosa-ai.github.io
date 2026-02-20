@@ -400,8 +400,8 @@ For these models, you need to create a Hugging Face account, accept the model’
 license, and generate an access token.
 You can create your access token at <a class="reference external" href="https://huggingface.co/settings/tokens">https://huggingface.co/settings/tokens</a>.
 Once you get the access token, you can authenticate on the Hugging Face Hub as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade &quot;huggingface_hub[cli]&quot;
-huggingface-cli login --token $HF_TOKEN
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install --upgrade huggingface_hub
+hf auth login --token $HF_TOKEN
 </pre></div>
 </div>
 </section>
@@ -411,10 +411,10 @@ huggingface-cli login --token $HF_TOKEN
 during the artifact building process.
 However, depending on your network environment, this download may take a significant amount of time.
 If you prefer to download the model in advance, you can do so using the
-<code class="docutils literal notranslate"><span class="pre">huggingface-cli</span></code> command.</p>
+<code class="docutils literal notranslate"><span class="pre">hf</span></code> CLI command.</p>
 <p>The following command downloads the model weights and configuration files
 for the Llama 3.1 8B model to the Hugging Face Hub cache directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hf</span> <span class="n">download</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
 </pre></div>
 </div>
 </section>

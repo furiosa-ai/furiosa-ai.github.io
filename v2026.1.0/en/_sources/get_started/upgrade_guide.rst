@@ -23,7 +23,7 @@ Please follow the steps below to upgrade the Furiosa software stack:
 
 .. code-block:: sh
 
-   sudo apt update && sudo apt install -y furiosa-driver-rngd furiosa-pert-rngd furiosa-smi
+   sudo apt update && sudo apt install -y furiosa-driver-rngd furiosa-smi
 
 Usually, major releases of the Furiosa SDK include a firmware upgrade.
 The firmware can be upgraded by running the following command:
@@ -32,6 +32,11 @@ The firmware can be upgraded by running the following command:
 
    sudo apt install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
 
+.. note::
+
+  Starting from the 2026.1 release, the ``furiosa-pert-rngd`` package has been removed.
+  PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.
+  Installing the firmware package will automatically remove ``furiosa-pert-rngd`` if it was previously installed.
 
 .. note::
 

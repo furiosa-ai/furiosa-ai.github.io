@@ -107,7 +107,7 @@ To launch the server with a custom chat template, use the following command:
 
     furiosa-llm serve [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
 
-.. _ToolCalling:
+.. _ToolCallingServer:
 
 Tool Calling Support
 ====================

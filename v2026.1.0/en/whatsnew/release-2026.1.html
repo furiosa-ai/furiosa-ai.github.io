@@ -539,6 +539,12 @@ obtaining this update.</p>
 <li><p>Beam search decoding has been removed from the LLM engine. <strong>Migration</strong>: Use sampling-based decoding methods such as top-k, top-p, or temperature sampling.</p></li>
 </ul>
 </li>
+<li><p><strong>Removed ``furiosa-pert-rngd`` Package</strong>:</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">furiosa-pert-rngd</span></code> package has been removed. PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.</p></li>
+<li><p><strong>Migration</strong>: See the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> for details.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 </section>

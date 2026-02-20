@@ -24,7 +24,7 @@ The minimum requirements for Furiosa-LLM are as follows:
 
 * A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * Python 3.10, 3.11, or 3.12
-* PyTorch 2.5.1
+* PyTorch 2.7.x
 * Sufficient storage space for model weights (varies depending on the model size)
 
 
@@ -62,8 +62,8 @@ Once you get a token, you can authenticate on the Hugging Face Hub as follows:
 
 .. code-block::
 
-  pip install --upgrade "huggingface_hub[cli]"
-  huggingface-cli login --token $HF_TOKEN
+  pip install --upgrade huggingface_hub
+  hf auth login --token $HF_TOKEN
 
 Offline Batch Inference with Furiosa-LLM
 ========================================
@@ -99,7 +99,7 @@ and invokes the ``generate`` method with the formatted prompt.
 For detailed examples of using the chat API, refer to:
 
 * :ref:`FuriosaLLMExamplesChat`
-* :ref:`FuriosaLLMExamplesChatWithTools`
+* :ref:`ToolCalling`
 
 
 Launching the OpenAI-Compatible Server
