@@ -60,8 +60,8 @@ devices, run the following command:
    +------+--------+------------------+------------------+---------+---------+--------------+
 
 
-To upgrade Furiosa-LLM, use ``pip``:
+To upgrade Furiosa-LLM, use ``uv pip``:
 
-.. code-block::
+.. code-block:: sh
 
-   pip install --upgrade --upgrade-strategy eager furiosa-llm
+   uv pip install --upgrade --torch-backend=auto furiosa-llm

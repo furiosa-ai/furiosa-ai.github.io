@@ -61,11 +61,11 @@ Pooling Models
    * - Qwen 3 Embedding
      - ``Qwen3Model``
      - Embedding
-     - ``Qwen/Qwen3-Embedding-4B``, ``Qwen/Qwen3-Embedding-8B``
+     - ``Qwen/Qwen3-Embedding-8B``
    * - Qwen 3 Reranker
      - ``Qwen3ForSequenceClassification``
      - Reranking
-     - ``Qwen/Qwen3-Reranker-4B``, ``Qwen/Qwen3-Reranker-8B``
+     - ``Qwen/Qwen3-Reranker-8B``
 
 Planned Models for Future Releases
 ===============================================
