@@ -14,7 +14,7 @@ and other deep learning models.
   :align: center
 
 
-RNGD is based the Tensor Contraction Processor (TCP) architecture which
+RNGD is based on the Tensor Contraction Processor (TCP) architecture which
 utilizes TSMC's 5nm process node, and operates at 1.0 GHz. It offers 512 TOPS and 1024 TOPS of INT8 and INT4
 performance, respectively.
 RNGD is configured with two HBM3 modules providing a memory bandwidth of 1.5 TB/s,
@@ -22,7 +22,7 @@ and supports PCIe Gen5 x16. For multi-tenant environments like Kubernetes,
 a single RNGD chip can work as 2, 4, or 8 individual NPUs, each fully isolated with its own cores and memory bandwidth.
 RNGD supports Single Root IO Virtualization (SR-IOV) and virtualization for multi-instance NPUs.
 
-Please refer to the followings to learn more about TCP architecture and RNGD:
+Please refer to the following resources to learn more about TCP architecture and RNGD:
 
 * `TCP: A Tensor Contraction Processor for AI Workloads, ACM/IEEE ISCA 2024 <https://ieeexplore.ieee.org/document/10609575>`_ (`PDF <https://furiosa.ai/download/FuriosaAI-tensor-contraction-processor-isca24>`_)
 * `FuriosaAI RNGD: A Tensor Contraction Processor for Sustainable AI Computing, Hotchips 2024 <https://hc2024.hotchips.org/#clip=8jnhm5vdlsow>`_
