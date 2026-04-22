@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Furiosa SDK Release 2026.2 &#8212; FuriosaAI Developer Center 2026.2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=0ecdb6af"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'whatsnew/release-2026.2';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.17.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.2.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Furiosa SDK Release 2026.1" href="release-2026.1.html" />
+    <link rel="prev" title="What’s New" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.2.0" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/supported_models.html">Supported Models</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">What’s New</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/responses-api.html">Responses API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/toolcalling.html">Tool Calling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/online_chat_completion_logprobs.html">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/llm_d.html">Deploying Furiosa-LLM with llm-d</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Furiosa SDK Release 2026.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qwen3-and-exaone4-performance-improvements">Qwen3 and Exaone4 Performance Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#per-model-bucket-presets">Per-Model Bucket Presets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallel-router-with-prefix-aware-routing">Data Parallel Router with Prefix-Aware Routing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching-is-now-on-by-default">Prefix Caching Is Now On by Default</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#response-api-phase-1">Response API (Phase 1)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-changes">All Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-efficiency-improvements">Performance &amp; Efficiency Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#released-components">📦 Released Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">Python packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apt-packages">APT packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-images">Docker images</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="furiosa-sdk-release-2026-2">
+<span id="release2026-2-0"></span><h1>Furiosa SDK Release 2026.2<a class="headerlink" href="#furiosa-sdk-release-2026-2" title="Link to this heading">#</a></h1>
+<p>We are happy to announce the release of <strong>Furiosa SDK 2026.2</strong>.</p>
+<p>Building on the foundation laid in 2026.1, this release focuses on making production
+deployments faster, easier to configure, and easier to scale out. We have improved
+serving performance for <strong>Qwen3</strong> and <strong>Exaone4</strong>, removed most of the bucket-tuning
+ceremony from artifact builds via <strong>preset-based configuration</strong>, introduced an
+independent <strong>Data Parallel (DP) Router</strong> with a <strong>prefix-aware</strong> variant, enabled
+<strong>prefix caching by default</strong>, and shipped the first phase of the <strong>Response API
+(/v1/responses)</strong>.</p>
+<p>If you are upgrading from 2026.1, please also read the
+<a class="reference internal" href="#release2026-2-0-breakingchanges"><span class="std std-ref">🚨 Breaking Changes &amp; Deprecations</span></a> section and the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a>.</p>
+<section id="highlights">
+<h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<section id="qwen3-and-exaone4-performance-improvements">
+<h3>Qwen3 and Exaone4 Performance Improvements<a class="headerlink" href="#qwen3-and-exaone4-performance-improvements" title="Link to this heading">#</a></h3>
+<p>Two of the most frequently deployed model families on RNGD see meaningful throughput
+improvements in this release, with per-request latencies held at 2026.1 levels.
+<strong>Qwen3</strong> artifacts ship with expanded prefill, decode, and append buckets (including
+a 64k append bucket for Qwen3-32B-FP8) so more of the real-world request distribution
+hits well-tuned kernels, and <strong>Exaone4</strong> gains more high-batch and append buckets
+along with <a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html#hybridkvcache"><span class="std std-ref">Hybrid KV Cache Management</span></a>, which splits KV memory
+into separate global-attention and sliding-window pools and reclaims sliding-window
+blocks as soon as they fall outside the active window — reducing memory waste and
+lifting effective concurrency on long-context workloads.</p>
+<p>Across a sweep of input length, output length, and concurrency, tokens/second
+throughput improved by <strong>74.9% on average over 2026.1</strong>, rising to <strong>84.8%</strong> in the
+low-concurrency regime (concurrency below 64), while TTFT and TPOT remain in line
+with the 2026.1 baseline.</p>
+</section>
+<section id="per-model-bucket-presets">
+<h3>Per-Model Bucket Presets<a class="headerlink" href="#per-model-bucket-presets" title="Link to this heading">#</a></h3>
+<p>Good bucket configuration — the set of prefill, decode, and append bucket sizes
+an artifact is compiled for — is one of the highest-leverage knobs for serving
+performance, and also one of the hardest to tune by hand. In 2026.2,
+<code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> absorbs that complexity: every supported model ships with
+<strong>per-model bucket presets</strong>, tuned by the Furiosa team to match each model’s
+architecture and cover its full maximum context, and applied automatically at
+build time.</p>
+<p>The design goal is simple — <strong>the default build should produce the best artifact
+for typical serving workloads</strong>, without requiring the user to reason about
+bucketization at all:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build an artifact for Qwen3-32B-FP8 and write it to ./Qwen3-32B-FP8</span>
+furiosa-llm<span class="w"> </span>build<span class="w"> </span>Qwen/Qwen3-32B-FP8<span class="w"> </span>-tp<span class="w"> </span><span class="m">8</span><span class="w"> </span>./Qwen3-32B-FP8
+</pre></div>
+</div>
+<p>Explicit bucket arguments are still supported and take precedence, so workload-
+specific tuning remains available for users who need it.</p>
+</section>
+<section id="data-parallel-router-with-prefix-aware-routing">
+<h3>Data Parallel Router with Prefix-Aware Routing<a class="headerlink" href="#data-parallel-router-with-prefix-aware-routing" title="Link to this heading">#</a></h3>
+<p>2026.2 introduces a first-class <strong>Data Parallel (DP) Router</strong> for horizontally scaled
+deployments. The router sits in front of the frontend and dispatches each request to
+a DP replica before any engine-local scheduling happens, so clients see a single
+entry point while each replica runs its own scheduler independently.</p>
+<p>Two routing policies are available. <code class="docutils literal notranslate"><span class="pre">round_robin</span></code> distributes requests evenly
+across replicas; <code class="docutils literal notranslate"><span class="pre">prefix_aware</span></code> inspects the tokenized prefix and prefers the
+replica that already holds matching prefix cache entries — important for workloads
+with shared leading tokens, such as chatbots with long system prompts or RAG systems,
+where naive round-robin scatters shared prefixes across replicas and destroys cache
+locality. The policy is selected via <code class="docutils literal notranslate"><span class="pre">--data-parallel-routing-policy</span></code>, and defaults
+to <code class="docutils literal notranslate"><span class="pre">prefix_aware</span></code> when prefix caching is enabled and <code class="docutils literal notranslate"><span class="pre">round_robin</span></code> otherwise:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Explicitly use prefix-aware routing</span>
+furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--data-parallel-size<span class="w"> </span>&lt;N&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-parallel-routing-policy<span class="w"> </span>&lt;policy&gt;
+</pre></div>
+</div>
+</section>
+<section id="prefix-caching-is-now-on-by-default">
+<h3>Prefix Caching Is Now On by Default<a class="headerlink" href="#prefix-caching-is-now-on-by-default" title="Link to this heading">#</a></h3>
+<p>Prefix caching was introduced in 2026.1 behind an opt-in flag. After a release of
+production use and several correctness and performance improvements, it is now
+<strong>enabled by default</strong> in 2026.2. You no longer need any flag to benefit from it.</p>
+<p>Alongside the default flip, we landed several refinements:</p>
+<ul class="simple">
+<li><p><strong>Prefix cache hit deferral</strong> maximizes the cache hit rate by briefly deferring
+requests that are about to match an in-flight prefix, instead of kicking them off to
+a fresh prefill.</p></li>
+<li><p><strong>Prefix caching is applied to decoded outputs</strong> as well, so multi-turn
+conversations benefit from the cache even on the continuation side.</p></li>
+</ul>
+<p>If you need to disable prefix caching for a specific deployment — for example, for
+workloads that rarely share prefixes across requests, or for benchmarking runs where
+cache-hit variance would distort the measurements — pass <code class="docutils literal notranslate"><span class="pre">--no-enable-prefix-caching</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--no-enable-prefix-caching
+</pre></div>
+</div>
+</section>
+<section id="response-api-phase-1">
+<h3>Response API (Phase 1)<a class="headerlink" href="#response-api-phase-1" title="Link to this heading">#</a></h3>
+<p>2026.2 adds initial support for the <a class="reference external" href="https://developers.openai.com/api/reference/responses/overview">Response API</a> at
+<code class="docutils literal notranslate"><span class="pre">/v1/responses</span></code>. The Response API is OpenAI’s newer, more expressive alternative to
+Chat Completions, and this release covers enough of the surface area to be useful for
+straightforward request/response flows.</p>
+<p>This is labeled <strong>Phase 1</strong> intentionally: the endpoint accepts requests and produces
+well-formed responses, but a number of advanced behaviors are still being rolled out.</p>
+<p>A minimal example using the OpenAI Python client:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3-32B-FP8&quot;</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;Tell me a three-sentence bedtime story about a unicorn.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">output_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For the full endpoint list, supported parameters, multi-turn conversations via
+<code class="docutils literal notranslate"><span class="pre">previous_response_id</span></code>, streaming, tool calling, and structured output, see
+<a class="reference internal" href="../furiosa_llm/responses-api.html#responsesapi"><span class="std std-ref">Responses API</span></a>.</p>
+<hr class="docutils" />
+<p>The complete list of changes in this release is summarized in the All Changes section
+below.</p>
+</section>
+</section>
+<section id="all-changes">
+<span id="release2026-2-0-allchanges"></span><h2>All Changes<a class="headerlink" href="#all-changes" title="Link to this heading">#</a></h2>
+<section id="major-features-improvements">
+<h3>Major Features &amp; Improvements<a class="headerlink" href="#major-features-improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Data Parallel (DP) Router</strong></p>
+<ul>
+<li><p>Introduced a dedicated DP router that schedules requests across DP replicas independently,
+enabling horizontal scale-out of inference workers with fine-grained control over request
+distribution.</p></li>
+<li><p><strong>Prefix-aware routing</strong> dispatches requests with shared prefixes to replicas that already
+hold matching prefix cache entries, maximizing cross-request cache hit rate in multi-tenant
+deployments.</p></li>
+<li><p>The DP router is placed in front of the frontend so that routing decisions happen before any
+engine-local scheduling, reducing cross-replica contention.</p></li>
+</ul>
+</li>
+<li><p><strong>Prefix Caching Enabled by Default</strong></p>
+<ul>
+<li><p>Prefix caching is now enabled by default for all deployments, delivering lower
+Time-To-First-Token (TTFT) out of the box.</p></li>
+<li><p>Additional refinements include <strong>prefix cache hit deferral</strong> to maximize cache hit rate,
+applying prefix caching to decoded outputs, and guaranteeing auxiliary block length
+equivalence for safe prefix cache insertion in hybrid attention models.</p></li>
+</ul>
+</li>
+<li><p><strong>Response API and OpenAI-compatible API</strong></p>
+<ul>
+<li><p><strong>Response API (/v1/responses)</strong>: Added support for the Response API, enabling
+stateful interactions.</p></li>
+<li><p><strong>Tokenize / Detokenize API</strong>: Added <code class="docutils literal notranslate"><span class="pre">/tokenize</span></code> and <code class="docutils literal notranslate"><span class="pre">/detokenize</span></code> endpoints for
+server-side tokenization and detokenization.</p></li>
+<li><p><strong>Embeddings ``dimensions`` parameter</strong>: Support for requesting a specific embedding
+dimensionality via the <code class="docutils literal notranslate"><span class="pre">dimensions</span></code> field.</p></li>
+</ul>
+</li>
+<li><p><strong>Broader Platform Support</strong></p>
+<ul>
+<li><p><strong>ARM64 hosts (AArch64)</strong>: The Furiosa SDK now runs on ARM64-based servers, with
+AArch64 SIMD support in the host runtime so the vectorized optimizations
+introduced in 2026.1 apply on ARM just as they do on x86-64.</p></li>
+<li><p><strong>Red Hat Enterprise Linux (RHEL)</strong>: RPM packages are now published, extending
+first-class OS support beyond Debian/Ubuntu to RHEL-based distributions.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="performance-efficiency-improvements">
+<h3>Performance &amp; Efficiency Improvements<a class="headerlink" href="#performance-efficiency-improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Model-specific optimizations</strong>:</p>
+<ul>
+<li><p>Expanded and re-tuned prefill, decode, and append buckets for <strong>Qwen3</strong> and
+<strong>Exaone4</strong> so more of the real-world request distribution hits well-tuned
+kernels, combined with compiler optimized for lower-batch buckets.</p></li>
+</ul>
+</li>
+<li><p><strong>Optimized logit copy I/O</strong>:</p>
+<ul>
+<li><p>Reduced the memory bottleneck in loading model outputs for sampling by copying
+only the slice actually consumed by the sampler, cutting host-device transfer
+volume per decode step.</p></li>
+</ul>
+</li>
+<li><p><strong>Scheduler optimizations</strong>:</p>
+<ul>
+<li><p><strong>Prefix cache hit deferral</strong> maximizes cross-request cache hit rate by briefly
+deferring requests that are about to match an in-flight prefix.</p></li>
+<li><p>Further optimization of the <strong>prefix-aware DP router</strong> keeps the routing
+decision fast even for very long shared prefixes.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="api-usability-improvements">
+<h3>API &amp; Usability Improvements<a class="headerlink" href="#api-usability-improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Serving Options</strong>:</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">--served-model-name</span></code> option to customize the model ID exposed via the
+OpenAI-compatible API (useful for aliasing or drop-in replacements).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">--chat-template-content-format</span></code> argument for multi-part chat content rendering.</p></li>
+</ul>
+</li>
+<li><p><strong>Sampling Defaults</strong>:</p>
+<ul>
+<li><p>Default sampling parameters can now be sourced from the model’s
+<code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code>, aligning server behavior with the model’s recommended defaults.</p></li>
+</ul>
+</li>
+<li><p><strong>Usage &amp; Observability</strong>:</p>
+<ul>
+<li><p>Usage response is augmented with <strong>cached_tokens</strong> and prompt/completion token details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sampling_done</span></code> metric now includes the device ID for per-device breakdown.</p></li>
+</ul>
+</li>
+<li><p><strong>CLI</strong>:</p>
+<ul>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">version</span></code> subcommand reports the installed SDK version.</p></li>
+</ul>
+</li>
+<li><p><strong>Chat Completion API</strong>:</p>
+<ul>
+<li><p>Request token length is validated against the maximum available KV blocks, preventing
+requests that cannot fit even in an empty cache.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="breaking-changes-deprecations">
+<span id="release2026-2-0-breakingchanges"></span><h2>🚨 Breaking Changes &amp; Deprecations<a class="headerlink" href="#breaking-changes-deprecations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>–prefill-chunk-size Removed</strong>:</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--prefill-chunk-size</span></code> CLI option has been removed. Prefill chunking is now managed
+internally by the scheduler.</p></li>
+<li><p><strong>Migration</strong>: Remove <code class="docutils literal notranslate"><span class="pre">--prefill-chunk-size</span></code> from your launch scripts; no replacement is
+required.</p></li>
+</ul>
+</li>
+<li><p><strong>PyTorch Upgrade to 2.10</strong>:</p>
+<ul>
+<li><p>PyTorch dependency bumped from 2.7 to 2.10.</p></li>
+<li><p><strong>Migration</strong>: Ensure your environment supports PyTorch 2.10.x.</p></li>
+</ul>
+</li>
+<li><p><strong>reasoning_content Deprecated</strong>:</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">reasoning_content</span></code> field in chat completions responses is being renamed to
+<code class="docutils literal notranslate"><span class="pre">reasoning</span></code> for consistency with upstream conventions. Both fields are populated
+in 2026.2, so existing clients continue to work unchanged; <code class="docutils literal notranslate"><span class="pre">reasoning_content</span></code>
+will remain available for at least one more release cycle before removal.</p></li>
+<li><p><strong>Migration</strong>: Update client code to read the <code class="docutils literal notranslate"><span class="pre">reasoning</span></code> field before the
+removal lands.</p></li>
+</ul>
+</li>
+<li><p><strong>guided_decoding Renamed to structured_output</strong>:</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">guided_decoding</span></code> parameter group has been renamed to <code class="docutils literal notranslate"><span class="pre">structured_output</span></code>.</p></li>
+<li><p><strong>Migration</strong>: Update any request payloads or SDK calls that reference
+<code class="docutils literal notranslate"><span class="pre">guided_decoding</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="released-components">
+<h2>📦 Released Components<a class="headerlink" href="#released-components" title="Link to this heading">#</a></h2>
+<section id="python-packages">
+<h3>Python packages<a class="headerlink" href="#python-packages" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 80.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosa-native-runtime</p></td>
+<td><p>2026.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-llm</p></td>
+<td><p>2026.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-torch</p></td>
+<td><p>2026.2.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="apt-packages">
+<h3>APT packages<a class="headerlink" href="#apt-packages" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 80.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosa-libsmi</p></td>
+<td><p>2026.1.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-smi</p></td>
+<td><p>2026.1.1</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-metrics-exporter</p></td>
+<td><p>2026.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-cdi</p></td>
+<td><p>2026.1.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="docker-images">
+<h3>Docker images<a class="headerlink" href="#docker-images" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 80.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Image</p></th>
+<th class="head"><p>Tag</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosaai/furiosa-device-plugin</p></td>
+<td><p>2026.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosaai/furiosa-dra-driver</p></td>
+<td><p>2026.1.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">What’s New</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="release-2026.1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Furiosa SDK Release 2026.1</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qwen3-and-exaone4-performance-improvements">Qwen3 and Exaone4 Performance Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#per-model-bucket-presets">Per-Model Bucket Presets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallel-router-with-prefix-aware-routing">Data Parallel Router with Prefix-Aware Routing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching-is-now-on-by-default">Prefix Caching Is Now On by Default</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#response-api-phase-1">Response API (Phase 1)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-changes">All Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-efficiency-improvements">Performance &amp; Efficiency Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#released-components">📦 Released Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">Python packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apt-packages">APT packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-images">Docker images</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
