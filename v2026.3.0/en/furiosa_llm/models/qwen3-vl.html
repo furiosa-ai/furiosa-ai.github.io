@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Qwen3-VL &#8212; FuriosaAI Developer Center 2026.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="../../_static/documentation_options.js?v=f2178343"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/models/qwen3-vl';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.19.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.3.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Qwen2.5" href="qwen2.5.html" />
+    <link rel="prev" title="Qwen3-Reranker" href="qwen3-reranker.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.3.0" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.html">Furiosa SDK Release 2026.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../supported_models.html">Supported Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="qwen3.html">Qwen3 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qwen3-embedding.html">Qwen3-Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qwen3-reranker.html">Qwen3-Reranker</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qwen2.5.html">Qwen2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llama-3.1.html">Llama 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpt-oss.html">GPT-OSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="k-exaone.html">K-EXAONE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar-open.html">Solar Open</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../responses-api.html">Responses API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolcalling.html">Tool Calling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fxb.html">Furiosa Executable Bundles (FXB)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/artifact_builder.html">ArtifactBuilder</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/online_chat_completion_logprobs.html">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud_native_toolkit/llm_d.html">Deploying Furiosa-LLM with llm-d</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Qwen3-VL</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants">Variants</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server">Launch the server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server-with-tool-calling">Launch the server with tool calling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#query-the-server">Query the server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multimodal-serving-options">Multimodal serving options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool calling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="qwen3-vl">
+<span id="furiosa-llm-model-qwen3-vl"></span><h1>Qwen3-VL<a class="headerlink" href="#qwen3-vl" title="Link to this heading">#</a></h1>
+<p>The <a class="reference external" href="https://huggingface.co/Qwen">Qwen3-VL</a> series are dense <strong>vision-language
+models</strong> that pair a vision encoder with a dense transformer decoder, using
+Interleaved-MRoPE positional embeddings and DeepStack multi-level feature fusion
+to handle images and videos alongside text. They cover visual understanding
+tasks such as OCR, document and chart analysis, spatial reasoning, and video
+comprehension, and natively support tool (function) calling.</p>
+<p>FuriosaAI publishes pre-compiled builds of the Qwen3-VL models under the
+<a class="reference external" href="https://huggingface.co/furiosa-ai"><code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> organization on the Hugging Face Hub</a>,
+each shipping a Furiosa Executable Bundle (FXB) for running it on
+<a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with Furiosa-LLM. The same upstream weights
+also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
+with those, see the upstream model cards linked below.</p>
+<section id="variants">
+<h2>Variants<a class="headerlink" href="#variants" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Quantization</p></th>
+<th class="head"><p>RNGD cards</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Instruct"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-VL-32B-Instruct</span></code></a></p></td>
+<td><p>None (16-bit)</p></td>
+<td><p>4</p></td>
+<td><p>32B dense; Instruct (non-thinking) edition</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Architecture:</strong> Qwen3-VL (dense), <code class="docutils literal notranslate"><span class="pre">Qwen3VLForConditionalGeneration</span></code></p></li>
+<li><p><strong>Input / Output:</strong> Image + Text / Text</p></li>
+<li><p><strong>Quantization:</strong> No quantization is applied — the model runs in the same precision as the upstream weights.</p></li>
+</ul>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>To run this model with Furiosa-LLM, follow the example commands below after
+<a class="reference external" href="https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm">installing Furiosa-LLM and its prerequisites</a>.</p>
+<section id="launch-the-server">
+<h3>Launch the server<a class="headerlink" href="#launch-the-server" title="Link to this heading">#</a></h3>
+<p>The simplest way to serve the model is:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch the server, listening on port 8000 by default</span>
+furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-VL-32B-Instruct
+</pre></div>
+</div>
+<p>When the server is ready, you will see:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">27507</span><span class="o">]</span>
+INFO:<span class="w">     </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
+INFO:<span class="w">     </span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
+INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>http://0.0.0.0:8000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="launch-the-server-with-tool-calling">
+<h3>Launch the server with tool calling<a class="headerlink" href="#launch-the-server-with-tool-calling" title="Link to this heading">#</a></h3>
+<p>To enable tool (function) calling, start the server with the <code class="docutils literal notranslate"><span class="pre">hermes</span></code> tool-call
+parser:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-VL-32B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--enable-auto-tool-choice<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tool-call-parser<span class="w"> </span>hermes
+</pre></div>
+</div>
+</section>
+<section id="query-the-server">
+<h3>Query the server<a class="headerlink" href="#query-the-server" title="Link to this heading">#</a></h3>
+<p>The server exposes an OpenAI-compatible API. You can send a text-only request
+with <code class="docutils literal notranslate"><span class="pre">curl</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Qwen3-VL-32B-Instruct&quot;,</span>
+<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
+<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+</pre></div>
+</div>
+<p>To ask about an image, pass an <code class="docutils literal notranslate"><span class="pre">image_url</span></code> content part in the message:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Qwen3-VL-32B-Instruct&quot;,</span>
+<span class="s1">    &quot;messages&quot;: [{</span>
+<span class="s1">        &quot;role&quot;: &quot;user&quot;,</span>
+<span class="s1">        &quot;content&quot;: [</span>
+<span class="s1">            {&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: {&quot;url&quot;: &quot;https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg&quot;}},</span>
+<span class="s1">            {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Describe this image.&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">    }]</span>
+<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">image_url.url</span></code> field accepts a remote <code class="docutils literal notranslate"><span class="pre">http://</span></code>/<code class="docutils literal notranslate"><span class="pre">https://</span></code> URL, an inline
+base64 <code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path (the latter requires the
+<code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span></code> flag below).</p>
+</section>
+<section id="multimodal-serving-options">
+<h3>Multimodal serving options<a class="headerlink" href="#multimodal-serving-options" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> provides flags to control multimodal behavior; requests
+that violate them are rejected with HTTP 400:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--image-limit-per-prompt</span> <span class="pre">N</span></code> / <code class="docutils literal notranslate"><span class="pre">--video-limit-per-prompt</span> <span class="pre">N</span></code> — maximum number of images/videos allowed per request (default: unlimited).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span> <span class="pre">PATH</span></code> — allow <code class="docutils literal notranslate"><span class="pre">file://</span></code> URLs whose resolved path is under <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. Local file access is disabled unless this is set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--allowed-media-domains</span> <span class="pre">D</span> <span class="pre">[D</span> <span class="pre">...]</span></code> — whitelist of remote domains for SSRF protection. When set, only images from the listed domains are fetched.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--interleave-mm-strings</span></code> — keep image placeholders at their original positions when the model uses a string-format chat template (no-op for OpenAI-format templates, the common case).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mm-processor-cache-gb</span> <span class="pre">GB</span></code> — size of the UUID-keyed multimodal processor cache (default: 4.0). Clients can tag an <code class="docutils literal notranslate"><span class="pre">image_url</span></code> part with a <code class="docutils literal notranslate"><span class="pre">uuid</span></code> field and re-reference it in follow-up requests without re-uploading the image bytes; set to 0 to disable.</p></li>
+</ul>
+<p>For example, to serve local images under <code class="docutils literal notranslate"><span class="pre">/srv/media</span></code> and restrict remote
+fetches to a single domain:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-VL-32B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowed-local-media-path<span class="w"> </span>/srv/media<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowed-media-domains<span class="w"> </span>cdn.example.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image-limit-per-prompt<span class="w"> </span><span class="m">4</span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html">Vision-Language Models guide</a>
+for image input formats, the UUID cache, and Python client examples.</p>
+</section>
+<section id="tool-calling">
+<h3>Tool calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h3>
+<p>With the server launched using <code class="docutils literal notranslate"><span class="pre">--enable-auto-tool-choice</span> <span class="pre">--tool-call-parser</span> <span class="pre">hermes</span></code>,
+you can pass <code class="docutils literal notranslate"><span class="pre">tools</span></code> and let the model decide when to call them. See the
+<a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html">Tool Calling guide</a>
+for a complete client example and details on tool-choice options.</p>
+</section>
+</section>
+<section id="learn-more">
+<h2>Learn more<a class="headerlink" href="#learn-more" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html">Vision-Language Models</a> — image input formats, multimodal server options, and the UUID cache</p></li>
+<li><p><a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html">Tool Calling</a> — parsers, tool-choice options, and more examples</p></li>
+<li><p><a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/furiosa-llm-serve.html">Furiosa-LLM Server (<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>)</a> — full OpenAI-compatible API reference and serving options</p></li>
+<li><p>Upstream model card: <a class="reference external" href="https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct">Qwen/Qwen3-VL-32B-Instruct</a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="qwen3-reranker.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Qwen3-Reranker</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="qwen2.5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Qwen2.5</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants">Variants</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server">Launch the server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server-with-tool-calling">Launch the server with tool calling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#query-the-server">Query the server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multimodal-serving-options">Multimodal serving options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool calling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
