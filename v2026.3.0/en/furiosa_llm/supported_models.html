@@ -432,7 +432,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder-only-models-text-generation">Decoder-only Models (Text Generation)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pooling-models">Pooling Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-language-models-multimodal">Vision-Language Models (Multimodal)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verified-models">Verified Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status-of-models">Status of Models</a></li>
 </ul>
             </nav>
         </div>
@@ -573,157 +573,155 @@ API.</p>
 </table>
 </div>
 </section>
-<section id="verified-models">
-<h2>Verified Models<a class="headerlink" href="#verified-models" title="Link to this heading">#</a></h2>
+<section id="status-of-models">
+<h2>Status of Models<a class="headerlink" href="#status-of-models" title="Link to this heading">#</a></h2>
 <p>You can compile and run any of the architectures listed above on RNGD yourself. The models
-below go a step further: each has been validated by FuriosaAI to run correctly <strong>out of the
-box</strong> for accuracy and functionality, with performance characterized per the maturity level
-shown below.</p>
-<p>Each row lists the Hugging Face repository you pass to <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> (or <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code>),
-the tensor parallel (TP) size it is verified at, the precision it runs in, and its current
-maturity level. <code class="docutils literal notranslate"><span class="pre">TP</span></code> is the number of PEs per tensor-parallel group (8 PEs per card).</p>
-<p>Maturity level uses the following scale:</p>
+below go a step further: each is one that FuriosaAI actively validates, and the table shows
+how far that validation has progressed across three checks — does it run (<strong>Function</strong>),
+does it produce correct results (<strong>Correctness</strong>), and has its performance been tuned
+(<strong>Performance</strong>).</p>
+<p>The status of each check uses the following scale:</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
-<col style="width: 16.0%" />
-<col style="width: 84.0%" />
+<col style="width: 26.0%" />
+<col style="width: 74.0%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Level</p></th>
+<tr class="row-odd"><th class="head"><p>Status</p></th>
 <th class="head"><p>Meaning</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>🚀 Optimized</p></td>
-<td><p>Verified for correctness and tuned for performance; recommended for production use.</p></td>
+<tr class="row-even"><td><p>✅ Passed</p></td>
+<td><p>Verified and working as expected.</p></td>
 </tr>
-<tr class="row-odd"><td><p>✅ Functional</p></td>
-<td><p>Verified to run correctly; performance optimization is ongoing.</p></td>
+<tr class="row-odd"><td><p>🟡 Experimental</p></td>
+<td><p>Works, but not yet fully validated or tuned.</p></td>
 </tr>
-<tr class="row-even"><td><p>🧪 Experimental</p></td>
-<td><p>Runs, but functionality and performance are still being validated.</p></td>
+<tr class="row-even"><td><p>⛔️ Unplanned</p></td>
+<td><p>Not planned for this model.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
-<col style="width: 43.2%" />
-<col style="width: 14.9%" />
-<col style="width: 8.1%" />
-<col style="width: 14.9%" />
-<col style="width: 18.9%" />
+<col style="width: 41.6%" />
+<col style="width: 16.9%" />
+<col style="width: 11.7%" />
+<col style="width: 14.3%" />
+<col style="width: 15.6%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Model</p></th>
 <th class="head"><p>Type</p></th>
-<th class="head"><p>TP</p></th>
-<th class="head"><p>Precision</p></th>
-<th class="head"><p>Maturity</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Correctness</p></th>
+<th class="head"><p>Performance</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/EXAONE-4.0-32B-FP8">EXAONE-4.0-32B-FP8</a></p></td>
 <td><p>Text</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>🚀 Optimized</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16">K-EXAONE-236B-A23B-NVFP4A16</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>NVFP4A16</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct">Llama-3.1-8B-Instruct</a></p></td>
 <td><p>Text</p></td>
-<td><p>8</p></td>
-<td><p>BF16</p></td>
-<td><p>🚀 Optimized</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.3-70B-Instruct">Llama-3.3-70B-Instruct</a></p></td>
 <td><p>Text</p></td>
-<td><p>32</p></td>
-<td><p>BF16</p></td>
-<td><p>🚀 Optimized</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8">Qwen3-30B-A3B-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8">Qwen3-30B-A3B-Instruct-2507-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8">Qwen3-30B-A3B-Thinking-2507-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-32B-FP8">Qwen3-32B-FP8</a></p></td>
 <td><p>Text</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>🚀 Optimized</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-4B-FP8">Qwen3-4B-FP8</a></p></td>
 <td><p>Text</p></td>
-<td><p>8</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>⛔️</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-8B-FP8">Qwen3-8B-FP8</a></p></td>
 <td><p>Text</p></td>
-<td><p>8</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Coder-30B-A3B-Instruct-FP8">Qwen3-Coder-30B-A3B-Instruct-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>FP8</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-8B">Qwen3-Embedding-8B</a></p></td>
 <td><p>Embedding</p></td>
-<td><p>8</p></td>
-<td><p>BF16</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-8B">Qwen3-Reranker-8B</a></p></td>
 <td><p>Reranking</p></td>
-<td><p>8</p></td>
-<td><p>BF16</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Instruct">Qwen3-VL-32B-Instruct</a></p></td>
 <td><p>Multimodal</p></td>
-<td><p>32</p></td>
-<td><p>BF16</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16">Solar-Open-100B-NVFP4A16</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>NVFP4A16</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-120b">gpt-oss-120b</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>32</p></td>
-<td><p>MXFP4</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
 <td><p>Text (MoE)</p></td>
-<td><p>8</p></td>
-<td><p>MXFP4</p></td>
-<td><p>✅ Functional</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
 </tr>
 </tbody>
 </table>
@@ -783,7 +781,7 @@ maturity level. <code class="docutils literal notranslate"><span class="pre">TP<
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder-only-models-text-generation">Decoder-only Models (Text Generation)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pooling-models">Pooling Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-language-models-multimodal">Vision-Language Models (Multimodal)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verified-models">Verified Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status-of-models">Status of Models</a></li>
 </ul>
   </nav></div>
 

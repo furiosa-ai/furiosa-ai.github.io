@@ -14,7 +14,11 @@ Requirements
 
 The minimum requirements are as follows:
 
-* Ubuntu 22.04 LTS (or Debian Bookworm) or later
+* A supported Linux distribution:
+
+  * Ubuntu 22.04 LTS (or Debian Bookworm) or later, or
+  * Rocky Linux 10 / RHEL 10
+
 * Linux Kernel 6.3 or later
 * Administrator privileges (root)
 
@@ -72,12 +76,28 @@ matching your Linux distribution.
 
       echo "deb [arch=$(dpkg --print-architecture)] http://asia-northeast3-apt.pkg.dev/projects/furiosa-ai $(. /etc/os-release && echo "$VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/furiosa.list
 
-  .. tab-item:: RPM (Rocky Linux / RHEL)
-    :sync: rpm
+  .. tab-item:: RPM (Rocky Linux)
+    :sync: rpm-rocky
 
-    If you are a user of Rocky Linux or RHEL, FuriosaAI provides an RPM
-    repository for installing the same packages. Register it by creating the
-    following repository file:
+    FuriosaAI provides an RPM repository for installing the same packages.
+    Register it by creating the following repository file:
+
+    .. code-block:: sh
+
+      sudo tee /etc/yum.repos.d/furiosa.repo > /dev/null << EOF
+      [furiosa]
+      name=furiosa
+      baseurl=https://asia-northeast3-yum.pkg.dev/projects/furiosa-ai/el10
+      enabled=1
+      repo_gpgcheck=0
+      gpgcheck=0
+      EOF
+
+  .. tab-item:: RPM (RHEL)
+    :sync: rpm-rhel
+
+    FuriosaAI provides an RPM repository for installing the same packages.
+    Register it by creating the following repository file:
 
     .. code-block:: sh
 
@@ -96,7 +116,9 @@ Installing Prerequisite Packages
 
 After registering FuriosaAI's package repository as described above, you can now
 install the required packages: the device driver, the PE Runtime, and optionally
-the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
+the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`). On RPM
+systems, the commands also install the EPEL repository, which provides the
+kernel-build dependencies.
 
 .. tab-set::
 
@@ -109,22 +131,23 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
       sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
       sudo apt install furiosa-driver-rngd furiosa-smi
 
-  .. tab-item:: RPM (Rocky Linux / RHEL)
-    :sync: rpm
-
-    Refresh the package metadata, install the EPEL repository (which provides
-    the kernel-build dependencies), and then install the device driver and
-    ``furiosa-smi``:
+  .. tab-item:: RPM (Rocky Linux)
+    :sync: rpm-rocky
 
     .. code-block:: sh
 
       sudo dnf makecache
-
-      # Rocky Linux / Fedora
       sudo dnf install -y epel-release
-      # Red Hat Enterprise Linux
-      sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+      sudo dnf install -y dkms gcc make kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+      sudo dnf install furiosa-driver-rngd furiosa-smi
 
+  .. tab-item:: RPM (RHEL)
+    :sync: rpm-rhel
+
+    .. code-block:: sh
+
+      sudo dnf makecache
+      sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
       sudo dnf install -y dkms gcc make kernel-devel-$(uname -r) kernel-headers-$(uname -r)
       sudo dnf install furiosa-driver-rngd furiosa-smi
 
@@ -162,9 +185,28 @@ Upgrading the firmware can improve the performance and stability of the devices.
 If there is newer firmware in the latest release, first install the firmware updater
 and firmware image packages:
 
-.. code-block:: sh
+.. tab-set::
 
-  sudo apt install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+  .. tab-item:: APT (Debian/Ubuntu)
+    :sync: apt
+
+    .. code-block:: sh
+
+      sudo apt install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+
+  .. tab-item:: RPM (Rocky Linux)
+    :sync: rpm-rocky
+
+    .. code-block:: sh
+
+      sudo dnf install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+
+  .. tab-item:: RPM (RHEL)
+    :sync: rpm-rhel
+
+    .. code-block:: sh
+
+      sudo dnf install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
 
 Then run the updater to upgrade the firmware on all RNGD devices:
 
