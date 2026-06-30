@@ -510,8 +510,8 @@ For the bundle you actually serve, favor full bucket coverage and a configuratio
 deployment, accepting a longer build:
 
 * ``-O O3`` — the full bucket set (this is the default; set it explicitly to make the intent clear).
-* ``-tp/--tensor-parallel-size`` — match the serving topology (8 PEs per chip — e.g. ``8`` for a
-  single chip, ``32`` for four).
+* ``-tp/--tensor-parallel-size`` — match the serving topology (8 PEs per card — e.g. ``8`` for a
+  single card, ``32`` for four).
 * ``--max-model-len`` — set to the maximum context length you actually serve, so buckets are sized
   for the real workload rather than over-built.
 * ``--concurrency`` — set high to saturate the build host and shorten the (longer) full build.

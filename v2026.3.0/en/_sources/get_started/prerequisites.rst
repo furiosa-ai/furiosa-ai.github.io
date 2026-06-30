@@ -6,7 +6,8 @@ Installing Prerequisites
 
 This article describes how to install the prerequisite packages necessary
 for the FuriosaAI software stack, namely the device driver, and firmware.
-These packages are available for Debian and Ubuntu systems.
+These packages are available for Debian/Ubuntu systems (via APT) and for
+Rocky Linux / RHEL systems (via RPM).
 
 Requirements
 ====================================
@@ -75,11 +76,19 @@ matching your Linux distribution.
     :sync: rpm
 
     If you are a user of Rocky Linux or RHEL, FuriosaAI provides an RPM
-    repository for installing the same packages.
+    repository for installing the same packages. Register it by creating the
+    following repository file:
 
-    .. note::
+    .. code-block:: sh
 
-      RPM installation instructions are coming soon.
+      sudo tee /etc/yum.repos.d/furiosa.repo > /dev/null << EOF
+      [furiosa]
+      name=furiosa
+      baseurl=https://asia-northeast3-yum.pkg.dev/projects/furiosa-ai/el10
+      enabled=1
+      repo_gpgcheck=0
+      gpgcheck=0
+      EOF
 
 
 Installing Prerequisite Packages
@@ -103,13 +112,21 @@ the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
   .. tab-item:: RPM (Rocky Linux / RHEL)
     :sync: rpm
 
-    If you are a user of Rocky Linux or RHEL, install the same packages
-    (device driver, PE Runtime, and optionally ``furiosa-smi``) from the RPM
-    repository.
+    Refresh the package metadata, install the EPEL repository (which provides
+    the kernel-build dependencies), and then install the device driver and
+    ``furiosa-smi``:
 
-    .. note::
+    .. code-block:: sh
 
-      RPM installation instructions are coming soon.
+      sudo dnf makecache
+
+      # Rocky Linux / Fedora
+      sudo dnf install -y epel-release
+      # Red Hat Enterprise Linux
+      sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+
+      sudo dnf install -y dkms gcc make kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+      sudo dnf install furiosa-driver-rngd furiosa-smi
 
 
 Verifying NPU Device Installation

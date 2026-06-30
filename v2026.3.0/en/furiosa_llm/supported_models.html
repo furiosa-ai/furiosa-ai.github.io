@@ -577,12 +577,12 @@ API.</p>
 <h2>Verified Models<a class="headerlink" href="#verified-models" title="Link to this heading">#</a></h2>
 <p>You can compile and run any of the architectures listed above on RNGD yourself. The models
 below go a step further: each has been validated by FuriosaAI to run correctly <strong>out of the
-box</strong> for accuracy and functionality, with performance characterized per the support level
+box</strong> for accuracy and functionality, with performance characterized per the maturity level
 shown below.</p>
 <p>Each row lists the Hugging Face repository you pass to <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> (or <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code>),
-the tensor parallel (TP) size it is verified at, the precision it runs in, and its current support
-level. <code class="docutils literal notranslate"><span class="pre">TP</span></code> is the number of PEs per tensor-parallel group (8 PEs per chip).</p>
-<p>Support level uses the following scale:</p>
+the tensor parallel (TP) size it is verified at, the precision it runs in, and its current
+maturity level. <code class="docutils literal notranslate"><span class="pre">TP</span></code> is the number of PEs per tensor-parallel group (8 PEs per card).</p>
+<p>Maturity level uses the following scale:</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 16.0%" />
@@ -619,7 +619,7 @@ level. <code class="docutils literal notranslate"><span class="pre">TP</span></c
 <th class="head"><p>Type</p></th>
 <th class="head"><p>TP</p></th>
 <th class="head"><p>Precision</p></th>
-<th class="head"><p>Support Level</p></th>
+<th class="head"><p>Maturity</p></th>
 </tr>
 </thead>
 <tbody>

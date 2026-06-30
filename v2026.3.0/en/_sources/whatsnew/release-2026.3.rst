@@ -505,22 +505,57 @@ APT packages
      - ``amd64``, ``arm64``
    * - furiosa-libsmi
      - 2026.1.1
-     - ``amd64``
+     - ``amd64``, ``arm64``
    * - furiosa-smi
      - 2026.1.1
-     - ``amd64``
+     - ``amd64``, ``arm64``
    * - furiosa-metrics-exporter
-     - 2026.1.0
+     - 2026.1.1
      - ``amd64``
    * - furiosa-cdi
      - 2026.1.0
      - ``amd64``
 
+YUM packages
+^^^^^^^^^^^^
+
+New in 2026.3: the driver and firmware packages are also published as ``.el10``
+RPMs for Rocky Linux 10 / RHEL.
+
+.. list-table::
+   :widths: 200 50 150
+   :header-rows: 1
+
+   * - Package name
+     - Version
+     - Supported architectures
+   * - furiosa-driver-rngd
+     - 2026.3.0
+     - ``noarch`` (architecture-independent)
+   * - furiosa-firmware-image-rngd
+     - 2026.3.0
+     - ``noarch`` (architecture-independent)
+   * - furiosa-firmware-tools-rngd
+     - 2026.3.0
+     - ``x86_64``
+   * - furiosa-libsmi
+     - 2026.1.1
+     - ``x86_64``
+   * - furiosa-smi
+     - 2026.1.1
+     - ``x86_64``
+   * - furiosa-metrics-exporter
+     - 2026.1.1
+     - ``x86_64``
+   * - furiosa-cdi
+     - 2026.1.0
+     - ``x86_64``
+
 Docker images
 ^^^^^^^^^^^^^
 
-All cloud-native component images are now multi-architecture and Red Hat
-OpenShift–certified.
+The cloud-native component images on Docker Hub are now multi-architecture and
+Red Hat OpenShift–certified.
 
 .. list-table::
    :widths: 200 50 150
@@ -547,3 +582,23 @@ OpenShift–certified.
    * - furiosaai/furiosa-system-manager
      - 2026.2.0
      - ``linux/amd64``, ``linux/arm64``
+
+The Red Hat UBI–based images certified through the OpenShift preflight are
+published on ``quay.io``:
+
+.. list-table::
+   :widths: 200 50 150
+   :header-rows: 1
+
+   * - Image
+     - Tag
+     - Supported architectures
+   * - quay.io/furiosaai/furiosa-feature-discovery
+     - 2026.1.0-ubi9
+     - ``linux/amd64``
+   * - quay.io/furiosaai/furiosa-device-plugin
+     - 2026.1.0-ubi9
+     - ``linux/amd64``
+   * - quay.io/furiosaai/furiosa-metrics-exporter
+     - 2026.1.1-ubi9
+     - ``linux/amd64``

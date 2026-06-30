@@ -429,14 +429,19 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q1-q2">Upcoming Releases 2026 Q1 - Q2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-q4">2025 Q3 - Q4</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q3">Upcoming Releases 2026 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2026 Q1 - Q2</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-packages">Platform &amp; Packages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-q4">2025 Q3 - Q4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Furiosa-LLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization">Quantization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-scalable-inference">Distributed &amp; Scalable Inference</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2025 Q1 - Q2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2025 Q1 - Q2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q4">2024 Q4</a></li>
 </ul>
             </nav>
@@ -458,23 +463,50 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
 <p class="admonition-title">Note</p>
 <p>The latest release is 2026.3.0. You can find the release notes <a class="reference internal" href="../whatsnew/index.html#whatsnew"><span class="std std-ref">here</span></a>.</p>
 </div>
-<section id="upcoming-releases-2026-q1-q2">
-<h2>Upcoming Releases 2026 Q1 - Q2<a class="headerlink" href="#upcoming-releases-2026-q1-q2" title="Link to this heading">#</a></h2>
+<section id="upcoming-releases-2026-q3">
+<h2>Upcoming Releases 2026 Q3<a class="headerlink" href="#upcoming-releases-2026-q3" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>🔨 Qwen3 MoE, GPT-OSS, K-EXAONE, Solar Open model support</p></li>
-<li><p>🔨 Qwen3 VL and multi-modal model support</p></li>
-<li><p>🔨 Qwen 3.6, Gemma 4, EXAONE 4.5 model support (in priority order)</p></li>
-<li><p>🔨 KV cache offloading support</p></li>
-<li><p>✅ Responses API support</p></li>
+<li><p>🔨 EXAONE 4.5, Qwen 3.6, Gemma 4 model support</p></li>
+<li><p>🔨 Multi-modal (vision-language) serving optimization</p></li>
+<li><p>🔨 Hierarchical KV caching support, including KV cache offloading</p></li>
+<li><p>🔨 KVCacheConnector support</p></li>
+<li><p>🔨 Prefill/decode (PD) disaggregation</p></li>
 <li><p>🔨 Speculative decoding support</p></li>
 <li><p>🔨 PyTorch eager mode support</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="q3-q4">
-<h2>2025 Q3 - Q4<a class="headerlink" href="#q3-q4" title="Link to this heading">#</a></h2>
+<section id="q1-q2">
+<h2>2026 Q1 - Q2<a class="headerlink" href="#q1-q2" title="Link to this heading">#</a></h2>
 <section id="furiosa-llm">
 <h3>Furiosa-LLM<a class="headerlink" href="#furiosa-llm" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Qwen3 MoE, gpt-oss, K-EXAONE, Solar-Open model support</p></li>
+<li><p>✅ Qwen3-VL and multi-modal (vision-language) serving</p></li>
+<li><p>✅ Qwen3 dense and Qwen3 MoE (FP8), EXAONE 4.0 model support</p></li>
+<li><p>✅ TCL (Tensor Contraction Language) kernel framework and furiosa-kernels</p></li>
+<li><p>✅ FXB (Furiosa Executable Bundle) shareable compiled-artifact format</p></li>
+<li><p>✅ Overlap scheduler for zero-overhead batching</p></li>
+<li><p>✅ Per-model bucket presets for best default artifacts</p></li>
+<li><p>✅ Responses API support</p></li>
+<li><p>✅ Data Parallel router with prefix-aware and scoring-based routing</p></li>
+<li><p>✅ Enhanced observability with OpenTelemetry and per-device metrics</p></li>
+</ul>
+</section>
+<section id="platform-packages">
+<h3>Platform &amp; Packages<a class="headerlink" href="#platform-packages" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Python 3.14 support (supported versions now 3.10–3.14)</p></li>
+<li><p>✅ Broader arm64 (aarch64) support across Python wheels and cloud-native images</p></li>
+<li><p>✅ Rocky Linux 10 / RHEL support via <code class="docutils literal notranslate"><span class="pre">.el10</span></code> RPM packages</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="q3-q4">
+<h2>2025 Q3 - Q4<a class="headerlink" href="#q3-q4" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>Furiosa-LLM<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>✅ Hybrid batching support (i.e., chunked prefill or inflight-batching)</p></li>
 <li><p>✅ Exaone4, Qwen3 support</p></li>
@@ -507,33 +539,33 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
 </ul>
 </section>
 </section>
-<section id="q1-q2">
-<h2>2025 Q1 - Q2<a class="headerlink" href="#q1-q2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h2>2025 Q1 - Q2<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>✅ Tool-calling support in Furiosa-LLM (2025.1.0 release)</p></li>
-<li><p>✅ Device remapping support (e.g., /dev/rngd/npu2pe0-3 -&gt; /dev/rngd/npu0pe0-3) for container (2025.1.0 release)</p></li>
-<li><p>✅ Automatic configuration for the maximum KV-cache memory allocation (2025.1.0 release)</p></li>
-<li><p>✅ Min-p sampling support (2025.1.0 release)</p></li>
-<li><p>✅ Chunked Prefill support in Furiosa-LLM (planned for 2025.2.0 release)</p></li>
-<li><p>✅ Chat API support in Furiosa-LLM (planned for 2025.2.0 release)</p></li>
-<li><p>✅ Reasoning parser support (2025.2.0 release)</p></li>
-<li><p>✅ Torch 2.5.1 support (2025.2.0 release)</p></li>
-<li><p>✅ Python 3.11 and 3.12 support (2025.2.0 release)</p></li>
-<li><p>✅ Support for building bfloat16, float16, and float32 models to model artifact without quantization (2025.2.0 release)</p></li>
-<li><p>✅ Metrics endpoint (<code class="docutils literal notranslate"><span class="pre">/metrics/</span></code>) support in Furiosa-LLM (2025.2.0 release)</p></li>
-<li><p>✅ Model artifact support in Huggingface Hub (2025.2.0 release)</p></li>
-<li><p>✅ Sampling parameter “logprobs” support (2025.2.0 release)</p></li>
-<li><p>✅ Container Runtime and Container Interface Device (CDI) support (2025.2.0 release)</p></li>
+<li><p>✅ Tool-calling support in Furiosa-LLM</p></li>
+<li><p>✅ Device remapping support (e.g., /dev/rngd/npu2pe0-3 -&gt; /dev/rngd/npu0pe0-3) for container</p></li>
+<li><p>✅ Automatic configuration for the maximum KV-cache memory allocation</p></li>
+<li><p>✅ Min-p sampling support</p></li>
+<li><p>✅ Chunked Prefill support in Furiosa-LLM</p></li>
+<li><p>✅ Chat API support in Furiosa-LLM</p></li>
+<li><p>✅ Reasoning parser support</p></li>
+<li><p>✅ Torch 2.5.1 support</p></li>
+<li><p>✅ Python 3.11 and 3.12 support</p></li>
+<li><p>✅ Support for building bfloat16, float16, and float32 models to model artifact without quantization</p></li>
+<li><p>✅ Metrics endpoint (<code class="docutils literal notranslate"><span class="pre">/metrics/</span></code>) support in Furiosa-LLM</p></li>
+<li><p>✅ Model artifact support in Huggingface Hub</p></li>
+<li><p>✅ Sampling parameter “logprobs” support</p></li>
+<li><p>✅ Container Runtime and Container Interface Device (CDI) support</p></li>
 </ul>
 </section>
 <section id="q4">
 <h2>2024 Q4<a class="headerlink" href="#q4" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>✅ Language Model Support: CodeLLaMA2, Vicuna, Solar, EXAONE-3.0 (2024.2.0 release)</p></li>
-<li><p>✅ Vision Model Support: MobileNetV1, MobileNetV2, ResNet152, ResNet50, EfficientNet, YOLOv8m, etc (2024.2.0 release)</p></li>
-<li><p>✅ Tensor Parallelism support Phase 1: Intra-chip (2024.2.0 release)</p></li>
-<li><p>✅ Torch 2.4.1 support (2024.2.0)</p></li>
-<li><p>✅ Huggingface Optimum integration (2024.2.0 release)</p></li>
+<li><p>✅ Language Model Support: CodeLLaMA2, Vicuna, Solar, EXAONE-3.0</p></li>
+<li><p>✅ Vision Model Support: MobileNetV1, MobileNetV2, ResNet152, ResNet50, EfficientNet, YOLOv8m, etc</p></li>
+<li><p>✅ Tensor Parallelism support Phase 1: Intra-chip</p></li>
+<li><p>✅ Torch 2.4.1 support</p></li>
+<li><p>✅ Huggingface Optimum integration</p></li>
 </ul>
 </section>
 </section>
@@ -584,14 +616,19 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q1-q2">Upcoming Releases 2026 Q1 - Q2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-q4">2025 Q3 - Q4</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q3">Upcoming Releases 2026 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2026 Q1 - Q2</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-packages">Platform &amp; Packages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-q4">2025 Q3 - Q4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Furiosa-LLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization">Quantization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-scalable-inference">Distributed &amp; Scalable Inference</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2025 Q1 - Q2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2025 Q1 - Q2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q4">2024 Q4</a></li>
 </ul>
   </nav></div>

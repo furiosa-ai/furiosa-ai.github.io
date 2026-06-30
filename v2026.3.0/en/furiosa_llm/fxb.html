@@ -913,8 +913,8 @@ performance and coverage compared with a full build. Do not serve it in producti
 deployment, accepting a longer build:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-O</span> <span class="pre">O3</span></code> — the full bucket set (this is the default; set it explicitly to make the intent clear).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> — match the serving topology (8 PEs per chip — e.g. <code class="docutils literal notranslate"><span class="pre">8</span></code> for a
-single chip, <code class="docutils literal notranslate"><span class="pre">32</span></code> for four).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> — match the serving topology (8 PEs per card — e.g. <code class="docutils literal notranslate"><span class="pre">8</span></code> for a
+single card, <code class="docutils literal notranslate"><span class="pre">32</span></code> for four).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> — set to the maximum context length you actually serve, so buckets are sized
 for the real workload rather than over-built.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--concurrency</span></code> — set high to saturate the build host and shorten the (longer) full build.</p></li>

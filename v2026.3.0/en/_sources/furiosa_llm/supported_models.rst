@@ -106,14 +106,14 @@ Verified Models
 
 You can compile and run any of the architectures listed above on RNGD yourself. The models
 below go a step further: each has been validated by FuriosaAI to run correctly **out of the
-box** for accuracy and functionality, with performance characterized per the support level
+box** for accuracy and functionality, with performance characterized per the maturity level
 shown below.
 
 Each row lists the Hugging Face repository you pass to ``furiosa-llm serve`` (or ``fxb build``),
-the tensor parallel (TP) size it is verified at, the precision it runs in, and its current support
-level. ``TP`` is the number of PEs per tensor-parallel group (8 PEs per chip).
+the tensor parallel (TP) size it is verified at, the precision it runs in, and its current
+maturity level. ``TP`` is the number of PEs per tensor-parallel group (8 PEs per card).
 
-Support level uses the following scale:
+Maturity level uses the following scale:
 
 .. list-table::
    :align: center
@@ -138,7 +138,7 @@ Support level uses the following scale:
      - Type
      - TP
      - Precision
-     - Support Level
+     - Maturity
    * - `EXAONE-4.0-32B-FP8 <https://huggingface.co/furiosa-ai/EXAONE-4.0-32B-FP8>`_
      - Text
      - 32
