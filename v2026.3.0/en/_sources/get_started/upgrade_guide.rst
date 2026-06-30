@@ -19,18 +19,61 @@ The high-level upgrade workflow is as follows:
   In that case, you will need to reboot the system to load the new driver kernel
   module.
 
+Upgrading the Driver, Firmware, and furiosa-smi
+===============================================
+
 Please follow the steps below to upgrade the Furiosa software stack:
 
-.. code-block:: sh
+.. tab-set::
 
-   sudo apt update && sudo apt install -y furiosa-driver-rngd furiosa-smi
+  .. tab-item:: APT (Debian/Ubuntu)
+    :sync: apt
+
+    .. code-block:: sh
+
+      sudo apt update && sudo apt install -y furiosa-driver-rngd furiosa-smi
+
+  .. tab-item:: RPM (Rocky Linux)
+    :sync: rpm-rocky
+
+    .. code-block:: sh
+
+      sudo dnf makecache && sudo dnf upgrade -y furiosa-driver-rngd furiosa-smi
+
+  .. tab-item:: RPM (RHEL)
+    :sync: rpm-rhel
+
+    .. code-block:: sh
+
+      sudo dnf makecache && sudo dnf upgrade -y furiosa-driver-rngd furiosa-smi
+
+.. _UpgradingDeviceFirmware:
 
 Usually, major releases of the Furiosa SDK include a firmware upgrade.
 Before upgrading the firmware, install the firmware updater and firmware image packages:
 
-.. code-block:: sh
+.. tab-set::
 
-   sudo apt install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+  .. tab-item:: APT (Debian/Ubuntu)
+    :sync: apt
+
+    .. code-block:: sh
+
+      sudo apt install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+
+  .. tab-item:: RPM (Rocky Linux)
+    :sync: rpm-rocky
+
+    .. code-block:: sh
+
+      sudo dnf install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+
+  .. tab-item:: RPM (RHEL)
+    :sync: rpm-rhel
+
+    .. code-block:: sh
+
+      sudo dnf install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
 
 To upgrade the firmware on all RNGD devices, run:
 
@@ -54,8 +97,8 @@ Alternatively, you can upgrade the firmware on a specific RNGD by specifying its
 .. note::
 
   Please remember to cold reboot the system after the firmware upgrade process is completed.
-  For more information about the firmware upgrade process, please refer to
-  :ref:`Upgrading Device Firmware <UpgradingDeviceFirmware>`.
+  If the firmware upgrade process is interrupted, the device may become unusable.
+  In this case, please contact FuriosaAI support for assistance.
 
 
 To check if the new driver and firmware were installed successfully in all
@@ -72,6 +115,9 @@ devices, run the following command:
    | rngd | npu1   | 2024.2.0+7a11888 | 2024.2.1+de20a9f | 31.41°C | 37.00 W | 0000:2a:00.0 |
    +------+--------+------------------+------------------+---------+---------+--------------+
 
+
+Upgrading Furiosa-LLM
+=====================
 
 To upgrade Furiosa-LLM, use ``uv pip``:
 

@@ -176,56 +176,9 @@ Please refer to :ref:`FuriosaSMICLI` to learn more about the ``furiosa-smi``
 command.
 
 
-.. _UpgradingDeviceFirmware:
+Upgrading the Software Stack
+============================
 
-Upgrading Device Firmware
-====================================
-
-Upgrading the firmware can improve the performance and stability of the devices.
-If there is newer firmware in the latest release, first install the firmware updater
-and firmware image packages:
-
-.. tab-set::
-
-  .. tab-item:: APT (Debian/Ubuntu)
-    :sync: apt
-
-    .. code-block:: sh
-
-      sudo apt install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
-
-  .. tab-item:: RPM (Rocky Linux)
-    :sync: rpm-rocky
-
-    .. code-block:: sh
-
-      sudo dnf install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
-
-  .. tab-item:: RPM (RHEL)
-    :sync: rpm-rhel
-
-    .. code-block:: sh
-
-      sudo dnf install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
-
-Then run the updater to upgrade the firmware on all RNGD devices:
-
-.. code-block:: sh
-
-  sudo furiosa_rngd_updater_all
-
-The process takes 3 to 5 minutes per device to complete.
-The firmware upgrade process may require a reboot to complete the installation.
-
-.. note::
-
-  Before the 2026.3 release, the firmware updater was executed automatically when the
-  ``furiosa-firmware-image-rngd`` package was installed. Starting with the 2026.3 release,
-  you must run the firmware updater manually after installing the package.
-
-.. note::
-
-  Please remember to cold reboot the system after the firmware upgrade process is completed.
-  If the firmware upgrade process is interrupted, the device may become unusable.
-  In this case, please contact FuriosaAI support for assistance.
+To upgrade an existing installation — the driver, firmware, and Furiosa-LLM — see the
+:ref:`UpgradeGuide`.
 
