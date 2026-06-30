@@ -10,18 +10,19 @@ attention scheme that interleaves sliding-window and global attention layers. It
 covers six languages — Korean, English, Spanish, German, Japanese, and
 Vietnamese — and supports both reasoning and non-reasoning chat.
 
-FuriosaAI publishes pre-compiled builds of K-EXAONE under the
+Furiosa-LLM runs K-EXAONE in **NVFP4A16** (NVFP4 weights with 16-bit activations
+and KV cache). FuriosaAI publishes pre-compiled NVFP4A16 builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
-[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The base model also runs
-on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
+[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The upstream weights also
+run on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
 those, see the upstream model card linked below.
 
 ## Variants
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
-| [`furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16`](https://huggingface.co/furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16) | NVFP4 | 4 | 236B total / 23B active; thinking by default |
+| [`furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16`](https://huggingface.co/furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16) | NVFP4A16 | 4 | 236B total / 23B active; thinking by default |
 
 - **Architecture:** ExaoneMoE (Mixture-of-Experts), `ExaoneMoEForCausalLM`
 - **Input / Output:** Text / Text
@@ -95,8 +96,8 @@ from the final answer:
 * `response.choices[].message.reasoning` (non-streaming)
 * `response.choices[].delta.reasoning` (streaming)
 
-K-EXAONE thinks by default. For latency-sensitive tasks you can switch to
-non-reasoning mode per request:
+K-EXAONE thinks by default, so a normal request returns both the reasoning and
+the final answer:
 
 ```python
 from openai import OpenAI
@@ -106,12 +107,16 @@ client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
 response = client.chat.completions.create(
     model="furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16",
     messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
-    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
 )
 
 print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
+
+For latency-sensitive tasks you can turn thinking off per request by passing
+`extra_body={"chat_template_kwargs": {"enable_thinking": False}}`. The response
+then carries no reasoning content, so read only `message.content` (accessing
+`message.reasoning` would raise `AttributeError`, as noted below).
 
 > **Note:** The `reasoning` field is not part of the OpenAI API specification, but
 > it is the convention OpenAI recommends for returning the chain-of-thought (CoT) in

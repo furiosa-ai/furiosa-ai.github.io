@@ -64,7 +64,7 @@ Then apply it immediately without reboot:
 When to use this
 ----------------
 
-On some systems(e.g., **NXT RNGD Server**), devices are connected behind a PCIe switch.
+On some systems (e.g., **NXT RNGD Server**), devices are connected behind a PCIe switch.
 If peer-to-peer (P2P) data paths are expected,
 **PCI ACS** enabled on the upstream switch port can prevent or penalize P2P traffic.
 

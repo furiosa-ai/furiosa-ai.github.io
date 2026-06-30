@@ -142,7 +142,7 @@ Encode your token using the following command:
 Then apply the secret:
 
 .. code-block:: bash
-   
+
    kubectl create namespace llm-d
    kubectl apply -f /path/to/hf-secret.yaml -n llm-d
 
@@ -189,7 +189,7 @@ Create a pod to download the model:
        - name: model-storage
          persistentVolumeClaim:
            claimName: model-pvc
-   
+
      initContainers:
        - name: download-model
          image: python:3.10-slim
@@ -209,7 +209,7 @@ Create a pod to download the model:
          volumeMounts:
            - name: model-storage
              mountPath: /models
-   
+
      containers:
        - name: model-consumer
          image: ubuntu
@@ -217,7 +217,7 @@ Create a pod to download the model:
          volumeMounts:
            - name: model-storage
              mountPath: /models
-   
+
      restartPolicy: Never
 
 .. code-block:: bash
@@ -324,7 +324,7 @@ Finally, deploy the llm-d-modelservice Helm chart to run the Furiosa-LLM model s
 
    prefill:
      create: false
-   
+
    decode:
      parallelism:
        tensor: 8
@@ -363,7 +363,7 @@ Finally, deploy the llm-d-modelservice Helm chart to run the Furiosa-LLM model s
            periodSeconds: 5
            timeoutSeconds: 2
            failureThreshold: 3
-   
+
 .. code-block:: bash
 
    helm install ms furiosa/llm-d-modelservice -n llm-d -f /path/to/llm-d-modelservice.yaml
@@ -403,7 +403,7 @@ Create an HTTPRoute so that inference requests are routed to the llm-d Inference
                value: /
 
 .. code-block:: bash
-   
+
    kubectl apply -f /path/to/httproute.yaml -n llm-d
 
 After the route is applied, you can send inference requests to the Gateway address (e.g. via the Istio ingress). For details on how to obtain the Gateway URL and call the API, see the llm-d `Inference Against llm-d <https://github.com/llm-d/llm-d/blob/v0.5.0/docs/getting-started-inferencing.md>`__ guide.

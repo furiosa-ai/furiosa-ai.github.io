@@ -458,7 +458,9 @@ transformers that emit responses in the
 <a class="reference external" href="https://github.com/openai/harmony">harmony response format</a>, separating the
 model’s chain-of-thought reasoning from its final answer and carrying native
 support for tool calling and configurable reasoning effort.</p>
-<p>FuriosaAI publishes pre-compiled builds of the GPT-OSS models under the
+<p>Furiosa-LLM runs GPT-OSS in <strong>MXFP4</strong> (the MoE expert weights use the MXFP4
+format of the upstream GPT-OSS release; attention, router, and embeddings stay in
+higher precision). FuriosaAI publishes pre-compiled builds under the
 <a class="reference external" href="https://huggingface.co/furiosa-ai"><code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> organization on the Hugging Face Hub</a>,
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 <a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with Furiosa-LLM. The same upstream weights
@@ -491,7 +493,7 @@ with those, see the upstream model cards linked below.</p>
 <ul class="simple">
 <li><p><strong>Architecture:</strong> GPT-OSS (Mixture-of-Experts), <code class="docutils literal notranslate"><span class="pre">GptOssForCausalLM</span></code></p></li>
 <li><p><strong>Input / Output:</strong> Text / Text</p></li>
-<li><p><strong>Quantization:</strong> The MoE expert weights are quantized to <strong>MXFP4</strong>, the format gpt-oss ships in upstream. The remaining components (attention, router, and embeddings) stay in higher precision.</p></li>
+<li><p><strong>Quantization:</strong> The MoE expert weights are quantized to <strong>MXFP4</strong>, the format used by the upstream GPT-OSS release. The remaining components (attention, router, and embeddings) stay in higher precision.</p></li>
 </ul>
 </section>
 <section id="usage">

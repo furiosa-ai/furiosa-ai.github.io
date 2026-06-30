@@ -3,8 +3,8 @@
 ****************************************************
 Model Preparation
 ****************************************************
-To run a trained model, fine-tuned model or quantized model by yourself,
-Furiosa-LLM needs to convert the model into a model artifact.
+To run your own trained, fine-tuned, or quantized model, you must first convert
+it into a model artifact using Furiosa-LLM.
 Also, if you want to apply specific optimization configurations or parallelization
 strategies for your workload, you must perform this model preparation step.
 
@@ -16,6 +16,14 @@ strategies for your workload, you must perform this model preparation step.
   Additionally, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
   `Hugging Face Hub 🤗 - FuriosaAI organization <https://huggingface.co/furiosa-ai>`_.
   You can use these to quickly run LLM models on the Furiosa NPU.
+
+.. note::
+
+  The ``ArtifactBuilder`` / ``furiosa-llm build`` workflow described on this page is
+  **legacy and scheduled for deprecation**. New work should use the
+  :ref:`Furiosa Executable Bundle (FXB) <FXB>` format and the ``fxb`` command instead,
+  which is now the recommended way to build, share, and serve compiled models. The
+  artifact-builder path remains available for backward compatibility for now.
 
 
 Prerequisites
@@ -68,7 +76,7 @@ It is typically applied when higher throughput or lower latency is needed. Howev
 model accuracy, it is important to perform thorough experimentation and accuracy evaluations.
 
 Furiosa-LLM currently supports fine-grained FP8 dynamic quantization for causal language models.
-We plan to support more quantization schemes based on llm-compressor in the next releases.
+We plan to support more quantization schemes based on llm-compressor in future releases.
 
 To quantize a model, you first need to load it using the
 ``AutoModelForCausalLM.from_pretrained()`` method from the ``transformers`` library.

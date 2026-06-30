@@ -429,7 +429,7 @@
 <span id="upgradeguide"></span><h1>Upgrading FuriosaAI’s Software<a class="headerlink" href="#upgrading-furiosaai-s-software" title="Link to this heading">#</a></h1>
 <p>The high-level upgrade workflow is as follows:</p>
 <ol class="arabic simple">
-<li><p>Upgrade the prerequisite packages (the driver and PE Runtime packages).</p></li>
+<li><p>Upgrade the driver package.</p></li>
 <li><p>Upgrade the firmware tool and image if a new version is available.</p></li>
 <li><p>Perform a cold reboot of the system to apply the changes if the device firmware is upgraded.</p></li>
 <li><p>Run the <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">info</span></code> CLI tool to confirm the new driver and firmware versions in all devices.</p></li>
@@ -447,15 +447,24 @@ module.</p>
 </pre></div>
 </div>
 <p>Usually, major releases of the Furiosa SDK include a firmware upgrade.
-The firmware can be upgraded by running the following command:</p>
+Before upgrading the firmware, install the firmware updater and firmware image packages:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
+</pre></div>
+</div>
+<p>To upgrade the firmware on all RNGD devices, run:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater_all
+</pre></div>
+</div>
+<p>Alternatively, you can upgrade the firmware on a specific RNGD by specifying its BDF and the firmware image:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater<span class="w"> </span>-b<span class="w"> </span>&lt;BDF&gt;<span class="w"> </span>-f<span class="w"> </span>&lt;firmware<span class="w"> </span>image&gt;
+<span class="c1"># Example:</span>
+<span class="c1"># sudo furiosa_rngd_updater -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.3.0.bin</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Starting from the 2026.1 release, the <code class="docutils literal notranslate"><span class="pre">furiosa-pert-rngd</span></code> package has been removed.
-PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.
-Installing the firmware package will automatically remove <code class="docutils literal notranslate"><span class="pre">furiosa-pert-rngd</span></code> if it was previously installed.</p>
+<p>Before the 2026.3 release, the firmware updater was executed automatically when the firmware image package was installed.
+Starting with the 2026.3 release, you must run the firmware updater manually after installing the firmware image package.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

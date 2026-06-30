@@ -489,13 +489,13 @@ continuously fed, and generalizes the Data Parallel router into a <strong>scorin
 framework. To see why adding a model got so much faster, it helps to look at how we used
 to describe one.</p>
 <p>The previous path started from a PyTorch model, traced with TorchDynamo into an FX graph
-of Torch ATen ops. This was great for getting a model running quickly, but it diluted the
+of Torch ATen ops. This was effective for getting a model running quickly, but it diluted the
 model’s intent: capturing through ATen decomposes the graph into fine-grained primitives.
 An <code class="docutils literal notranslate"><span class="pre">aten.mm</span></code>, for example, becomes a tiling, then an elementwise multiply, then a
 reduce — so the compiler no longer sees a “matmul” and has to re-recognize one before it
 can optimize it, and axis semantics and op boundaries blur in the same way. Just as
 importantly, the modeling stage left few good places to attach the hints a compiler needs
-for an RNGD target, such as the intended tensor parallelism (TP) strategy. The software
+for an RNGD target, such as the intended tensor parallelism (TP) strategy. The compiler
 was essentially optimizing after much of the meaning had already been flattened away.</p>
 <p><strong>TCL</strong> was designed to preserve that model meaning and structure. It is a declarative
 Python eDSL in which a kernel author writes a high-level, <code class="docutils literal notranslate"><span class="pre">&#64;tcl.kernel</span></code>-decorated
@@ -533,7 +533,7 @@ including several large Mixture-of-Experts (MoE) architectures:</p>
 <li><p><strong>Qwen3-VL</strong> (e.g. Qwen3-VL-32B) — the first <strong>vision-language</strong> family on RNGD: a
 dense transformer paired with a vision encoder (see <em>Multimodal Serving and Qwen3-VL</em>
 below).</p></li>
-<li><p><strong>gpt-oss</strong> (e.g. gpt-oss-120b) — Mixture-of-Experts (MoE) family with <strong>MXFP4</strong>-quantized
+<li><p><strong>gpt-oss</strong> (e.g. gpt-oss-120b) — MoE family with <strong>MXFP4</strong>-quantized
 expert weights.</p></li>
 <li><p><strong>Solar-Open</strong> (e.g. Solar-Open-100B) — MoE family, <strong>NVFP4</strong>-quantized weights with
 16-bit activations and KV cache (NVFP4A16).</p></li>
@@ -626,8 +626,8 @@ significant fraction of each iteration.</p>
 batch ahead</strong>: while the NPU executes the current batch, the scheduler concurrently
 prepares all the metadata for the next one. The host-side scheduling cost is overlapped
 with NPU compute instead of serialized in front of it, keeping the NPU continuously fed.
-For throughput-oriented workloads this improves overall <strong>throughput and TPOT</strong>, at the
-cost of a small, bounded increase in <strong>TTFT</strong>.</p>
+For throughput-oriented workloads this improves overall <strong>throughput and time per output
+token (TPOT)</strong>, at the cost of a small, bounded increase in <strong>TTFT</strong>.</p>
 <p>This feature is still <strong>experimental</strong>, so it is <strong>off by default</strong> and the scheduling
 loop remains <strong>eager</strong>; we plan to make it the default once it stabilizes. Enable the
 overlap scheduler explicitly:</p>
@@ -823,12 +823,6 @@ mode) for testing and benchmarking.</p></li>
 <li><p><strong>Graceful DP termination</strong> for clean shutdown of data-parallel deployments.</p></li>
 </ul>
 </li>
-<li><p><strong>Cleanups</strong>:</p>
-<ul>
-<li><p>Removed the unused legacy Qwen3 reranker code path (rerankers now require models
-converted with <code class="docutils literal notranslate"><span class="pre">as_binary_seq_cls</span></code>).</p></li>
-</ul>
-</li>
 </ul>
 </section>
 </section>
@@ -898,6 +892,17 @@ to <code class="docutils literal notranslate"><span class="pre">/metrics</span><
 with <code class="docutils literal notranslate"><span class="pre">GET</span></code>.</p></li>
 </ul>
 </li>
+<li><p><strong>Firmware upgrade is now a manual step</strong>:</p>
+<ul>
+<li><p>Before 2026.3, the firmware updater ran automatically when the firmware image package
+was installed. Starting with 2026.3, installing the image package no longer triggers
+the update — you must run the updater yourself after installing it.</p></li>
+<li><p><strong>Migration</strong>: After <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span></code> of the firmware tool and image packages, run
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">furiosa_rngd_updater_all</span></code> to upgrade all RNGD devices (or
+<code class="docutils literal notranslate"><span class="pre">furiosa_rngd_updater</span> <span class="pre">-b</span> <span class="pre">&lt;BDF&gt;</span> <span class="pre">-f</span> <span class="pre">&lt;firmware</span> <span class="pre">image&gt;</span></code> for a specific device), then
+perform a cold reboot. See the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> for the full procedure.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="released-components">
@@ -935,7 +940,7 @@ with <code class="docutils literal notranslate"><span class="pre">GET</span></co
 </tr>
 <tr class="row-even"><td><p>furiosa-torch</p></td>
 <td><p>2026.2.0</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -991,7 +996,7 @@ with <code class="docutils literal notranslate"><span class="pre">GET</span></co
 <section id="docker-images">
 <h3>Docker images<a class="headerlink" href="#docker-images" title="Link to this heading">#</a></h3>
 <p>All cloud-native component images are now multi-architecture and Red Hat
-OpenShift–certified (see <em>Cloud-Native Components</em> above).</p>
+OpenShift–certified.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 50.0%" />

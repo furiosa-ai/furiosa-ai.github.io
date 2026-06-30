@@ -5,9 +5,11 @@
 [EXAONE 4.0](https://huggingface.co/LGAI-EXAONE) is LG AI Research's bilingual
 (English / Korean) series of auto-regressive dense transformers that unify a
 non-reasoning mode for general instruction following with a reasoning mode for
-harder problems, and carry native support for tool calling and agentic use.
+harder problems, plus native support for tool calling and agentic use.
 
-FuriosaAI publishes pre-compiled builds of the EXAONE 4.0 models under the
+Furiosa-LLM runs EXAONE 4.0 in **FP8** (static FP8 weights with dynamic FP8
+activation quantization; the KV cache stays in 16-bit precision). FuriosaAI
+publishes pre-compiled FP8 builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 [FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights

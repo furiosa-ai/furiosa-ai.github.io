@@ -44,37 +44,72 @@ PCIe ID database using the following commands:
 
 .. _AptSetup:
 
-Setting up APT
-==============
+Setting up the Package Repository
+=================================
 
-To use the APT server provided by FuriosaAI, follow the steps below:
+FuriosaAI distributes its packages through both an APT repository (for
+Debian/Ubuntu) and an RPM repository (for Rocky Linux / RHEL). Select the tab
+matching your Linux distribution.
 
-1. Install the required packages and register the signing key.
+.. tab-set::
 
-.. code-block:: sh
+  .. tab-item:: APT (Debian/Ubuntu)
+    :sync: apt
 
-  sudo apt update && sudo apt install -y curl gnupg
-  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/cloud.google.gpg
+    To use the APT server provided by FuriosaAI, follow the steps below:
 
-2. Configure the APT server for your Linux distribution by executing the following command:
+    1. Install the required packages and register the signing key.
 
-.. code-block:: sh
+    .. code-block:: sh
 
-  echo "deb [arch=$(dpkg --print-architecture)] http://asia-northeast3-apt.pkg.dev/projects/furiosa-ai $(. /etc/os-release && echo "$VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/furiosa.list
+      sudo apt update && sudo apt install -y curl gnupg
+      curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/cloud.google.gpg
+
+    2. Configure the APT server for your Linux distribution by executing the following command:
+
+    .. code-block:: sh
+
+      echo "deb [arch=$(dpkg --print-architecture)] http://asia-northeast3-apt.pkg.dev/projects/furiosa-ai $(. /etc/os-release && echo "$VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/furiosa.list
+
+  .. tab-item:: RPM (Rocky Linux / RHEL)
+    :sync: rpm
+
+    If you are a user of Rocky Linux or RHEL, FuriosaAI provides an RPM
+    repository for installing the same packages.
+
+    .. note::
+
+      RPM installation instructions are coming soon.
 
 
 Installing Prerequisite Packages
 ================================
 
-After registering FuriosaAI's APT server as described above, you can now
+After registering FuriosaAI's package repository as described above, you can now
 install the required packages: the device driver, the PE Runtime, and optionally
 the device control/information tool (:ref:`furiosa-smi <FuriosaSMICLI>`).
 
-.. code-block:: sh
+.. tab-set::
 
-  sudo apt update
-  sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
-  sudo apt install furiosa-driver-rngd furiosa-smi
+  .. tab-item:: APT (Debian/Ubuntu)
+    :sync: apt
+
+    .. code-block:: sh
+
+      sudo apt update
+      sudo apt install build-essential linux-modules-extra-$(uname -r) linux-headers-$(uname -r)
+      sudo apt install furiosa-driver-rngd furiosa-smi
+
+  .. tab-item:: RPM (Rocky Linux / RHEL)
+    :sync: rpm
+
+    If you are a user of Rocky Linux or RHEL, install the same packages
+    (device driver, PE Runtime, and optionally ``furiosa-smi``) from the RPM
+    repository.
+
+    .. note::
+
+      RPM installation instructions are coming soon.
 
 
 Verifying NPU Device Installation
@@ -107,20 +142,31 @@ Upgrading Device Firmware
 ====================================
 
 Upgrading the firmware can improve the performance and stability of the devices.
-If there is newer firmware in the latest release, you can upgrade it using the
-following commands:
+If there is newer firmware in the latest release, first install the firmware updater
+and firmware image packages:
 
 .. code-block:: sh
 
   sudo apt install furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
 
-Installing the ``furiosa-firmware-image-rngd`` package will automatically upgrade the firmware.
+Then run the updater to upgrade the firmware on all RNGD devices:
+
+.. code-block:: sh
+
+  sudo furiosa_rngd_updater_all
+
 The process takes 3 to 5 minutes per device to complete.
 The firmware upgrade process may require a reboot to complete the installation.
 
 .. note::
 
+  Before the 2026.3 release, the firmware updater was executed automatically when the
+  ``furiosa-firmware-image-rngd`` package was installed. Starting with the 2026.3 release,
+  you must run the firmware updater manually after installing the package.
+
+.. note::
+
   Please remember to cold reboot the system after the firmware upgrade process is completed.
-  For more information about the firmware upgrade process. If the firmware upgrade process is interrupted,
-  the device may become unusable. In this case, please contact FuriosaAI support for assistance.
+  If the firmware upgrade process is interrupted, the device may become unusable.
+  In this case, please contact FuriosaAI support for assistance.
 

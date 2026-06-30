@@ -8,18 +8,19 @@ language model developed by Upstage. It is an auto-regressive
 it handles both reasoning and non-reasoning chat as well as tool (function)
 calling.
 
-FuriosaAI publishes pre-compiled builds of Solar Open under the
+Furiosa-LLM runs Solar Open in **NVFP4A16** (NVFP4 weights with 16-bit activations
+and KV cache). FuriosaAI publishes pre-compiled NVFP4A16 builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
-[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The base model also runs
-on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
+[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The upstream weights also
+run on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
 those, see the upstream model card linked below.
 
 ## Variants
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
-| [`furiosa-ai/Solar-Open-100B-NVFP4A16`](https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16) | NVFP4 | 4 | 100B MoE; reasoning / non-reasoning |
+| [`furiosa-ai/Solar-Open-100B-NVFP4A16`](https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16) | NVFP4A16 | 4 | 100B MoE; reasoning / non-reasoning |
 
 - **Architecture:** SolarOpen (Mixture-of-Experts), `SolarOpenForCausalLM`
 - **Input / Output:** Text / Text
@@ -80,7 +81,7 @@ curl http://localhost:8000/v1/chat/completions \
 
 ### Reasoning
 
-With `--reasoning-parser solar_open`, Solar-Open returns its reasoning separately
+With `--reasoning-parser solar_open`, Solar Open returns its reasoning separately
 from the final answer:
 
 * `response.choices[].message.reasoning` (non-streaming)

@@ -458,7 +458,9 @@ token. They offer strong instruction following, reasoning over text,
 multilingual coverage, and tool usage. They come in the original hybrid
 thinking / non-thinking release as well as updated instruct, thinking, and
 coding-specialized editions.</p>
-<p>FuriosaAI publishes pre-compiled builds of the Qwen3-MoE models under the
+<p>Furiosa-LLM runs the Qwen3-MoE models in <strong>FP8</strong> (static FP8 weights with dynamic
+FP8 activation quantization; the KV cache stays in 16-bit precision). FuriosaAI
+publishes pre-compiled FP8 builds under the
 <a class="reference external" href="https://huggingface.co/furiosa-ai"><code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> organization on the Hugging Face Hub</a>,
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 <a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with Furiosa-LLM. The same upstream weights

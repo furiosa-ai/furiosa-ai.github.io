@@ -4,29 +4,33 @@
 Furiosa-LLM
 ****************************************************
 
-Furiosa-LLM is a high-performance inference engine for LLM and multi-modal
-LLM models.
+Furiosa-LLM is a high-performance inference engine for large language models
+(LLMs) and multi-modal (vision-language) models.
 Furiosa-LLM offers state-of-the-art serving efficiency and optimizations.
 Key features of Furiosa-LLM include:
 
 * vLLM-compatible API (LLM, LLMEngine, AsyncLLMEngine API)
+* Text and multi-modal (vision-language) serving
+* Generative and pooling model support (embedding, reranking, classification)
 * Efficient KV cache management with PagedAttention
+* Radix-tree prefix caching for reuse of shared prompt prefixes
+* Hybrid KV cache for models that mix sliding-window and global attention
 * Continuous batching of incoming requests
-* Quantization: FP8 (Planned: INT4, INT8, GPTQ, AWQ)
+* Quantization: INT4, INT8, BF16, FP8, MXFP4, and NVFP4
 * Support for data, tensor, and pipeline parallelism across multiple NPUs
-* OpenAI-compatible API server
-* Various decoding algorithms: greedy search, top-k/top-p, and speculative decoding (planned for 2026.3)
+* OpenAI-compatible API server with Chat Completions and Responses APIs
+* Various decoding algorithms: greedy search, top-k/top-p, and speculative decoding (planned)
 * Tool calling and reasoning parser support
 * Structured output generation (choice, regex, json schema, grammar)
-* Chunked Prefill
+* Chunked prefill with mixed prefill/decode batching
+* Prometheus metrics endpoint for serving observability
 * Integration with Hugging Face models and hub support
-* Hugging Face PEFT support (planned)
 
 
 Documentation
 -------------
 * :ref:`GettingStartedFuriosaLLM`: A quick start guide to Furiosa-LLM
-* :ref:`FuriosaLLMModels`: Model cards for the pre-compiled models published by FuriosaAI
+* :ref:`Furiosa-LLM Models <SupportedModels>`: Model cards for the pre-compiled models published by FuriosaAI
 * :ref:`OpenAIServer`: Details about the OpenAI-compatible server and its features
 * :ref:`ResponsesAPI`: Guide to the OpenResponses-compatible Responses API
 * :ref:`ToolCalling`: Guide to tool calling with parsers and choice options

@@ -131,7 +131,7 @@ The same settings can be passed through ``SchedulerConfig``:
    )
 
    with LLM(
-       "furiosa-ai/Llama-3.1-8B-Instruct-FP8",
+       "furiosa-ai/Qwen3-4B-FP8",
        data_parallel_size=2,
        scheduler_config=scheduler_config,
    ) as llm:

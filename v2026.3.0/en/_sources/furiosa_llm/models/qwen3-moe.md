@@ -9,7 +9,9 @@ multilingual coverage, and tool usage. They come in the original hybrid
 thinking / non-thinking release as well as updated instruct, thinking, and
 coding-specialized editions.
 
-FuriosaAI publishes pre-compiled builds of the Qwen3-MoE models under the
+Furiosa-LLM runs the Qwen3-MoE models in **FP8** (static FP8 weights with dynamic
+FP8 activation quantization; the KV cache stays in 16-bit precision). FuriosaAI
+publishes pre-compiled FP8 builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 [FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights

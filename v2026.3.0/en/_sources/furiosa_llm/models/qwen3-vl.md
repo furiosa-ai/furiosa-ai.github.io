@@ -2,7 +2,7 @@
 
 # Qwen3-VL
 
-The [Qwen3-VL](https://huggingface.co/Qwen) series are dense **vision-language
+The [Qwen3-VL](https://huggingface.co/Qwen) models are dense **vision-language
 models** that pair a vision encoder with a dense transformer decoder, using
 Interleaved-MRoPE positional embeddings and DeepStack multi-level feature fusion
 to handle images and videos alongside text. They cover visual understanding
@@ -94,7 +94,7 @@ curl http://localhost:8000/v1/chat/completions \
 ```
 
 The `image_url.url` field accepts a remote `http://`/`https://` URL, an inline
-base64 `data:` URL, or a local `file://` path (the latter requires the
+base64 `data:` URL, or a local `file://` path (the last requires the
 `--allowed-local-media-path` flag below).
 
 ### Multimodal serving options

@@ -448,8 +448,8 @@
                   
   <section id="model-preparation">
 <span id="modelpreparation"></span><h1>Model Preparation<a class="headerlink" href="#model-preparation" title="Link to this heading">#</a></h1>
-<p>To run a trained model, fine-tuned model or quantized model by yourself,
-Furiosa-LLM needs to convert the model into a model artifact.
+<p>To run your own trained, fine-tuned, or quantized model, you must first convert
+it into a model artifact using Furiosa-LLM.
 Also, if you want to apply specific optimization configurations or parallelization
 strategies for your workload, you must perform this model preparation step.</p>
 <div class="admonition tip">
@@ -460,6 +460,14 @@ please refer to the <a class="reference internal" href="../get_started/furiosa_l
 Additionally, Furiosa-LLM provides a set of pre-compiled model artifacts for popular LLMs in the
 <a class="reference external" href="https://huggingface.co/furiosa-ai">Hugging Face Hub 🤗 - FuriosaAI organization</a>.
 You can use these to quickly run LLM models on the Furiosa NPU.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code> / <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> workflow described on this page is
+<strong>legacy and scheduled for deprecation</strong>. New work should use the
+<a class="reference internal" href="fxb.html#fxb"><span class="std std-ref">Furiosa Executable Bundle (FXB)</span></a> format and the <code class="docutils literal notranslate"><span class="pre">fxb</span></code> command instead,
+which is now the recommended way to build, share, and serve compiled models. The
+artifact-builder path remains available for backward compatibility for now.</p>
 </div>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
@@ -504,7 +512,7 @@ such as INT8, FP8, or INT4 — while aiming to preserve model accuracy.</p>
 <p>It is typically applied when higher throughput or lower latency is needed. However, since quantization may affect
 model accuracy, it is important to perform thorough experimentation and accuracy evaluations.</p>
 <p>Furiosa-LLM currently supports fine-grained FP8 dynamic quantization for causal language models.
-We plan to support more quantization schemes based on llm-compressor in the next releases.</p>
+We plan to support more quantization schemes based on llm-compressor in future releases.</p>
 <p>To quantize a model, you first need to load it using the
 <code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM.from_pretrained()</span></code> method from the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> library.
 When loading the model, you can specify the <code class="docutils literal notranslate"><span class="pre">quantization_config</span></code> parameter to define

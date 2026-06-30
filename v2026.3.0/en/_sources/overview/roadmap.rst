@@ -17,7 +17,7 @@ Upcoming Releases 2026 Q1 - Q2
 * 🔨 Qwen3 VL and multi-modal model support
 * 🔨 Qwen 3.6, Gemma 4, EXAONE 4.5 model support (in priority order)
 * 🔨 KV cache offloading support
-* ✅ Response API support
+* ✅ Responses API support
 * 🔨 Speculative decoding support
 * 🔨 PyTorch eager mode support
 

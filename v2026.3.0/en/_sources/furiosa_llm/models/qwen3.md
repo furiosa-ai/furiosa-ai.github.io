@@ -10,7 +10,9 @@ thought before the final answer for complex reasoning, math, and coding — and 
 They also offer strong tool-calling and agent capabilities and multilingual
 support.
 
-FuriosaAI publishes pre-compiled builds of the Qwen3 dense models under the
+Furiosa-LLM runs the Qwen3 dense models in **FP8** (static FP8 weights with
+dynamic FP8 activation quantization; the KV cache stays in 16-bit precision).
+FuriosaAI publishes pre-compiled FP8 builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 [FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights
@@ -26,6 +28,7 @@ vision-language members of the family see {doc}`qwen3-embedding`,
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
+| [`furiosa-ai/Qwen3-4B-FP8`](https://huggingface.co/furiosa-ai/Qwen3-4B-FP8) | FP8 | 1 | 4B params; hybrid thinking / non-thinking |
 | [`furiosa-ai/Qwen3-8B-FP8`](https://huggingface.co/furiosa-ai/Qwen3-8B-FP8) | FP8 | 1 | 8.2B params; hybrid thinking / non-thinking |
 | [`furiosa-ai/Qwen3-32B-FP8`](https://huggingface.co/furiosa-ai/Qwen3-32B-FP8) | FP8 | 4 | 32B params; hybrid thinking / non-thinking |
 

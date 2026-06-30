@@ -2,8 +2,8 @@
 
 # Qwen3-Reranker
 
-The [Qwen3-Reranker](https://huggingface.co/Qwen) series are reranking models
-built on the Qwen3 dense transformer backbone. Given a query and a set of
+The [Qwen3-Reranker](https://huggingface.co/Qwen) series is a family of reranking
+models built on the Qwen3 dense transformer backbone. Given a query and a set of
 candidate documents, they produce relevance scores used to reorder retrieval
 results — a common second stage in retrieval-augmented generation (RAG) and
 search pipelines.

@@ -30,13 +30,13 @@ framework. To see why adding a model got so much faster, it helps to look at how
 to describe one.
 
 The previous path started from a PyTorch model, traced with TorchDynamo into an FX graph
-of Torch ATen ops. This was great for getting a model running quickly, but it diluted the
+of Torch ATen ops. This was effective for getting a model running quickly, but it diluted the
 model's intent: capturing through ATen decomposes the graph into fine-grained primitives.
 An ``aten.mm``, for example, becomes a tiling, then an elementwise multiply, then a
 reduce — so the compiler no longer sees a "matmul" and has to re-recognize one before it
 can optimize it, and axis semantics and op boundaries blur in the same way. Just as
 importantly, the modeling stage left few good places to attach the hints a compiler needs
-for an RNGD target, such as the intended tensor parallelism (TP) strategy. The software
+for an RNGD target, such as the intended tensor parallelism (TP) strategy. The compiler
 was essentially optimizing after much of the meaning had already been flattened away.
 
 **TCL** was designed to preserve that model meaning and structure. It is a declarative
@@ -77,7 +77,7 @@ including several large Mixture-of-Experts (MoE) architectures:
 * **Qwen3-VL** (e.g. Qwen3-VL-32B) — the first **vision-language** family on RNGD: a
   dense transformer paired with a vision encoder (see *Multimodal Serving and Qwen3-VL*
   below).
-* **gpt-oss** (e.g. gpt-oss-120b) — Mixture-of-Experts (MoE) family with **MXFP4**-quantized
+* **gpt-oss** (e.g. gpt-oss-120b) — MoE family with **MXFP4**-quantized
   expert weights.
 * **Solar-Open** (e.g. Solar-Open-100B) — MoE family, **NVFP4**-quantized weights with
   16-bit activations and KV cache (NVFP4A16).
@@ -183,8 +183,8 @@ significant fraction of each iteration.
 batch ahead**: while the NPU executes the current batch, the scheduler concurrently
 prepares all the metadata for the next one. The host-side scheduling cost is overlapped
 with NPU compute instead of serialized in front of it, keeping the NPU continuously fed.
-For throughput-oriented workloads this improves overall **throughput and TPOT**, at the
-cost of a small, bounded increase in **TTFT**.
+For throughput-oriented workloads this improves overall **throughput and time per output
+token (TPOT)**, at the cost of a small, bounded increase in **TTFT**.
 
 This feature is still **experimental**, so it is **off by default** and the scheduling
 loop remains **eager**; we plan to make it the default once it stabilizes. Enable the
@@ -375,11 +375,6 @@ API & Usability Improvements
 
   * **Graceful DP termination** for clean shutdown of data-parallel deployments.
 
-* **Cleanups**:
-
-  * Removed the unused legacy Qwen3 reranker code path (rerankers now require models
-    converted with ``as_binary_seq_cls``).
-
 
 Platform & Packaging
 ^^^^^^^^^^^^^^^^^^^^
@@ -449,6 +444,16 @@ gained broader platform support:
   * **Migration**: Ensure any monitoring scrapers or health checks query ``/metrics``
     with ``GET``.
 
+* **Firmware upgrade is now a manual step**:
+
+  * Before 2026.3, the firmware updater ran automatically when the firmware image package
+    was installed. Starting with 2026.3, installing the image package no longer triggers
+    the update — you must run the updater yourself after installing it.
+  * **Migration**: After ``apt install`` of the firmware tool and image packages, run
+    ``sudo furiosa_rngd_updater_all`` to upgrade all RNGD devices (or
+    ``furiosa_rngd_updater -b <BDF> -f <firmware image>`` for a specific device), then
+    perform a cold reboot. See the :ref:`UpgradeGuide` for the full procedure.
+
 
 📦 Released Components
 ----------------------
@@ -477,7 +482,7 @@ Python packages
      - pure Python (``any``)
    * - furiosa-torch
      - 2026.2.0
-     - ``x86_64``
+     - ``x86_64``, ``aarch64``
 
 APT packages
 ^^^^^^^^^^^^
@@ -515,7 +520,7 @@ Docker images
 ^^^^^^^^^^^^^
 
 All cloud-native component images are now multi-architecture and Red Hat
-OpenShift–certified (see *Cloud-Native Components* above).
+OpenShift–certified.
 
 .. list-table::
    :widths: 200 50 150

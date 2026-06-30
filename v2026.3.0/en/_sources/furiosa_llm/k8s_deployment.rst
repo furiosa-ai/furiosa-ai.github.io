@@ -80,8 +80,8 @@ Apply the PVC:
 Step 3: Deploy Furiosa-LLM Server
 ---------------------------------
 
-Create a Deployment manifest for serving the ``furiosa-ai/Llama-3.1-8B-Instruct-FP8`` model with Furiosa-LLM.
-For detailed information about the ``furiosa-ai/Llama-3.1-8B-Instruct-FP8`` model, please see the `Hugging Face model page <https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct-FP8>`_.
+Create a Deployment manifest for serving the ``furiosa-ai/Llama-3.1-8B-Instruct`` model with Furiosa-LLM.
+For detailed information about the ``furiosa-ai/Llama-3.1-8B-Instruct`` model, please see the `Hugging Face model page <https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct>`_.
 
 .. code-block:: yaml
 
@@ -106,7 +106,7 @@ For detailed information about the ``furiosa-ai/Llama-3.1-8B-Instruct-FP8`` mode
              image: furiosaai/furiosa-llm:latest
              args:
                - "serve"
-               - "furiosa-ai/Llama-3.1-8B-Instruct-FP8"
+               - "furiosa-ai/Llama-3.1-8B-Instruct"
              ports:
                - containerPort: 8000
              resources:
@@ -217,7 +217,7 @@ Then, issue a test request:
    curl http://localhost:8000/v1/completions \
      -H "Content-Type: application/json" \
      -d '{
-           "model": "furiosa-ai/Llama-3.1-8B-Instruct-FP8",
+           "model": "furiosa-ai/Llama-3.1-8B-Instruct",
            "prompt": "San Francisco is a",
            "max_tokens": 7,
            "temperature": 0

@@ -3,48 +3,27 @@
 ****************************************************
 Furiosa Executable Bundles (FXB)
 ****************************************************
-A **Furiosa Executable Bundle (FXB)** is Furiosa-LLM's shareable, compiled-artifact format.
-An ``.fxb`` file is a single archive that contains a ``manifest.json`` together with the compiled
-kernels (``edfs/``) needed to run a model on the Furiosa NPU. Once a model is compiled into an
-``.fxb``, you can serve it directly without recompiling, copy it to another machine, or publish it
-to the Hugging Face Hub for others to reuse.
+A **Furiosa Executable Bundle (FXB)** is Furiosa-LLM's compiled-artifact format. An ``.fxb``
+file is a single archive holding the compiled binaries — generated for a specific model
+architecture — together with the metadata needed to run the model on the Furiosa NPU. It
+is designed to be easy to distribute, share, and reuse: once a model is compiled into an
+``.fxb``, you can serve it directly without recompiling, copy it to another machine, or
+publish it to the Hugging Face Hub for others to reuse.
 
-The key property of an FXB is its **architecture fingerprint**. The manifest records the model's
-architecture and the configuration fields that determine the compiled kernels — so a single FXB is
-reusable across *any* Hugging Face model that shares the same fingerprint, not just the one it was
-built from. This is what makes it possible to serve a model whose own repository ships no ``.fxb``
-by reusing a compatible bundle from your local cache.
-
-The fingerprint is the architecture plus the ``config.json`` fields that **furiosa-kernels reads at
-build time** to generate the compiled kernels — so two repositories that differ in any of them
-compile to different kernels and must not share an FXB. Fields used only at load time (e.g.
-``rope_theta``, which feeds the rotary cache computed during module load rather than the compiled
-kernel) are intentionally excluded. It consists of:
-
-* ``architecture`` (always present; must match exactly)
-* **Required** config keys: ``hidden_size``, ``intermediate_size``, ``num_attention_heads``,
-  ``vocab_size``
-* **Optional** config keys (compared when present on both sides):
-
-  * attention / positional: ``num_key_value_heads``, ``head_dim``, ``sliding_window``,
-    ``num_hidden_layers``, ``max_position_embeddings``, ``rms_norm_eps``, ``rope_scaling``
-  * mixture-of-experts: ``moe_intermediate_size``, ``num_experts``, ``num_local_experts``,
-    ``n_routed_experts``, ``num_experts_per_tok``, ``num_shared_experts``, ``n_shared_experts``
-    (model families spell expert counts differently — e.g. ``num_experts`` for Qwen3-MoE /
-    EXAONE-MoE, ``num_local_experts`` for gpt-oss, ``n_routed_experts`` for solar-open — so every
-    spelling is listed; a given model carries only one)
-
-* **Quantization** keys (compared when present on both sides): ``format``, ``quant_method``
-
-Matching is **strict**: the architecture and all required keys must be equal, and any optional or
-quantization key present on both sides must also be equal. A key set to JSON ``null`` (e.g.
-``sliding_window: null``) is treated as absent.
+A bundle is not tied to a single model. Models that compile to the same kernels share an
+**architecture fingerprint**, and any model with a matching fingerprint can reuse the same
+``.fxb`` — so a fine-tuned model, a model whose weights were updated, or any other model of
+the same architecture can be served from one bundle without recompiling. See
+:ref:`FXBFingerprint` for how compatibility is determined.
 
 .. note::
 
-  The fingerprint-based compatibility matching is **experimental**. The exact set of fields that
-  make up the fingerprint, and how they are compared, may change in future releases. Always verify
-  a match with ``fxb check`` before relying on a cached bundle for a different model.
+  **Coming from GPUs?** On a GPU, the kernels are software: they ship with the framework,
+  usually as pre-compiled CUDA kernel libraries, and the same binaries run for every model.
+  RNGD works differently — the compiler generates code that is optimized for a specific
+  model, and that code is not part of the Furiosa-LLM software but a separate artifact you
+  build, distribute, and load. FXB is both the **format** for that artifact and the
+  **tool** (the ``fxb`` command) for building, sharing, and inspecting it.
 
 .. tip::
 
@@ -94,10 +73,10 @@ Serving a model with a compatible cached FXB
 ============================================
 A model's own Hugging Face repository may not ship an ``.fxb`` of its own. When that happens,
 Furiosa-LLM can still serve it by reusing a **fingerprint-compatible** bundle from your local
-cache. This is especially useful when the model weights are updated, or when you serve a
-fine-tuned model or a variation of a supported model: as long as the architecture fingerprint is
-unchanged, you can reuse an existing FXB instead of compiling a new one for every weight update or
-variant. The workflow is:
+cache (see :ref:`FXBFingerprint` for how compatibility is determined). This is especially useful
+when the model weights are updated, or when you serve a fine-tuned model or a variation of a
+supported model: as long as the architecture fingerprint is unchanged, you can reuse an existing
+FXB instead of compiling a new one for every weight update or variant. The workflow is:
 
 #. Get a compatible FXB into the cache — either download one from the Hub, or add one you already
    have on disk.
@@ -319,7 +298,8 @@ rest, and the command exits non-zero if any failed.
 
 ``fxb check``
 -------------
-Find cached FXBs compatible with a Hugging Face repository's model config.
+Find cached FXBs compatible with a Hugging Face repository's model config (see
+:ref:`FXBFingerprint` for how compatibility is determined).
 
 .. code-block::
 
@@ -462,3 +442,148 @@ kernel/bucket; the excerpt below shows the first entry:
     Outputs:
       [0] size=8192      shape=[Broadcast=1]|[0_1=1:4096, 1_1=4096:1]  dtype=bf16
       [1] size=8192      shape=[Broadcast=1]|[0_1=1:4096, 1_1=4096:1]  dtype=bf16
+
+
+.. _FXBFingerprint:
+
+Fingerprint and Compatibility
+=============================
+The key property of an FXB is its **architecture fingerprint** — the value Furiosa-LLM uses to
+decide whether a bundle is compatible with a given model. The manifest records the model's
+architecture and the configuration fields that determine the compiled kernels, and a bundle is
+considered compatible with a model when their fingerprints match. A single FXB is therefore
+reusable across *any* Hugging Face model that shares the same fingerprint, not just the one it was
+built from — which is what makes it possible to serve a model whose own repository ships no ``.fxb``
+by reusing a compatible bundle from your local cache.
+
+The fingerprint is built from the model architecture plus the ``config.json`` fields that affect
+kernel generation — the dimensions, attention and mixture-of-experts settings, and quantization
+that **furiosa-kernels reads at build time**. Representative examples are ``hidden_size``,
+``num_attention_heads``, ``sliding_window``, the expert counts for MoE models, and the quantization
+``format``. Two repositories that differ in any of these compile to different kernels and must not
+share an FXB; fields used only at load time are not part of the fingerprint.
+
+Matching is **strict**: two models are compatible only if their architecture and all
+fingerprint fields are equal. Use ``fxb check`` to verify a match before reusing a bundle.
+
+.. note::
+
+  The fingerprint-based compatibility matching is **experimental**. The exact set of fields that
+  make up the fingerprint, and how they are compared, may change in future releases. Always verify
+  a match with ``fxb check`` before relying on a cached bundle for a different model.
+
+
+Best Practices
+==============
+``fxb build`` trades build time against the runtime coverage and performance of the resulting
+bundle. The right options depend on what you are building for. The scenarios below cover the common
+cases; FuriosaAI's own per-model production configurations live in the build matrix at
+``.github/fxb-artifacts.yaml``.
+
+Quick test build
+----------------
+When you just want a runnable bundle as fast as possible — bring-up, a smoke test, or checking that
+a model compiles at all — minimize the number of kernels that get compiled and parallelize the
+build:
+
+* ``-O O0`` — the minimal bucket set, so far fewer kernels are compiled. This is the single biggest
+  lever on build time.
+* ``--max-model-len`` — cap the context length to something small so fewer and smaller buckets are
+  generated.
+* ``--concurrency`` — raise above the default of ``1`` to compile kernels in parallel and use the
+  available cores on the build host.
+* ``--dry-run`` — resolve the config and bucket plan and print the build summary *without*
+  compiling, so you can confirm the plan before spending any compile time.
+
+.. code-block::
+
+  # Preview the plan first, then build a minimal bundle quickly
+  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-test.fxb --max-model-len 4096 --dry-run
+  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-test.fxb -O O0 --max-model-len 4096 --concurrency 8
+
+A bundle built with ``-O O0`` runs, but it only covers a minimal set of buckets; expect reduced
+performance and coverage compared with a full build. Do not serve it in production.
+
+Production build
+----------------
+For the bundle you actually serve, favor full bucket coverage and a configuration that matches the
+deployment, accepting a longer build:
+
+* ``-O O3`` — the full bucket set (this is the default; set it explicitly to make the intent clear).
+* ``-tp/--tensor-parallel-size`` — match the serving topology (8 PEs per chip — e.g. ``8`` for a
+  single chip, ``32`` for four).
+* ``--max-model-len`` — set to the maximum context length you actually serve, so buckets are sized
+  for the real workload rather than over-built.
+* ``--concurrency`` — set high to saturate the build host and shorten the (longer) full build.
+* ``--build-report`` — print per-kernel compilation timing to spot unexpectedly slow kernels.
+
+.. code-block::
+
+  fxb build openai/gpt-oss-120b gpt-oss-120b.fxb \
+      -O O3 -tp 32 --max-model-len 32768 --concurrency 24 --build-report
+
+Publishing and distribution
+---------------------------
+An FXB is meant to be reused — from the local cache, copied to another machine, or published to the
+Hugging Face Hub. Once you have a ``.fxb`` file, there are two ways to serve with it:
+
+* **Register it in the cache** with ``fxb add`` so it is discovered automatically. After adding,
+  ``fxb check`` confirms a target model is compatible, and ``furiosa-llm serve`` finds the bundle by
+  fingerprint without any extra flag (see
+  :ref:`Serving a model with a compatible cached FXB <ServingFromCachedFXB>` above for how
+  compatibility is matched). This is the right choice when you serve the model regularly or share
+  one cache across several models.
+
+  .. code-block::
+
+    fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8.fxb -O O3 -tp 8
+    fxb add ./qwen3-8b-fp8.fxb
+    fxb check Qwen/Qwen3-8B-FP8
+    furiosa-llm serve Qwen/Qwen3-8B-FP8
+
+* **Point at the file directly** with ``furiosa-llm serve --fxb <path>``, which uses the given
+  bundle as-is and skips cache lookup. This is convenient for a one-off run, a freshly built bundle
+  you have not registered, or pinning a specific file.
+
+  .. code-block::
+
+    furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb
+
+**Tensor parallelism is fixed at build time**, while **pipeline and data parallelism are set when
+you serve.** A bundle's ``-tp/--tensor-parallel-size`` shapes the compiled kernels (each kernel is
+sharded for that tensor-parallel degree), so it is part of the FXB and cannot be changed
+afterward — build with the ``-tp`` you intend to deploy. Pipeline and data parallelism, by
+contrast, replicate and stage the already-compiled bundle across more PEs without recompiling, so
+they are chosen at ``furiosa-llm serve`` time via ``-pp/--pipeline-parallel-size`` and
+``-dp/--data-parallel-size``:
+
+.. code-block::
+
+  # Built once for tensor-parallel size 8; deployed with pipeline and data parallelism
+  furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb -pp 2 -dp 4
+
+The simplest way to distribute a model is to ship the ``.fxb`` *inside* a standard model
+directory. Take a directory saved by Transformers' ``save_pretrained()`` — the usual
+``config.json``, ``tokenizer.json``, weights, and so on — drop a single ``.fxb`` file into it, and
+``furiosa-llm serve`` runs that directory directly: it loads the weights and tokenizer as usual and
+picks up the bundled ``.fxb`` (the second step of the resolution order above), with no cache setup
+or ``--fxb`` flag needed.
+
+.. code-block::
+
+  # A model directory that also contains an .fxb
+  my-model/
+    config.json
+    tokenizer.json
+    model-00001-of-00002.safetensors
+    ...
+    qwen3-8b-fp8.fxb        # the bundle, added alongside the weights
+
+  furiosa-llm serve ./my-model
+
+The same directory can then be published or distributed however you like — pushed to the Hugging
+Face Hub, copied to another machine, or packaged for deployment — and it serves on RNGD out of the
+box for anyone who pulls it. The pre-compiled models under the
+`furiosa-ai organization on the Hugging Face Hub <https://huggingface.co/furiosa-ai>`_ (for example
+``furiosa-ai/Qwen3-8B-FP8``) are published exactly this way: each repository carries the model
+files together with a matching ``.fxb``.

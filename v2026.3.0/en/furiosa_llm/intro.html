@@ -443,29 +443,33 @@
                   
   <section id="furiosa-llm">
 <span id="furiosallm"></span><h1>Furiosa-LLM<a class="headerlink" href="#furiosa-llm" title="Link to this heading">#</a></h1>
-<p>Furiosa-LLM is a high-performance inference engine for LLM and multi-modal
-LLM models.
+<p>Furiosa-LLM is a high-performance inference engine for large language models
+(LLMs) and multi-modal (vision-language) models.
 Furiosa-LLM offers state-of-the-art serving efficiency and optimizations.
 Key features of Furiosa-LLM include:</p>
 <ul class="simple">
 <li><p>vLLM-compatible API (LLM, LLMEngine, AsyncLLMEngine API)</p></li>
+<li><p>Text and multi-modal (vision-language) serving</p></li>
+<li><p>Generative and pooling model support (embedding, reranking, classification)</p></li>
 <li><p>Efficient KV cache management with PagedAttention</p></li>
+<li><p>Radix-tree prefix caching for reuse of shared prompt prefixes</p></li>
+<li><p>Hybrid KV cache for models that mix sliding-window and global attention</p></li>
 <li><p>Continuous batching of incoming requests</p></li>
-<li><p>Quantization: FP8 (Planned: INT4, INT8, GPTQ, AWQ)</p></li>
+<li><p>Quantization: INT4, INT8, BF16, FP8, MXFP4, and NVFP4</p></li>
 <li><p>Support for data, tensor, and pipeline parallelism across multiple NPUs</p></li>
-<li><p>OpenAI-compatible API server</p></li>
-<li><p>Various decoding algorithms: greedy search, top-k/top-p, and speculative decoding (planned for 2026.3)</p></li>
+<li><p>OpenAI-compatible API server with Chat Completions and Responses APIs</p></li>
+<li><p>Various decoding algorithms: greedy search, top-k/top-p, and speculative decoding (planned)</p></li>
 <li><p>Tool calling and reasoning parser support</p></li>
 <li><p>Structured output generation (choice, regex, json schema, grammar)</p></li>
-<li><p>Chunked Prefill</p></li>
+<li><p>Chunked prefill with mixed prefill/decode batching</p></li>
+<li><p>Prometheus metrics endpoint for serving observability</p></li>
 <li><p>Integration with Hugging Face models and hub support</p></li>
-<li><p>Hugging Face PEFT support (planned)</p></li>
 </ul>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../get_started/furiosa_llm.html#gettingstartedfuriosallm"><span class="std std-ref">Quick Start with Furiosa-LLM</span></a>: A quick start guide to Furiosa-LLM</p></li>
-<li><p><a class="reference internal" href="supported_models.html#furiosallmmodels"><span class="std std-ref">Supported Models</span></a>: Model cards for the pre-compiled models published by FuriosaAI</p></li>
+<li><p><a class="reference internal" href="supported_models.html#supportedmodels"><span class="std std-ref">Furiosa-LLM Models</span></a>: Model cards for the pre-compiled models published by FuriosaAI</p></li>
 <li><p><a class="reference internal" href="furiosa-llm-serve.html#openaiserver"><span class="std std-ref">OpenAI-Compatible Server</span></a>: Details about the OpenAI-compatible server and its features</p></li>
 <li><p><a class="reference internal" href="responses-api.html#responsesapi"><span class="std std-ref">Responses API</span></a>: Guide to the OpenResponses-compatible Responses API</p></li>
 <li><p><a class="reference internal" href="toolcalling.html#toolcalling"><span class="std std-ref">Tool Calling</span></a>: Guide to tool calling with parsers and choice options</p></li>

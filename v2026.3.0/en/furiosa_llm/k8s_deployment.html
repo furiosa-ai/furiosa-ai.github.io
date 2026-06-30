@@ -511,8 +511,8 @@ Please verify and specify the appropriate storage class for your cluster:</p>
 </section>
 <section id="step-3-deploy-furiosa-llm-server">
 <h2>Step 3: Deploy Furiosa-LLM Server<a class="headerlink" href="#step-3-deploy-furiosa-llm-server" title="Link to this heading">#</a></h2>
-<p>Create a Deployment manifest for serving the <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct-FP8</span></code> model with Furiosa-LLM.
-For detailed information about the <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct-FP8</span></code> model, please see the <a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct-FP8">Hugging Face model page</a>.</p>
+<p>Create a Deployment manifest for serving the <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct</span></code> model with Furiosa-LLM.
+For detailed information about the <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct</span></code> model, please see the <a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct">Hugging Face model page</a>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -534,7 +534,7 @@ For detailed information about the <code class="docutils literal notranslate"><s
 <span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-llm:latest</span>
 <span class="w">          </span><span class="nt">args</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;serve&quot;</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;</span>
 <span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span>
 <span class="w">          </span><span class="nt">resources</span><span class="p">:</span>
@@ -629,7 +629,7 @@ For detailed information about the <code class="docutils literal notranslate"><s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/completions<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">        &quot;model&quot;: &quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8&quot;,</span>
+<span class="s1">        &quot;model&quot;: &quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;,</span>
 <span class="s1">        &quot;prompt&quot;: &quot;San Francisco is a&quot;,</span>
 <span class="s1">        &quot;max_tokens&quot;: 7,</span>
 <span class="s1">        &quot;temperature&quot;: 0</span>

@@ -6,7 +6,7 @@ Upgrading FuriosaAI's Software
 ******************************
 The high-level upgrade workflow is as follows:
 
-1. Upgrade the prerequisite packages (the driver and PE Runtime packages).
+1. Upgrade the driver package.
 2. Upgrade the firmware tool and image if a new version is available.
 3. Perform a cold reboot of the system to apply the changes if the device firmware is upgraded.
 4. Run the ``furiosa-smi info`` CLI tool to confirm the new driver and firmware versions in all devices.
@@ -26,17 +26,30 @@ Please follow the steps below to upgrade the Furiosa software stack:
    sudo apt update && sudo apt install -y furiosa-driver-rngd furiosa-smi
 
 Usually, major releases of the Furiosa SDK include a firmware upgrade.
-The firmware can be upgraded by running the following command:
+Before upgrading the firmware, install the firmware updater and firmware image packages:
 
 .. code-block:: sh
 
    sudo apt install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
 
+To upgrade the firmware on all RNGD devices, run:
+
+.. code-block:: sh
+
+   sudo furiosa_rngd_updater_all
+
+Alternatively, you can upgrade the firmware on a specific RNGD by specifying its BDF and the firmware image:
+
+.. code-block:: sh
+
+   sudo furiosa_rngd_updater -b <BDF> -f <firmware image>
+   # Example:
+   # sudo furiosa_rngd_updater -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.3.0.bin
+
 .. note::
 
-  Starting from the 2026.1 release, the ``furiosa-pert-rngd`` package has been removed.
-  PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.
-  Installing the firmware package will automatically remove ``furiosa-pert-rngd`` if it was previously installed.
+  Before the 2026.3 release, the firmware updater was executed automatically when the firmware image package was installed.
+  Starting with the 2026.3 release, you must run the firmware updater manually after installing the firmware image package.
 
 .. note::
 

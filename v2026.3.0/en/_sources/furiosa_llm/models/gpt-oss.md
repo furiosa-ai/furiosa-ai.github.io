@@ -9,7 +9,9 @@ transformers that emit responses in the
 model's chain-of-thought reasoning from its final answer and carrying native
 support for tool calling and configurable reasoning effort.
 
-FuriosaAI publishes pre-compiled builds of the GPT-OSS models under the
+Furiosa-LLM runs GPT-OSS in **MXFP4** (the MoE expert weights use the MXFP4
+format of the upstream GPT-OSS release; attention, router, and embeddings stay in
+higher precision). FuriosaAI publishes pre-compiled builds under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 [FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights
@@ -25,7 +27,7 @@ with those, see the upstream model cards linked below.
 
 - **Architecture:** GPT-OSS (Mixture-of-Experts), `GptOssForCausalLM`
 - **Input / Output:** Text / Text
-- **Quantization:** The MoE expert weights are quantized to **MXFP4**, the format gpt-oss ships in upstream. The remaining components (attention, router, and embeddings) stay in higher precision.
+- **Quantization:** The MoE expert weights are quantized to **MXFP4**, the format used by the upstream GPT-OSS release. The remaining components (attention, router, and embeddings) stay in higher precision.
 
 ## Usage
 

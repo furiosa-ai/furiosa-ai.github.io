@@ -2,10 +2,10 @@
 
 # Qwen3-Embedding
 
-The [Qwen3-Embedding](https://huggingface.co/Qwen) series are text-embedding
-models built on the Qwen3 dense transformer backbone. They map text into dense
-vector representations for semantic search, retrieval, and similarity matching,
-with strong multilingual coverage.
+The [Qwen3-Embedding](https://huggingface.co/Qwen) series is a family of
+text-embedding models built on the Qwen3 dense transformer backbone. They map
+text into dense vector representations for semantic search, retrieval, and
+similarity matching, with strong multilingual coverage.
 
 FuriosaAI publishes pre-compiled builds of the Qwen3-Embedding models under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),

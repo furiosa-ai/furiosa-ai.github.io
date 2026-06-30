@@ -459,7 +459,9 @@ thought before the final answer for complex reasoning, math, and coding — and 
 <strong>non-thinking mode</strong> for efficient general dialogue, within a single model.
 They also offer strong tool-calling and agent capabilities and multilingual
 support.</p>
-<p>FuriosaAI publishes pre-compiled builds of the Qwen3 dense models under the
+<p>Furiosa-LLM runs the Qwen3 dense models in <strong>FP8</strong> (static FP8 weights with
+dynamic FP8 activation quantization; the KV cache stays in 16-bit precision).
+FuriosaAI publishes pre-compiled FP8 builds under the
 <a class="reference external" href="https://huggingface.co/furiosa-ai"><code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> organization on the Hugging Face Hub</a>,
 each shipping a Furiosa Executable Bundle (FXB) for running it on
 <a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with Furiosa-LLM. The same upstream weights
@@ -480,12 +482,17 @@ vision-language members of the family see <a class="reference internal" href="qw
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-8B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-8B-FP8</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-4B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-4B-FP8</span></code></a></p></td>
+<td><p>FP8</p></td>
+<td><p>1</p></td>
+<td><p>4B params; hybrid thinking / non-thinking</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-8B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-8B-FP8</span></code></a></p></td>
 <td><p>FP8</p></td>
 <td><p>1</p></td>
 <td><p>8.2B params; hybrid thinking / non-thinking</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-32B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-32B-FP8</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-32B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-32B-FP8</span></code></a></p></td>
 <td><p>FP8</p></td>
 <td><p>4</p></td>
 <td><p>32B params; hybrid thinking / non-thinking</p></td>
