@@ -235,9 +235,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.html">Furiosa SDK Release 2026.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.html">Furiosa SDK Release 2026.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
@@ -433,7 +433,6 @@
 <span class="c1"># This is necessary because npu-tools and download CI environments depend only</span>
 <span class="c1"># on furiosa-models without native packages.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Sequence</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -476,7 +475,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.tokenization_utils_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BatchEncoding</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.tokenization_utils_tokenizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedTokenizerFast</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">POOLING_TASKS</span><span class="p">,</span> <span class="n">PoolingTask</span><span class="p">,</span> <span class="n">TaskType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">POOLING_TASKS</span><span class="p">,</span> <span class="n">PoolingTask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.server.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_list_of</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">FURIOSA_LLM_VERSION</span>
 
@@ -559,29 +558,6 @@
                 <span class="sa">f</span><span class="s2">&quot;explicitly (e.g. </span><span class="si">{</span><span class="n">outcome</span><span class="o">.</span><span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">).&quot;</span>
             <span class="p">)</span>
         <span class="k">raise</span> <span class="n">repo_err</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_detect_fxb_task</span><span class="p">(</span><span class="n">model_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">TaskType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Infer (task, use_binary_seq_class) for an FXB-served model from its</span>
-<span class="sd">    sentence-transformers metadata, mirroring the Rust `detect_convert_task`</span>
-<span class="sd">    (furiosa-generator/src/fxb/metadata.rs): Qwen3 reuses `Qwen3ForCausalLM` for</span>
-<span class="sd">    its embedding and reranker repos, so the HF architecture can&#39;t tell them</span>
-<span class="sd">    apart. Gate on `modules.json` (absent -&gt; generative); otherwise</span>
-<span class="sd">    `config_sentence_transformers.json`&#39;s `model_type` `&quot;CrossEncoder&quot;` -&gt; score</span>
-<span class="sd">    (binary seq-class head), anything else -&gt; embed.&quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">EMBED</span><span class="p">,</span> <span class="n">GENERATE</span><span class="p">,</span> <span class="n">SCORE</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;modules.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">GENERATE</span><span class="p">,</span> <span class="kc">False</span>
-
-    <span class="n">model_type</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">st_config</span> <span class="o">=</span> <span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;config_sentence_transformers.json&quot;</span>
-    <span class="k">if</span> <span class="n">st_config</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">model_type</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">st_config</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model_type&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
-            <span class="n">model_type</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">SCORE</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s2">&quot;CrossEncoder&quot;</span> <span class="k">else</span> <span class="p">(</span><span class="n">EMBED</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
 
 <span class="c1"># Default index of the padding block when paged attention model is used.</span>
@@ -841,7 +817,6 @@
 
         <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.generation_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_diff_sampling_params</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelMetadataBase</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">GENERATION_TASKS</span>
 
         <span class="n">model_id_or_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model_id_or_path</span><span class="p">)</span>
         <span class="n">fxb_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fxb_path</span><span class="p">)</span>
@@ -849,17 +824,13 @@
         <span class="c1"># Load tokenizer from HF model directory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">(</span><span class="n">model_id_or_path</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">tokenizer_mode</span><span class="p">)</span>
 
-        <span class="c1"># Recover the pooling task from sentence-transformers metadata; an FXB</span>
-        <span class="c1"># may be an embedding/reranker bundle despite a generative HF arch, and</span>
-        <span class="c1"># treating it as generative would 400 the pooling endpoints.</span>
+        <span class="c1"># Build model metadata from HF config</span>
         <span class="n">hf_config</span> <span class="o">=</span> <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id_or_path</span><span class="p">)</span>
         <span class="n">hf_configs</span> <span class="o">=</span> <span class="n">hf_config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-        <span class="n">task</span><span class="p">,</span> <span class="n">use_binary_seq_class</span> <span class="o">=</span> <span class="n">_detect_fxb_task</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">model_id_or_path</span><span class="p">))</span>
         <span class="n">model_metadata</span> <span class="o">=</span> <span class="n">ModelMetadataBase</span><span class="p">(</span>
             <span class="n">model_type</span><span class="o">=</span><span class="n">hf_config</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
-            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
+            <span class="n">task</span><span class="o">=</span><span class="s2">&quot;generate&quot;</span><span class="p">,</span>
             <span class="n">hf_configs</span><span class="o">=</span><span class="n">hf_configs</span><span class="p">,</span>
-            <span class="n">use_binary_seq_class</span><span class="o">=</span><span class="n">use_binary_seq_class</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Derive sequence length limits from HF config</span>
@@ -878,7 +849,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model_metadata</span> <span class="o">=</span> <span class="n">model_metadata</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">hf_configs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">artifact_id</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fxb_path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_generative_model</span> <span class="o">=</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">GENERATION_TASKS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_generative_model</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_metadata</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parallel_config</span><span class="p">:</span> <span class="n">ParallelConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pipelines</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1274,7 +1245,6 @@
                 <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
                 <span class="n">finished</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">num_cached_tokens</span><span class="o">=</span><span class="n">request_output</span><span class="o">.</span><span class="n">num_cached_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="n">num_prompt_tokens</span><span class="o">=</span><span class="n">request_output</span><span class="o">.</span><span class="n">num_prompt_tokens</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">native_outputs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>

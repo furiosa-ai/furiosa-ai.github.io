@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Upgrading FuriosaAI’s Software &#8212; FuriosaAI Developer Center 2026.3.0 documentation</title>
+    <title>Furiosa SDK Release 2026.1 &#8212; FuriosaAI Developer Center 2026.3.0 documentation</title>
   
   
   
@@ -58,7 +58,7 @@
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/upgrade_guide';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'whatsnew/release-2026.1.0';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.19.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
@@ -70,8 +70,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Furiosa-LLM" href="../furiosa_llm/intro.html" />
-    <link rel="prev" title="Quick Start with Furiosa-LLM" href="furiosa_llm.html" />
+    <link rel="next" title="Release Notes for Furiosa SDK Release 2025.X" href="release-2025.html" />
+    <link rel="prev" title="Furiosa SDK Release 2026.2" href="release-2026.2.0.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.3.0" />
@@ -236,23 +236,23 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">What’s New</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installing Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Upgrading FuriosaAI’s Software</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
 <ul class="nav bd-sidenav">
@@ -419,7 +419,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Upgrading FuriosaAI’s Software</h1>
+    <h1>Furiosa SDK Release 2026.1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -429,8 +429,14 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-the-driver-firmware-and-furiosa-smi">Upgrading the Driver, Firmware, and furiosa-smi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-furiosa-llm">Upgrading Furiosa-LLM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">🚀 Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-efficiency">Performance &amp; Efficiency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanded-model-quantization-support">Expanded Model &amp; Quantization Support</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
 </ul>
             </nav>
         </div>
@@ -442,114 +448,182 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="upgrading-furiosaai-s-software">
-<span id="upgradeguide"></span><h1>Upgrading FuriosaAI’s Software<a class="headerlink" href="#upgrading-furiosaai-s-software" title="Link to this heading">#</a></h1>
-<p>The high-level upgrade workflow is as follows:</p>
-<ol class="arabic simple">
-<li><p>Upgrade the driver package.</p></li>
-<li><p>Upgrade the firmware tool and image if a new version is available.</p></li>
-<li><p>Perform a cold reboot of the system to apply the changes if the device firmware is upgraded.</p></li>
-<li><p>Run the <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">info</span></code> CLI tool to confirm the new driver and firmware versions in all devices.</p></li>
-<li><p>Upgrade Furiosa-LLM if necessary.</p></li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Make sure to stop all running applications using NPUs before upgrading the SDK.
-Otherwise, the new driver kernel module won’t be loaded.
-In that case, you will need to reboot the system to load the new driver kernel
-module.</p>
-</div>
-<section id="upgrading-the-driver-firmware-and-furiosa-smi">
-<h2>Upgrading the Driver, Firmware, and furiosa-smi<a class="headerlink" href="#upgrading-the-driver-firmware-and-furiosa-smi" title="Link to this heading">#</a></h2>
-<p>Please follow the steps below to upgrade the Furiosa software stack:</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="apt" for="sd-tab-item-0">
-APT (Debian/Ubuntu)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-smi
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rocky" for="sd-tab-item-1">
-RPM (Rocky Linux)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>dnf<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-smi
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rhel" for="sd-tab-item-2">
-RPM (RHEL)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>dnf<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="w"> </span>furiosa-driver-rngd<span class="w"> </span>furiosa-smi
-</pre></div>
-</div>
-</div>
-</div>
-<p id="upgradingdevicefirmware">Usually, major releases of the Furiosa SDK include a firmware upgrade.
-Before upgrading the firmware, install the firmware updater and firmware image packages:</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="apt" for="sd-tab-item-3">
-APT (Debian/Ubuntu)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rocky" for="sd-tab-item-4">
-RPM (Rocky Linux)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rhel" for="sd-tab-item-5">
-RPM (RHEL)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
-</pre></div>
-</div>
-</div>
-</div>
-<p>To upgrade the firmware on all RNGD devices, run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater_all
-</pre></div>
-</div>
-<p>Alternatively, you can upgrade the firmware on a specific RNGD by specifying its BDF and the firmware image:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater<span class="w"> </span>-b<span class="w"> </span>&lt;BDF&gt;<span class="w"> </span>-f<span class="w"> </span>&lt;firmware<span class="w"> </span>image&gt;
-<span class="c1"># Example:</span>
-<span class="c1"># sudo furiosa_rngd_updater -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.3.0.bin</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Before the 2026.3 release, the firmware updater was executed automatically when the firmware image package was installed.
-Starting with the 2026.3 release, you must run the firmware updater manually after installing the firmware image package.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Please remember to cold reboot the system after the firmware upgrade process is completed.
-If the firmware upgrade process is interrupted, the device may become unusable.
-In this case, please contact FuriosaAI support for assistance.</p>
-</div>
-<p>To check if the new driver and firmware were installed successfully in all
-devices, run the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>furiosa-smi<span class="w"> </span>info
-+------+--------+------------------+------------------+---------+---------+--------------+
-<span class="p">|</span><span class="w"> </span>Arch<span class="w"> </span><span class="p">|</span><span class="w"> </span>Device<span class="w"> </span><span class="p">|</span><span class="w"> </span>Firmware<span class="w">         </span><span class="p">|</span><span class="w"> </span>PERT<span class="w">             </span><span class="p">|</span><span class="w"> </span>Temp.<span class="w">   </span><span class="p">|</span><span class="w"> </span>Power<span class="w">   </span><span class="p">|</span><span class="w"> </span>PCI-BDF<span class="w">      </span><span class="p">|</span>
-+------+--------+------------------+------------------+---------+---------+--------------+
-<span class="p">|</span><span class="w"> </span>rngd<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu0<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2024</span>.2.0+7a11888<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">2024</span>.2.1+de20a9f<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">30</span>.62°C<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">35</span>.00<span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:17:00.0<span class="w"> </span><span class="p">|</span>
-+------+--------+------------------+------------------+---------+---------+--------------+
-<span class="p">|</span><span class="w"> </span>rngd<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu1<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2024</span>.2.0+7a11888<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">2024</span>.2.1+de20a9f<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">31</span>.41°C<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">37</span>.00<span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:2a:00.0<span class="w"> </span><span class="p">|</span>
-+------+--------+------------------+------------------+---------+---------+--------------+
-</pre></div>
-</div>
+  <section id="furiosa-sdk-release-2026-1">
+<span id="release2026-1-0"></span><h1>Furiosa SDK Release 2026.1<a class="headerlink" href="#furiosa-sdk-release-2026-1" title="Link to this heading">#</a></h1>
+<p>This release brings major architectural improvements focusing on throughput, efficiency, and scalability.
+Key introductions include Hybrid Batching to balance high throughput with low latency, Prefix Caching
+for reduced latency in multi-turn applications, and comprehensive support for Pooling Models (Embeddings, Scoring, Reranking).
+Additionally, we have enhanced our production readiness with distributed inference capabilities using <a class="reference external" href="https://llm-d.ai/docs/architecture">LLM-D</a>,
+NPU operator, <a class="reference external" href="https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/">Dynamic Resource Allocation (DRA)</a> for K8s, and advanced observability features.</p>
+<p>Please refer to the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> section for instructions on
+obtaining this update.</p>
+<section id="highlights">
+<span id="release2026-1-0-highlights"></span><h2>🚀 Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<section id="major-features-improvements">
+<h3>Major Features &amp; Improvements<a class="headerlink" href="#major-features-improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Hybrid Batching</strong></p>
+<ul>
+<li><p>Introduced hybrid batching capabilities that intelligently combine multiple prefill and decode requests within a single batch.</p></li>
+<li><p>This feature boosts throughput while maintaining low tail latency, achieving up to significantly higher requests per second compared to the previous versions.</p></li>
+</ul>
+</li>
+<li><p><strong>Prefix Caching</strong></p>
+<ul>
+<li><p>Automatically detects and reuses common prompt prefixes across requests using a branch-compressed radix tree, eliminating redundant computation.</p></li>
+<li><p>Ideal for applications with shared context such as chatbots with system prompts and RAG systems.</p></li>
+<li><p>Significantly reduces Time-To-First-Token (TTFT) with SIMD-optimized prefix matching and cache eviction.</p></li>
+<li><p>Smart eviction strategies leverage idle time to minimize memory overhead while maintaining high cache hit rates.</p></li>
+</ul>
+</li>
+<li><p><strong>Pooling Model Support</strong></p>
+<ul>
+<li><p>Added comprehensive support for pooling models to enable critical NLP tasks:</p>
+<ul>
+<li><p><strong>Embeddings</strong>: Generate vector representations for semantic search using <code class="docutils literal notranslate"><span class="pre">encode()</span></code> and <code class="docutils literal notranslate"><span class="pre">embed()</span></code> APIs.</p></li>
+<li><p><strong>Scoring</strong>: Evaluate relevance between query-document pairs with the <code class="docutils literal notranslate"><span class="pre">score()</span></code> API.</p></li>
+<li><p><strong>Reranking</strong>: Improve search results by reordering candidates using the <code class="docutils literal notranslate"><span class="pre">rerank()</span></code> API.</p></li>
+</ul>
+</li>
+<li><p>Includes <code class="docutils literal notranslate"><span class="pre">PoolingParams.normalize</span></code> support for normalized embedding outputs.</p></li>
+<li><p>Currently supports <strong>Qwen3-8B embedding and reranking models</strong>, with plans to expand support.</p></li>
+</ul>
+</li>
+<li><p><strong>Structured Output with Multiple Backends</strong></p>
+<ul>
+<li><p>Production-ready structured output generation supporting JSON schema validation, Regular expression constraints, and Grammar-based generation.</p></li>
+<li><p>Includes both <code class="docutils literal notranslate"><span class="pre">outlines</span></code> and <code class="docutils literal notranslate"><span class="pre">xgrammar</span></code> backends, providing flexibility and performance for various use cases.</p></li>
+<li><p>Optimized guided decoding with bitmask prefetching for reduced latency during NPU task execution.</p></li>
+</ul>
+</li>
+<li><p><strong>Distributed and Scaling Inference</strong></p>
+<ul>
+<li><p><strong>LLM-D (LLM Distributed)</strong>: Enabled seamless deployment of large language models across multiple nodes, intelligently handling request routing.</p>
+<ul>
+<li><p>Supports KV-cache usage aware routing, prefix-aware routing, and LLM-aware routing.</p></li>
+<li><p>See <a class="reference external" href="https://llm-d.ai/docs/architecture">LLM-D documentation</a> for more details.</p></li>
+</ul>
+</li>
+<li><p><strong>Dynamic Resource Allocation (DRA)</strong>: Intelligent resource management to allocate/deallocate NPU resources based on PCIe topology-aware strategies.</p></li>
+<li><p><strong>NPU Operator Support</strong>: Added comprehensive support for Kubernetes environments with native NPU operator integration, handling device discovery, driver/fw rolling upgrade, and lifecycle management.</p></li>
+</ul>
+</li>
+<li><p><strong>Enhanced Observability</strong></p>
+<ul>
+<li><p>Migrated metrics collection to Rust native implementations for improved performance and reduced overhead.</p></li>
+<li><p>Added comprehensive instrumentation including per-device metrics, KV cache utilization, request pool statistics, and detailed scheduler logs for hybrid batching.</p></li>
+<li><p>Integrated <strong>OpenTelemetry</strong> support with quiet span filtering for production environments.</p></li>
+<li><p>Improved liveness check endpoints and health monitoring capabilities.</p></li>
+<li><p>Metrics enabled by default with configurable Prometheus endpoint export.</p></li>
+</ul>
+</li>
+</ul>
 </section>
-<section id="upgrading-furiosa-llm">
-<h2>Upgrading Furiosa-LLM<a class="headerlink" href="#upgrading-furiosa-llm" title="Link to this heading">#</a></h2>
-<p>To upgrade Furiosa-LLM, use <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">pip</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>--torch-backend<span class="o">=</span>auto<span class="w"> </span>furiosa-llm
-</pre></div>
-</div>
+<section id="performance-efficiency">
+<h3>Performance &amp; Efficiency<a class="headerlink" href="#performance-efficiency" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Optimization</strong></p>
+<ul>
+<li><p><strong>Ahead-of-Time (AOT) Wired Pipeline</strong>: Pre-wired execution graphs for low-latency task launches and reduced runtime overhead.</p></li>
+<li><p><strong>SIMD Optimizations</strong>: Applied throughout the host runtime for decoding strategies, prefix caching, radix tree’s branch operations, and other performance-critical paths.</p>
+<ul>
+<li><p>Softmax, log-softmax, and normalization operations accelerated with AVX-512 16-lane vectorization (<code class="docutils literal notranslate"><span class="pre">f32x16</span></code>, <code class="docutils literal notranslate"><span class="pre">u16x16</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">libmvec</span></code> integration for SIMD-optimized exponential function, loaded via dynamic linking.</p></li>
+<li><p>Native bf16 (bfloat16) support with automatic f32 widening for numerical precision.</p></li>
+<li><p>Runtime CPU feature detection with automatic scalar fallback for non-AVX-512 systems.</p></li>
+</ul>
+</li>
+<li><p><strong>Memory Management</strong>: Improved with expandable buffer pools, smart KV cache allocation strategies, and efficient memory usage for sliding window attention in long context models.</p></li>
+<li><p><strong>Pipeline Loading</strong>: Parallelized pipeline loading with Ray-based parallelization for next-gen artifact builds.</p></li>
+<li><p><strong>Warm Up</strong>: Warm-up of tokenizers and templates before serving for reduced cold-start latency.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="expanded-model-quantization-support">
+<h3>Expanded Model &amp; Quantization Support<a class="headerlink" href="#expanded-model-quantization-support" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>New Model Support</strong>:</p>
+<ul>
+<li><p><strong>Qwen3 Family</strong>: Support for 32B variants and 8B embedding/reranking models.</p></li>
+<li><p><strong>Exaone4</strong>: Comprehensive support including up to 128k context length, sparse attention, and sliding window attention.</p></li>
+</ul>
+</li>
+<li><p><strong>Quantization</strong>:</p>
+<ul>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/en/quantization/finegrained_fp8">Fine-grained FP8 quantization</a> support, enabling DeepSeek-style 2D-block weight quantization and per-token group activation quantization.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="api-usability-improvements">
+<h3>API &amp; Usability Improvements<a class="headerlink" href="#api-usability-improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Tool Calling Enhancements</strong>:</p>
+<ul>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">tool_choice=&quot;required&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">tool_choice=&quot;auto&quot;</span></code>, and named tool selection in Tool Calling API.</p></li>
+</ul>
+</li>
+<li><p><strong>Sampling Parameters</strong>:</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code> for controlling repetitive outputs.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">return_token_ids</span></code> for returning token IDs alongside text.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">skip_special_tokens</span></code> for controlling special token inclusion in outputs.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ignore_eos</span></code> for bypassing end-of-sequence token handling.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">stop_token_ids</span></code> for custom stopping criteria.</p></li>
+</ul>
+</li>
+<li><p><strong>Prompt Logprobs Support</strong>:</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">prompt_logprobs</span></code> parameter to return log probabilities for prompt tokens.</p></li>
+<li><p>Useful for analyzing model confidence and token-level predictions.</p></li>
+</ul>
+</li>
+<li><p><strong>Security &amp; Authentication</strong>:</p>
+<ul>
+<li><p>Implemented API key authentication via <code class="docutils literal notranslate"><span class="pre">--api-key</span></code> argument for secure server access.</p></li>
+</ul>
+</li>
+<li><p><strong>Content Format Improvements</strong>:</p>
+<ul>
+<li><p>Support for <strong>Harmony response format</strong> in Chat Completions API with proper reasoning token counting.</p></li>
+<li><p>Support for <strong>content parts format</strong> for multi-part messages in chat completions.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="breaking-changes-deprecations">
+<h2>🚨 Breaking Changes &amp; Deprecations<a class="headerlink" href="#breaking-changes-deprecations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Legacy Artifact Format Deprecated</strong>:</p>
+<ul>
+<li><p>Blockwise artifact format is no longer supported. <strong>Migration</strong>: All artifacts must be rebuilt using the new ArtifactBuilder.</p></li>
+</ul>
+</li>
+<li><p><strong>Python Version Requirement</strong>:</p>
+<ul>
+<li><p>Minimum Python version increased to 3.10+. <strong>Migration</strong>: Upgrade to Python 3.10 or later before installing this release.</p></li>
+</ul>
+</li>
+<li><p><strong>Transformer and PyTorch Library Update</strong>:</p>
+<ul>
+<li><p>Bumped transformers to 4.57.1.</p></li>
+<li><p>Bumped PyTorch to 2.7.1. <strong>Migration</strong>: Ensure your environment supports PyTorch 2.7.x.</p></li>
+</ul>
+</li>
+<li><p><strong>Removed Beam Search Support</strong>:</p>
+<ul>
+<li><p>Beam search decoding has been removed from the LLM engine. <strong>Migration</strong>: Use sampling-based decoding methods such as top-k, top-p, or temperature sampling.</p></li>
+</ul>
+</li>
+<li><p><strong>Removed furiosa-pert-rngd Package</strong>:</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">furiosa-pert-rngd</span></code> package has been removed. PERT is now dynamically loaded onto the device through the runtime, eliminating the need for a separate package installation.</p></li>
+<li><p><strong>Migration</strong>: See the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> for details.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 </section>
 
@@ -565,20 +639,20 @@ devices, run the following command:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="furiosa_llm.html"
+       href="release-2026.2.0.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Quick Start with Furiosa-LLM</p>
+        <p class="prev-next-title">Furiosa SDK Release 2026.2</p>
       </div>
     </a>
     <a class="right-next"
-       href="../furiosa_llm/intro.html"
+       href="release-2025.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Furiosa-LLM</p>
+        <p class="prev-next-title">Release Notes for Furiosa SDK Release 2025.X</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -599,8 +673,14 @@ devices, run the following command:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-the-driver-firmware-and-furiosa-smi">Upgrading the Driver, Firmware, and furiosa-smi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrading-furiosa-llm">Upgrading Furiosa-LLM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">🚀 Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-efficiency">Performance &amp; Efficiency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanded-model-quantization-support">Expanded Model &amp; Quantization Support</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
 </ul>
   </nav></div>
 

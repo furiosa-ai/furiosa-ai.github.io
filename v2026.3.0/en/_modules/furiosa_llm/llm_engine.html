@@ -235,9 +235,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.html">Furiosa SDK Release 2026.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.html">Furiosa SDK Release 2026.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
@@ -496,12 +496,6 @@
     <span class="n">max_processing_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">spare_blocks_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="c1"># kv_offload_config</span>
-    <span class="n">kv_offload_host_memory_gb</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">kv_offload_host_memory_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">kv_offload_write_through_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">kv_offload_write_back</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-
     <span class="c1"># wiring related arguments</span>
     <span class="n">enable_jit_compilation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">jit_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_JIT_THRESHOLD</span>
@@ -609,51 +603,6 @@
             <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">spare_blocks_ratio</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The spare blocks ratio. Used as an hint for the scheduler.&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="c1"># TODO: drop the `--experimental-` prefix and restore the help text below once</span>
-        <span class="c1"># KV offload is stabilized.</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--experimental-kv-offload-host-memory-gb&#39;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;kv_offload_host_memory_gb&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_host_memory_gb</span><span class="p">,</span>
-            <span class="c1"># help=&#39;Enable hierarchical KV cache offloading and allocate this many GiB of host KV &#39;</span>
-            <span class="c1"># &#39;cache for the whole process. The budget is split across data-parallel schedulers &#39;</span>
-            <span class="c1"># &#39;and draft schedulers when speculative decoding is enabled. Mutually exclusive with &#39;</span>
-            <span class="c1"># &#39;--experimental-kv-offload-host-memory-ratio. (default: disabled)&#39;,</span>
-            <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--experimental-kv-offload-host-memory-ratio&#39;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;kv_offload_host_memory_ratio&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_host_memory_ratio</span><span class="p">,</span>
-            <span class="c1"># help=&quot;Enable hierarchical KV cache offloading and allocate host KV capacity per scheduler &quot;</span>
-            <span class="c1"># &quot;as this ratio of that scheduler&#39;s NPU KV blocks. Total host memory scales with the &quot;</span>
-            <span class="c1"># &quot;number of data-parallel schedulers and draft schedulers. For process-wide capacity, &quot;</span>
-            <span class="c1"># &quot;prefer --experimental-kv-offload-host-memory-gb. (default: disabled)&quot;,</span>
-            <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--experimental-kv-offload-write-through-threshold&#39;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;kv_offload_write_through_threshold&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_write_through_threshold</span><span class="p">,</span>
-            <span class="c1"># help=&#39;Minimum prefix-cache hit count before hot NPU-resident blocks are proactively copied to host. &#39;</span>
-            <span class="c1"># &#39;Only applies when KV offload is enabled. Set to 0 to disable write-through promotion. (default: %(default)s)&#39;,</span>
-            <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s1">&#39;--experimental-kv-offload-write-back&#39;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;kv_offload_write_back&#39;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_write_back</span><span class="p">,</span>
-            <span class="c1"># store_true (not BooleanOptionalAction) so help=SUPPRESS fully hides it: under</span>
-            <span class="c1"># Python 3.10 a BooleanOptionalAction still leaks `--flag | --no-flag` into --help.</span>
-            <span class="c1"># Restore BooleanOptionalAction along with the help text when this is unhidden.</span>
-            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-            <span class="c1"># help=&#39;When hierarchical KV offload is enabled, offload NPU-only cached blocks to host during NPU eviction. &#39;</span>
-            <span class="c1"># &#39;When disabled, only write-through promoted blocks survive NPU eviction. (default: %(default)s)&#39;,</span>
-            <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">&#39;--enable-jit-compilation&#39;</span><span class="p">,</span>

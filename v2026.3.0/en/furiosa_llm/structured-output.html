@@ -240,9 +240,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.html">Furiosa SDK Release 2026.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.html">Furiosa SDK Release 2026.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
@@ -430,7 +430,6 @@
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backends-for-structured-output">Backends for Structured Output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-backend-choice">Dynamic Backend Choice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-methods-via-openai-api">Supported Methods via OpenAI API</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choices">Choices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-expressions">Regular Expressions</a></li>
@@ -464,8 +463,8 @@ parsable responses such as JSON data extraction and any-formatted text generatio
 <h2>Backends for Structured Output<a class="headerlink" href="#backends-for-structured-output" title="Link to this heading">#</a></h2>
 <p>Furiosa-LLM supports multiple backends for structured output:</p>
 <ul class="simple">
-<li><p><strong>xgrammar</strong> (default): High-performance grammar-guided generation using <a class="reference external" href="https://github.com/mlc-ai/xgrammar">XGrammar</a></p></li>
-<li><p><strong>llguidance</strong>: Efficient constraint enforcement using <a class="reference external" href="https://github.com/guidance-ai/llguidance">llguidance</a></p></li>
+<li><p><strong>llguidance</strong> (default): Efficient constraint enforcement using <a class="reference external" href="https://github.com/guidance-ai/llguidance">llguidance</a></p></li>
+<li><p><strong>xgrammar</strong>: High-performance grammar-guided generation using <a class="reference external" href="https://github.com/mlc-ai/xgrammar">XGrammar</a></p></li>
 </ul>
 <p>You can select a backend based on your performance and compatibility needs.</p>
 <p><strong>Using the serving command:</strong></p>
@@ -482,31 +481,13 @@ parsable responses such as JSON data extraction and any-formatted text generatio
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This option determines which structured output backend to use for structured output.</p>
 <p>The available options are:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">auto</span></code> (default): Let engine choose the backend. It currently defaults to xgrammar.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">guidance</span></code>: Explicitly choose the llguidance backend.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">xgrammar</span></code>: Explicitly choose the XGrammar backend.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auto</span></code> (default): Automatically selects llguidance as the backend</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">guidance</span></code>: Explicitly uses the llguidance backend</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xgrammar</span></code>: Uses the XGrammar backend</p></li>
 </ul>
-<p>Note that this choice of preferred backend can be overridden in each user request, as explained below.</p>
-</section>
-<section id="dynamic-backend-choice">
-<span id="dynamicbackend"></span><h2>Dynamic Backend Choice<a class="headerlink" href="#dynamic-backend-choice" title="Link to this heading">#</a></h2>
-<p>Furiosa-LLM supports dynamic, per-request choice of backend. Users can use the field <code class="docutils literal notranslate"><span class="pre">backend</span></code> to specify the backend to use in this request.</p>
-<p>If this field is absent or is set to <code class="docutils literal notranslate"><span class="pre">auto</span></code>, the default backend of the server (chosen as explained above) will be used.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-   <span class="n">model</span><span class="o">=</span><span class="s2">&quot;my-model&quot;</span><span class="p">,</span>
-   <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Classify: positive or negative&quot;</span><span class="p">}],</span>
-   <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
-      <span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;backend&quot;</span><span class="p">:</span> <span class="s2">&quot;xgrammar&quot;</span><span class="p">,</span> <span class="c1"># or &quot;guidance&quot;, &quot;auto&quot;</span>
-         <span class="s2">&quot;choice&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">],</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-<span class="p">)</span>
-</pre></div>
-</div>
+<p>If no backend is specified, <code class="docutils literal notranslate"><span class="pre">auto</span></code> is used, which defaults to llguidance.</p>
 </section>
 <section id="supported-methods-via-openai-api">
 <h2>Supported Methods via OpenAI API<a class="headerlink" href="#supported-methods-via-openai-api" title="Link to this heading">#</a></h2>
@@ -801,7 +782,6 @@ request will raise an error. Please migrate to <code class="docutils literal not
   <nav class="bd-toc-nav page-toc">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backends-for-structured-output">Backends for Structured Output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-backend-choice">Dynamic Backend Choice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-methods-via-openai-api">Supported Methods via OpenAI API</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choices">Choices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-expressions">Regular Expressions</a></li>

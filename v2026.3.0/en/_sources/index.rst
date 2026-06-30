@@ -14,7 +14,7 @@ deployment.
 
 
    .. grid-item-card:: 📢 Latest Release |release|
-      :link: /whatsnew/release-2026.3
+      :link: /whatsnew/release-2026.3.0
       :link-type: doc
       :columns: 6
 

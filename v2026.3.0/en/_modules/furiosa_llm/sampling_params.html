@@ -235,9 +235,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.html">Furiosa SDK Release 2026.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.html">Furiosa SDK Release 2026.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
 </ul>
 </details></li>
@@ -463,11 +463,7 @@
 <span class="c1"># https://github.com/vllm-project/vllm/blob/6d8d0a24c02bfd84d46b3016b865a44f048ae84b/vllm/sampling_params.py#L30-L84</span>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">StructuredOutputsParams</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parameters for a pattern, corresponding to one state machine.</span>
-
-<span class="sd">    These parameters also function as request JSON body parameters (in &quot;structured_outputs&quot; field) in OpenAI-compatible interfaces.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One of these fields will be used to build a logit processor.&quot;&quot;&quot;</span>
 
     <span class="n">json</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">regex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -479,7 +475,8 @@
     <span class="n">whitespace_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">structural_tag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># furiosa-llm addition for structured outputs with reasoning</span>
+    <span class="n">reasoning_grammar</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_optional</span><span class="p">(</span>
@@ -490,7 +487,7 @@
         <span class="n">json_object</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">whitespace_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">structural_tag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reasoning_grammar</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">disable_additional_properties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;StructuredOutputsParams | None&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">grammar</span><span class="p">,</span> <span class="n">json_object</span><span class="p">,</span> <span class="n">structural_tag</span><span class="p">)):</span>
@@ -498,7 +495,6 @@
         <span class="c1"># Extract json schemas from pydantic models</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">))):</span>
             <span class="n">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">model_json_schema</span><span class="p">()</span>
-
         <span class="k">return</span> <span class="n">StructuredOutputsParams</span><span class="p">(</span>
             <span class="n">json</span><span class="o">=</span><span class="n">json</span><span class="p">,</span>
             <span class="n">regex</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span>
@@ -507,8 +503,8 @@
             <span class="n">json_object</span><span class="o">=</span><span class="n">json_object</span><span class="p">,</span>
             <span class="n">whitespace_pattern</span><span class="o">=</span><span class="n">whitespace_pattern</span><span class="p">,</span>
             <span class="n">structural_tag</span><span class="o">=</span><span class="n">structural_tag</span><span class="p">,</span>
+            <span class="n">reasoning_grammar</span><span class="o">=</span><span class="n">reasoning_grammar</span><span class="p">,</span>
             <span class="n">disable_additional_properties</span><span class="o">=</span><span class="n">disable_additional_properties</span><span class="p">,</span>
-            <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -594,10 +590,6 @@
 <span class="sd">            **Warning**: Using -1 can cause significant memory</span>
 <span class="sd">            and network overhead as it returns logprobs for the entire vocabulary</span>
 <span class="sd">            (e.g., ~150K tokens for Qwen models) at each prompt position.</span>
-<span class="sd">        structured_outputs: Parameter for specifying structured output requirements.</span>
-<span class="sd">        reasoning_structured_outputs: Parameter that matches the reasoning part of</span>
-<span class="sd">            model output. This will be used to strip the reasoning tokens before</span>
-<span class="sd">            applying structured output requirements on the answer content.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -622,7 +614,6 @@
         <span class="n">prompt_logprobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">output_kind</span><span class="p">:</span> <span class="n">RequestOutputKind</span> <span class="o">=</span> <span class="n">RequestOutputKind</span><span class="o">.</span><span class="n">CUMULATIVE</span><span class="p">,</span>
         <span class="n">structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">reasoning_structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">=</span> <span class="n">best_of</span> <span class="k">if</span> <span class="n">best_of</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span>
@@ -644,7 +635,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">prompt_logprobs</span> <span class="o">=</span> <span class="n">prompt_logprobs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_kind</span> <span class="o">=</span> <span class="n">output_kind</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span> <span class="o">=</span> <span class="n">structured_outputs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span> <span class="o">=</span> <span class="n">reasoning_structured_outputs</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_args</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span><span class="p">:</span>
@@ -677,7 +667,6 @@
         <span class="n">prompt_logprobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">output_kind</span><span class="p">:</span> <span class="n">RequestOutputKind</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">reasoning_structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SamplingParams&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">n</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span><span class="p">,</span>
@@ -699,7 +688,6 @@
             <span class="n">prompt_logprobs</span><span class="o">=</span><span class="n">prompt_logprobs</span><span class="p">,</span>
             <span class="n">output_kind</span><span class="o">=</span><span class="n">RequestOutputKind</span><span class="o">.</span><span class="n">CUMULATIVE</span> <span class="k">if</span> <span class="n">output_kind</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">output_kind</span><span class="p">,</span>
             <span class="n">structured_outputs</span><span class="o">=</span><span class="n">structured_outputs</span><span class="p">,</span>
-            <span class="n">reasoning_structured_outputs</span><span class="o">=</span><span class="n">reasoning_structured_outputs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SamplingParams&quot;</span><span class="p">:</span>
@@ -726,8 +714,6 @@
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">output_kind</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_token_ids</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">stop_token_ids</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_eos</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ignore_eos</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">structured_outputs</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_verify_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -829,7 +815,6 @@
             <span class="sa">f</span><span class="s2">&quot;logprobs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">logprobs</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;prompt_logprobs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_logprobs</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;structured_outputs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;reasoning_structured_outputs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;output_kind=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_kind</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;stop_token_ids=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_token_ids</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;ignore_eos=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_eos</span><span class="si">}</span><span class="s2">)&quot;</span>

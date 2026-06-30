@@ -1,7 +1,7 @@
 .. _Release2026_3_0:
 
 ********************************************
-Furiosa SDK Release 2026.3
+Furiosa SDK Release 2026.3.0
 ********************************************
 
 We are happy to announce the release of **Furiosa SDK 2026.3**.

@@ -14,8 +14,8 @@ Backends for Structured Output
 
 Furiosa-LLM supports multiple backends for structured output:
 
-* **xgrammar** (default): High-performance grammar-guided generation using `XGrammar <https://github.com/mlc-ai/xgrammar>`_
-* **llguidance**: Efficient constraint enforcement using `llguidance <https://github.com/guidance-ai/llguidance>`_
+* **llguidance** (default): Efficient constraint enforcement using `llguidance <https://github.com/guidance-ai/llguidance>`_
+* **xgrammar**: High-performance grammar-guided generation using `XGrammar <https://github.com/mlc-ai/xgrammar>`_
 
 You can select a backend based on your performance and compatibility needs.
 
@@ -37,38 +37,16 @@ You can select a backend based on your performance and compatibility needs.
    ) as llm:
        outputs = llm.generate(prompts, sampling_params)
 
-This option determines which structured output backend to use for structured output.
-
 The available options are:
 
-* ``auto`` (default): Let engine choose the backend. It currently defaults to xgrammar.
-* ``guidance``: Explicitly choose the llguidance backend.
-* ``xgrammar``: Explicitly choose the XGrammar backend.
+* ``auto`` (default): Automatically selects llguidance as the backend
+* ``guidance``: Explicitly uses the llguidance backend
+* ``xgrammar``: Uses the XGrammar backend
 
-Note that this choice of preferred backend can be overridden in each user request, as explained below.
+If no backend is specified, ``auto`` is used, which defaults to llguidance.
 
 
-.. _DynamicBackend:
 
-Dynamic Backend Choice
-================================
-
-Furiosa-LLM supports dynamic, per-request choice of backend. Users can use the field ``backend`` to specify the backend to use in this request.
-
-If this field is absent or is set to ``auto``, the default backend of the server (chosen as explained above) will be used.
-
-.. code-block:: python
-
-   response = client.chat.completions.create(
-      model="my-model",
-      messages=[{"role": "user", "content": "Classify: positive or negative"}],
-      extra_body={
-         "structured_outputs": {
-            "backend": "xgrammar", # or "guidance", "auto"
-            "choice": ["positive", "negative"],
-         }
-      },
-   )
 
 
 Supported Methods via OpenAI API
