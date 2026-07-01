@@ -216,11 +216,6 @@ The status of each check uses the following scale:
      - ✅
      - ✅
      - 🟡
-   * - `gpt-oss-20b <https://huggingface.co/furiosa-ai/gpt-oss-20b>`_
-     - Text (MoE)
-     - ✅
-     - ✅
-     - 🟡
 
 For models planned for future releases, see the :ref:`Roadmap`.
 
