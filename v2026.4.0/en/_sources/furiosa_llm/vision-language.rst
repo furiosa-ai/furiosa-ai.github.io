@@ -15,6 +15,12 @@ Image inputs may be passed as a remote ``https://`` URL, a base64
 patching, prompt-token expansion) is handled by the Hugging Face
 ``AutoProcessor`` that ships with the model.
 
+.. note::
+
+   Only **image** inputs are supported at this time. **Video input is not
+   currently supported.** The ``video_url`` content type is not accepted;
+   support is planned for a future release.
+
 
 Quick Start
 ===========
@@ -103,8 +109,9 @@ behaviour. Requests that violate any of them are rejected with HTTP
        limit returns HTTP 400.
    * - ``--video-limit-per-prompt N``
      - unlimited
-     - Maximum number of videos allowed per request. Exceeding the
-       limit returns HTTP 400.
+     - Maximum number of videos allowed per request. Video input is not
+       currently supported (see the note above), so this flag has no
+       effect yet.
    * - ``--allowed-local-media-path PATH``
      - disabled
      - Allow ``file://`` URLs whose resolved path is under ``PATH``.
@@ -148,7 +155,7 @@ Example with multiple allowed domains (``nargs="+"``):
 Caching Multimodal Inputs with UUID
 ===================================
 
-You can optionally tag each image or video on a request with a stable
+You can optionally tag each image on a request with a stable
 ``uuid``. The server caches the processed result under that UUID and
 reuses it on follow-up requests carrying the same UUID, skipping
 pre-processing.

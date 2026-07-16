@@ -86,6 +86,7 @@ Furiosa-LLM
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
 * :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
+* :ref:`K8sMooncakeDeployment`: A guide to deploying Mooncake on Kubernetes
 
 Cloud Native Toolkit
 -------------------------------------------------
@@ -157,6 +158,7 @@ Other Links
    /furiosa_llm/reference
    /furiosa_llm/examples
    /furiosa_llm/k8s_deployment
+   /furiosa_llm/mooncake_deployment
 
 
 .. toctree::

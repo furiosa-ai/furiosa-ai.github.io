@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Solar Open &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Solar Open &#8212; FuriosaAI Developer Center 2026.4.0b8 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../../_static/documentation_options.js?v=c955e330"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -303,6 +303,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -429,13 +430,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants">Variants</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-models">Available Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server">Launch the server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server-with-tool-calling">Launch the server with tool calling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#query-the-server">Query the server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning">Reasoning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool calling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic Usage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-usage">Advanced Usage</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
@@ -464,8 +463,8 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 <a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with Furiosa-LLM. The upstream weights also
 run on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
 those, see the upstream model card linked below.</p>
-<section id="variants">
-<h2>Variants<a class="headerlink" href="#variants" title="Link to this heading">#</a></h2>
+<section id="available-models">
+<h2>Available Models<a class="headerlink" href="#available-models" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Model</p></th>
@@ -495,14 +494,21 @@ those, see the upstream model card linked below.</p>
 <a class="reference external" href="https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm">installing Furiosa-LLM and its prerequisites</a>.</p>
 <section id="launch-the-server">
 <h3>Launch the server<a class="headerlink" href="#launch-the-server" title="Link to this heading">#</a></h3>
-<p>The simplest way to serve the model is:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch the server, listening on port 8000 by default</span>
-furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Solar-Open-100B-NVFP4A16<span class="w"> </span><span class="se">\</span>
+<p>Serve the model with the <code class="docutils literal notranslate"><span class="pre">solar_open</span></code> reasoning parser so the chain of thought is
+returned in a separate field:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Solar-Open-100B-NVFP4A16<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reasoning-parser<span class="w"> </span>solar_open
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">--reasoning-parser</span> <span class="pre">solar_open</span></code> flag separates the model’s chain of thought
-from the final answer (see <a class="reference internal" href="../furiosa-llm-serve.html#reasoning"><span class="std std-ref">Reasoning</span></a> below).</p>
+<p>To also enable tool (function) calling, add the <code class="docutils literal notranslate"><span class="pre">solar_open</span></code> tool-call parser;
+keep <code class="docutils literal notranslate"><span class="pre">--reasoning-parser</span> <span class="pre">solar_open</span></code> so thinking is still parsed into its own
+field:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Solar-Open-100B-NVFP4A16<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reasoning-parser<span class="w"> </span>solar_open<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--enable-auto-tool-choice<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tool-call-parser<span class="w"> </span>solar_open
+</pre></div>
+</div>
 <p>When the server is ready, you will see:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">27507</span><span class="o">]</span>
 INFO:<span class="w">     </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
@@ -511,19 +517,8 @@ INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span cla
 </pre></div>
 </div>
 </section>
-<section id="launch-the-server-with-tool-calling">
-<h3>Launch the server with tool calling<a class="headerlink" href="#launch-the-server-with-tool-calling" title="Link to this heading">#</a></h3>
-<p>To enable tool (function) calling, start the server with the <code class="docutils literal notranslate"><span class="pre">solar_open</span></code> tool-call
-parser:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Solar-Open-100B-NVFP4A16<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--reasoning-parser<span class="w"> </span>solar_open<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--enable-auto-tool-choice<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--tool-call-parser<span class="w"> </span>solar_open
-</pre></div>
-</div>
-</section>
-<section id="query-the-server">
-<h3>Query the server<a class="headerlink" href="#query-the-server" title="Link to this heading">#</a></h3>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
 <p>The server exposes an OpenAI-compatible API. You can send a request with <code class="docutils literal notranslate"><span class="pre">curl</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -534,26 +529,41 @@ parser:</p>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
-</section>
-<section id="reasoning">
-<h3>Reasoning<a class="headerlink" href="#reasoning" title="Link to this heading">#</a></h3>
 <p>With <code class="docutils literal notranslate"><span class="pre">--reasoning-parser</span> <span class="pre">solar_open</span></code>, Solar Open returns its reasoning separately
 from the final answer:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">response.choices[].message.reasoning</span></code> (non-streaming)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">response.choices[].delta.reasoning</span></code> (streaming)</p></li>
 </ul>
-<p>You can control how much the model reasons per request with the <code class="docutils literal notranslate"><span class="pre">reasoning_effort</span></code>
-parameter (<code class="docutils literal notranslate"><span class="pre">&quot;low&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code>; default <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code>). Solar Open’s chat
-template maps this to its thinking behavior: <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code> produce a
-chain of thought — with <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code> allowed a larger reasoning-token budget than
-<code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code> — while <code class="docutils literal notranslate"><span class="pre">&quot;low&quot;</span></code> (and <code class="docutils literal notranslate"><span class="pre">&quot;minimal&quot;</span></code>) prefill an empty thinking block so the
-model skips reasoning and answers directly.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Solar-Open-100B-NVFP4A16&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;How many r&#39;s are in &#39;strawberry&#39;?&quot;</span><span class="p">}],</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note:</strong> The <code class="docutils literal notranslate"><span class="pre">reasoning</span></code> field is not part of the OpenAI API specification but
+is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+appears only in responses that contain reasoning content; accessing it otherwise
+raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="advanced-usage">
+<h3>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Link to this heading">#</a></h3>
+<p><strong>Controlling reasoning effort.</strong> You can control how much the model reasons per
+request with the <code class="docutils literal notranslate"><span class="pre">reasoning_effort</span></code> parameter (<code class="docutils literal notranslate"><span class="pre">&quot;low&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code>;
+default <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code>). Solar Open’s chat template maps this to its thinking behavior:
+<code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code> produce a chain of thought — with <code class="docutils literal notranslate"><span class="pre">&quot;high&quot;</span></code> allowed a larger
+reasoning-token budget than <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code> — while <code class="docutils literal notranslate"><span class="pre">&quot;low&quot;</span></code> (and <code class="docutils literal notranslate"><span class="pre">&quot;minimal&quot;</span></code>) prefill an
+empty thinking block so the model skips reasoning and answers directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Solar-Open-100B-NVFP4A16&quot;</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;How many r&#39;s are in &#39;strawberry&#39;?&quot;</span><span class="p">}],</span>
     <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;reasoning_effort&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">},</span>
@@ -563,19 +573,10 @@ model skips reasoning and answers directly.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
-<blockquote>
-<div><p><strong>Note:</strong> The <code class="docutils literal notranslate"><span class="pre">reasoning</span></code> field is not part of the OpenAI API specification, but
-it is the convention OpenAI recommends for returning the chain-of-thought (CoT) in
-Chat Completions-compatible APIs. The OpenAI Agents SDK uses <code class="docutils literal notranslate"><span class="pre">reasoning</span></code> as its
-primary property for the CoT, and many LLM serving frameworks (such as vLLM) follow
-the same convention. It appears only in responses that contain reasoning content;
-accessing it on a response without reasoning content raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>.</p>
-</div></blockquote>
-</section>
-<section id="tool-calling">
-<h3>Tool calling<a class="headerlink" href="#tool-calling" title="Link to this heading">#</a></h3>
-<p>With the server launched using <code class="docutils literal notranslate"><span class="pre">--enable-auto-tool-choice</span> <span class="pre">--tool-call-parser</span> <span class="pre">solar_open</span></code>,
-you can pass <code class="docutils literal notranslate"><span class="pre">tools</span></code> and let the model decide when to call them. See the
+<p><strong>Tool calling.</strong> With the server launched using
+<code class="docutils literal notranslate"><span class="pre">--enable-auto-tool-choice</span> <span class="pre">--tool-call-parser</span> <span class="pre">solar_open</span></code> (see
+<a class="reference internal" href="#launch-the-server">Launch the server</a>), pass <code class="docutils literal notranslate"><span class="pre">tools</span></code> in the request and let the
+model decide when to call them. See the
 <a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html">Tool Calling guide</a>
 for a complete client example and details on tool-choice options.</p>
 </section>
@@ -636,13 +637,11 @@ for a complete client example and details on tool-choice options.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants">Variants</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-models">Available Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server">Launch the server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-the-server-with-tool-calling">Launch the server with tool calling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#query-the-server">Query the server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning">Reasoning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling">Tool calling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic Usage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-usage">Advanced Usage</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>

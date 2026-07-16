@@ -18,7 +18,7 @@ Transformers); for usage with those, see the upstream model cards linked below.
 For the related embedding model see {doc}`qwen3-embedding`; for the dense Qwen3
 chat models see {doc}`qwen3`.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -76,7 +76,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Rerank documents
+### Basic Usage
 
 The server exposes a `/v1/rerank` endpoint (compatible with the Cohere/Jina
 rerank API, also used by vLLM). Send a query and the candidate documents with
@@ -214,7 +214,7 @@ for result in response.json()["results"]:
 To score query-document pairs directly instead of reranking, the server also
 exposes a `/v1/score` endpoint.
 
-### Python API
+### Advanced Usage
 
 For offline use, load the model with the `LLM` constructor (the FXB shipped in
 the repo is discovered automatically) and call `score` with a query and the

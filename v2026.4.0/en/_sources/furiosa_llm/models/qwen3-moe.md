@@ -20,7 +20,7 @@ with those, see the upstream model cards linked below.
 
 For the dense Qwen3 chat models see {doc}`qwen3`.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -40,36 +40,37 @@ To run these models with Furiosa-LLM, follow the example commands below after
 
 ### Launch the server
 
-Pass the model's `furiosa-ai/<repo>` identifier. Each variant runs on four RNGD
-cards (tensor-parallel size 32 PEs).
+Pass the model's `furiosa-ai/<repo>` identifier; each variant runs on four RNGD
+cards (tensor-parallel size 32 PEs). The examples below use the hybrid
+**`Qwen3-30B-A3B-FP8`**, which reasons by default and can switch thinking on and
+off (see [Advanced Usage](#advanced-usage)).
 
-The **Instruct** and **Coder** variants are non-thinking and need no reasoning
-parser:
-
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8
-```
-
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-Coder-30B-A3B-Instruct-FP8
-```
-
-The original **`Qwen3-30B-A3B-FP8`** is a hybrid model that reasons by default;
-add `--reasoning-parser qwen3` to have the reasoning returned in a separate field
-(see [Reasoning](#reasoning) below):
+Serve it with the `qwen3` reasoning parser so the chain of thought is returned in
+a separate field:
 
 ```sh
 furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-FP8 \
   --reasoning-parser qwen3
 ```
 
-The **Thinking** variant always produces a chain of thought before its final
-answer; add `--reasoning-parser qwen3` to have the reasoning returned in a
-separate field (see [Reasoning](#reasoning) below):
+To also enable tool (function) calling, add the `hermes` tool-call parser (the
+parser used by the Qwen3 series):
 
 ```sh
-furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8 \
-  --reasoning-parser qwen3
+furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-FP8 \
+  --reasoning-parser qwen3 \
+  --enable-auto-tool-choice \
+  --tool-call-parser hermes
+```
+
+The other variants launch the same way, with one difference: the
+`Qwen3-30B-A3B-Thinking-2507-FP8` variant always reasons (keep
+`--reasoning-parser qwen3`), while the non-thinking
+`Qwen3-30B-A3B-Instruct-2507-FP8` and `Qwen3-Coder-30B-A3B-Instruct-FP8` variants
+omit the reasoning parser:
+
+```sh
+furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8
 ```
 
 When the server is ready, you will see:
@@ -81,20 +82,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `hermes` tool-call
-parser (the parser used by the Qwen3 series). For the Thinking variant, keep the
-reasoning parser as well:
-
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8 \
-  --reasoning-parser qwen3 \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`
 (replace the model id with the variant you launched):
@@ -103,16 +91,14 @@ The server exposes an OpenAI-compatible API. You can send a request with `curl`
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-    "model": "furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8",
+    "model": "furiosa-ai/Qwen3-30B-A3B-FP8",
     "messages": [{"role": "user", "content": "What is the capital of France?"}]
     }' \
     | python -m json.tool
 ```
 
-### Reasoning
-
-The **Thinking** variant returns its reasoning separately from the final answer
-when launched with `--reasoning-parser qwen3`:
+The reasoning variants (`Qwen3-30B-A3B-FP8` and `Qwen3-30B-A3B-Thinking-2507-FP8`)
+return their reasoning separately from the final answer:
 
 * `response.choices[].message.reasoning` (non-streaming)
 * `response.choices[].delta.reasoning` (streaming)
@@ -123,7 +109,7 @@ from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
 
 response = client.chat.completions.create(
-    model="furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8",
+    model="furiosa-ai/Qwen3-30B-A3B-FP8",
     messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
 )
 
@@ -131,18 +117,46 @@ print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
 
-> **Note:** The `reasoning` field is not part of the OpenAI API specification, but
-> it is the convention OpenAI recommends for returning the chain-of-thought (CoT)
-> in Chat Completions-compatible APIs. The OpenAI Agents SDK uses `reasoning` as
-> its primary property for the CoT, and many LLM serving frameworks (such as vLLM)
-> follow the same convention. It appears only in responses that contain reasoning
-> content; accessing it on a response without reasoning content raises an
-> `AttributeError`.
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+> appears only in responses that contain reasoning content; accessing it otherwise
+> raises an `AttributeError`.
 
-### Tool calling
+### Advanced Usage
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser hermes`,
-you can pass `tools` and let the model decide when to call them. See the
+**Toggling thinking.** Only the hybrid `Qwen3-30B-A3B-FP8` supports switching
+thinking on and off; it reasons by default. To turn thinking off for a single
+request, pass `enable_thinking` through `chat_template_kwargs`; the response then
+carries no reasoning content, so read only `message.content`:
+
+```python
+# Disable thinking for a single request
+response = client.chat.completions.create(
+    model="furiosa-ai/Qwen3-30B-A3B-FP8",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+)
+print(response.choices[0].message.content)
+```
+
+To default every request to non-thinking, launch the server with
+`--default-chat-template-kwargs` (a request can still re-enable thinking with its
+own `chat_template_kwargs`):
+
+```sh
+furiosa-llm serve furiosa-ai/Qwen3-30B-A3B-FP8 \
+  --reasoning-parser qwen3 \
+  --default-chat-template-kwargs '{"enable_thinking": false}'
+```
+
+The other variants do not read `enable_thinking` — the Instruct and Coder variants
+are non-thinking, and `Qwen3-30B-A3B-Thinking-2507-FP8` always reasons — so the
+switch has no effect on them.
+
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser hermes` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

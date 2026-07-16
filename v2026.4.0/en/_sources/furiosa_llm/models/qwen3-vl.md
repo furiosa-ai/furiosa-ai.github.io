@@ -12,17 +12,23 @@ comprehension, and natively support tool (function) calling.
 FuriosaAI publishes the Qwen3-VL models under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 each shipping a Furiosa Executable Bundle (FXB) for running it on
-[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights
-also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
-with those, see the upstream model cards linked below.
+[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. Both the Instruct
+(non-thinking) and Thinking editions are published; the Thinking editions emit an
+explicit chain of thought before the final answer (see [Basic Usage](#basic-usage)
+below). The same upstream weights also run on other frameworks (such as vLLM,
+SGLang, and Transformers); for usage with those, see the upstream model cards
+linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
 | [`furiosa-ai/Qwen3-VL-2B-Instruct`](https://huggingface.co/furiosa-ai/Qwen3-VL-2B-Instruct) | None (BF16) | 1 | 2B dense; Instruct (non-thinking) edition |
 | [`furiosa-ai/Qwen3-VL-4B-Instruct`](https://huggingface.co/furiosa-ai/Qwen3-VL-4B-Instruct) | None (BF16) | 1 | 4B dense; Instruct (non-thinking) edition |
 | [`furiosa-ai/Qwen3-VL-32B-Instruct`](https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Instruct) | None (BF16) | 4 | 32B dense; Instruct (non-thinking) edition |
+| [`furiosa-ai/Qwen3-VL-2B-Thinking`](https://huggingface.co/furiosa-ai/Qwen3-VL-2B-Thinking) | None (BF16) | 1 | 2B dense; Thinking edition (always reasons) |
+| [`furiosa-ai/Qwen3-VL-4B-Thinking`](https://huggingface.co/furiosa-ai/Qwen3-VL-4B-Thinking) | None (BF16) | 1 | 4B dense; Thinking edition (always reasons) |
+| [`furiosa-ai/Qwen3-VL-32B-Thinking`](https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Thinking) | None (BF16) | 4 | 32B dense; Thinking edition (always reasons) |
 
 - **Architecture:** Qwen3-VL (dense), `Qwen3VLForConditionalGeneration`
 - **Input / Output:** Image + Text / Text
@@ -32,36 +38,38 @@ with those, see the upstream model cards linked below.
 
 To run these models with Furiosa-LLM, follow the example commands below after
 [installing Furiosa-LLM and its prerequisites](https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm).
-Select a variant tab below; the choice is kept in sync across all the examples on
-this page.
+The examples use the smallest 2B models; the larger sizes run the same way (see
+[Available Models](#available-models) for the RNGD card counts).
 
 ### Launch the server
 
 Serve a model by passing its `furiosa-ai/<repo>` identifier:
 
-::::{tab-set}
-:::{tab-item} 2B
-:sync: v2
 ```sh
 # Qwen3-VL-2B-Instruct — single RNGD card
 furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct
 ```
-:::
-:::{tab-item} 4B
-:sync: v4
+
+The **Thinking** editions always produce a chain of thought before the final
+answer; serve them with `--reasoning-parser qwen3` so the reasoning is returned
+in a separate field (see [Basic Usage](#basic-usage) below):
+
 ```sh
-# Qwen3-VL-4B-Instruct — single RNGD card
-furiosa-llm serve furiosa-ai/Qwen3-VL-4B-Instruct
+# Qwen3-VL-2B-Thinking — single RNGD card
+furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Thinking --reasoning-parser qwen3
 ```
-:::
-:::{tab-item} 32B
-:sync: v32
+
+To also enable tool (function) calling, add the `hermes` tool-call parser (the
+parser used by the Qwen3 series):
+
 ```sh
-# Qwen3-VL-32B-Instruct — four RNGD cards
-furiosa-llm serve furiosa-ai/Qwen3-VL-32B-Instruct
+furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
+  --enable-auto-tool-choice \
+  --tool-call-parser hermes
 ```
-:::
-::::
+
+The **Thinking** editions additionally keep `--reasoning-parser qwen3` so
+thinking is still parsed into its own field.
 
 When the server is ready, you will see:
 
@@ -72,46 +80,11 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `hermes` tool-call
-parser:
-
-::::{tab-set}
-:::{tab-item} 2B
-:sync: v2
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-:::
-:::{tab-item} 4B
-:sync: v4
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-VL-4B-Instruct \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-:::
-:::{tab-item} 32B
-:sync: v32
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-VL-32B-Instruct \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-:::
-::::
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a text-only request
 with `curl`:
 
-::::{tab-set}
-:::{tab-item} 2B
-:sync: v2
 ```sh
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
@@ -121,38 +94,9 @@ curl http://localhost:8000/v1/chat/completions \
     }' \
     | python -m json.tool
 ```
-:::
-:::{tab-item} 4B
-:sync: v4
-```sh
-curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -d '{
-    "model": "furiosa-ai/Qwen3-VL-4B-Instruct",
-    "messages": [{"role": "user", "content": "What is the capital of France?"}]
-    }' \
-    | python -m json.tool
-```
-:::
-:::{tab-item} 32B
-:sync: v32
-```sh
-curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -d '{
-    "model": "furiosa-ai/Qwen3-VL-32B-Instruct",
-    "messages": [{"role": "user", "content": "What is the capital of France?"}]
-    }' \
-    | python -m json.tool
-```
-:::
-::::
 
 To ask about an image, pass an `image_url` content part in the message:
 
-::::{tab-set}
-:::{tab-item} 2B
-:sync: v2
 ```sh
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
@@ -168,53 +112,40 @@ curl http://localhost:8000/v1/chat/completions \
     }' \
     | python -m json.tool
 ```
-:::
-:::{tab-item} 4B
-:sync: v4
-```sh
-curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -d '{
-    "model": "furiosa-ai/Qwen3-VL-4B-Instruct",
-    "messages": [{
-        "role": "user",
-        "content": [
-            {"type": "image_url", "image_url": {"url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg"}},
-            {"type": "text", "text": "Describe this image."}
-        ]
-    }]
-    }' \
-    | python -m json.tool
-```
-:::
-:::{tab-item} 32B
-:sync: v32
-```sh
-curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -d '{
-    "model": "furiosa-ai/Qwen3-VL-32B-Instruct",
-    "messages": [{
-        "role": "user",
-        "content": [
-            {"type": "image_url", "image_url": {"url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg"}},
-            {"type": "text", "text": "Describe this image."}
-        ]
-    }]
-    }' \
-    | python -m json.tool
-```
-:::
-::::
 
 The `image_url.url` field accepts a remote `http://`/`https://` URL, an inline
 base64 `data:` URL, or a local `file://` path (the last requires the
-`--allowed-local-media-path` flag below).
+`--allowed-local-media-path` flag described under [Advanced Usage](#advanced-usage)).
 
-### Multimodal serving options
+The **Thinking** editions (such as `furiosa-ai/Qwen3-VL-2B-Thinking`) return
+their reasoning separately from the final answer:
 
-`furiosa-llm serve` provides flags to control multimodal behavior; requests
-that violate them are rejected with HTTP 400:
+* `response.choices[].message.reasoning` (non-streaming)
+* `response.choices[].delta.reasoning` (streaming)
+
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
+
+response = client.chat.completions.create(
+    model="furiosa-ai/Qwen3-VL-2B-Thinking",
+    messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
+)
+
+print("Reasoning:", response.choices[0].message.reasoning)
+print("Answer:", response.choices[0].message.content)
+```
+
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+> appears only in responses that contain reasoning content; accessing it otherwise
+> raises an `AttributeError`.
+
+### Advanced Usage
+
+**Multimodal serving options.** `furiosa-llm serve` provides flags to control
+multimodal behavior; requests that violate them are rejected with HTTP 400:
 
 - `--image-limit-per-prompt N` / `--video-limit-per-prompt N` — maximum number of images/videos allowed per request (default: unlimited).
 - `--allowed-local-media-path PATH` — allow `file://` URLs whose resolved path is under `PATH`. Local file access is disabled unless this is set.
@@ -225,43 +156,24 @@ that violate them are rejected with HTTP 400:
 For example, to serve local images under `/srv/media` and restrict remote
 fetches to a single domain:
 
-::::{tab-set}
-:::{tab-item} 2B
-:sync: v2
 ```sh
 furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
   --allowed-local-media-path /srv/media \
   --allowed-media-domains cdn.example.com \
   --image-limit-per-prompt 4
 ```
-:::
-:::{tab-item} 4B
-:sync: v4
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-VL-4B-Instruct \
-  --allowed-local-media-path /srv/media \
-  --allowed-media-domains cdn.example.com \
-  --image-limit-per-prompt 4
-```
-:::
-:::{tab-item} 32B
-:sync: v32
-```sh
-furiosa-llm serve furiosa-ai/Qwen3-VL-32B-Instruct \
-  --allowed-local-media-path /srv/media \
-  --allowed-media-domains cdn.example.com \
-  --image-limit-per-prompt 4
-```
-:::
-::::
 
 See the [Vision-Language Models guide](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html)
 for image input formats, the UUID cache, and Python client examples.
 
-### Tool calling
+**Reasoning.** The **Thinking** editions always reason; there is no
+`enable_thinking` switch (the Instruct editions are the non-thinking
+counterparts).
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser hermes`,
-you can pass `tools` and let the model decide when to call them. See the
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser hermes` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 
@@ -270,4 +182,4 @@ for a complete client example and details on tool-choice options.
 * [Vision-Language Models](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html) — image input formats, multimodal server options, and the UUID cache
 * [Tool Calling](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html) — parsers, tool-choice options, and more examples
 * [Furiosa-LLM Server (`furiosa-llm serve`)](https://developer.furiosa.ai/latest/en/furiosa_llm/furiosa-llm-serve.html) — full OpenAI-compatible API reference and serving options
-* Upstream model cards: [Qwen/Qwen3-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct), [Qwen/Qwen3-VL-4B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct), [Qwen/Qwen3-VL-32B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct)
+* Upstream model cards: [Qwen/Qwen3-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct), [Qwen/Qwen3-VL-4B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct), [Qwen/Qwen3-VL-32B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct), [Qwen/Qwen3-VL-2B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-2B-Thinking), [Qwen/Qwen3-VL-4B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking), [Qwen/Qwen3-VL-32B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking)

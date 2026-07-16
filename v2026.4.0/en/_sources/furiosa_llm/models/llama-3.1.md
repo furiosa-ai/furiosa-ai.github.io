@@ -15,15 +15,16 @@ with those, see the upstream model card linked below.
 
 For the newer 70B revision see {doc}`llama-3.3`.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
 | [`furiosa-ai/Llama-3.1-8B-Instruct`](https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct) | None (16-bit) | 1 | 8B instruction-tuned |
+| [`furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic`](https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic) | FP8 (dynamic) | 1 | 8B instruction-tuned; RedHatAI FP8-dynamic build |
 
 - **Architecture:** Llama 3.1 (dense), `LlamaForCausalLM`
 - **Input / Output:** Text / Text
-- **Quantization:** No quantization — the model runs in its native 16-bit precision.
+- **Quantization:** `furiosa-ai/Llama-3.1-8B-Instruct` runs in native 16-bit; `furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic` uses static FP8 weights with dynamic FP8 activation quantization (per-token).
 
 ## Usage
 
@@ -36,7 +37,16 @@ The simplest way to serve the model is:
 
 ```sh
 # Launch the server, listening on port 8000 by default
-furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct
+furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic
+```
+
+To also enable tool (function) calling, add the `llama3_json` tool-call parser
+(the parser used by the Llama 3 series):
+
+```sh
+furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic \
+  --enable-auto-tool-choice \
+  --tool-call-parser llama3_json
 ```
 
 When the server is ready, you will see:
@@ -48,18 +58,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `llama3_json`
-tool-call parser (the parser used by the Llama 3 series):
-
-```sh
-furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct \
-  --enable-auto-tool-choice \
-  --tool-call-parser llama3_json
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 
@@ -67,16 +66,18 @@ The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-    "model": "furiosa-ai/Llama-3.1-8B-Instruct",
+    "model": "furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic",
     "messages": [{"role": "user", "content": "What is the capital of France?"}]
     }' \
     | python -m json.tool
 ```
 
-### Tool calling
+### Advanced Usage
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser llama3_json`,
-you can pass `tools` and let the model decide when to call them. See the
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser llama3_json` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

@@ -16,7 +16,7 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
 with those, see the upstream model card linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -40,12 +40,25 @@ The simplest way to serve the model is:
 furiosa-llm serve furiosa-ai/EXAONE-4.0-32B-FP8
 ```
 
-To parse the model's reasoning into a separate field, start the server with the
-`exaone4` reasoning parser (see [Reasoning](#reasoning) below):
+EXAONE 4.0 is a hybrid model that runs in **non-reasoning mode by default**. To
+have the chain of thought returned in a separate field once reasoning is enabled,
+start the server with the `exaone4` reasoning parser (see
+[Advanced Usage](#advanced-usage) for how to turn reasoning on):
 
 ```sh
 furiosa-llm serve furiosa-ai/EXAONE-4.0-32B-FP8 \
   --reasoning-parser exaone4
+```
+
+To also enable tool (function) calling, add the `hermes` tool-call parser (the
+parser used for the EXAONE-4.0 format); keep `--reasoning-parser exaone4` so
+reasoning, when enabled, is parsed into its own field:
+
+```sh
+furiosa-llm serve furiosa-ai/EXAONE-4.0-32B-FP8 \
+  --reasoning-parser exaone4 \
+  --enable-auto-tool-choice \
+  --tool-call-parser hermes
 ```
 
 When the server is ready, you will see:
@@ -57,19 +70,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `hermes` tool-call
-parser (the parser used for the EXAONE-4.0 format):
-
-```sh
-furiosa-llm serve furiosa-ai/EXAONE-4.0-32B-FP8 \
-  --reasoning-parser exaone4 \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 
@@ -83,10 +84,10 @@ curl http://localhost:8000/v1/chat/completions \
     | python -m json.tool
 ```
 
-### Reasoning
-
-When launched with `--reasoning-parser exaone4`, the model returns its reasoning
-separately from the final answer:
+EXAONE 4.0 runs in non-reasoning mode by default. Once reasoning is enabled (see
+[Advanced Usage](#advanced-usage)) and the server is started with
+`--reasoning-parser exaone4`, the chain of thought is returned separately from the
+final answer:
 
 * `response.choices[].message.reasoning` (non-streaming)
 * `response.choices[].delta.reasoning` (streaming)
@@ -105,18 +106,46 @@ print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
 
-> **Note:** The `reasoning` field is not part of the OpenAI API specification, but
-> it is the convention OpenAI recommends for returning the chain-of-thought (CoT)
-> in Chat Completions-compatible APIs. The OpenAI Agents SDK uses `reasoning` as
-> its primary property for the CoT, and many LLM serving frameworks (such as vLLM)
-> follow the same convention. It appears only in responses that contain reasoning
-> content; accessing it on a response without reasoning content raises an
-> `AttributeError`.
+By default the response carries no reasoning content, so read only
+`message.content`; `message.reasoning` is populated once you enable reasoning.
 
-### Tool calling
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+> appears only in responses that contain reasoning content; accessing it otherwise
+> raises an `AttributeError`.
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser hermes`,
-you can pass `tools` and let the model decide when to call them. See the
+### Advanced Usage
+
+**Enabling reasoning.** EXAONE 4.0 runs in non-reasoning mode by default. Enable
+reasoning for a single request by passing `enable_thinking` through
+`chat_template_kwargs`; with `--reasoning-parser exaone4` the chain of thought is
+then returned separately from the final answer:
+
+```python
+# Enable reasoning for a single request
+response = client.chat.completions.create(
+    model="furiosa-ai/EXAONE-4.0-32B-FP8",
+    messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
+    extra_body={"chat_template_kwargs": {"enable_thinking": True}},
+)
+
+print("Reasoning:", response.choices[0].message.reasoning)
+print("Answer:", response.choices[0].message.content)
+```
+
+To make every request reason, launch the server with `--default-chat-template-kwargs`
+(a request can still override with its own `chat_template_kwargs`):
+
+```sh
+furiosa-llm serve furiosa-ai/EXAONE-4.0-32B-FP8 \
+  --reasoning-parser exaone4 \
+  --default-chat-template-kwargs '{"enable_thinking": true}'
+```
+
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser hermes` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

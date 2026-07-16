@@ -13,7 +13,7 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
 with those, see the upstream model card linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -37,6 +37,15 @@ The simplest way to serve the model is:
 furiosa-llm serve furiosa-ai/Qwen2.5-0.5B-Instruct
 ```
 
+To also enable tool (function) calling, add the `hermes` tool-call parser
+(the parser used by the Qwen series):
+
+```sh
+furiosa-llm serve furiosa-ai/Qwen2.5-0.5B-Instruct \
+  --enable-auto-tool-choice \
+  --tool-call-parser hermes
+```
+
 When the server is ready, you will see:
 
 ```sh
@@ -46,18 +55,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `hermes` tool-call
-parser (the parser used by the Qwen series):
-
-```sh
-furiosa-llm serve furiosa-ai/Qwen2.5-0.5B-Instruct \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 
@@ -71,10 +69,12 @@ curl http://localhost:8000/v1/chat/completions \
     | python -m json.tool
 ```
 
-### Tool calling
+### Advanced Usage
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser hermes`,
-you can pass `tools` and let the model decide when to call them. See the
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser hermes` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

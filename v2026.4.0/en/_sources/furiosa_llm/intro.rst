@@ -45,3 +45,4 @@ Documentation
 * :ref:`FuriosaLLMReference`: Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
 * :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
+* :ref:`K8sMooncakeDeployment`: A guide to deploying Mooncake on Kubernetes

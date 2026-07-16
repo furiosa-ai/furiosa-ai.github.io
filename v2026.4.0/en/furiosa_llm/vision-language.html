@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Vision-Language Models &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Vision-Language Models &#8212; FuriosaAI Developer Center 2026.4.0b8 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../_static/documentation_options.js?v=c955e330"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -303,6 +303,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -458,6 +459,12 @@ authoritative list.</p>
 <code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path. Preprocessing (resizing,
 patching, prompt-token expansion) is handled by the Hugging Face
 <code class="docutils literal notranslate"><span class="pre">AutoProcessor</span></code> that ships with the model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only <strong>image</strong> inputs are supported at this time. <strong>Video input is not
+currently supported.</strong> The <code class="docutils literal notranslate"><span class="pre">video_url</span></code> content type is not accepted;
+support is planned for a future release.</p>
+</div>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <p>Launch a server against a compiled VL artifact:</p>
@@ -561,8 +568,9 @@ limit returns HTTP 400.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--video-limit-per-prompt</span> <span class="pre">N</span></code></p></td>
 <td><p>unlimited</p></td>
-<td><p>Maximum number of videos allowed per request. Exceeding the
-limit returns HTTP 400.</p></td>
+<td><p>Maximum number of videos allowed per request. Video input is not
+currently supported (see the note above), so this flag has no
+effect yet.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span> <span class="pre">PATH</span></code></p></td>
 <td><p>disabled</p></td>
@@ -610,7 +618,7 @@ limit SSRF and bandwidth-amplification risk.</p>
 </section>
 <section id="caching-multimodal-inputs-with-uuid">
 <h2>Caching Multimodal Inputs with UUID<a class="headerlink" href="#caching-multimodal-inputs-with-uuid" title="Link to this heading">#</a></h2>
-<p>You can optionally tag each image or video on a request with a stable
+<p>You can optionally tag each image on a request with a stable
 <code class="docutils literal notranslate"><span class="pre">uuid</span></code>. The server caches the processed result under that UUID and
 reuses it on follow-up requests carrying the same UUID, skipping
 pre-processing.</p>
