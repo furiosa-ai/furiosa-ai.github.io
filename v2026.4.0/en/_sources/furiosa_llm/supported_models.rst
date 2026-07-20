@@ -71,6 +71,10 @@ Pooling Models
      - Architecture
      - Task
      - Example Hugging Face Models
+   * - :doc:`Harrier OSS v1 <models/harrier-oss-v1>`
+     - ``Qwen3Model``
+     - Embedding
+     - ``microsoft/harrier-oss-v1-0.6b``
    * - :doc:`Qwen 3 Embedding <models/qwen3-embedding>`
      - ``Qwen3Model``
      - Embedding
@@ -251,6 +255,11 @@ The status of each check uses the following scale:
      - ✅
      - ✅
      - 🟡
+   * - `harrier-oss-v1-0.6b <https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
 
 For models planned for future releases, see the :ref:`Roadmap`.
 
@@ -260,6 +269,7 @@ For models planned for future releases, see the :ref:`Roadmap`.
 
    models/qwen3
    models/qwen3-moe
+   models/harrier-oss-v1
    models/qwen3-embedding
    models/qwen3-reranker
    models/qwen3-vl

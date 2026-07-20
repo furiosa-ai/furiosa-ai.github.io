@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Supported Models &#8212; FuriosaAI Developer Center 2026.4.0b8 documentation</title>
+    <title>Supported Models &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=c955e330"></script>
+    <script src="../_static/documentation_options.js?v=72a9612d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -260,6 +260,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Supported Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
@@ -531,12 +532,17 @@ repository-level model cards live on the Hugging Face Hub.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3-embedding.html"><span class="doc">Qwen 3 Embedding</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/harrier-oss-v1.html"><span class="doc">Harrier OSS v1</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Qwen3Model</span></code></p></td>
+<td><p>Embedding</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">microsoft/harrier-oss-v1-0.6b</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3-embedding.html"><span class="doc">Qwen 3 Embedding</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3Model</span></code></p></td>
 <td><p>Embedding</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Embedding-8B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Embedding-4B</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3-reranker.html"><span class="doc">Qwen 3 Reranker</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3-reranker.html"><span class="doc">Qwen 3 Reranker</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3ForSequenceClassification</span></code></p></td>
 <td><p>Reranking</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Reranker-8B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-Reranker-4B</span></code></p></td>
@@ -756,6 +762,12 @@ does it produce correct results (<strong>Correctness</strong>), and has its perf
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
 <td><p>Text (MoE)</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b">harrier-oss-v1-0.6b</a></p></td>
+<td><p>Embedding</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
