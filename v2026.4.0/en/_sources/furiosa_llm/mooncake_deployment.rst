@@ -19,19 +19,29 @@ Building Mooncake Library
 
 Furiosa-LLM uses Mooncake libraries built from commit `c989668 <https://github.com/kvcache-ai/Mooncake/tree/c9896684fbd7b85ca207c643056a645ab6be3bad>`__.
 Refer to the `Mooncake Build Guide <https://kvcache-ai.github.io/Mooncake/getting_started/build.html>`__ for build instructions.
-The library is built with the follwing configuration:
+The library is built with the following configuration:
 
 .. code-block:: bash
 
    cmake .. \
-        -DBUILD_UNIT_TESTS=OFF \
-        -DUSE_HTTP=ON \
-        -DUSE_ETCD=ON \
-        -DUSE_CUDA=OFF \
-        -DWITH_EP=OFF \
-        -DSTORE_USE_ETCD=ON \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON
+       -DBUILD_UNIT_TESTS=OFF \
+       -DUSE_HTTP=ON \
+       -DUSE_ETCD=ON \
+       -DUSE_CUDA=OFF \
+       -DWITH_EP=OFF \
+       -DSTORE_USE_ETCD=ON \
+       -DCMAKE_BUILD_TYPE=Release \
+       -DBUILD_SHARED_LIBS=ON \
+       -DBUILD_EXAMPLES=OFF \
+       -DBUILD_BENCHMARK=OFF \
+       -DWITH_STORE_GO=OFF \
+       -DENABLE_DEBUG_SYMBOLS=OFF
+
+This produces ``libmooncake_store.so`` (and its dependencies such as
+``libtransfer_engine.so``). Furiosa-LLM loads this library at runtime rather than
+linking it, so it is **not** bundled into the ``furiosa-llm`` wheel; you make it
+available to Furiosa-LLM by putting its directory on ``LD_LIBRARY_PATH`` as
+described in :ref:`Step 4 <ConnectFuriosaToMooncake>` below.
 
 Step 1: Deploy Mooncake Master
 ------------------------------
@@ -262,15 +272,26 @@ Apply the deployment:
    kubectl apply -f deployment.yaml
 
 
+.. _ConnectFuriosaToMooncake:
+
 Step 4: Connect Furiosa-LLM to Mooncake
 ---------------------------------------
 
 Set the following environment variables on Furiosa-LLM Pods to utilize Mooncake.
 The following environment variables enable the TCP-based Mooncake transfer protocol for Furiosa-LLM, with 6.25 GiB of Host DRAM contributing to the distributed memory pool.
 
+Furiosa-LLM does not bundle Mooncake: the ``furiosa-llm`` wheel links no Mooncake
+library and stays lean. When L3 is enabled, Furiosa-LLM loads
+``libmooncake_store.so`` by soname on first use (``dlopen``), so put the
+directory holding the library you built above on ``LD_LIBRARY_PATH`` — the same
+directory its own dependencies (``libtransfer_engine.so``, ``libetcd_wrapper.so``,
+glog, …) are resolved from. If the library cannot be loaded, Furiosa-LLM logs a
+warning and runs L2-only instead of failing.
+
 .. code-block:: bash
 
    export L3_ENABLED=1
+   export LD_LIBRARY_PATH=/opt/mooncake/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
    export MOONCAKE_MASTER=(MOONCAKE_MASTER_SERVICE_FQDN):50051
    export MOONCAKE_TE_META_DATA_SERVER=http://(MOONCAKE_MASTER_SERVICE_FQDN):8080/metadata
    export MOONCAKE_PROTOCOL=tcp

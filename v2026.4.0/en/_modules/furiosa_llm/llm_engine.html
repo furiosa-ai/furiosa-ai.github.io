@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>furiosa_llm.llm_engine &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>furiosa_llm.llm_engine &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../../_static/documentation_options.js?v=276809a2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -447,6 +447,7 @@
     <span class="n">DEFAULT_JIT_THRESHOLD</span><span class="p">,</span>
     <span class="n">DEFAULT_JIT_UNIT_SIZE</span><span class="p">,</span>
     <span class="n">LLM</span><span class="p">,</span>
+    <span class="n">LoggerConfig</span><span class="p">,</span>
     <span class="n">NativeEngineLike</span><span class="p">,</span>
     <span class="n">PoolingOutput</span><span class="p">,</span>
     <span class="n">PoolingParams</span><span class="p">,</span>
@@ -484,6 +485,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">EngineArgs</span><span class="p">:</span>
     <span class="c1"># Currently only artifact path is supported</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="c1"># Optional path to a Furiosa Executable Bundle (FXB). When set, the v3</span>
+    <span class="c1"># engine path is used and `model` is treated as the HF id for</span>
+    <span class="c1"># config/tokenizer (mirrors LLM(..., fxb=...)).</span>
+    <span class="n">fxb</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">revision</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">data_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -535,6 +540,13 @@
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
             <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The Hugging Face model id, or path to Furiosa model artifact. Currently only one model is supported per server.&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--fxb&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">fxb</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to a Furiosa Executable Bundle (FXB) file. When given, the v3 engine &#39;</span>
+            <span class="s1">&#39;is used and --model is treated as the Hugging Face model id for config/tokenizer.&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--revision&quot;</span><span class="p">,</span>
@@ -875,9 +887,11 @@
 <span class="sd">        Creates an LLMEngine from EngineArgs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scheduler_config</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">logger_config</span> <span class="o">=</span> <span class="n">LoggerConfig</span><span class="o">.</span><span class="n">load_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
         <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="p">(</span>
             <span class="n">model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">fxb</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fxb</span><span class="p">,</span>
             <span class="n">revision</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">revision</span><span class="p">,</span>
             <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
@@ -887,6 +901,7 @@
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
+            <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
             <span class="n">enable_jit_compilation</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_jit_compilation</span><span class="p">,</span>
             <span class="n">jit_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">jit_threshold</span><span class="p">,</span>
             <span class="n">jit_max_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">jit_max_workers</span><span class="p">,</span>
@@ -949,16 +964,21 @@
                 <span class="n">n</span><span class="p">,</span>
                 <span class="n">params</span><span class="o">.</span><span class="n">output_kind</span><span class="p">,</span>
                 <span class="n">params</span><span class="o">.</span><span class="n">skip_special_tokens</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">include_stop_str_in_output</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">abort_request</span><span class="p">,</span>
                 <span class="n">request_id</span><span class="p">,</span>
                 <span class="n">prompt_str</span><span class="p">,</span>
                 <span class="n">prompt_token_ids</span><span class="p">,</span>
+                <span class="n">min_tokens</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="n">native_params</span> <span class="o">=</span> <span class="n">_build_native_sampling_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
             <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_process_generation_request</span><span class="p">(</span>
                     <span class="n">request_id</span><span class="p">,</span>
                     <span class="n">converter</span><span class="p">,</span>
                     <span class="n">batch_encoding</span><span class="p">,</span>
-                    <span class="n">params</span><span class="p">,</span>
+                    <span class="n">native_params</span><span class="p">,</span>
                     <span class="n">mm_inputs</span><span class="o">=</span><span class="n">mm_inputs</span><span class="p">,</span>
                     <span class="n">mm_modalities</span><span class="o">=</span><span class="n">mm_modalities</span><span class="p">,</span>
                     <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
@@ -1156,9 +1176,11 @@
 <span class="sd">        Creates an AsyncLLMEngine from AsyncEngineArgs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scheduler_config</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="o">.</span><span class="n">load_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">logger_config</span> <span class="o">=</span> <span class="n">LoggerConfig</span><span class="o">.</span><span class="n">load_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
         <span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="p">(</span>
             <span class="n">model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">fxb</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fxb</span><span class="p">,</span>
             <span class="n">revision</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">revision</span><span class="p">,</span>
             <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
@@ -1168,6 +1190,7 @@
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
+            <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
             <span class="n">enable_jit_compilation</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_jit_compilation</span><span class="p">,</span>
             <span class="n">jit_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">jit_threshold</span><span class="p">,</span>
             <span class="n">jit_max_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">jit_max_workers</span><span class="p">,</span>
@@ -1198,53 +1221,58 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model does not support text generation tasks.&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">try_add_request_id</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
-
-        <span class="c1"># XXX, ditto:`add_special_tokens` is set to `False` for text generation requests.</span>
-        <span class="c1"># See LLMEngine.add_request for more details.</span>
-        <span class="n">batch_encoding</span><span class="p">,</span> <span class="n">prompt_getter</span> <span class="o">=</span> <span class="n">preprocess_prompt</span><span class="p">(</span>
-            <span class="n">prompt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;add_special_tokens&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">batch_encoding</span><span class="o">.</span><span class="n">input_ids</span>
-        <span class="n">validate_context_length</span><span class="p">(</span>
-            <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
-            <span class="n">prompt_tokens</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">),</span>
-            <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">mm_inputs</span><span class="p">,</span> <span class="n">mm_modalities</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
-            <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">mm_inputs</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">native_output_generator</span> <span class="o">=</span> <span class="n">call_native_mm</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">,</span>
-                <span class="n">batch_encoding</span><span class="p">,</span>
-                <span class="n">sampling_params</span><span class="p">,</span>
-                <span class="n">mm_inputs</span><span class="p">,</span>
-                <span class="n">mm_modalities</span><span class="p">,</span>
-                <span class="n">constraints</span><span class="p">,</span>
-                <span class="n">request_id</span><span class="o">=</span><span class="n">request_id</span><span class="p">,</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># XXX, ditto:`add_special_tokens` is set to `False` for text generation requests.</span>
+            <span class="c1"># See LLMEngine.add_request for more details.</span>
+            <span class="n">batch_encoding</span><span class="p">,</span> <span class="n">prompt_getter</span> <span class="o">=</span> <span class="n">preprocess_prompt</span><span class="p">(</span>
+                <span class="n">prompt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;add_special_tokens&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
             <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">native_output_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span>
-                <span class="n">batch_encoding</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">,</span> <span class="n">request_id</span>
+            <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">batch_encoding</span><span class="o">.</span><span class="n">input_ids</span>
+            <span class="n">validate_context_length</span><span class="p">(</span>
+                <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
+                <span class="n">prompt_tokens</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">),</span>
+                <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt_getter</span><span class="p">()</span>
-        <span class="n">converter</span> <span class="o">=</span> <span class="n">NativeOutputConverter</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
-            <span class="n">sampling_params</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
-            <span class="n">sampling_params</span><span class="o">.</span><span class="n">output_kind</span><span class="p">,</span>
-            <span class="n">sampling_params</span><span class="o">.</span><span class="n">skip_special_tokens</span><span class="p">,</span>
-            <span class="n">request_id</span><span class="p">,</span>
-            <span class="n">prompt_str</span><span class="p">,</span>
-            <span class="n">prompt_token_ids</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="n">mm_inputs</span><span class="p">,</span> <span class="n">mm_modalities</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
+                <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span>
+            <span class="p">)</span>
+            <span class="n">native_sampling_params</span> <span class="o">=</span> <span class="n">_build_native_sampling_params</span><span class="p">(</span><span class="n">sampling_params</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mm_inputs</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="n">native_output_generator</span> <span class="o">=</span> <span class="n">call_native_mm</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">,</span>
+                    <span class="n">batch_encoding</span><span class="p">,</span>
+                    <span class="n">native_sampling_params</span><span class="p">,</span>
+                    <span class="n">mm_inputs</span><span class="p">,</span>
+                    <span class="n">mm_modalities</span><span class="p">,</span>
+                    <span class="n">constraints</span><span class="p">,</span>
+                    <span class="n">request_id</span><span class="o">=</span><span class="n">request_id</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">native_output_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span>
+                    <span class="n">batch_encoding</span><span class="p">,</span> <span class="n">native_sampling_params</span><span class="p">,</span> <span class="n">request_id</span>
+                <span class="p">)</span>
 
-        <span class="k">async</span> <span class="k">for</span> <span class="n">request_output</span> <span class="ow">in</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert_stream</span><span class="p">(</span><span class="n">native_output_generator</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">request_output</span>
+            <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt_getter</span><span class="p">()</span>
+            <span class="n">converter</span> <span class="o">=</span> <span class="n">NativeOutputConverter</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="o">.</span><span class="n">output_kind</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="o">.</span><span class="n">skip_special_tokens</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="o">.</span><span class="n">include_stop_str_in_output</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="o">.</span><span class="n">abort_request</span><span class="p">,</span>
+                <span class="n">request_id</span><span class="p">,</span>
+                <span class="n">prompt_str</span><span class="p">,</span>
+                <span class="n">prompt_token_ids</span><span class="p">,</span>
+                <span class="n">min_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">try_remove_request_id</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span></div>
+            <span class="k">async</span> <span class="k">for</span> <span class="n">request_output</span> <span class="ow">in</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert_stream</span><span class="p">(</span><span class="n">native_output_generator</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">request_output</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">try_remove_request_id</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AsyncLLMEngine.encode">
@@ -1309,6 +1337,16 @@
 
     <span class="c1"># TODO</span>
     <span class="c1"># async def engine_step(self): ...</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_native_sampling_params</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">SamplingParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SamplingParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter fields that shouldn&#39;t be passed to the native engine.</span>
+<span class="sd">    `stop` is handled entirely in the frontend.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">native_params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">native_params</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">native_params</span>
 </pre></div>
 
                 </article>

@@ -141,7 +141,7 @@ Parameters without descriptions inherit their behavior and functionality from th
 .. note::
 
     For sampling-related fields (``temperature``, ``top_p``, ``top_k``,
-    ``max_output_tokens``), each field resolves in this order:
+    ``max_output_tokens``, ``stop``), each field resolves in this order:
 
     1. The value specified in the request body, if set.
     2. The value from the model's ``generation_config.json``, if present
@@ -195,6 +195,17 @@ Parameters without descriptions inherit their behavior and functionality from th
      - integer
      - -1
      - Furiosa-LLM extension; not part of the OpenResponses specification.
+   * - stop
+     - string or array[string]
+     - null
+     - Stop generation when a non-empty string is matched. A single string is
+       normalized to a one-item list. If omitted, ``stop_strings`` from the
+       model's ``generation_config.json`` is used when available.
+   * - include_stop_str_in_output
+     - boolean
+     - false
+     - When true, retain the matched ``stop`` string in the output; any text
+       after the match in the completing token is removed.
    * - max_output_tokens
      - integer
      - null

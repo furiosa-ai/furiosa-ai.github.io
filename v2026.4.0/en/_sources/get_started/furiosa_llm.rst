@@ -73,7 +73,7 @@ The ``LLM`` class is used to load LLM models and provides the core API for LLM i
 Streaming Inference with Furiosa-LLM
 ====================================
 In addition to batch inference, Furiosa-LLM also supports streaming inference.
-The key difference of streaming inference is that tokens are returned as soon
+The key difference of streaming inference is that tokens are returned as soon as
 they are generated.
 This allows you to start printing or processing partial tokens before the whole
 inference process finishes.
@@ -114,8 +114,8 @@ Below is an example of how to launch the server with the Llama 3.1 8B Instruct m
 
 .. code-block:: sh
 
-  # Launch the server to listen 8000 port by default
-  furiosa-llm serve furiosa-ai/Qwen3-32B-FP8
+  # Launch the server to listen on port 8000 by default
+  furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct
 
 
 The server loads the model and starts listening on the specified port.
@@ -142,7 +142,7 @@ Example output:
     "id": "chat-21f0b74b2c6040d3b615c04cb5bf2e2e",
     "object": "chat.completion",
     "created": 1736480800,
-    "model": "meta-llama/Llama-3.1-8B-Instruct",
+    "model": "furiosa-ai/Llama-3.1-8B-Instruct",
     "choices": [
         {
             "index": 0,

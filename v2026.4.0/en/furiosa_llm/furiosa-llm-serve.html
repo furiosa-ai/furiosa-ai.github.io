@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../_static/documentation_options.js?v=276809a2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -440,6 +440,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-string-response-fields">Stop-string response fields</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>
@@ -477,7 +478,7 @@ artifact path, as follows:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.4.0b9.
+<p>This document is based on Furiosa SDK 2026.4.0b10.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="supported-apis">
@@ -643,12 +644,13 @@ parameters. Here’s an example:</p>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
     <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">tool_call</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Expected &#39;get_weather&#39; but got &#39;</span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -695,18 +697,14 @@ You can check the help text’s <code class="docutils literal notranslate"><span
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-    <span class="c1"># Pass the argument here in the extra_body field for Qwen3, Exaone4</span>
-    <span class="c1"># It depends on the model you are using</span>
-    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;chat_template_kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;enable_thinking&quot;</span><span class="p">:</span> <span class="kc">True</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
 <span class="p">)</span>
 
-<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;reasoning&quot;</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+<span class="c1"># The reasoning parser splits the chain-of-thought into a separate `reasoning`</span>
+<span class="c1"># field, kept out of `content`.</span>
+<span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">,</span> <span class="s2">&quot;expected a non-empty reasoning field&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -718,17 +716,11 @@ attempting to access this field in responses without reasoning content will rais
 </section>
 <section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> together with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not
-allowed because beam search requires the whole sequence to produce the
-output tokens.</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For sampling-related fields (<code class="docutils literal notranslate"><span class="pre">temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">top_p</span></code>, <code class="docutils literal notranslate"><span class="pre">top_k</span></code>,
-<code class="docutils literal notranslate"><span class="pre">min_p</span></code>, <code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code>, <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>), each field resolves
-in this order:</p>
+<code class="docutils literal notranslate"><span class="pre">min_p</span></code>, <code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code>, <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code>), each field
+resolves in this order:</p>
 <ol class="arabic simple">
 <li><p>The value specified in the request body, if set.</p></li>
 <li><p>The value from the model’s <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code>, if present.</p></li>
@@ -790,16 +782,6 @@ and offline-API behavior.</p>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>best_of</p></td>
-<td><p>integer</p></td>
-<td><p>1</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>use_beam_search</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
 <tr class="row-odd"><td><p>top_k</p></td>
 <td><p>integer</p></td>
 <td><p>-1</p></td>
@@ -810,27 +792,27 @@ and offline-API behavior.</p>
 <td><p>0.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>length_penalty</p></td>
+<tr class="row-odd"><td><p>repetition_penalty</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>repetition_penalty</p></td>
-<td><p>float</p></td>
-<td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<tr class="row-even"><td><p>stop</p></td>
+<td><p>string or array[string]</p></td>
+<td><p>null</p></td>
+<td><p>Stop string or list of non-empty stop strings. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<tr class="row-odd"><td><p>include_stop_str_in_output</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>Whether to retain a matched <code class="docutils literal notranslate"><span class="pre">stop</span></code> string. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>stop_token_ids</p></td>
 <td><p>array[integer]</p></td>
 <td><p>[]</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>ignore_eos</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p>early_stopping</p></td>
+<tr class="row-odd"><td><p>ignore_eos</p></td>
 <td><p>boolean</p></td>
 <td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
@@ -938,24 +920,14 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 <td><p>1</p></td>
 <td><p>Currently limited to 1.</p></td>
 </tr>
-<tr class="row-odd"><td><p>best_of</p></td>
-<td><p>integer</p></td>
-<td><p>1</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>temperature</p></td>
+<tr class="row-odd"><td><p>temperature</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>top_p</p></td>
+<tr class="row-even"><td><p>top_p</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>use_beam_search</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>top_k</p></td>
@@ -968,27 +940,27 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 <td><p>0.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>length_penalty</p></td>
+<tr class="row-odd"><td><p>repetition_penalty</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>repetition_penalty</p></td>
-<td><p>float</p></td>
-<td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<tr class="row-even"><td><p>stop</p></td>
+<td><p>string or array[string]</p></td>
+<td><p>null</p></td>
+<td><p>Stop string or list of non-empty stop strings. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<tr class="row-odd"><td><p>include_stop_str_in_output</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>Whether to retain a matched <code class="docutils literal notranslate"><span class="pre">stop</span></code> string. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>stop_token_ids</p></td>
 <td><p>array[integer]</p></td>
 <td><p>[]</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>ignore_eos</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p>early_stopping</p></td>
+<tr class="row-odd"><td><p>ignore_eos</p></td>
 <td><p>boolean</p></td>
 <td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
@@ -1021,6 +993,19 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 </tbody>
 </table>
 </div>
+</section>
+<section id="stop-string-response-fields">
+<h3>Stop-string response fields<a class="headerlink" href="#stop-string-response-fields" title="Link to this heading">#</a></h3>
+<p>For Chat Completions and Completions, each response choice has a
+<code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> field. This is a Furiosa-LLM extension to the OpenAI-compatible
+response schema. When a configured stop string ends generation, the terminal
+choice—or the terminal choice in a streamed chunk—has <code class="docutils literal notranslate"><span class="pre">finish_reason</span></code> set to
+<code class="docutils literal notranslate"><span class="pre">&quot;stop&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> set to the matched string. <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> is
+<code class="docutils literal notranslate"><span class="pre">null</span></code> for earlier streamed chunks and when generation ends for another
+reason.</p>
+<p>The raw JSON response always includes the field. OpenAI Python SDK response
+models that do not declare this extension expose it through
+<code class="docutils literal notranslate"><span class="pre">choice.model_extra[&quot;stop_reason&quot;]</span></code>.</p>
 </section>
 <section id="embeddings-api-v1-embeddings">
 <span id="embeddingsapi"></span><h3>Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)<a class="headerlink" href="#embeddings-api-v1-embeddings" title="Link to this heading">#</a></h3>
@@ -1400,6 +1385,7 @@ Hugging Face cache directory.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-string-response-fields">Stop-string response fields</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>

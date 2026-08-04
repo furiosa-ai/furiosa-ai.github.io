@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible API with Logprobs &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>OpenAI-Compatible API with Logprobs &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../../_static/documentation_options.js?v=276809a2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -521,6 +521,13 @@ and <code class="docutils literal notranslate"><span class="pre">prompt_logprobs
         <span class="s2">&quot;return_token_ids&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Return prompt token IDs</span>
     <span class="p">},</span>
 <span class="p">)</span>
+
+<span class="c1"># The key fields this example demonstrates must be present.</span>
+<span class="n">choice</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">choice</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;expected non-empty generated text&quot;</span>
+<span class="k">assert</span> <span class="n">choice</span><span class="o">.</span><span class="n">logprobs</span> <span class="ow">and</span> <span class="n">choice</span><span class="o">.</span><span class="n">logprobs</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;expected generated-token logprobs&quot;</span>
+<span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">prompt_logprobs</span><span class="p">,</span> <span class="s2">&quot;expected prompt_logprobs (vLLM extension)&quot;</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">prompt_token_ids</span><span class="p">,</span> <span class="s2">&quot;expected prompt_token_ids&quot;</span>  <span class="c1"># type: ignore[attr-defined]</span>
 
 <span class="c1"># Print generated text</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>

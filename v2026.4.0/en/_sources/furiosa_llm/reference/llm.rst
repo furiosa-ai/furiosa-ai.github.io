@@ -24,6 +24,12 @@ See :ref:`DefaultSamplingParams` for details.
 
 See the :ref:`chat example <FuriosaLLMExamplesChat>` for usage.
 
+For a completion stopped by a configured stop string, inspect
+``result.outputs[j].stop_reason`` for a single prompt or
+``results[i].outputs[j].stop_reason`` for batched prompts. It is the matched
+stop string, or ``None`` when generation ended for another reason;
+``finish_reason`` continues to describe the reason generation finished.
+
 get_default_sampling_params()
 -----------------------------
 

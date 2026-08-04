@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>furiosa_llm.api &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>furiosa_llm.api &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../../_static/documentation_options.js?v=276809a2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -479,19 +479,19 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.tokenization_utils_tokenizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedTokenizerFast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">POOLING_TASKS</span><span class="p">,</span> <span class="n">PoolingTask</span><span class="p">,</span> <span class="n">TaskType</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.server.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_list_of</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.server.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_list_of</span><span class="p">,</span> <span class="n">random_uuid</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">FURIOSA_LLM_VERSION</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.device</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_devices</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_context_length</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.metadata.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchedulerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.metadata.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggerConfig</span><span class="p">,</span> <span class="n">SchedulerConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.outputs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CompletionOutput</span><span class="p">,</span>
     <span class="n">EmbeddingRequestOutput</span><span class="p">,</span>
-    <span class="n">Logprob</span><span class="p">,</span>
+    <span class="n">NativeOutputConverter</span><span class="p">,</span>
     <span class="n">PoolingOutput</span><span class="p">,</span>
     <span class="n">PoolingRequestOutput</span><span class="p">,</span>
     <span class="n">RequestOutput</span><span class="p">,</span>
+    <span class="n">RequestOutputKind</span><span class="p">,</span>
     <span class="n">ScoringRequestOutput</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.sampling_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoolingParams</span><span class="p">,</span> <span class="n">SamplingParams</span>
@@ -594,8 +594,6 @@
 
 <span class="n">RAY_LOG_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;[furiosa-llm]&quot;</span>
 
-<span class="n">STREAMING_MAX_DECODE_TRIAL</span> <span class="o">=</span> <span class="mi">2</span>
-
 
 <span class="k">class</span><span class="w"> </span><span class="nc">NativeEngineLike</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
     <span class="nd">@property</span>
@@ -626,6 +624,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_prefix_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="o">...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_prometheus_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_llm_finalize</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="s2">&quot;NativeEngineLike | None&quot;</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -678,9 +678,11 @@
         <span class="n">data_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">num_blocks_per_pp_stage</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># Pipeline selection related Configs</span>
         <span class="n">scheduler_config</span><span class="p">:</span> <span class="n">SchedulerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># Observability related Configs</span>
+        <span class="n">logger_config</span><span class="p">:</span> <span class="n">LoggerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># Structured outputs related Configuration</span>
         <span class="n">structured_outputs_backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;guidance&quot;</span><span class="p">,</span> <span class="s2">&quot;xgrammar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
         <span class="c1"># Other Configuration</span>
@@ -722,12 +724,16 @@
 <span class="sd">                If not given, it will use the value from artifact.</span>
 <span class="sd">            num_blocks_per_pp_stage: The number of transformer blocks per each pipeline parallelism stage.</span>
 <span class="sd">                If only `pipeline_parallel_size` is provided, transformer blocks will be distributed equally.</span>
-<span class="sd">            max_io_memory_mb: Maximum NPU memory to be used as I/O tensor, which can range from 0 to 48GB.</span>
-<span class="sd">                If unspecified, will use the default value of 2048.</span>
+<span class="sd">            max_io_memory_mb: NPU memory in MB to set aside for per-forward I/O tensors,</span>
+<span class="sd">                which can range from 0 to 49152. If unspecified, the runtime estimates the</span>
+<span class="sd">                required size from the model&#39;s bucket shapes. Setting it too small for the</span>
+<span class="sd">                model may cause an out-of-memory error at runtime.</span>
 <span class="sd">            scheduler_config: Configuration for the scheduler, allowing to maximum number of tasks which can</span>
 <span class="sd">                be queued to HW, maximum number of samples that can be processed by the scheduler, and ratio</span>
 <span class="sd">                of spare blocks that are reserved by scheduler. If this is not given, scheduler config saved</span>
 <span class="sd">                in the artifacts will be used.</span>
+<span class="sd">            logger_config: Observability configuration (e.g. disabling the periodic per-DP stats</span>
+<span class="sd">                log). If not given, default logging behavior is used.</span>
 <span class="sd">            structured_outputs_backend: The backend for structured outputs. &quot;auto&quot; will automatically select the</span>
 <span class="sd">                best backend based on the model. &quot;guidance&quot; will use the guidance library. &quot;xgrammar&quot; will</span>
 <span class="sd">                use the xgrammar library.</span>
@@ -782,6 +788,7 @@
                 <span class="n">num_blocks_per_pp_stage</span><span class="o">=</span><span class="n">num_blocks_per_pp_stage</span><span class="p">,</span>
                 <span class="n">max_io_memory_mb</span><span class="o">=</span><span class="n">max_io_memory_mb</span><span class="p">,</span>
                 <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
+                <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
                 <span class="n">structured_outputs_backend</span><span class="o">=</span><span class="n">structured_outputs_backend</span><span class="p">,</span>
                 <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
                 <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">tokenizer_mode</span><span class="p">,</span>
@@ -804,6 +811,7 @@
                 <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
                 <span class="n">max_io_memory_mb</span><span class="o">=</span><span class="n">max_io_memory_mb</span><span class="p">,</span>
                 <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
+                <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
                 <span class="n">structured_outputs_backend</span><span class="o">=</span><span class="n">structured_outputs_backend</span><span class="p">,</span>
                 <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
                 <span class="n">tokenizer_mode</span><span class="o">=</span><span class="n">tokenizer_mode</span><span class="p">,</span>
@@ -831,8 +839,9 @@
         <span class="n">devices</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="s2">&quot;Device&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">data_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">scheduler_config</span><span class="p">:</span> <span class="n">SchedulerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">logger_config</span><span class="p">:</span> <span class="n">LoggerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">structured_outputs_backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;guidance&quot;</span><span class="p">,</span> <span class="s2">&quot;xgrammar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
         <span class="n">tokenizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">PreTrainedTokenizer</span> <span class="o">|</span> <span class="n">PreTrainedTokenizerFast</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tokenizer_mode</span><span class="p">:</span> <span class="n">TokenizerModeType</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
@@ -903,6 +912,7 @@
             <span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">max_io_memory_mb</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_obj</span><span class="p">(</span><span class="n">scheduler_config</span> <span class="ow">or</span> <span class="n">SchedulerConfig</span><span class="p">()),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_obj</span><span class="p">(</span><span class="n">logger_config</span> <span class="ow">or</span> <span class="n">LoggerConfig</span><span class="p">()),</span>
             <span class="n">structured_outputs_backend</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">backend_tokenizer</span><span class="o">.</span><span class="n">to_str</span><span class="p">(),</span>
             <span class="kc">None</span><span class="p">,</span>  <span class="c1"># num_speculative_tokens</span>
@@ -927,8 +937,9 @@
         <span class="n">data_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">num_blocks_per_pp_stage</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">max_io_memory_mb</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">scheduler_config</span><span class="p">:</span> <span class="n">SchedulerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">logger_config</span><span class="p">:</span> <span class="n">LoggerConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">structured_outputs_backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;guidance&quot;</span><span class="p">,</span> <span class="s2">&quot;xgrammar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
         <span class="n">tokenizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">PreTrainedTokenizer</span> <span class="o">|</span> <span class="n">PreTrainedTokenizerFast</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tokenizer_mode</span><span class="p">:</span> <span class="n">TokenizerModeType</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
@@ -983,6 +994,7 @@
                 <span class="n">pipeline_parallel_size</span><span class="p">,</span>
                 <span class="n">max_io_memory_mb</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_obj</span><span class="p">(</span><span class="n">scheduler_config</span> <span class="ow">or</span> <span class="n">SchedulerConfig</span><span class="p">()),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_obj</span><span class="p">(</span><span class="n">logger_config</span> <span class="ow">or</span> <span class="n">LoggerConfig</span><span class="p">()),</span>
                 <span class="n">structured_outputs_backend</span><span class="p">,</span>
                 <span class="n">tokenizer</span><span class="o">.</span><span class="n">backend_tokenizer</span><span class="o">.</span><span class="n">to_str</span><span class="p">(),</span>
                 <span class="kc">None</span><span class="p">,</span>  <span class="c1"># num_speculative_tokens (speculative decoding not exposed)</span>
@@ -1065,8 +1077,40 @@
             <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">native_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_postprocess</span><span class="p">(</span><span class="n">native_outputs</span><span class="p">,</span> <span class="n">prompts</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">prompt_list</span> <span class="o">=</span> <span class="n">prompts</span>
+            <span class="n">batch_encodings</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">BatchEncoding</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">prompt_token_ids</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+                <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prompts</span><span class="p">))</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prompt_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">prompts</span><span class="p">]</span>
+            <span class="n">batch_encodings</span> <span class="o">=</span> <span class="p">[</span><span class="n">prompt_token_ids</span><span class="p">]</span>
+
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_one</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">batch_encoding</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RequestOutput</span><span class="p">:</span>
+            <span class="n">final_output</span><span class="p">:</span> <span class="n">RequestOutput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">async</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_generation_stream</span><span class="p">(</span>
+                <span class="n">prompt</span><span class="p">,</span>
+                <span class="n">batch_encoding</span><span class="p">,</span>
+                <span class="n">sampling_params</span><span class="p">,</span>
+                <span class="n">RequestOutputKind</span><span class="o">.</span><span class="n">FINAL</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="n">final_output</span> <span class="o">=</span> <span class="n">output</span>
+            <span class="k">if</span> <span class="n">final_output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Native generation stream completed without producing output.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">final_output</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">async_gather</span><span class="p">,</span> <span class="n">run_sync</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">run_sync</span><span class="p">(</span>
+            <span class="n">async_gather</span><span class="p">(</span>
+                <span class="o">*</span><span class="p">(</span>
+                    <span class="n">generate_one</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">batch_encoding</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">batch_encoding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">prompt_list</span><span class="p">,</span> <span class="n">batch_encodings</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="LLM.chat">
@@ -1171,11 +1215,6 @@
         <span class="k">if</span> <span class="n">sampling_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sampling_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_sampling_params</span><span class="p">()</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa.llm_native.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">NativeRequestOutput</span>
-        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="k">pass</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_generative_model</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;generate API can only be used for generative models.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1202,105 +1241,47 @@
         <span class="k">if</span> <span class="n">is_demo</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="o">.</span><span class="n">input_ids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1024</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The length of the prompt is larger than 1024 tokens&quot;</span><span class="p">)</span>
 
-        <span class="c1"># NOTE: type of engine.stream_generate() is AsyncGenerator[RequestOutput, None]</span>
-        <span class="n">token_buffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">request_output</span><span class="p">:</span> <span class="n">RequestOutput</span> <span class="o">|</span> <span class="n">NativeRequestOutput</span>
-        <span class="k">async</span> <span class="k">for</span> <span class="n">request_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
-            <span class="n">num_decode_trials</span> <span class="o">=</span> <span class="n">STREAMING_MAX_DECODE_TRIAL</span>
+        <span class="n">output_stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_generation_stream</span><span class="p">(</span>
+            <span class="n">prompt</span><span class="p">,</span>
+            <span class="n">prompt_token_ids</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="p">,</span>
+            <span class="n">RequestOutputKind</span><span class="o">.</span><span class="n">DELTA</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">request_output</span> <span class="ow">in</span> <span class="n">output_stream</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">completion_output</span> <span class="ow">in</span> <span class="n">request_output</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
-                <span class="n">token_buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">completion_output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">)</span>
-                <span class="n">num_decode_trials</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">num_decode_trials</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">completion_output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">))</span>
-
-            <span class="k">if</span> <span class="n">num_decode_trials</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="k">for</span> <span class="n">tokens_to_discard</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_decode_trials</span><span class="p">):</span>
-                <span class="n">end_offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">token_buffer</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">tokens_to_discard</span>
-                <span class="n">new_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
-                    <span class="n">token_buffer</span><span class="p">[:</span> <span class="n">end_offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span>
-                <span class="p">)</span>
-                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">new_text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;�&quot;</span><span class="p">):</span>
-                    <span class="k">break</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="n">token_buffer</span> <span class="o">=</span> <span class="n">token_buffer</span><span class="p">[</span><span class="n">end_offset</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
-            <span class="k">yield</span> <span class="n">new_text</span>
-
-        <span class="k">if</span> <span class="n">token_buffer</span><span class="p">:</span>
-            <span class="n">decode_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token_buffer</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">decode_res</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
-            <span class="k">yield</span> <span class="n">decode_res</span></div>
+                <span class="k">if</span> <span class="n">completion_output</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">completion_output</span><span class="o">.</span><span class="n">text</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_postprocess</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_generation_stream</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">native_outputs</span><span class="p">,</span>
-        <span class="n">prompts</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">prompt_token_ids</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RequestOutput</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">RequestOutput</span><span class="p">]:</span>
-        <span class="c1"># Convert one prompt and multiple generated sequences into a RequestOutput</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">request_output</span><span class="p">):</span>
-            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">prompt_logprobs</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">request_output</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
-                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
-                    <span class="n">output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span>
-                <span class="p">)</span>
-                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
-                <span class="n">logprobs</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">logprobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="c1"># output: NativeCompletionOutput (not CompletionOutput)</span>
-                    <span class="c1"># output.logprobs: List[List[Tuple[int, Logprob]]]</span>
-                    <span class="c1"># token_id_to_logprob: List[Tuple[int, Logprob]]</span>
-                    <span class="n">logprobs</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="p">{</span>
-                            <span class="n">token_id</span><span class="p">:</span> <span class="n">Logprob</span><span class="p">(</span><span class="n">logprob</span><span class="o">.</span><span class="n">logprob</span><span class="p">,</span> <span class="n">logprob</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span> <span class="n">logprob</span><span class="o">.</span><span class="n">decoded_token</span><span class="p">)</span>
-                            <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">logprob</span> <span class="ow">in</span> <span class="n">token_id_to_logprob</span>
-                        <span class="p">}</span>
-                        <span class="k">for</span> <span class="n">token_id_to_logprob</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">logprobs</span>
-                    <span class="p">]</span>
-                <span class="c1"># Convert prompt_logprobs from native format</span>
-                <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">prompt_logprobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prompt_logprobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">prompt_logprobs</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="p">(</span>
-                            <span class="p">{</span>
-                                <span class="n">token_id</span><span class="p">:</span> <span class="n">Logprob</span><span class="p">(</span>
-                                    <span class="n">logprob</span><span class="o">.</span><span class="n">logprob</span><span class="p">,</span> <span class="n">logprob</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span> <span class="n">logprob</span><span class="o">.</span><span class="n">decoded_token</span>
-                                <span class="p">)</span>
-                                <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">logprob</span> <span class="ow">in</span> <span class="n">token_id_to_logprob</span>
-                            <span class="p">}</span>
-                            <span class="k">if</span> <span class="n">token_id_to_logprob</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                            <span class="k">else</span> <span class="kc">None</span>
-                        <span class="p">)</span>
-                        <span class="k">for</span> <span class="n">token_id_to_logprob</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">prompt_logprobs</span>
-                    <span class="p">]</span>
-                <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">CompletionOutput</span><span class="p">(</span>
-                        <span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">,</span> <span class="n">logprobs</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">finish_reason</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="k">return</span> <span class="n">RequestOutput</span><span class="p">(</span>
-                <span class="n">request_id</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(),</span>
-                <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
-                <span class="n">prompt_token_ids</span><span class="o">=</span><span class="n">prompt_token_ids</span><span class="p">,</span>
-                <span class="n">prompt_logprobs</span><span class="o">=</span><span class="n">prompt_logprobs</span><span class="p">,</span>
-                <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
-                <span class="n">finished</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">num_cached_tokens</span><span class="o">=</span><span class="n">request_output</span><span class="o">.</span><span class="n">num_cached_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="n">num_prompt_tokens</span><span class="o">=</span><span class="n">request_output</span><span class="o">.</span><span class="n">num_prompt_tokens</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">native_outputs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">[</span>
-                <span class="n">convert</span><span class="p">(</span><span class="n">req</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">req</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">req</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">req</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">native_outputs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-            <span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">convert</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">native_outputs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">sampling_params</span><span class="p">:</span> <span class="n">SamplingParams</span><span class="p">,</span>
+        <span class="n">output_kind</span><span class="p">:</span> <span class="n">RequestOutputKind</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">RequestOutput</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="n">request_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;llm-engine-</span><span class="si">{</span><span class="n">random_uuid</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">NativeOutputConverter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+            <span class="n">output_kind</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="o">.</span><span class="n">skip_special_tokens</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span>
+            <span class="n">sampling_params</span><span class="o">.</span><span class="n">include_stop_str_in_output</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">abort_request</span><span class="p">,</span>
+            <span class="n">request_id</span><span class="p">,</span>
+            <span class="n">prompt</span><span class="p">,</span>
+            <span class="n">prompt_token_ids</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span>
+            <span class="n">min_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">native_sampling_params</span> <span class="o">=</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="n">native_sampling_params</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">native_output_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span>
+            <span class="n">prompt_token_ids</span><span class="p">,</span>
+            <span class="n">native_sampling_params</span><span class="p">,</span>
+            <span class="n">request_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert_stream</span><span class="p">(</span><span class="n">native_output_generator</span><span class="p">)</span>
 
     <span class="c1"># XXX(n0gu):</span>
     <span class="c1"># More pooling APIs should be implemented - classify, reward, score.</span>

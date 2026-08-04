@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Responses API &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>Responses API &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../_static/documentation_options.js?v=276809a2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -634,7 +634,7 @@ previous output items to the <code class="docutils literal notranslate"><span cl
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For sampling-related fields (<code class="docutils literal notranslate"><span class="pre">temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">top_p</span></code>, <code class="docutils literal notranslate"><span class="pre">top_k</span></code>,
-<code class="docutils literal notranslate"><span class="pre">max_output_tokens</span></code>), each field resolves in this order:</p>
+<code class="docutils literal notranslate"><span class="pre">max_output_tokens</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code>), each field resolves in this order:</p>
 <ol class="arabic simple">
 <li><p>The value specified in the request body, if set.</p></li>
 <li><p>The value from the model’s <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code>, if present
@@ -701,6 +701,19 @@ stored in-memory for later retrieval via <code class="docutils literal notransla
 <td><p>integer</p></td>
 <td><p>-1</p></td>
 <td><p>Furiosa-LLM extension; not part of the OpenResponses specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>stop</p></td>
+<td><p>string or array[string]</p></td>
+<td><p>null</p></td>
+<td><p>Stop generation when a non-empty string is matched. A single string is
+normalized to a one-item list. If omitted, <code class="docutils literal notranslate"><span class="pre">stop_strings</span></code> from the
+model’s <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code> is used when available.</p></td>
+</tr>
+<tr class="row-odd"><td><p>include_stop_str_in_output</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>When true, retain the matched <code class="docutils literal notranslate"><span class="pre">stop</span></code> string in the output; any text
+after the match in the completing token is removed.</p></td>
 </tr>
 <tr class="row-even"><td><p>max_output_tokens</p></td>
 <td><p>integer</p></td>

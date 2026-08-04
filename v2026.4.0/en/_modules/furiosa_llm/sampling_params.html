@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>furiosa_llm.sampling_params &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>furiosa_llm.sampling_params &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../../_static/documentation_options.js?v=276809a2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -459,7 +459,6 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">SamplingType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
     <span class="n">GREEDY</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">RANDOM</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">BEAM</span> <span class="o">=</span> <span class="mi">2</span>
 
 
 <span class="c1"># https://github.com/vllm-project/vllm/blob/6d8d0a24c02bfd84d46b3016b865a44f048ae84b/vllm/sampling_params.py#L30-L84</span>
@@ -480,6 +479,11 @@
     <span class="n">disable_additional_properties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">whitespace_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">structural_tag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># XXX: Indicates if this parameter was generated from xgrammar’s harmony built-in structural tag.</span>
+    <span class="c1"># This field is needed to work around the xgrammar limitation described in #3907.</span>
+    <span class="c1"># It should not be set by the user, but should be managed internally and implicitly.</span>
+    <span class="n">_is_harmony_structural_tag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -542,11 +546,6 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        n: Number of output sequences to return for the given prompt.</span>
-<span class="sd">        best_of: Number of output sequences that are generated from the prompt.</span>
-<span class="sd">            From these `best_of` sequences, the top `n` sequences are returned.</span>
-<span class="sd">            `best_of` must be greater than or equal to `n`. This is treated as</span>
-<span class="sd">            the beam width when `use_beam_search` is True. By default, `best_of`</span>
-<span class="sd">            is set to `n`.</span>
 <span class="sd">        repetition_penalty: Float that penalizes new tokens based on whether</span>
 <span class="sd">            they appear in the prompt and the generated text so far. Values &gt; 1</span>
 <span class="sd">            encourage the model to use new tokens, while values &lt; 1 encourage</span>
@@ -561,21 +560,21 @@
 <span class="sd">        min_p: Float that represents the minimum probability for a token to be</span>
 <span class="sd">            considered, relative to the probability of the most likely token.</span>
 <span class="sd">            Must be in [0, 1]. Set to 0 to disable this.</span>
+<span class="sd">        stop: List or single non-empty string(s) that stop generation when the</span>
+<span class="sd">            first string is matched. By default, the matched stop string is removed</span>
+<span class="sd">            from the returned text. When streaming, Furiosa-LLM may hold back</span>
+<span class="sd">            a trailing window up to the longest configured stop string to</span>
+<span class="sd">            prevent a partial match from being emitted.</span>
 <span class="sd">        stop_token_ids: Token IDs that stop the generation when they are generated. The returned</span>
 <span class="sd">            output will contain the stop tokens unless the stop tokens are special</span>
 <span class="sd">            tokens.</span>
+<span class="sd">        include_stop_str_in_output: Whether to retain the matched stop string</span>
+<span class="sd">            in the returned text. Defaults to False. When True, text after</span>
+<span class="sd">            the match within the token that completed it is removed. Streaming</span>
+<span class="sd">            does not need to hold back a trailing stop-string window in this</span>
+<span class="sd">            mode.</span>
 <span class="sd">        ignore_eos: Whether to ignore the EOS token and continue generating tokens</span>
 <span class="sd">            after the EOS token is generated.</span>
-<span class="sd">        use_beam_search: Whether to use beam search instead of sampling.</span>
-<span class="sd">        length_penalty: Float that penalizes sequences based on their length.</span>
-<span class="sd">            Used in beam search.</span>
-<span class="sd">        early_stopping: Controls the stopping condition for beam search. It</span>
-<span class="sd">            accepts the following values: `True`, where the generation stops as</span>
-<span class="sd">            soon as there are `best_of` complete candidates; `False`, where an</span>
-<span class="sd">            heuristic is applied and the generation stops when is it very</span>
-<span class="sd">            unlikely to find better candidates; `&quot;never&quot;`, where the beam search</span>
-<span class="sd">            procedure only stops when there cannot be better candidates</span>
-<span class="sd">            (canonical beam search algorithm).</span>
 <span class="sd">        max_tokens: Maximum number of tokens to generate per output sequence.</span>
 <span class="sd">            If the value is None, it is capped to the maximum sequence length.</span>
 <span class="sd">        min_tokens: Minimum number of tokens to generate per output sequence</span>
@@ -618,17 +617,15 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">best_of</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">repetition_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">min_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">stop</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">stop_token_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_stop_str_in_output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">ignore_eos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">use_beam_search</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">length_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">early_stopping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">max_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">min_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">skip_special_tokens</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -639,18 +636,23 @@
         <span class="n">reasoning_structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">extra_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Filter empty strings and switch empty array to None</span>
+        <span class="c1"># This is to keep vLLM behavior compatibility</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="p">[</span><span class="n">stop</span><span class="p">]</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">stop</span> <span class="ow">or</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">s</span><span class="p">]</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">stop</span> <span class="ow">or</span> <span class="kc">None</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">=</span> <span class="n">best_of</span> <span class="k">if</span> <span class="n">best_of</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">=</span> <span class="n">repetition_penalty</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">=</span> <span class="n">top_p</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">=</span> <span class="n">top_k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_p</span> <span class="o">=</span> <span class="n">min_p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="n">stop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_token_ids</span> <span class="o">=</span> <span class="n">stop_token_ids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_stop_str_in_output</span> <span class="o">=</span> <span class="n">include_stop_str_in_output</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ignore_eos</span> <span class="o">=</span> <span class="n">ignore_eos</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span> <span class="o">=</span> <span class="n">use_beam_search</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length_penalty</span> <span class="o">=</span> <span class="n">length_penalty</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span> <span class="o">=</span> <span class="n">early_stopping</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span> <span class="o">=</span> <span class="n">max_tokens</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span> <span class="o">=</span> <span class="n">min_tokens</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_special_tokens</span> <span class="o">=</span> <span class="n">skip_special_tokens</span>
@@ -664,29 +666,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">kv_transfer_params</span> <span class="o">=</span> <span class="p">(</span><span class="n">extra_args</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kv_transfer_params&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_args</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_verify_beam_search</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_verify_non_beam_search</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;</span> <span class="n">_SAMPLING_EPS</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_verify_greedy_sampling</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_optional</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">best_of</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">repetition_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">min_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">stop</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">stop_token_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_stop_str_in_output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">ignore_eos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_beam_search</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">length_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">early_stopping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">max_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">min_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">skip_special_tokens</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -697,19 +691,18 @@
         <span class="n">reasoning_structured_outputs</span><span class="p">:</span> <span class="n">StructuredOutputsParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">extra_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SamplingParams&quot;</span><span class="p">:</span>
+
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">n</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n</span><span class="p">,</span>
-            <span class="n">best_of</span><span class="o">=</span><span class="n">best_of</span><span class="p">,</span>
             <span class="n">repetition_penalty</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">repetition_penalty</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">repetition_penalty</span><span class="p">,</span>
             <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">temperature</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">temperature</span><span class="p">,</span>
             <span class="n">top_p</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">top_p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_p</span><span class="p">,</span>
             <span class="n">top_k</span><span class="o">=-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">top_k</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_k</span><span class="p">,</span>
             <span class="n">min_p</span><span class="o">=</span><span class="n">min_p</span><span class="p">,</span>
+            <span class="n">stop</span><span class="o">=</span><span class="n">stop</span><span class="p">,</span>
             <span class="n">stop_token_ids</span><span class="o">=</span><span class="n">stop_token_ids</span><span class="p">,</span>
+            <span class="n">include_stop_str_in_output</span><span class="o">=</span><span class="n">include_stop_str_in_output</span><span class="p">,</span>
             <span class="n">ignore_eos</span><span class="o">=</span><span class="kc">False</span> <span class="k">if</span> <span class="n">ignore_eos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ignore_eos</span><span class="p">,</span>
-            <span class="n">use_beam_search</span><span class="o">=</span><span class="kc">False</span> <span class="k">if</span> <span class="n">use_beam_search</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">use_beam_search</span><span class="p">,</span>
-            <span class="n">length_penalty</span><span class="o">=</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">length_penalty</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">length_penalty</span><span class="p">,</span>
-            <span class="n">early_stopping</span><span class="o">=</span><span class="kc">False</span> <span class="k">if</span> <span class="n">early_stopping</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">early_stopping</span><span class="p">,</span>
             <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_tokens</span><span class="p">,</span>
             <span class="n">min_tokens</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">min_tokens</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">min_tokens</span><span class="p">,</span>
             <span class="n">skip_special_tokens</span><span class="o">=</span><span class="n">skip_special_tokens</span><span class="p">,</span>
@@ -728,22 +721,20 @@
         <span class="k">return</span> <span class="p">(</span>
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">)</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">best_of</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">repetition_penalty</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">temperature</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">top_p</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">top_k</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_p</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">min_p</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">use_beam_search</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_penalty</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">length_penalty</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">early_stopping</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">max_tokens</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">min_tokens</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_special_tokens</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">skip_special_tokens</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">logprobs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">logprobs</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_logprobs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">prompt_logprobs</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">output_kind</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">stop</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_token_ids</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">stop_token_ids</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_stop_str_in_output</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">include_stop_str_in_output</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_eos</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ignore_eos</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">structured_outputs</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span>
@@ -754,11 +745,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n must be at least 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;furiosa-llm currently does not support n &gt; 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;best_of must be greater than or equal to n, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;got n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2"> and best_of=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span> <span class="o">&lt;=</span> <span class="mf">2.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;repetition_penalty must be in (0, 2], got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span><span class="si">}</span><span class="s2">.&quot;</span>
@@ -768,14 +754,17 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;top_p must be in (0, 1], got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_p</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;top_k must be -1 (disable), or at least 1, &quot;</span> <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_k</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;top_k must be -1 (disable), or at least 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_k</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;min_p must be in [0, 1], got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_p</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stop strings must not be empty.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;max_tokens must be at least 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;min_tokens must be greater than or equal to 0, &quot;</span> <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;min_tokens must be greater than or equal to 0, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -810,38 +799,11 @@
                     <span class="sa">f</span><span class="s2">&quot;kv_transfer_params must contain either &#39;remote_prefiller&#39; or &#39;remote_decoder&#39; field, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kv_transfer_params</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_beam_search</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;best_of must be greater than 1 when using beam &quot;</span> <span class="sa">f</span><span class="s2">&quot;search. Got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;never&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;early_stopping must be True, False, or &#39;never&#39;, &quot;</span> <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_non_beam_search</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;early_stopping is not effective and must be &quot;</span> <span class="s2">&quot;False when not using beam search.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_penalty</span> <span class="o">&lt;</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">_SAMPLING_EPS</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_penalty</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">_SAMPLING_EPS</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;length_penalty is not effective and must be the &quot;</span>
-                <span class="s2">&quot;default value of 1.0 when not using beam search.&quot;</span>
-            <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_greedy_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;best_of must be 1 when using greedy sampling.&quot;</span> <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-
     <span class="k">def</span><span class="w"> </span><span class="nf">structured_outputs_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sampling_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SamplingType</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">SamplingType</span><span class="o">.</span><span class="n">BEAM</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;</span> <span class="n">_SAMPLING_EPS</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">SamplingType</span><span class="o">.</span><span class="n">GREEDY</span>
         <span class="k">return</span> <span class="n">SamplingType</span><span class="o">.</span><span class="n">RANDOM</span>
@@ -849,15 +811,11 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;SamplingParams(n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;best_of=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;repetition_penalty=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repetition_penalty</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;temperature=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;top_p=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_p</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;top_k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">top_k</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;min_p=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_p</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;use_beam_search=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">use_beam_search</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;length_penalty=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length_penalty</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;early_stopping=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">early_stopping</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;max_tokens=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tokens</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;min_tokens=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tokens</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;skip_special_tokens=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">skip_special_tokens</span><span class="si">}</span><span class="s2">, &quot;</span>
@@ -866,7 +824,9 @@
             <span class="sa">f</span><span class="s2">&quot;structured_outputs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">structured_outputs</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;reasoning_structured_outputs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;output_kind=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_kind</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;stop=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;stop_token_ids=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_token_ids</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;include_stop_str_in_output=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">include_stop_str_in_output</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;ignore_eos=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_eos</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;extra_args=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_args</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span></div>

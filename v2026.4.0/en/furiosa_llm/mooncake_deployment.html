@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Using Mooncake with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>Using Mooncake with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../_static/documentation_options.js?v=276809a2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -463,18 +463,27 @@
 <h2>Building Mooncake Library<a class="headerlink" href="#building-mooncake-library" title="Link to this heading">#</a></h2>
 <p>Furiosa-LLM uses Mooncake libraries built from commit <a class="reference external" href="https://github.com/kvcache-ai/Mooncake/tree/c9896684fbd7b85ca207c643056a645ab6be3bad">c989668</a>.
 Refer to the <a class="reference external" href="https://kvcache-ai.github.io/Mooncake/getting_started/build.html">Mooncake Build Guide</a> for build instructions.
-The library is built with the follwing configuration:</p>
+The library is built with the following configuration:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>..<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DBUILD_UNIT_TESTS<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DUSE_HTTP<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DUSE_ETCD<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DUSE_CUDA<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DWITH_EP<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DSTORE_USE_ETCD<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-DBUILD_SHARED_LIBS<span class="o">=</span>ON
+<span class="w">    </span>-DBUILD_UNIT_TESTS<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DUSE_HTTP<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DUSE_ETCD<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DUSE_CUDA<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DWITH_EP<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DSTORE_USE_ETCD<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DBUILD_SHARED_LIBS<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DBUILD_EXAMPLES<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DBUILD_BENCHMARK<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DWITH_STORE_GO<span class="o">=</span>OFF<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DENABLE_DEBUG_SYMBOLS<span class="o">=</span>OFF
 </pre></div>
 </div>
+<p>This produces <code class="docutils literal notranslate"><span class="pre">libmooncake_store.so</span></code> (and its dependencies such as
+<code class="docutils literal notranslate"><span class="pre">libtransfer_engine.so</span></code>). Furiosa-LLM loads this library at runtime rather than
+linking it, so it is <strong>not</strong> bundled into the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> wheel; you make it
+available to Furiosa-LLM by putting its directory on <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> as
+described in <a class="reference internal" href="#connectfuriosatomooncake"><span class="std std-ref">Step 4</span></a> below.</p>
 </section>
 <section id="step-1-deploy-mooncake-master">
 <h2>Step 1: Deploy Mooncake Master<a class="headerlink" href="#step-1-deploy-mooncake-master" title="Link to this heading">#</a></h2>
@@ -692,10 +701,18 @@ Replace the <code class="docutils literal notranslate"><span class="pre">MOONCAK
 </div>
 </section>
 <section id="step-4-connect-furiosa-llm-to-mooncake">
-<h2>Step 4: Connect Furiosa-LLM to Mooncake<a class="headerlink" href="#step-4-connect-furiosa-llm-to-mooncake" title="Link to this heading">#</a></h2>
+<span id="connectfuriosatomooncake"></span><h2>Step 4: Connect Furiosa-LLM to Mooncake<a class="headerlink" href="#step-4-connect-furiosa-llm-to-mooncake" title="Link to this heading">#</a></h2>
 <p>Set the following environment variables on Furiosa-LLM Pods to utilize Mooncake.
 The following environment variables enable the TCP-based Mooncake transfer protocol for Furiosa-LLM, with 6.25 GiB of Host DRAM contributing to the distributed memory pool.</p>
+<p>Furiosa-LLM does not bundle Mooncake: the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span></code> wheel links no Mooncake
+library and stays lean. When L3 is enabled, Furiosa-LLM loads
+<code class="docutils literal notranslate"><span class="pre">libmooncake_store.so</span></code> by soname on first use (<code class="docutils literal notranslate"><span class="pre">dlopen</span></code>), so put the
+directory holding the library you built above on <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> — the same
+directory its own dependencies (<code class="docutils literal notranslate"><span class="pre">libtransfer_engine.so</span></code>, <code class="docutils literal notranslate"><span class="pre">libetcd_wrapper.so</span></code>,
+glog, …) are resolved from. If the library cannot be loaded, Furiosa-LLM logs a
+warning and runs L2-only instead of failing.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">L3_ENABLED</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/opt/mooncake/lib<span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="p">:+:</span><span class="nv">$LD_LIBRARY_PATH</span><span class="si">}</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">MOONCAKE_MASTER</span><span class="o">=(</span>MOONCAKE_MASTER_SERVICE_FQDN<span class="o">)</span>:50051
 <span class="nb">export</span><span class="w"> </span><span class="nv">MOONCAKE_TE_META_DATA_SERVER</span><span class="o">=</span>http://<span class="o">(</span>MOONCAKE_MASTER_SERVICE_FQDN<span class="o">)</span>:8080/metadata
 <span class="nb">export</span><span class="w"> </span><span class="nv">MOONCAKE_PROTOCOL</span><span class="o">=</span>tcp

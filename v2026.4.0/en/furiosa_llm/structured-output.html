@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Structured Output &#8212; FuriosaAI Developer Center 2026.4.0b9 documentation</title>
+    <title>Structured Output &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=72a9612d"></script>
+    <script src="../_static/documentation_options.js?v=276809a2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -538,11 +538,15 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Classify sentiment: &#39;</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">}],</span>
-    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;choice&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">]}},</span>
+    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;choice&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">]},</span>
+    <span class="p">},</span>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="k">assert</span> <span class="n">content</span> <span class="ow">and</span> <span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">},</span> <span class="n">content</span>  <span class="c1"># validate the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Use Cases:</strong></p>
@@ -558,6 +562,7 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">regex</span></code> field in <code class="docutils literal notranslate"><span class="pre">structured_outputs</span></code> ensures the generated text matches a specific regular expression pattern. This is useful for generating structured text like email addresses, phone numbers, or custom formats.</p>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
@@ -570,11 +575,15 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Generate an email address for Ada Lovelace, who works in Analytical. End in .com and new line. Example result: &#39;ada.lovelace@analytical.com</span><span class="se">\n</span><span class="s2">&#39;&quot;</span><span class="p">}],</span>
-    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">email_pattern</span><span class="p">}},</span>
+    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">email_pattern</span><span class="p">},</span>
+    <span class="p">},</span>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="k">assert</span> <span class="n">content</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">email_pattern</span><span class="p">,</span> <span class="n">content</span><span class="p">),</span> <span class="n">content</span>  <span class="c1"># validate the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Use Cases:</strong></p>
@@ -623,7 +632,10 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="k">assert</span> <span class="n">content</span><span class="p">,</span> <span class="s2">&quot;expected non-empty content&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="n">FruitDescription</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># validate the result against the schema</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -646,6 +658,7 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
@@ -671,12 +684,16 @@ Furiosa-LLM supports four main types of structured output constraints:</p>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Generate an SQL query to show the &#39;username&#39; from the &#39;users&#39; table.&quot;</span><span class="p">}],</span>
-    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;grammar&quot;</span><span class="p">:</span> <span class="n">sql_grammar</span><span class="p">}},</span>
+    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;structured_outputs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;grammar&quot;</span><span class="p">:</span> <span class="n">sql_grammar</span><span class="p">},</span>
+    <span class="p">},</span>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">100</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="k">assert</span> <span class="n">content</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;SELECT (username|email) FROM users WHERE id = [123]&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="n">content</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The example above uses EBNF format with the <code class="docutils literal notranslate"><span class="pre">::=</span></code> notation. You can also use Lark format with different syntax rules depending on your grammar complexity requirements.</p>

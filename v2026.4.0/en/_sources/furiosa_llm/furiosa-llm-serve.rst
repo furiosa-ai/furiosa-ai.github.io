@@ -185,17 +185,11 @@ Here's an example that demonstrates how to access the reasoning content:
 API Reference
 =============
 
-.. warning::
-
-    Please note that using ``use_beam_search`` together with ``stream`` is not
-    allowed because beam search requires the whole sequence to produce the
-    output tokens.
-
 .. note::
 
     For sampling-related fields (``temperature``, ``top_p``, ``top_k``,
-    ``min_p``, ``repetition_penalty``, ``max_tokens``), each field resolves
-    in this order:
+    ``min_p``, ``repetition_penalty``, ``max_tokens``, ``stop``), each field
+    resolves in this order:
 
     1. The value specified in the request body, if set.
     2. The value from the model's ``generation_config.json``, if present.
@@ -248,14 +242,6 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - best_of
-     - integer
-     - 1
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - use_beam_search
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - top_k
      - integer
      - -1
@@ -264,23 +250,23 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 0.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - length_penalty
-     - float
-     - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - repetition_penalty
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
+   * - stop
+     - string or array[string]
+     - null
+     - Stop string or list of non-empty stop strings. See :ref:`Sampling Params <SamplingParams>`.
+   * - include_stop_str_in_output
+     - boolean
+     - false
+     - Whether to retain a matched ``stop`` string. See :ref:`Sampling Params <SamplingParams>`.
    * - stop_token_ids
      - array[integer]
      - []
      - See :ref:`Sampling Params <SamplingParams>`.
    * - ignore_eos
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - early_stopping
      - boolean
      - false
      - See :ref:`Sampling Params <SamplingParams>`.
@@ -366,10 +352,6 @@ Parameters without descriptions inherit their behavior and functionality from th
      - integer
      - 1
      - Currently limited to 1.
-   * - best_of
-     - integer
-     - 1
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - temperature
      - float
      - 1.0
@@ -377,10 +359,6 @@ Parameters without descriptions inherit their behavior and functionality from th
    * - top_p
      - float
      - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - use_beam_search
-     - boolean
-     - false
      - See :ref:`Sampling Params <SamplingParams>`.
    * - top_k
      - integer
@@ -390,23 +368,23 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 0.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - length_penalty
-     - float
-     - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - repetition_penalty
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
+   * - stop
+     - string or array[string]
+     - null
+     - Stop string or list of non-empty stop strings. See :ref:`Sampling Params <SamplingParams>`.
+   * - include_stop_str_in_output
+     - boolean
+     - false
+     - Whether to retain a matched ``stop`` string. See :ref:`Sampling Params <SamplingParams>`.
    * - stop_token_ids
      - array[integer]
      - []
      - See :ref:`Sampling Params <SamplingParams>`.
    * - ignore_eos
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - early_stopping
      - boolean
      - false
      - See :ref:`Sampling Params <SamplingParams>`.
@@ -430,6 +408,21 @@ Parameters without descriptions inherit their behavior and functionality from th
      - integer
      - null
      - See :ref:`Sampling Params <SamplingParams>`.
+
+Stop-string response fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For Chat Completions and Completions, each response choice has a
+``stop_reason`` field. This is a Furiosa-LLM extension to the OpenAI-compatible
+response schema. When a configured stop string ends generation, the terminal
+choice—or the terminal choice in a streamed chunk—has ``finish_reason`` set to
+``"stop"`` and ``stop_reason`` set to the matched string. ``stop_reason`` is
+``null`` for earlier streamed chunks and when generation ends for another
+reason.
+
+The raw JSON response always includes the field. OpenAI Python SDK response
+models that do not declare this extension expose it through
+``choice.model_extra["stop_reason"]``.
 
 .. _EmbeddingsAPI:
 
