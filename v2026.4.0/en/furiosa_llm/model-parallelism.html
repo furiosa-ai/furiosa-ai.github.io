@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
+    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=276809a2"></script>
+    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -527,7 +527,7 @@ Similarly, <code class="docutils literal notranslate"><span class="pre">LLM</spa
 <h3>Best Practices for Furiosa-LLM<a class="headerlink" href="#best-practices-for-furiosa-llm" title="Link to this heading">#</a></h3>
 <p>Each parallelism type has its own characteristics and constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> parameter can be at most the number of devices.
-The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.4.0b10 release;
+The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.4.0b11 release;
 future releases will lift this limitation.</p>
 <p>The product of <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>
 should be equal to the total number of PEs in your machine.</p>

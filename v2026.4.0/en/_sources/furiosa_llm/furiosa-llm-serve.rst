@@ -46,11 +46,11 @@ In addition, we have the following vLLM-compatible APIs for pooling models:
 
 * Score API (``/score``, ``/v1/score``)
 
-  * Currently supported only for Qwen3-Rerank models.
+  * Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.
 
 * Rerank API (``/rerank``, ``/v1/rerank``, ``/v2/rerank``)
 
-  * Currently supported only for Qwen3-Rerank models.
+  * Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.
 
 Prerequisites
 =============
@@ -82,6 +82,47 @@ with streaming mode:
 
 .. literalinclude:: ../../../examples/online_chat_complete_async_client.py
   :language: python
+
+.. _ServeMaxModelLen:
+
+Limiting the Context Length
+===========================
+
+By default the server accepts requests up to the smallest of the model's
+``max_position_embeddings``, the context length the artifact was compiled for,
+and what the KV cache can hold. ``--max-model-len`` lowers that limit:
+
+.. code-block::
+
+    furiosa-llm serve [ARTIFACT_PATH] --max-model-len 8192
+
+The value caps the total tokens a single request may use — prompt plus
+generated tokens. It applies to every request, including those that do not set
+``max_tokens``: the implicit generation budget shrinks with the cap as well. The
+limit advertised on ``/v1/models`` is whichever of those four bounds is smallest,
+so on a memory-tight deployment it can be the KV-derived one even with no cap
+set. A request exceeding it is rejected with a context-length error.
+
+The cap may only *lower* the limit. A value above either the model's
+``max_position_embeddings`` or the context length the artifact was compiled for
+is rejected at startup, so a typo fails fast instead of being ignored.
+
+Lowering the cap also raises concurrency for requests that omit ``max_tokens``.
+Admission is conservative by default: a request is charged ``prompt + max_tokens``
+KV blocks — one block per token, less any prefix-cache hit — for its whole
+lifetime, and a request that omits ``max_tokens`` is budgeted the entire remaining
+context window. Each therefore costs a full context, so roughly
+``max_kv_len / max_model_len`` of them run concurrently per data-parallel replica.
+The gain stops once another limit binds, such as ``--max-concurrency`` or a cap
+already at or above the KV capacity. It frees no NPU memory: weights, buckets and
+the KV pool are fixed by the artifact.
+
+.. note::
+
+  ``furiosa-llm build`` and ``fxb build`` take an option of the same name, but
+  it means something different there: at build time ``--max-model-len`` shapes
+  which buckets get compiled into the artifact. At serve time the bucket set is
+  fixed by the artifact, and this option only caps admission.
 
 .. _ChatTemplates:
 

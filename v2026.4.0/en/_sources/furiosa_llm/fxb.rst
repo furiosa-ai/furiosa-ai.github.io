@@ -223,7 +223,9 @@ Common options:
 * ``-tp/--tensor-parallel-size`` — number of PEs per tensor-parallel group (default: the model
   preset).
 * ``-pp/--pipeline-parallel-size`` — pipeline-parallel size (default: ``1``).
-* ``--max-model-len`` — override the model's maximum context length for bucket selection.
+* ``--max-model-len`` — override the model's maximum context length for bucket selection. This
+  shapes what gets compiled into the bundle; ``furiosa-llm serve`` takes an option of the same
+  name that only caps admission at serve time (see :ref:`ServeMaxModelLen`).
 * ``-O/--optim-level`` — bucket-filtering optimization level: ``O0`` (minimal), ``O1`` (half),
   ``O2`` (quarter), ``O3`` (full, the default).
 * ``--convert`` — task override for models with an ambiguous architecture: ``embed`` rewrites

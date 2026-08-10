@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>furiosa_llm.llm_engine &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
+    <title>furiosa_llm.llm_engine &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=276809a2"></script>
+    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -456,9 +456,11 @@
     <span class="n">SamplingParams</span><span class="p">,</span>
     <span class="n">SchedulerConfig</span><span class="p">,</span>
     <span class="n">TokenizerModeType</span><span class="p">,</span>
+    <span class="n">validate_speculative_args</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_context_length</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">GENERATION_TASKS</span><span class="p">,</span> <span class="n">POOLING_TASKS</span><span class="p">,</span> <span class="n">GenerationTask</span><span class="p">,</span> <span class="n">PoolingTask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.mm_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">MediaModality</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">MultimodalConstraints</span><span class="p">,</span>
     <span class="n">call_native_mm</span><span class="p">,</span>
@@ -471,6 +473,7 @@
     <span class="n">resolve_constraints</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.outputs</span><span class="w"> </span><span class="kn">import</span> <span class="n">NativeOutputConverter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.speculative_args</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_speculative_args</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">coalesce</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.vllm_compat</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">AnyTokenizer</span><span class="p">,</span>
@@ -478,6 +481,7 @@
     <span class="n">PromptType</span><span class="p">,</span>
     <span class="n">fit_prompt_to_context</span><span class="p">,</span>
     <span class="n">preprocess_prompt</span><span class="p">,</span>
+    <span class="n">resolve_truncation_side</span><span class="p">,</span>
 <span class="p">)</span>
 
 
@@ -490,6 +494,9 @@
     <span class="c1"># config/tokenizer (mirrors LLM(..., fxb=...)).</span>
     <span class="n">fxb</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">revision</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">draft_model_id_or_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">draft_fxb_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_speculative_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">pipeline_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">data_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tokenizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -529,6 +536,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;jit_threshold must be &gt;= 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jit_threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit_max_workers</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;jit_max_workers must be &gt;= 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jit_max_workers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">validate_speculative_args</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">draft_model_id_or_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">draft_fxb_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_speculative_tokens</span>
+        <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArgumentParser</span><span class="p">:</span>
@@ -555,6 +565,7 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The specific model revision on Hugging Face Hub if the model is given as a Hugging Face model id. It can be a branch name, a tag name, or a commit id.&quot;</span>
             <span class="s2">&quot; Its default value is main. However, if a given model belongs to the furiosa-ai organization, the model will use the release model tag by default.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="n">add_speculative_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">&#39;--tokenizer&#39;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
@@ -632,8 +643,8 @@
             <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_host_memory_gb</span><span class="p">,</span>
             <span class="c1"># help=&#39;Enable hierarchical KV cache offloading and allocate this many GiB of host KV &#39;</span>
-            <span class="c1"># &#39;cache for the whole process. The budget is split across data-parallel schedulers &#39;</span>
-            <span class="c1"># &#39;and draft schedulers when speculative decoding is enabled. Mutually exclusive with &#39;</span>
+            <span class="c1"># &#39;cache for the whole process. The budget is split across data-parallel replicas and &#39;</span>
+            <span class="c1"># &#39;their target/draft model lanes. Mutually exclusive with &#39;</span>
             <span class="c1"># &#39;--experimental-kv-offload-host-memory-ratio. (default: disabled)&#39;,</span>
             <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
         <span class="p">)</span>
@@ -642,9 +653,9 @@
             <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;kv_offload_host_memory_ratio&#39;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">kv_offload_host_memory_ratio</span><span class="p">,</span>
-            <span class="c1"># help=&quot;Enable hierarchical KV cache offloading and allocate host KV capacity per scheduler &quot;</span>
-            <span class="c1"># &quot;as this ratio of that scheduler&#39;s NPU KV blocks. Total host memory scales with the &quot;</span>
-            <span class="c1"># &quot;number of data-parallel schedulers and draft schedulers. For process-wide capacity, &quot;</span>
+            <span class="c1"># help=&quot;Enable hierarchical KV cache offloading and allocate host KV capacity per model &quot;</span>
+            <span class="c1"># &quot;lane as this ratio of that lane&#39;s NPU KV blocks. Total host memory scales with the &quot;</span>
+            <span class="c1"># &quot;number of data-parallel replicas and model lanes. For process-wide capacity, &quot;</span>
             <span class="c1"># &quot;prefer --experimental-kv-offload-host-memory-gb. (default: disabled)&quot;,</span>
             <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
         <span class="p">)</span>
@@ -747,7 +758,8 @@
         <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span>
         <span class="n">prompt_token_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
         <span class="n">max_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">MultimodalConstraints</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="n">min_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">MediaModality</span><span class="p">],</span> <span class="n">MultimodalConstraints</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run MM preprocessing and post-expansion length validation.</span>
 
 <span class="sd">        Returns `(mm_inputs, mm_modalities, constraints)`. When the prompt</span>
@@ -758,9 +770,10 @@
 <span class="sd">        length so an oversized image (which the text-side pre-validate only</span>
 <span class="sd">        counted as 1 token per `&lt;|image_pad|&gt;`) surfaces as</span>
 <span class="sd">        `ContextLengthExceededError` here rather than as a Rust-side</span>
-<span class="sd">        bucket-overflow abort.</span>
+<span class="sd">        bucket-overflow abort. `min_completion_tokens` is the caller&#39;s budget floor,</span>
+<span class="sd">        clamped to at least 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mm_data</span> <span class="o">=</span> <span class="n">extract_mm_data</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="n">mm_data</span><span class="p">,</span> <span class="n">mm_media_ids</span> <span class="o">=</span> <span class="n">extract_mm_data</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">mm_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[],</span> <span class="p">[],</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -779,6 +792,7 @@
             <span class="n">user_kwargs</span><span class="o">=</span><span class="n">extract_mm_processor_kwargs</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span>
             <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
             <span class="n">mm_uuids</span><span class="o">=</span><span class="n">extract_mm_uuids</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span>
+            <span class="n">mm_media_ids</span><span class="o">=</span><span class="n">mm_media_ids</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">validate_context_length</span><span class="p">(</span>
             <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
@@ -790,6 +804,7 @@
                 <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">max_completion_tokens</span><span class="p">,</span>
+            <span class="n">min_completion_tokens</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_completion_tokens</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">mm_inputs</span><span class="p">,</span> <span class="n">mm_modalities</span><span class="p">,</span> <span class="n">constraints</span>
 
@@ -893,6 +908,9 @@
             <span class="n">model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">fxb</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fxb</span><span class="p">,</span>
             <span class="n">revision</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">revision</span><span class="p">,</span>
+            <span class="n">draft_model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">draft_model_id_or_path</span><span class="p">,</span>
+            <span class="n">draft_fxb_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">draft_fxb_path</span><span class="p">,</span>
+            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
             <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
             <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
@@ -950,11 +968,12 @@
                 <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
                 <span class="n">prompt_tokens</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">),</span>
                 <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
+                <span class="n">min_completion_tokens</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="n">n</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">n</span> <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">1</span>
 
             <span class="n">mm_inputs</span><span class="p">,</span> <span class="n">mm_modalities</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
-                <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">max_tokens</span>
+                <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">min_tokens</span>
             <span class="p">)</span>
 
             <span class="c1"># TODO: call prompt_getter after calling `self.native_engine.stream_generate` to reduce latency</span>
@@ -997,6 +1016,7 @@
             <span class="n">fit_prompt_to_context</span><span class="p">(</span>
                 <span class="n">batch_encoding</span><span class="p">,</span>
                 <span class="n">truncate_prompt_tokens</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">truncate_prompt_tokens</span><span class="p">,</span>
+                <span class="n">truncation_side</span><span class="o">=</span><span class="n">resolve_truncation_side</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">),</span>
                 <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
             <span class="p">)</span>
 
@@ -1031,7 +1051,7 @@
         <span class="n">batch_encoding</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">,</span>
         <span class="n">sampling_params</span><span class="p">:</span> <span class="n">SamplingParams</span><span class="p">,</span>
         <span class="n">mm_inputs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">mm_modalities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mm_modalities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MediaModality</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">constraints</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">mm_inputs</span><span class="p">:</span>
@@ -1182,6 +1202,9 @@
             <span class="n">model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">fxb</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fxb</span><span class="p">,</span>
             <span class="n">revision</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">revision</span><span class="p">,</span>
+            <span class="n">draft_model_id_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">draft_model_id_or_path</span><span class="p">,</span>
+            <span class="n">draft_fxb_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">draft_fxb_path</span><span class="p">,</span>
+            <span class="n">num_speculative_tokens</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_speculative_tokens</span><span class="p">,</span>
             <span class="n">pipeline_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pipeline_parallel_size</span><span class="p">,</span>
             <span class="n">data_parallel_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_parallel_size</span><span class="p">,</span>
             <span class="n">tokenizer</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
@@ -1232,12 +1255,14 @@
                 <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
                 <span class="n">prompt_tokens</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt_token_ids</span><span class="p">),</span>
                 <span class="n">max_completion_tokens</span><span class="o">=</span><span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
+                <span class="n">min_completion_tokens</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">),</span>
             <span class="p">)</span>
 
             <span class="n">mm_inputs</span><span class="p">,</span> <span class="n">mm_modalities</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
-                <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span>
+                <span class="n">prompt</span><span class="p">,</span> <span class="n">prompt_token_ids</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span>
             <span class="p">)</span>
             <span class="n">native_sampling_params</span> <span class="o">=</span> <span class="n">_build_native_sampling_params</span><span class="p">(</span><span class="n">sampling_params</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">mm_inputs</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
                 <span class="n">native_output_generator</span> <span class="o">=</span> <span class="n">call_native_mm</span><span class="p">(</span>
@@ -1309,6 +1334,7 @@
         <span class="n">fit_prompt_to_context</span><span class="p">(</span>
             <span class="n">batch_encoding</span><span class="p">,</span>
             <span class="n">truncate_prompt_tokens</span><span class="o">=</span><span class="n">pooling_params</span><span class="o">.</span><span class="n">truncate_prompt_tokens</span><span class="p">,</span>
+            <span class="n">truncation_side</span><span class="o">=</span><span class="n">resolve_truncation_side</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">),</span>
             <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
         <span class="p">)</span>
 

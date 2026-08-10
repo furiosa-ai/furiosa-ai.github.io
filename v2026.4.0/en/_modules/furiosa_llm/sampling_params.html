@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>furiosa_llm.sampling_params &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
+    <title>furiosa_llm.sampling_params &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=276809a2"></script>
+    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -831,6 +831,23 @@
             <span class="sa">f</span><span class="s2">&quot;extra_args=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_args</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span></div>
 
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_speculative_sampling_params</span><span class="p">(</span>
+    <span class="n">sampling_params</span><span class="p">:</span> <span class="n">SamplingParams</span><span class="p">,</span> <span class="n">speculative_decoding_enabled</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reject request features not yet supported by speculative decoding.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">speculative_decoding_enabled</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">kv_transfer_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;PD disaggregation is not supported with speculative decoding&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">sampling_params</span><span class="o">.</span><span class="n">structured_outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="ow">or</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">reasoning_structured_outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;structured outputs are not supported with speculative decoding&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">logprobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sampling_params</span><span class="o">.</span><span class="n">prompt_logprobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;logprobs and prompt_logprobs are not supported with speculative decoding&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="PoolingParams">

@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Furiosa Executable Bundles (FXB) &#8212; FuriosaAI Developer Center 2026.4.0b10 documentation</title>
+    <title>Furiosa Executable Bundles (FXB) &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=276809a2"></script>
+    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -503,7 +503,7 @@ You can download one of these and serve it for any compatible model with the wor
 <p>The <code class="docutils literal notranslate"><span class="pre">fxb</span></code> command ships with the Furiosa-LLM package — there is nothing extra to install.
 If you have not installed Furiosa-LLM yet, follow <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Installing Furiosa-LLM</span></a>:</p>
 <pre class="literal-block">pip install --upgrade pip setuptools wheel uv
-uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b10</pre>
+uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b11</pre>
 <p>Verify that the command is available:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
@@ -649,7 +649,9 @@ path has none, so the command above writes <code class="docutils literal notrans
 <li><p><code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> — number of PEs per tensor-parallel group (default: the model
 preset).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-pp/--pipeline-parallel-size</span></code> — pipeline-parallel size (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> — override the model’s maximum context length for bucket selection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> — override the model’s maximum context length for bucket selection. This
+shapes what gets compiled into the bundle; <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> takes an option of the same
+name that only caps admission at serve time (see <a class="reference internal" href="furiosa-llm-serve.html#servemaxmodellen"><span class="std std-ref">Limiting the Context Length</span></a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-O/--optim-level</span></code> — bucket-filtering optimization level: <code class="docutils literal notranslate"><span class="pre">O0</span></code> (minimal), <code class="docutils literal notranslate"><span class="pre">O1</span></code> (half),
 <code class="docutils literal notranslate"><span class="pre">O2</span></code> (quarter), <code class="docutils literal notranslate"><span class="pre">O3</span></code> (full, the default).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--convert</span></code> — task override for models with an ambiguous architecture: <code class="docutils literal notranslate"><span class="pre">embed</span></code> rewrites

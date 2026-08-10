@@ -167,6 +167,16 @@ thead p{
   border-bottom: none!important;
 }
 
+.pooling-models-table th{
+  white-space: nowrap;
+}
+
+.pooling-models-table td:nth-child(2) code.literal,
+.pooling-models-table td:nth-child(2) code.literal .pre{
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 /* Main Sidebar */
 
 #pst-primary-sidebar{

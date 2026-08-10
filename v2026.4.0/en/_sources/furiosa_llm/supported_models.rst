@@ -62,27 +62,49 @@ Decoder-only Models (Text Generation)
 Pooling Models
 ================================
 
+Embedding Models
+----------------
+
 .. list-table::
    :align: center
+   :class: pooling-models-table
    :header-rows: 1
-   :widths: 130 120 120 300
+   :widths: 130 180 300
 
    * - Model Name
      - Architecture
-     - Task
-     - Example Hugging Face Models
+     - HF Models
+   * - `BGE-M3 <https://huggingface.co/BAAI/bge-m3>`_
+     - ``XLMRobertaModel``
+     - ``BAAI/bge-m3``
    * - :doc:`Harrier OSS v1 <models/harrier-oss-v1>`
      - ``Qwen3Model``
-     - Embedding
      - ``microsoft/harrier-oss-v1-0.6b``
    * - :doc:`Qwen 3 Embedding <models/qwen3-embedding>`
      - ``Qwen3Model``
-     - Embedding
      - ``Qwen/Qwen3-Embedding-8B``, ``Qwen/Qwen3-Embedding-4B``
+
+Cross-Encoder Models
+--------------------
+
+.. list-table::
+   :align: center
+   :class: pooling-models-table
+   :header-rows: 1
+   :widths: 130 220 220 120
+
+   * - Model Name
+     - Architecture
+     - HF Models
+     - Score Template
+   * - `BGE Reranker v2 M3 <https://huggingface.co/BAAI/bge-reranker-v2-m3>`_
+     - ``XLMRobertaForSequenceClassification``
+     - ``BAAI/bge-reranker-v2-m3``
+     - N/A
    * - :doc:`Qwen 3 Reranker <models/qwen3-reranker>`
      - ``Qwen3ForSequenceClassification``
-     - Reranking
      - ``Qwen/Qwen3-Reranker-8B``, ``Qwen/Qwen3-Reranker-4B``
+     - Built-in Qwen3-Reranker template
 
 Vision-Language Models (Multimodal)
 ======================================
