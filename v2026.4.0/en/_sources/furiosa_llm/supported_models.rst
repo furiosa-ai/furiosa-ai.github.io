@@ -46,6 +46,9 @@ Decoder-only Models (Text Generation)
    * - :doc:`Llama 3.1 <models/llama-3.1>`, :doc:`Llama 3.3 <models/llama-3.3>`
      - ``LlamaForCausalLM``
      - ``meta-llama/Llama-3.1-8B-Instruct``, ``meta-llama/Llama-3.3-70B-Instruct``
+   * - :doc:`Mistral NeMo <models/mistral-nemo>`
+     - ``MistralForCausalLM``
+     - ``RedHatAI/Mistral-Nemo-Instruct-2407-FP8``
    * - :doc:`Solar Open <models/solar-open>`
      - ``SolarOpenForCausalLM``
      - ``upstage/Solar-Open-100B``
@@ -54,7 +57,7 @@ Decoder-only Models (Text Generation)
      - ``Qwen/Qwen2.5-0.5B-Instruct``
    * - :doc:`Qwen 3 <models/qwen3>`
      - ``Qwen3ForCausalLM``
-     - ``Qwen/Qwen3-8B``, ``Qwen/Qwen3-32B``
+     - ``Qwen/Qwen3-8B``, ``Qwen/Qwen3-32B``, ``Qwen/Qwen3-32B-FP8``
    * - :doc:`Qwen 3 MoE <models/qwen3-moe>`
      - ``Qwen3MoeForCausalLM``
      - ``Qwen/Qwen3-30B-A3B-Instruct-2507``
@@ -182,6 +185,11 @@ The status of each check uses the following scale:
      - ✅
      - ✅
      - ✅
+   * - `Mistral-Nemo-Instruct-2407-FP8 <https://huggingface.co/furiosa-ai/Mistral-Nemo-Instruct-2407-FP8>`_
+     - Text
+     - ✅
+     - ✅
+     - 🟡
    * - `Qwen3-30B-A3B-FP8 <https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8>`_
      - Text (MoE)
      - ✅
@@ -298,6 +306,7 @@ For models planned for future releases, see the :ref:`Roadmap`.
    models/qwen2.5
    models/llama-3.1
    models/llama-3.3
+   models/mistral-nemo
    models/gpt-oss
    models/exaone-4.0
    models/k-exaone

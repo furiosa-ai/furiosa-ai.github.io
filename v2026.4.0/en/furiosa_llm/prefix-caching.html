@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Prefix Caching &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Prefix Caching &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -70,7 +70,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Hybrid KV Cache Management" href="hybrid-kv-cache.html" />
+    <link rel="next" title="Hierarchical Prefix Caching" href="hierarchical-prefix-caching.html" />
     <link rel="prev" title="Vision-Language Models" href="vision-language.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -553,29 +555,29 @@ The rationale is memory efficiency: blocks outside the frequently reused window 
 <section id="example-scenarios">
 <h3>Example Scenarios<a class="headerlink" href="#example-scenarios" title="Link to this heading">#</a></h3>
 <p><strong>Scenario 1: System Prompt Reuse</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;You are a helpful assistant specialized in Python programming...&quot;</span>  <span class="c1"># 200 tokens</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">"You are a helpful assistant specialized in Python programming..."</span>  <span class="c1"># 200 tokens</span>
 
 <span class="c1"># First request: Full computation</span>
 <span class="n">response1</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;How do I read a file?&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"How do I read a file?"</span><span class="p">}</span>
 <span class="p">])</span>  <span class="c1"># Computes all 200 + N tokens</span>
 
 <span class="c1"># Second request: Only user message computed</span>
 <span class="n">response2</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;How do I write to a file?&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"How do I write to a file?"</span><span class="p">}</span>
 <span class="p">])</span>  <span class="c1"># Reuses 200 cached tokens, computes only new N tokens</span>
 </pre></div>
 </div>
 <p><strong>Scenario 2: Document QA</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">long_document</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>  <span class="c1"># 2000 tokens</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">long_document</span> <span class="o">=</span> <span class="s2">"..."</span>  <span class="c1"># 2000 tokens</span>
 
 <span class="c1"># Multiple questions about the same document</span>
 <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">:</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Answer based on: </span><span class="si">{</span><span class="n">long_document</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+        <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Answer based on: </span><span class="si">{</span><span class="n">long_document</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
     <span class="p">])</span>  <span class="c1"># Document prefix cached after first query</span>
 </pre></div>
 </div>
@@ -605,6 +607,8 @@ In such cases, to disable prefix caching, set <code class="docutils literal notr
 <li><p>Evicts cached prefixes when memory pressure increases</p></li>
 </ul>
 <p>No manual tuning of cache size or eviction policies is necessary.</p>
+<p>To retain reusable prefixes in host memory after they leave the NPU cache, see
+<a class="reference internal" href="hierarchical-prefix-caching.html#hierarchicalprefixcaching"><span class="std std-ref">Hierarchical Prefix Caching</span></a>.</p>
 </section>
 </section>
 <section id="best-practices">
@@ -619,15 +623,15 @@ In such cases, to disable prefix caching, set <code class="docutils literal notr
 </ol>
 <p>Example - Consistent Prompting:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good: Exact same system prompt</span>
-<span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;You are a helpful AI assistant.&quot;</span>
+<span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">"You are a helpful AI assistant."</span>
 
-<span class="n">response1</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
-<span class="n">response2</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
+<span class="n">response1</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
+<span class="n">response2</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
 <span class="c1"># ✓ Cache hit</span>
 
 <span class="c1"># Bad: Slightly different prompts</span>
-<span class="n">response3</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful AI assistant.&quot;</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
-<span class="n">response4</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful assistant.&quot;</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
+<span class="n">response3</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"You are a helpful AI assistant."</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
+<span class="n">response4</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">([{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"You are a helpful assistant."</span><span class="p">},</span> <span class="o">...</span><span class="p">])</span>
 <span class="c1"># ✗ Cache miss due to difference</span>
 </pre></div>
 </div>
@@ -665,11 +669,11 @@ In such cases, to disable prefix caching, set <code class="docutils literal notr
       </div>
     </a>
     <a class="right-next"
-       href="hybrid-kv-cache.html"
+       href="hierarchical-prefix-caching.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Hybrid KV Cache Management</p>
+        <p class="prev-next-title">Hierarchical Prefix Caching</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

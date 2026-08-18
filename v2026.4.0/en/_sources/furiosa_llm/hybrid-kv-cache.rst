@@ -48,9 +48,14 @@ This is a key efficiency point: sliding-window cache entries outside the active 
 Interaction with Prefix Caching
 -------------------------------
 
-When prefix caching is enabled, hybrid cache management works with hybrid prefix matching to deduplicate both global and sliding-window blocks.
-If part of a matched prefix no longer has valid sliding-window cache, Furiosa-LLM still reuses the valid portion and computes only what is needed.
-For details on hybrid prefix-match behavior, see :ref:`Hybrid Attention Models <PrefixCachingHybridAttentionModels>` in :ref:`PrefixCaching`.
+When prefix caching is enabled, hybrid cache management works with hybrid prefix
+matching to deduplicate both global and sliding-window blocks. If part of a
+matched prefix no longer has valid sliding-window cache, Furiosa-LLM still
+reuses the valid portion and computes only what is needed. For details on
+hybrid prefix-match behavior, see
+:ref:`Hybrid Attention Models <PrefixCachingHybridAttentionModels>` in
+:ref:`PrefixCaching`. To retain reusable hybrid-attention prefixes in host
+memory, see :ref:`HierarchicalPrefixCaching`.
 
 Why It Is Efficient
 ===================

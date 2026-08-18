@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Quick Start with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Quick Start with Furiosa-LLM &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -458,7 +460,7 @@ OpenAI’s API.
 This document explains how to install and use Furiosa-LLM.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.4.0b11.
+<p>This document is based on Furiosa SDK 2026.4.0b12.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="installing-furiosa-llm">
@@ -472,7 +474,7 @@ The features and APIs described herein are subject to change in the future.</p>
 </ul>
 <p>To install the Furiosa-LLM, run the following commands:</p>
 <pre class="literal-block">pip install --upgrade pip setuptools wheel uv
-uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b11</pre>
+uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b12</pre>
 <section id="authorizing-hugging-face-hub-optional">
 <span id="authorizinghuggingfacehub"></span><h3>Authorizing Hugging Face Hub (Optional)<a class="headerlink" href="#authorizing-hugging-face-hub-optional" title="Link to this heading">#</a></h3>
 <p>Some models, such as meta-llama/Llama-3.1-8B, require a license to run.
@@ -495,12 +497,12 @@ The <code class="docutils literal notranslate"><span class="pre">LLM</span></cod
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
 <span class="c1"># Load the model from Hugging Face model hub</span>
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
     <span class="c1"># You can specify various parameters for text generation</span>
     <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
     <span class="c1"># Prompt for the model</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}]</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What is the capital of France?"</span><span class="p">}]</span>
     <span class="n">prompt</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Generate text</span>
@@ -527,21 +529,21 @@ This method is asynchronous and returns a stream of tokens as they are generated
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="c1"># Load the model from Hugging Face model hub</span>
-    <span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
         <span class="c1"># You can specify various parameters for text generation</span>
         <span class="n">sampling_params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
         <span class="c1"># Prompt for the model</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}]</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What is the capital of France?"</span><span class="p">}]</span>
         <span class="n">prompt</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Generate text and print each token at a time</span>
         <span class="k">async</span> <span class="k">for</span> <span class="n">output_txt</span> <span class="ow">in</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream_generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">output_txt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">output_txt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
 <span class="c1"># Run the async main function</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -582,39 +584,39 @@ INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span cla
 </div>
 <p>Then, you can test the server using the following curl command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;EMPTY&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "EMPTY",</span>
+<span class="s1">    "messages": [{"role": "user", "content": "What is the capital of France?"}]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
 <p>Example output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat-21f0b74b2c6040d3b615c04cb5bf2e2e&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat.completion&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1736480800</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;choices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chat-21f0b74b2c6040d3b615c04cb5bf2e2e"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chat.completion"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1736480800</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"furiosa-ai/Llama-3.1-8B-Instruct"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">      </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The capital of France is Paris.&quot;</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;tool_calls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">          </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The capital of France is Paris."</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <span class="w">          </span><span class="p">},</span>
-<span class="w">          </span><span class="nt">&quot;logprobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;finish_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stop&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;stop_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">          </span><span class="nt">"logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"stop_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;prompt_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;total_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;completion_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span>
+<span class="w">  </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;prompt_logprobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="nt">"prompt_logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="p">}</span>
 </pre></div>
 </div>

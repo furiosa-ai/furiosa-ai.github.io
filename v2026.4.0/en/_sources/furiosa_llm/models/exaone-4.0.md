@@ -2,8 +2,9 @@
 
 # EXAONE 4.0
 
-[EXAONE 4.0](https://huggingface.co/LGAI-EXAONE) is LG AI Research's bilingual
-(English / Korean) series of auto-regressive dense transformers that unify a
+[EXAONE 4.0](https://huggingface.co/LGAI-EXAONE) is LG AI Research's multilingual
+(English / Korean / Spanish) series of auto-regressive dense transformers that
+unify a
 non-reasoning mode for general instruction following with a reasoning mode for
 harder problems, plus native support for tool calling and agentic use.
 

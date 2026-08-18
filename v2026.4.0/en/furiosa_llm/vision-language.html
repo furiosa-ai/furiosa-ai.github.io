@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Vision-Language Models &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Vision-Language Models &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -474,25 +476,25 @@ support is planned for a future release.</p>
 </div>
 <p>Send a chat-completion request with an image and a text prompt:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;Qwen/Qwen3-VL-32B-Instruct&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "Qwen/Qwen3-VL-32B-Instruct",</span>
+<span class="s1">    "messages": [</span>
 <span class="s1">        {</span>
-<span class="s1">            &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">            &quot;content&quot;: [</span>
+<span class="s1">            "role": "user",</span>
+<span class="s1">            "content": [</span>
 <span class="s1">                {</span>
-<span class="s1">                    &quot;type&quot;: &quot;image_url&quot;,</span>
-<span class="s1">                    &quot;image_url&quot;: {</span>
-<span class="s1">                        &quot;url&quot;: &quot;https://developer.furiosa.ai/v2026.2.0/en/_images/Furiosa_RNGD_image.png&quot;</span>
+<span class="s1">                    "type": "image_url",</span>
+<span class="s1">                    "image_url": {</span>
+<span class="s1">                        "url": "https://developer.furiosa.ai/v2026.2.0/en/_images/Furiosa_RNGD_image.png"</span>
 <span class="s1">                    }</span>
 <span class="s1">                },</span>
-<span class="s1">                {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Describe this image in one short sentence.&quot;}</span>
+<span class="s1">                {"type": "text", "text": "Describe this image in one short sentence."}</span>
 <span class="s1">            ]</span>
 <span class="s1">        }</span>
 <span class="s1">    ],</span>
-<span class="s1">    &quot;max_tokens&quot;: 128</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="s1">    "max_tokens": 128</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -507,16 +509,16 @@ URL schemes:</p>
 <li><p><strong>Remote URL</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code> / <code class="docutils literal notranslate"><span class="pre">https://</span></code>) — the server fetches the
 image with <code class="docutils literal notranslate"><span class="pre">httpx</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_url&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;image_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/photo.png&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/photo.png"</span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Base64 data URL</strong> — useful for inline payloads:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_url&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;image_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUh...&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"data:image/png;base64,iVBORw0KGgoAAAANSUh..."</span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -524,8 +526,8 @@ image with <code class="docutils literal notranslate"><span class="pre">httpx</s
 <li><p><strong>Local file</strong> (<code class="docutils literal notranslate"><span class="pre">file://</span></code>) — disabled by default; requires the
 <code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span></code> server flag (see below).</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_url&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;image_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file:///srv/media/photo.png&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file:///srv/media/photo.png"</span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -627,18 +629,18 @@ pre-processing.</p>
 only explicitly tagged items participate in the cache.</p>
 <p>Add <code class="docutils literal notranslate"><span class="pre">uuid</span></code> next to <code class="docutils literal notranslate"><span class="pre">image_url</span></code> on the content part:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_url&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;image_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/receipt.png&quot;</span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;receipt-2026-05-01-abc&quot;</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/receipt.png"</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"receipt-2026-05-01-abc"</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>A follow-up may then omit the image bytes (<code class="docutils literal notranslate"><span class="pre">&quot;image_url&quot;:</span> <span class="pre">null</span></code>) and
 reference the upload by <code class="docutils literal notranslate"><span class="pre">uuid</span></code> alone:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_url&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;image_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;receipt-2026-05-01-abc&quot;</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"receipt-2026-05-01-abc"</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -655,7 +657,7 @@ is full.</p>
 <section id="python-example">
 <span id="vlpythonexample"></span><h2>Python Example<a class="headerlink" href="#python-example" title="Link to this heading">#</a></h2>
 <p>Using the OpenAI Python client against a Furiosa-LLM server:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""</span>
 <span class="sd">OpenAI-Compatible Server - Vision-Language Chat Completion Example</span>
 
 <span class="sd">Sends a chat-completion request containing an image and a text prompt</span>
@@ -665,26 +667,26 @@ is full.</p>
 <span class="sd">site and is intended to be stable. For other image-input forms (base64</span>
 <span class="sd">``data:`` URLs and local ``file://`` paths), see the Vision-Language</span>
 <span class="sd">Models documentation page.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
 
-<span class="n">IMAGE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://developer.furiosa.ai/v2026.2.0/en/_images/Furiosa_RNGD_image.png&quot;</span>
+<span class="n">IMAGE_URL</span> <span class="o">=</span> <span class="s2">"https://developer.furiosa.ai/v2026.2.0/en/_images/Furiosa_RNGD_image.png"</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
         <span class="p">{</span>
-            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;image_url&quot;</span><span class="p">,</span> <span class="s2">&quot;image_url&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">IMAGE_URL</span><span class="p">}},</span>
-                <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Describe this image in one short sentence.&quot;</span><span class="p">},</span>
+            <span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span>
+            <span class="s2">"content"</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"image_url"</span><span class="p">,</span> <span class="s2">"image_url"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"url"</span><span class="p">:</span> <span class="n">IMAGE_URL</span><span class="p">}},</span>
+                <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Describe this image in one short sentence."</span><span class="p">},</span>
             <span class="p">],</span>
         <span class="p">}</span>
     <span class="p">],</span>
@@ -704,15 +706,15 @@ images keyed by modality:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">SamplingParams</span>
 
-<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;photo.png&quot;</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"photo.png"</span><span class="p">)</span>
 <span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Describe this image.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;multi_modal_data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">]},</span>
+        <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Describe this image."</span><span class="p">,</span>
+        <span class="s2">"multi_modal_data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">]},</span>
     <span class="p">}</span>
 <span class="p">]</span>
 
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;Qwen/Qwen3-VL-32B-Instruct&quot;</span><span class="p">,</span> <span class="n">fxb</span><span class="o">=</span><span class="s2">&quot;/path/to/qwen3-vl-32b.fxb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"Qwen/Qwen3-VL-32B-Instruct"</span><span class="p">,</span> <span class="n">fxb</span><span class="o">=</span><span class="s2">"/path/to/qwen3-vl-32b.fxb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_tokens</span><span class="o">=</span><span class="mi">64</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
@@ -723,9 +725,9 @@ available through the offline API. Add <code class="docutils literal notranslate
 client does not wish to cache:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Describe this image.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;multi_modal_data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">]},</span>
-        <span class="s2">&quot;multi_modal_uuids&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;receipt-2026-05-01-abc&quot;</span><span class="p">]},</span>
+        <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Describe this image."</span><span class="p">,</span>
+        <span class="s2">"multi_modal_data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">]},</span>
+        <span class="s2">"multi_modal_uuids"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"receipt-2026-05-01-abc"</span><span class="p">]},</span>
     <span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
@@ -734,9 +736,9 @@ client does not wish to cache:</p>
 alone — pass <code class="docutils literal notranslate"><span class="pre">None</span></code> in the <code class="docutils literal notranslate"><span class="pre">multi_modal_data</span></code> slot:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">followup</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Translate to Korean.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;multi_modal_data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]},</span>
-        <span class="s2">&quot;multi_modal_uuids&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;receipt-2026-05-01-abc&quot;</span><span class="p">]},</span>
+        <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Translate to Korean."</span><span class="p">,</span>
+        <span class="s2">"multi_modal_data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]},</span>
+        <span class="s2">"multi_modal_uuids"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"receipt-2026-05-01-abc"</span><span class="p">]},</span>
     <span class="p">}</span>
 <span class="p">]</span>
 </pre></div>

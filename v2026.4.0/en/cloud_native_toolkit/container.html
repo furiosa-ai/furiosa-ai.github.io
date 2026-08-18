@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Container Support &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Container Support &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -521,10 +523,10 @@ The section below provides detailed instructions for configuring CDI for each su
 Update the Docker daemon configuration file <code class="docutils literal notranslate"><span class="pre">daemon.json</span></code> to enable CDI feature and include <code class="docutils literal notranslate"><span class="pre">/etc/cdi</span></code> in the <code class="docutils literal notranslate"><span class="pre">cdi-spec-dirs</span></code> setting.
 Below is an example of <code class="docutils literal notranslate"><span class="pre">daemon.json</span></code> configuration:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="nt">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="nt">"cdi"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;cdi-spec-dirs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/etc/cdi/&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/var/run/cdi&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">"cdi-spec-dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"/etc/cdi/"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/var/run/cdi"</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -535,9 +537,9 @@ Below is an example of <code class="docutils literal notranslate"><span class="p
 <p>ContainerD supports CDI starting from version 2.0.0 by default.
 For earlier versions, CDI must be explicitly enabled through the configuration file config.toml, typically located at <code class="docutils literal notranslate"><span class="pre">/etc/containerd/config.toml</span></code>.</p>
 <p>To enable CDI support, add the following configuration:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[plugins.</span><span class="s2">&quot;io.containerd.grpc.v1.cri&quot;</span><span class="k">]</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[plugins.</span><span class="s2">"io.containerd.grpc.v1.cri"</span><span class="k">]</span>
 <span class="n">enable_cdi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<span class="n">cdi_spec_dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/etc/cdi&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/var/run/cdi&quot;</span><span class="p">]</span>
+<span class="n">cdi_spec_dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/etc/cdi"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/var/run/cdi"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>After modifying the configuration, restart ContainerD to apply the changes:</p>

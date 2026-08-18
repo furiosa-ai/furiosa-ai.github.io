@@ -150,6 +150,7 @@ Other Links
    /furiosa_llm/structured-output
    /furiosa_llm/vision-language
    /furiosa_llm/prefix-caching
+   /furiosa_llm/hierarchical-prefix-caching
    /furiosa_llm/hybrid-kv-cache
    /furiosa_llm/data-parallel-routing
    /furiosa_llm/model-preparation

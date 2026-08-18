@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Scoring (Similarity Scoring) &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Scoring (Similarity Scoring) &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -457,65 +459,65 @@ This is applicable to binary classification models, including Qwen3-Reranker mod
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">PoolingParams</span>
 
 <span class="c1"># Load a reranker or binary classification model</span>
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Qwen3-Reranker-4B&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Qwen3-Reranker-4B"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
     <span class="c1"># ============================================================</span>
     <span class="c1"># Example 1: 1-to-1 scoring (single query, single document)</span>
     <span class="c1"># ============================================================</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is machine learning?&quot;</span>
-    <span class="n">document</span> <span class="o">=</span> <span class="s2">&quot;Machine learning is a subset of artificial intelligence.&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">"What is machine learning?"</span>
+    <span class="n">document</span> <span class="o">=</span> <span class="s2">"Machine learning is a subset of artificial intelligence."</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity score: </span><span class="si">{</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity score: </span><span class="si">{</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 
     <span class="c1"># ============================================================</span>
     <span class="c1"># Example 2: 1-to-N scoring (single query, multiple documents)</span>
     <span class="c1"># ============================================================</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is deep learning?&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">"What is deep learning?"</span>
     <span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;Deep learning uses neural networks with multiple layers.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Python is a popular programming language.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Machine learning is a field of artificial intelligence.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Neural networks are inspired by the human brain.&quot;</span><span class="p">,</span>
+        <span class="s2">"Deep learning uses neural networks with multiple layers."</span><span class="p">,</span>
+        <span class="s2">"Python is a popular programming language."</span><span class="p">,</span>
+        <span class="s2">"Machine learning is a field of artificial intelligence."</span><span class="p">,</span>
+        <span class="s2">"Neural networks are inspired by the human brain."</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">documents</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">outputs</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Document </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Text: </span><span class="si">{</span><span class="n">documents</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Document </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Text: </span><span class="si">{</span><span class="n">documents</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 
     <span class="c1"># ============================================================</span>
     <span class="c1"># Example 3: N-to-N scoring (multiple queries, paired documents)</span>
     <span class="c1"># ============================================================</span>
     <span class="n">queries</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;What is Python?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;What is JavaScript?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;What is SQL?&quot;</span><span class="p">,</span>
+        <span class="s2">"What is Python?"</span><span class="p">,</span>
+        <span class="s2">"What is JavaScript?"</span><span class="p">,</span>
+        <span class="s2">"What is SQL?"</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;Python is a programming language.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;JavaScript is used for web development.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SQL is a database query language.&quot;</span><span class="p">,</span>
+        <span class="s2">"Python is a programming language."</span><span class="p">,</span>
+        <span class="s2">"JavaScript is used for web development."</span><span class="p">,</span>
+        <span class="s2">"SQL is a database query language."</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">documents</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pair </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Query: </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Document: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pair </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Query: </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Document: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 
     <span class="c1"># ============================================================</span>
     <span class="c1"># Example 4: Using PoolingParams for truncation</span>
     <span class="c1"># ============================================================</span>
     <span class="c1"># Truncate long documents to fit within model limits</span>
     <span class="n">pooling_params</span> <span class="o">=</span> <span class="n">PoolingParams</span><span class="p">(</span><span class="n">truncate_prompt_tokens</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is the capital of France?&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">"What is the capital of France?"</span>
     <span class="n">long_documents</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;Paris is the capital and most populous city of France. &quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>  <span class="c1"># Long document</span>
-        <span class="s2">&quot;London is the capital of the United Kingdom. &quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="s2">"Paris is the capital and most populous city of France. "</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>  <span class="c1"># Long document</span>
+        <span class="s2">"London is the capital of the United Kingdom. "</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">long_documents</span><span class="p">,</span> <span class="n">pooling_params</span><span class="o">=</span><span class="n">pooling_params</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">outputs</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Document </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> score: </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Document </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> score: </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -543,25 +545,25 @@ This is applicable to binary classification models, including Qwen3-Reranker mod
 
 <span class="c1"># Start server with: furiosa-llm serve path/to/reranker-model</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
 
 <span class="c1"># 1-to-N scoring via HTTP API</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/score&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/score"</span><span class="p">,</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;reranker&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;text_1&quot;</span><span class="p">:</span> <span class="s2">&quot;What is machine learning?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;text_2&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Machine learning is a subset of AI.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Python is a programming language.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Deep learning uses neural networks.&quot;</span><span class="p">,</span>
+        <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"reranker"</span><span class="p">,</span>
+        <span class="s2">"text_1"</span><span class="p">:</span> <span class="s2">"What is machine learning?"</span><span class="p">,</span>
+        <span class="s2">"text_2"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Machine learning is a subset of AI."</span><span class="p">,</span>
+            <span class="s2">"Python is a programming language."</span><span class="p">,</span>
+            <span class="s2">"Deep learning uses neural networks."</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">},</span>
 <span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Index </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Qwen3-Embedding &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Qwen3-Embedding &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -553,11 +555,11 @@ embeddings with <code class="docutils literal notranslate"><span class="pre">cur
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="v06" for="sd-tab-item-3">
 0.6B</label><div class="sd-tab-content docutils">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/embeddings<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Qwen3-Embedding-0.6B&quot;,</span>
-<span class="s1">    &quot;input&quot;: [&quot;Hello, world!&quot;, &quot;How are you?&quot;]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "furiosa-ai/Qwen3-Embedding-0.6B",</span>
+<span class="s1">    "input": ["Hello, world!", "How are you?"]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -566,11 +568,11 @@ embeddings with <code class="docutils literal notranslate"><span class="pre">cur
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="v4" for="sd-tab-item-4">
 4B</label><div class="sd-tab-content docutils">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/embeddings<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Qwen3-Embedding-4B&quot;,</span>
-<span class="s1">    &quot;input&quot;: [&quot;Hello, world!&quot;, &quot;How are you?&quot;]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "furiosa-ai/Qwen3-Embedding-4B",</span>
+<span class="s1">    "input": ["Hello, world!", "How are you?"]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -579,11 +581,11 @@ embeddings with <code class="docutils literal notranslate"><span class="pre">cur
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="v8" for="sd-tab-item-5">
 8B</label><div class="sd-tab-content docutils">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/embeddings<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Qwen3-Embedding-8B&quot;,</span>
-<span class="s1">    &quot;input&quot;: [&quot;Hello, world!&quot;, &quot;How are you?&quot;]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "furiosa-ai/Qwen3-Embedding-8B",</span>
+<span class="s1">    "input": ["Hello, world!", "How are you?"]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -597,15 +599,15 @@ client:</p>
 0.6B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:8000/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-0.6B&quot;</span><span class="p">,</span>
-    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">],</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"furiosa-ai/Qwen3-Embedding-0.6B"</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -614,15 +616,15 @@ client:</p>
 4B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:8000/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-4B&quot;</span><span class="p">,</span>
-    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">],</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"furiosa-ai/Qwen3-Embedding-4B"</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -631,15 +633,15 @@ client:</p>
 8B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:8000/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-8B&quot;</span><span class="p">,</span>
-    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">],</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"furiosa-ai/Qwen3-Embedding-8B"</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Index </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -655,10 +657,10 @@ the repo is discovered automatically) and call <code class="docutils literal not
 0.6B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span>
 
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-0.6B&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">])</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Qwen3-Embedding-0.6B"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -667,10 +669,10 @@ the repo is discovered automatically) and call <code class="docutils literal not
 4B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span>
 
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-4B&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">])</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Qwen3-Embedding-4B"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -679,10 +681,10 @@ the repo is discovered automatically) and call <code class="docutils literal not
 8B</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span>
 
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">&quot;furiosa-ai/Qwen3-Embedding-8B&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">])</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"furiosa-ai/Qwen3-Embedding-8B"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">([</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="s2">"How are you?"</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">embedding</span><span class="p">)</span><span class="si">}</span><span class="s2"> dimensions"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

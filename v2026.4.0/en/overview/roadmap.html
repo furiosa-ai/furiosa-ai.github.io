@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Roadmap &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Roadmap &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -463,14 +465,15 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
 <a class="reference internal" href="software_stack.html#softwarestack"><span class="std std-ref">our software stack</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The latest release is 2026.4.0b11. You can find the release notes <a class="reference internal" href="../whatsnew/index.html#whatsnew"><span class="std std-ref">here</span></a>.</p>
+<p>The latest release is 2026.4.0b12. You can find the release notes <a class="reference internal" href="../whatsnew/index.html#whatsnew"><span class="std std-ref">here</span></a>.</p>
 </div>
 <section id="upcoming-releases-2026-q3">
 <h2>Upcoming Releases 2026 Q3<a class="headerlink" href="#upcoming-releases-2026-q3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>🔨 EXAONE 4.5, Qwen 3.6, Gemma 4 model support</p></li>
 <li><p>🔨 Multi-modal (vision-language) serving optimization</p></li>
-<li><p>🔨 Hierarchical KV caching support, including KV cache offloading</p></li>
+<li><p>🔨 Hierarchical KV caching: an experimental local NPU/host preview is
+available; general availability and further transfer optimizations are planned</p></li>
 <li><p>🔨 KVCacheConnector support</p></li>
 <li><p>🔨 Prefill/decode (PD) disaggregation</p></li>
 <li><p>🔨 Speculative decoding support</p></li>

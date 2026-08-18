@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Hybrid KV Cache Management &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Hybrid KV Cache Management &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Data-Parallel Routing" href="data-parallel-routing.html" />
-    <link rel="prev" title="Prefix Caching" href="prefix-caching.html" />
+    <link rel="prev" title="Hierarchical Prefix Caching" href="hierarchical-prefix-caching.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.4.0" />
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -490,9 +492,14 @@ The partitioning logic is attention-aware, so memory is distributed according to
 </section>
 <section id="interaction-with-prefix-caching">
 <h3>Interaction with Prefix Caching<a class="headerlink" href="#interaction-with-prefix-caching" title="Link to this heading">#</a></h3>
-<p>When prefix caching is enabled, hybrid cache management works with hybrid prefix matching to deduplicate both global and sliding-window blocks.
-If part of a matched prefix no longer has valid sliding-window cache, Furiosa-LLM still reuses the valid portion and computes only what is needed.
-For details on hybrid prefix-match behavior, see <a class="reference internal" href="prefix-caching.html#prefixcachinghybridattentionmodels"><span class="std std-ref">Hybrid Attention Models</span></a> in <a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a>.</p>
+<p>When prefix caching is enabled, hybrid cache management works with hybrid prefix
+matching to deduplicate both global and sliding-window blocks. If part of a
+matched prefix no longer has valid sliding-window cache, Furiosa-LLM still
+reuses the valid portion and computes only what is needed. For details on
+hybrid prefix-match behavior, see
+<a class="reference internal" href="prefix-caching.html#prefixcachinghybridattentionmodels"><span class="std std-ref">Hybrid Attention Models</span></a> in
+<a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a>. To retain reusable hybrid-attention prefixes in host
+memory, see <a class="reference internal" href="hierarchical-prefix-caching.html#hierarchicalprefixcaching"><span class="std std-ref">Hierarchical Prefix Caching</span></a>.</p>
 </section>
 </section>
 <section id="why-it-is-efficient">
@@ -534,12 +541,12 @@ furiosa-llm<span class="w"> </span>serve<span class="w"> </span>...
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="prefix-caching.html"
+       href="hierarchical-prefix-caching.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Prefix Caching</p>
+        <p class="prev-next-title">Hierarchical Prefix Caching</p>
       </div>
     </a>
     <a class="right-next"

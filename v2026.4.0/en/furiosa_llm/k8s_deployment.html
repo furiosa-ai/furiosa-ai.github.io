@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Deploying Furiosa-LLM on Kubernetes &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Deploying Furiosa-LLM on Kubernetes &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -474,7 +476,7 @@
 </pre></div>
 </div>
 <p>Encode your token using the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;&lt;your_HF_TOKEN&gt;&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">'&lt;your_HF_TOKEN&gt;'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
 </pre></div>
 </div>
 <p>Then apply the secret:</p>
@@ -502,7 +504,7 @@ Please verify and specify the appropriate storage class for your cluster:</p>
 <span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
-<span class="w">  </span><span class="c1"># The storage class &quot;default&quot; is an example, use an appropriate one for your cluster.</span>
+<span class="w">  </span><span class="c1"># The storage class "default" is an example, use an appropriate one for your cluster.</span>
 <span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 </pre></div>
 </div>
@@ -535,8 +537,8 @@ For detailed information about the <code class="docutils literal notranslate"><s
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama-3-8b</span>
 <span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-llm:latest</span>
 <span class="w">          </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;serve&quot;</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"serve"</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"furiosa-ai/Llama-3.1-8B-Instruct"</span>
 <span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span>
 <span class="w">          </span><span class="nt">resources</span><span class="p">:</span>
@@ -544,11 +546,11 @@ For detailed information about the <code class="docutils literal notranslate"><s
 <span class="w">            </span><span class="nt">limits</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100Gi</span>
-<span class="w">              </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">              </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
 <span class="w">            </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100Gi</span>
-<span class="w">              </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">              </span><span class="nt">furiosa.ai/rngd</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
 <span class="w">          </span><span class="nt">env</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
 <span class="w">              </span><span class="nt">valueFrom</span><span class="p">:</span>
@@ -629,35 +631,35 @@ For detailed information about the <code class="docutils literal notranslate"><s
 </div>
 <p>Then, issue a test request:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">        &quot;model&quot;: &quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;,</span>
-<span class="s1">        &quot;prompt&quot;: &quot;San Francisco is a&quot;,</span>
-<span class="s1">        &quot;max_tokens&quot;: 7,</span>
-<span class="s1">        &quot;temperature&quot;: 0</span>
-<span class="s1">      }&#39;</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">        "model": "furiosa-ai/Llama-3.1-8B-Instruct",</span>
+<span class="s1">        "prompt": "San Francisco is a",</span>
+<span class="s1">        "max_tokens": 7,</span>
+<span class="s1">        "temperature": 0</span>
+<span class="s1">      }'</span>
 </pre></div>
 </div>
 <p>You should receive a valid response from the Furiosa-LLM server, similar to:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmpl-69102e5d78c94e29b74660eaadbe39db&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text_completion&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748675715</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;choices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cmpl-69102e5d78c94e29b74660eaadbe39db"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text_completion"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1748675715</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta-llama/Llama-3.1-8B-Instruct"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; city that is known for its vibrant&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;logprobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;finish_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;length&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;prompt_logprobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">" city that is known for its vibrant"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"length"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"prompt_logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;prompt_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;total_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;completion_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;completion_tokens_details&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"completion_tokens_details"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

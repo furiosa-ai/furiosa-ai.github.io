@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Installing Furiosa DRA Driver &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Installing Furiosa DRA Driver &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -502,7 +504,7 @@ NPU resources by running the following command:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resource.k8s.io/v1</span>
 <span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceSlice</span>
 <span class="w">  </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2026-01-12T02:57:12Z&quot;</span>
+<span class="w">    </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s">"2026-01-12T02:57:12Z"</span>
 <span class="w">    </span><span class="nt">generateName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cntk002-npu.furiosa.ai-</span>
 <span class="w">    </span><span class="nt">generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cntk002-npu.furiosa.ai-stczm</span>
@@ -512,7 +514,7 @@ NPU resources by running the following command:</p>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Node</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cntk002</span>
 <span class="w">        </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0a0a5366-cb39-4e8d-9aae-56a885709887</span>
-<span class="w">    </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8934931&quot;</span>
+<span class="w">    </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"8934931"</span>
 <span class="w">    </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8909a748-d798-4e98-b738-5c08d771e011</span>
 <span class="w">  </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">devices</span><span class="p">:</span>
@@ -526,14 +528,14 @@ NPU resources by running the following command:</p>
 <span class="w">          </span><span class="nt">numaNode</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pciBusID</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000:17:00.0&quot;</span>
+<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">"0000:17:00.0"</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pcieRoot</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pci0000:16&quot;</span>
+<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">"pci0000:16"</span>
 <span class="w">          </span><span class="nt">uuid</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">09512C86-0709-4404-8943-414B404A4F44</span>
 <span class="w">        </span><span class="nt">capacity</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">core</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"8"</span>
 <span class="w">          </span><span class="nt">memory</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48Gi</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npu0</span>
@@ -547,14 +549,14 @@ NPU resources by running the following command:</p>
 <span class="w">          </span><span class="nt">numaNode</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">int</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pciBusID</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000:43:00.0&quot;</span>
+<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">"0000:43:00.0"</span>
 <span class="w">          </span><span class="nt">resource.kubernetes.io/pcieRoot</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pci0000:42&quot;</span>
+<span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="s">"pci0000:42"</span>
 <span class="w">          </span><span class="nt">uuid</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">string</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">B65D0C77-7333-4D90-AC82-3E22EE5F88EE</span>
 <span class="w">        </span><span class="nt">capacity</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">core</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"8"</span>
 <span class="w">          </span><span class="nt">memory</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48Gi</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npu1</span>
@@ -650,7 +652,7 @@ Then, create a Pod that references the template to claim the NPU resource.</p>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-llm:latest</span>
 <span class="w">      </span><span class="nt">command</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sleep</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;86400&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"86400"</span>
 <span class="w">      </span><span class="nt">env</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
 <span class="w">          </span><span class="nt">valueFrom</span><span class="p">:</span>
@@ -706,7 +708,7 @@ Then, create a Pod that references the template to claim the NPU resource.</p>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-llm:latest</span>
 <span class="w">      </span><span class="nt">command</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sleep</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;86400&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"86400"</span>
 <span class="w">      </span><span class="nt">env</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
 <span class="w">          </span><span class="nt">valueFrom</span><span class="p">:</span>

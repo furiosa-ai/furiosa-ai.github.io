@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -473,15 +475,15 @@
     <span class="n">engine_args</span> <span class="o">=</span> <span class="n">AsyncEngineArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">engine</span> <span class="o">=</span> <span class="n">AsyncLLMEngine</span><span class="o">.</span><span class="n">from_engine_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
     <span class="n">example_input</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;What is LLM?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-        <span class="s2">&quot;request_id&quot;</span><span class="p">:</span> <span class="s2">&quot;request-123&quot;</span><span class="p">,</span>
+        <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"What is LLM?"</span><span class="p">,</span>
+        <span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="s2">"request_id"</span><span class="p">:</span> <span class="s2">"request-123"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">results_generator</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-        <span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">],</span>
-        <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]),</span>
-        <span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]</span>
+        <span class="n">example_input</span><span class="p">[</span><span class="s2">"prompt"</span><span class="p">],</span>
+        <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">example_input</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">]),</span>
+        <span class="n">example_input</span><span class="p">[</span><span class="s2">"request_id"</span><span class="p">]</span>
     <span class="p">)</span>
 
     <span class="n">final_output</span> <span class="o">=</span> <span class="kc">None</span>
@@ -490,7 +492,7 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="n">final_output</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
@@ -531,15 +533,15 @@ options:
   --tokenizer TOKENIZER
                         The name or path of a HuggingFace Transformers tokenizer.
   --tokenizer-mode TOKENIZER_MODE
-                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if
-                        available, and &quot;slow&quot; will always use the slow tokenizer.
+                        The tokenizer mode. "auto" will use the fast tokenizer if
+                        available, and "slow" will always use the slow tokenizer.
   --seed SEED           The seed to initialize the random number generator for
                         sampling.
   --devices DEVICES     The devices to run the model. It can be a single device or a
                         comma-separated list of devices. Each device can be either
-                        &quot;npu:X&quot; or &quot;npu:X:Y&quot;, where X is a device index and Y is a
-                        NPU core range notation (e.g. &quot;npu:0&quot; for whole npu 0,
-                        &quot;npu:0:0&quot; for core 0 of NPU 0, and &quot;npu:0:0-3&quot; for fused core
+                        "npu:X" or "npu:X:Y", where X is a device index and Y is a
+                        NPU core range notation (e.g. "npu:0" for whole npu 0,
+                        "npu:0:0" for core 0 of NPU 0, and "npu:0:0-3" for fused core
                         0-3 of npu 0). If not given, all available unoccupied devices
                         will be used.
   --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
@@ -552,7 +554,7 @@ options:
   --cache-dir CACHE_DIR
                         The cache directory for temporarily generated files for this
                         LLM instance. When its value is ``None``, caching is
-                        disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.
+                        disabled. The default is "$HOME/.cache/furiosa/llm".
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES

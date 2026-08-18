@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Supported Models &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Supported Models &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -499,19 +501,23 @@ repository-level model cards live on the Hugging Face Hub.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">LlamaForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.1-8B-Instruct</span></code>, <code class="docutils literal notranslate"><span class="pre">meta-llama/Llama-3.3-70B-Instruct</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="models/solar-open.html"><span class="doc">Solar Open</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/mistral-nemo.html"><span class="doc">Mistral NeMo</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MistralForCausalLM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RedHatAI/Mistral-Nemo-Instruct-2407-FP8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/solar-open.html"><span class="doc">Solar Open</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">SolarOpenForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">upstage/Solar-Open-100B</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen2.5.html"><span class="doc">Qwen 2.5</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/qwen2.5.html"><span class="doc">Qwen 2.5</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen2ForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen2.5-0.5B-Instruct</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3.html"><span class="doc">Qwen 3</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3.html"><span class="doc">Qwen 3</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3ForCausalLM</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-8B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-8B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B-FP8</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3-moe.html"><span class="doc">Qwen 3 MoE</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3-moe.html"><span class="doc">Qwen 3 MoE</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3MoeForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-30B-A3B-Instruct-2507</span></code></p></td>
 </tr>
@@ -685,121 +691,127 @@ does it produce correct results (<strong>Correctness</strong>), and has its perf
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8">Qwen3-30B-A3B-FP8</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Mistral-Nemo-Instruct-2407-FP8">Mistral-Nemo-Instruct-2407-FP8</a></p></td>
+<td><p>Text</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8">Qwen3-30B-A3B-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8">Qwen3-30B-A3B-Instruct-2507-FP8</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8">Qwen3-30B-A3B-Instruct-2507-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8">Qwen3-30B-A3B-Thinking-2507-FP8</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8">Qwen3-30B-A3B-Thinking-2507-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-32B-FP8">Qwen3-32B-FP8</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-32B-FP8">Qwen3-32B-FP8</a></p></td>
 <td><p>Text</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-4B-FP8">Qwen3-4B-FP8</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-4B-FP8">Qwen3-4B-FP8</a></p></td>
 <td><p>Text</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>⛔️</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-8B-FP8">Qwen3-8B-FP8</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-8B-FP8">Qwen3-8B-FP8</a></p></td>
 <td><p>Text</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Coder-30B-A3B-Instruct-FP8">Qwen3-Coder-30B-A3B-Instruct-FP8</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Coder-30B-A3B-Instruct-FP8">Qwen3-Coder-30B-A3B-Instruct-FP8</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-0.6B">Qwen3-Embedding-0.6B</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-0.6B">Qwen3-Embedding-0.6B</a></p></td>
 <td><p>Embedding</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-4B">Qwen3-Embedding-4B</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-4B">Qwen3-Embedding-4B</a></p></td>
 <td><p>Embedding</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-8B">Qwen3-Embedding-8B</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Embedding-8B">Qwen3-Embedding-8B</a></p></td>
 <td><p>Embedding</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-0.6B">Qwen3-Reranker-0.6B</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-0.6B">Qwen3-Reranker-0.6B</a></p></td>
 <td><p>Reranking</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-4B">Qwen3-Reranker-4B</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-4B">Qwen3-Reranker-4B</a></p></td>
 <td><p>Reranking</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-8B">Qwen3-Reranker-8B</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-Reranker-8B">Qwen3-Reranker-8B</a></p></td>
 <td><p>Reranking</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-2B-Instruct">Qwen3-VL-2B-Instruct</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-2B-Instruct">Qwen3-VL-2B-Instruct</a></p></td>
 <td><p>Multimodal</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Instruct">Qwen3-VL-32B-Instruct</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Instruct">Qwen3-VL-32B-Instruct</a></p></td>
 <td><p>Multimodal</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-4B-Instruct">Qwen3-VL-4B-Instruct</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3-VL-4B-Instruct">Qwen3-VL-4B-Instruct</a></p></td>
 <td><p>Multimodal</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16">Solar-Open-100B-NVFP4A16</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16">Solar-Open-100B-NVFP4A16</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-120b">gpt-oss-120b</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-120b">gpt-oss-120b</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b">harrier-oss-v1-0.6b</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b">harrier-oss-v1-0.6b</a></p></td>
 <td><p>Embedding</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>

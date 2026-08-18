@@ -34,13 +34,6 @@ The ``tool_choice`` parameter controls how the model selects tools to call. Furi
 For more details on the tool calling specification, refer to the `OpenAI Chat API documentation <https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice>`_.
 
 
-Offline Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. literalinclude:: ../../../examples/offline_toolcalling.py
-   :language: python
-   :caption: Offline Example of Tool Calling
-
-
 Online Example with Named Function Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

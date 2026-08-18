@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Deploying Furiosa-LLM with llm-d &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Deploying Furiosa-LLM with llm-d &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -566,10 +568,10 @@ helm<span class="w"> </span>install<span class="w"> </span>istio-base<span class
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">meshConfig</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">defaultConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">proxyMetadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ENABLE_GATEWAY_API_INFERENCE_EXTENSION</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">      </span><span class="nt">ENABLE_GATEWAY_API_INFERENCE_EXTENSION</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">pilot</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ENABLE_GATEWAY_API_INFERENCE_EXTENSION</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">ENABLE_GATEWAY_API_INFERENCE_EXTENSION</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </pre></div>
 </div>
 </div>
@@ -594,7 +596,7 @@ Create a Kubernetes secret for your Hugging Face token:</p>
 </div>
 </div>
 <p>Encode your token using the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;&lt;your_HF_TOKEN&gt;&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">'&lt;your_HF_TOKEN&gt;'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
 </pre></div>
 </div>
 <p>Then apply the secret:</p>
@@ -620,7 +622,7 @@ In this guide, we will pre-download the <code class="docutils literal notranslat
 <span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20Gi</span>
-<span class="w">  </span><span class="c1"># The storage class &quot;default&quot; is an example, use an appropriate one for your cluster.</span>
+<span class="w">  </span><span class="c1"># The storage class "default" is an example, use an appropriate one for your cluster.</span>
 <span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 </pre></div>
 </div>
@@ -655,7 +657,7 @@ In this guide, we will pre-download the <code class="docutils literal notranslat
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
 <span class="w">          </span><span class="no">pip install --no-cache-dir huggingface_hub &amp;&amp;</span>
-<span class="w">          </span><span class="no">python -c &quot;from huggingface_hub import snapshot_download; snapshot_download(repo_id=&#39;furiosa-ai/Llama-3.1-8B-Instruct&#39;, cache_dir=&#39;/models&#39;)&quot;</span>
+<span class="w">          </span><span class="no">python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='furiosa-ai/Llama-3.1-8B-Instruct', cache_dir='/models')"</span>
 
 <span class="w">      </span><span class="nt">volumeMounts</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-storage</span>
@@ -664,7 +666,7 @@ In this guide, we will pre-download the <code class="docutils literal notranslat
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-consumer</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;sleep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;infinity&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"sleep"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"infinity"</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="nt">volumeMounts</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-storage</span>
 <span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models</span>
@@ -701,20 +703,20 @@ helm<span class="w"> </span>install<span class="w"> </span>llm-d-infra<span clas
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">inferenceExtension</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">flags</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cache-info-metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa_llm_cache_config_info&quot;</span>
-<span class="w">    </span><span class="nt">kv-cache-usage-percentage-metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa_llm_kv_cache_usage_percent&quot;</span>
-<span class="w">    </span><span class="nt">lora-info-metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">    </span><span class="nt">total-queued-requests-metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa_llm_num_requests_waiting&quot;</span>
-<span class="w">    </span><span class="nt">total-running-requests-metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa_llm_num_requests_running&quot;</span>
+<span class="w">    </span><span class="nt">cache-info-metric</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa_llm_cache_config_info"</span>
+<span class="w">    </span><span class="nt">kv-cache-usage-percentage-metric</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa_llm_kv_cache_usage_percent"</span>
+<span class="w">    </span><span class="nt">lora-info-metric</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">total-queued-requests-metric</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa_llm_num_requests_waiting"</span>
+<span class="w">    </span><span class="nt">total-running-requests-metric</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa_llm_num_requests_running"</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm-d-inference-scheduler</span>
 <span class="w">    </span><span class="nt">hub</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/llm-d</span>
 <span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.5.0</span>
 <span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span>
 <span class="w">  </span><span class="nt">extProcPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9002</span>
-<span class="w">  </span><span class="nt">pluginsConfigFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default-plugins.yaml&quot;</span>
+<span class="w">  </span><span class="nt">pluginsConfigFile</span><span class="p">:</span><span class="w"> </span><span class="s">"default-plugins.yaml"</span>
 <span class="w">  </span><span class="nt">monitoring</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;10s&quot;</span>
+<span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="s">"10s"</span>
 <span class="w">    </span><span class="c1"># Prometheus ServiceMonitor will be created when enabled for EPP metrics collection</span>
 <span class="w">    </span><span class="nt">secret</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inference-scheduling-gateway-sa-metrics-reader-secret</span>
@@ -729,12 +731,12 @@ helm<span class="w"> </span>install<span class="w"> </span>llm-d-infra<span clas
 <span class="w">  </span><span class="nt">modelServerType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm</span>
 <span class="w">  </span><span class="nt">modelServers</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">llm-d.ai/inferenceServing</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">      </span><span class="nt">llm-d.ai/inferenceServing</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">provider</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">istio</span>
 <span class="w">  </span><span class="nt">istio</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">destinationRule</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gaie-epp.llm-d.svc.cluster.local&quot;</span>
+<span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"gaie-epp.llm-d.svc.cluster.local"</span>
 </pre></div>
 </div>
 </div>
@@ -752,16 +754,16 @@ helm<span class="w"> </span>install<span class="w"> </span>llm-d-infra<span clas
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">multinode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class="nt">modelArtifacts</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa-ai/Llama-3.1-8B-Instruct&quot;</span>
-<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pvc+hf://model-pvc/furiosa-ai/Llama-3.1-8B-Instruct&quot;</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa-ai/Llama-3.1-8B-Instruct"</span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="s">"pvc+hf://model-pvc/furiosa-ai/Llama-3.1-8B-Instruct"</span>
 <span class="w">  </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20Gi</span>
-<span class="w">  </span><span class="nt">authSecretName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hf-token-secret&quot;</span>
+<span class="w">  </span><span class="nt">authSecretName</span><span class="p">:</span><span class="w"> </span><span class="s">"hf-token-secret"</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">llm-d.ai/inferenceServing</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">    </span><span class="nt">llm-d.ai/model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Llama-3.1-8B-Instruct&quot;</span>
+<span class="w">    </span><span class="nt">llm-d.ai/inferenceServing</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">    </span><span class="nt">llm-d.ai/model</span><span class="p">:</span><span class="w"> </span><span class="s">"Llama-3.1-8B-Instruct"</span>
 
 <span class="nt">accelerator</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa&quot;</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa"</span>
 
 <span class="nt">routing</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">proxy</span><span class="p">:</span>
@@ -776,7 +778,7 @@ helm<span class="w"> </span>install<span class="w"> </span>llm-d-infra<span clas
 <span class="w">    </span><span class="nt">tensor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;furiosa-llm&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"furiosa-llm"</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaai/furiosa-llm:latest</span>
 <span class="w">      </span><span class="nt">modelCommand</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">furiosaLLMServe</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>

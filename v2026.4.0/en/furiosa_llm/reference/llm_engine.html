@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>LLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -471,13 +473,13 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">create_test_prompts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a list of test prompts with their sampling parameters.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a list of test prompts with their sampling parameters."""</span>
     <span class="k">return</span> <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;A robot may not injure a human being&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s2">"A robot may not injure a human being"</span><span class="p">,</span>
         <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)),</span>
-        <span class="p">(</span><span class="s2">&quot;To be or not to be,&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s2">"To be or not to be,"</span><span class="p">,</span>
         <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)),</span>
-        <span class="p">(</span><span class="s2">&quot;What is the meaning of life?&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s2">"What is the meaning of life?"</span><span class="p">,</span>
         <span class="n">SamplingParams</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                         <span class="n">temperature</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
                         <span class="n">top_p</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)),</span>
@@ -486,7 +488,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">process_requests</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">LLMEngine</span><span class="p">,</span>
                     <span class="n">test_prompts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">]]):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Continuously process a list of prompts and handle the outputs.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Continuously process a list of prompts and handle the outputs."""</span>
     <span class="n">request_id</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">while</span> <span class="n">test_prompts</span> <span class="ow">or</span> <span class="n">engine</span><span class="o">.</span><span class="n">has_unfinished_requests</span><span class="p">():</span>
@@ -503,19 +505,19 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_engine</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LLMEngine</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the LLMEngine from the command line arguments.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Initialize the LLMEngine from the command line arguments."""</span>
     <span class="n">engine_args</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">LLMEngine</span><span class="o">.</span><span class="n">from_engine_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function that sets up and runs the prompt processing.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Main function that sets up and runs the prompt processing."""</span>
     <span class="n">engine</span> <span class="o">=</span> <span class="n">initialize_engine</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">test_prompts</span> <span class="o">=</span> <span class="n">create_test_prompts</span><span class="p">()</span>
     <span class="n">process_requests</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">test_prompts</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">EngineArgs</span><span class="o">.</span><span class="n">add_cli_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -556,15 +558,15 @@ options:
   --tokenizer TOKENIZER
                         The name or path of a HuggingFace Transformers tokenizer.
   --tokenizer-mode TOKENIZER_MODE
-                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if
-                        available, and &quot;slow&quot; will always use the slow tokenizer.
+                        The tokenizer mode. "auto" will use the fast tokenizer if
+                        available, and "slow" will always use the slow tokenizer.
   --seed SEED           The seed to initialize the random number generator for
                         sampling.
   --devices DEVICES     The devices to run the model. It can be a single device or a
                         comma-separated list of devices. Each device can be either
-                        &quot;npu:X&quot; or &quot;npu:X:Y&quot;, where X is a device index and Y is a
-                        NPU core range notation (e.g. &quot;npu:0&quot; for whole npu 0,
-                        &quot;npu:0:0&quot; for core 0 of NPU 0, and &quot;npu:0:0-3&quot; for fused core
+                        "npu:X" or "npu:X:Y", where X is a device index and Y is a
+                        NPU core range notation (e.g. "npu:0" for whole npu 0,
+                        "npu:0:0" for core 0 of NPU 0, and "npu:0:0-3" for fused core
                         0-3 of npu 0). If not given, all available unoccupied devices
                         will be used.
   --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
@@ -577,7 +579,7 @@ options:
   --cache-dir CACHE_DIR
                         The cache directory for temporarily generated files for this
                         LLM instance. When its value is ``None``, caching is
-                        disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.
+                        disabled. The default is "$HOME/.cache/furiosa/llm".
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES

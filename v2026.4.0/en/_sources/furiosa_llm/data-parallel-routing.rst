@@ -142,6 +142,7 @@ Operational Notes
 
 * DP routing happens inside one Furiosa-LLM process. For routing across
   multiple model-server pods, see :doc:`llm-d </cloud_native_toolkit/llm_d>`.
-* Scoring-based routing works best with prefix caching enabled. For details,
-  see :ref:`PrefixCaching`.
+* Scoring-based routing works best with prefix caching enabled. See
+  :ref:`PrefixCaching` for NPU-resident caching and
+  :ref:`HierarchicalPrefixCaching` for the optional host cache tier.
 * For background on DP itself, see :ref:`ModelParallelism`.

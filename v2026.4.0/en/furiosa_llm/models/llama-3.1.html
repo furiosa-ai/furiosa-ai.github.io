@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Llama 3.1 &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Llama 3.1 &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -478,7 +480,7 @@ with those, see the upstream model card linked below.</p>
 <td><p>1</p></td>
 <td><p>8B instruction-tuned</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic</span></code></a></p></td>
 <td><p>FP8 (dynamic)</p></td>
 <td><p>1</p></td>
 <td><p>8B instruction-tuned; RedHatAI FP8-dynamic build</p></td>
@@ -489,7 +491,7 @@ with those, see the upstream model card linked below.</p>
 <ul class="simple">
 <li><p><strong>Architecture:</strong> Llama 3.1 (dense), <code class="docutils literal notranslate"><span class="pre">LlamaForCausalLM</span></code></p></li>
 <li><p><strong>Input / Output:</strong> Text / Text</p></li>
-<li><p><strong>Quantization:</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct</span></code> runs in native 16-bit; <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic</span></code> uses static FP8 weights with dynamic FP8 activation quantization (per-token).</p></li>
+<li><p><strong>Quantization:</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Llama-3.1-8B-Instruct</span></code> runs in native 16-bit; <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic</span></code> uses static FP8 weights with dynamic FP8 activation quantization (per-token).</p></li>
 </ul>
 </section>
 <section id="usage">
@@ -500,12 +502,12 @@ with those, see the upstream model card linked below.</p>
 <h3>Launch the server<a class="headerlink" href="#launch-the-server" title="Link to this heading">#</a></h3>
 <p>The simplest way to serve the model is:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch the server, listening on port 8000 by default</span>
-furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic
+furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic
 </pre></div>
 </div>
 <p>To also enable tool (function) calling, add the <code class="docutils literal notranslate"><span class="pre">llama3_json</span></code> tool-call parser
 (the parser used by the Llama 3 series):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic<span class="w"> </span><span class="se">\</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--enable-auto-tool-choice<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tool-call-parser<span class="w"> </span>llama3_json
 </pre></div>
@@ -522,11 +524,11 @@ INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span cla
 <h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
 <p>The server exposes an OpenAI-compatible API. You can send a request with <code class="docutils literal notranslate"><span class="pre">curl</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic",</span>
+<span class="s1">    "messages": [{"role": "user", "content": "What is the capital of France?"}]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>

@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Preparation &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Model Preparation &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Preparation</a></li>
@@ -502,7 +504,7 @@ If you prefer to download the model in advance, you can do so using the
 <code class="docutils literal notranslate"><span class="pre">hf</span></code> command.</p>
 <p>The following command downloads the model weights and configuration files
 for the Llama 3.1 8B model to the Hugging Face Hub cache directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hf</span> <span class="n">download</span> <span class="s2">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hf</span> <span class="n">download</span> <span class="s2">"meta-llama/Llama-3.1-8B-Instruct"</span>
 </pre></div>
 </div>
 </section>
@@ -523,20 +525,20 @@ using fine-grained FP8 dynamic quantization.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">FineGrainedFP8Config</span>
 
-<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;Qwen/Qwen3-32B&quot;</span>
-<span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;./qwen3-32b-fp8-dynamic&quot;</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">"Qwen/Qwen3-32B"</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="s2">"./qwen3-32b-fp8-dynamic"</span>
 
 <span class="c1"># FineGrained FP8 Quantization Example</span>
 <span class="c1"># Using Block-wise(128x128) Dynamic FP8 Quantization for weights</span>
 <span class="n">quantization_config</span> <span class="o">=</span> <span class="n">FineGrainedFP8Config</span><span class="p">(</span>
-    <span class="n">activation_scheme</span><span class="o">=</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span>
+    <span class="n">activation_scheme</span><span class="o">=</span><span class="s2">"dynamic"</span><span class="p">,</span>
     <span class="n">weight_block_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="c1"># Loading the model with quantization configuration</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
     <span class="n">model_id</span><span class="p">,</span>
-    <span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">device_map</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>
     <span class="n">quantization_config</span><span class="o">=</span><span class="n">quantization_config</span><span class="p">,</span>
     <span class="n">torch_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span>
 <span class="p">)</span>
@@ -569,7 +571,7 @@ strategy:</p>
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
     <span class="c1"># Path to the quantized model directory or model ID from Hugging Face Hub</span>
-    <span class="n">model_id_or_path</span><span class="o">=</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic&quot;</span><span class="p">,</span>
+    <span class="n">model_id_or_path</span><span class="o">=</span><span class="s2">"./qwen3-32b-fp8-dynamic"</span><span class="p">,</span>
     <span class="n">model_config</span><span class="o">=</span><span class="n">ModelConfig</span><span class="p">(</span>
         <span class="n">max_model_len</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>  <span class="c1"># Optional: cap the context length of the generated buckets</span>
     <span class="p">),</span>
@@ -579,7 +581,7 @@ strategy:</p>
     <span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic-artifact&quot;</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s2">"./qwen3-32b-fp8-dynamic-artifact"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If you need full control over the bucket shapes, supply a <code class="docutils literal notranslate"><span class="pre">BucketConfig</span></code> explicitly.
@@ -588,7 +590,7 @@ is used as-is:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.artifact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArtifactBuilder</span><span class="p">,</span> <span class="n">BucketConfig</span><span class="p">,</span> <span class="n">ParallelConfig</span>
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">ArtifactBuilder</span><span class="p">(</span>
-    <span class="n">model_id_or_path</span><span class="o">=</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic&quot;</span><span class="p">,</span>
+    <span class="n">model_id_or_path</span><span class="o">=</span><span class="s2">"./qwen3-32b-fp8-dynamic"</span><span class="p">,</span>
     <span class="n">bucket_config</span><span class="o">=</span><span class="n">BucketConfig</span><span class="p">(</span>
         <span class="n">prefill_buckets</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)],</span>  <span class="c1"># Prefill bucket configuration</span>
         <span class="n">decode_buckets</span><span class="o">=</span><span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">256</span><span class="p">)],</span>   <span class="c1"># Decode bucket configuration</span>
@@ -600,7 +602,7 @@ is used as-is:</p>
     <span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s2">&quot;./qwen3-32b-fp8-dynamic-artifact&quot;</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s2">"./qwen3-32b-fp8-dynamic-artifact"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Once a model artifact is built, you can deploy it to any machine equipped with FuriosaAI RNGD and

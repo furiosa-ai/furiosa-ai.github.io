@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Host PCI Optimization Tuning &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>Host PCI Optimization Tuning &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -266,6 +266,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
@@ -278,6 +279,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
@@ -491,8 +493,10 @@ hugepages can:</p>
 <ul class="simple">
 <li><p>This adjusts the number of 2MB HugeTLB pages.</p></li>
 <li><p>When using additional caching optimizations involving KV Cache offloading,
-increasing this number may be necessary to ensure sufficient hugepage availability for pinned DMA buffers,
-depending on the size of the allocated host-side KV cache pool.</p></li>
+increasing this number may be necessary to ensure sufficient hugepage
+availability for pinned DMA buffers, depending on the size of the allocated
+host-side KV cache pool. See <a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html#hierarchicalprefixcaching"><span class="std std-ref">Hierarchical Prefix Caching</span></a> for configuration
+and sizing guidance.</p></li>
 <li><p>The allocation can fail (partially or fully) if memory is fragmented; applying
 early after boot usually works best.</p></li>
 </ul>
@@ -614,69 +618,69 @@ lspci<span class="w"> </span>-D<span class="w"> </span>-s<span class="w"> </span
 matching keys (vendor/device, BDF, or driver) for your environment.</p>
 <p>Create a rules file such as <code class="docutils literal notranslate"><span class="pre">/etc/udev/rules.d/99-furiosa.rules</span></code>:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Disable ACS on a specific upstream PCIe port to improve P2P performance.
-SUBSYSTEM==&quot;rngd_mgmt&quot;, ATTR{device_type}==&quot;RNGD&quot;, ACTION==&quot;add&quot;, ENV{BUSNAME}=&quot;$attr{busname}&quot;, RUN+=&quot;/usr/local/sbin/furiosa-acs-clear&quot;
+SUBSYSTEM=="rngd_mgmt", ATTR{device_type}=="RNGD", ACTION=="add", ENV{BUSNAME}="$attr{busname}", RUN+="/usr/local/sbin/furiosa-acs-clear"
 </pre></div>
 </div>
 <p>Create a script file such as <code class="docutils literal notranslate"><span class="pre">/usr/local/sbin/furiosa-acs-clear</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BUSNAME</span><span class="k">:-</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: BUSNAME is not set&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BUSNAME</span><span class="k">:-</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: BUSNAME is not set"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 <span class="k">fi</span>
 
-<span class="nv">DEVICE_ROOT</span><span class="o">=</span><span class="s2">&quot;/sys/bus/pci/devices&quot;</span>
-<span class="nv">DEVICE_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEVICE_ROOT</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">BUSNAME</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEVICE_PATH</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: PCI device not found: </span><span class="si">${</span><span class="nv">DEVICE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="nv">DEVICE_ROOT</span><span class="o">=</span><span class="s2">"/sys/bus/pci/devices"</span>
+<span class="nv">DEVICE_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">DEVICE_ROOT</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">BUSNAME</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span><span class="nv">$DEVICE_PATH</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: PCI device not found: </span><span class="si">${</span><span class="nv">DEVICE_PATH</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
 <span class="k">fi</span>
 
 <span class="nv">READLINK</span><span class="o">=</span><span class="k">$(</span>readlink<span class="w"> </span><span class="si">${</span><span class="nv">DEVICE_PATH</span><span class="si">}</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$READLINK</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Unable to read link for </span><span class="si">${</span><span class="nv">DEVICE_PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$READLINK</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Unable to read link for </span><span class="si">${</span><span class="nv">DEVICE_PATH</span><span class="si">}</span><span class="s2">"</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">3</span>
 <span class="k">fi</span>
 
 <span class="nv">PARENT_BDF</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$READLINK</span><span class="k">))</span>
-<span class="nv">PARENT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEVICE_ROOT</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Parent device not found: </span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="nv">PARENT_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">DEVICE_ROOT</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Parent device not found: </span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">4</span>
 <span class="k">fi</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">/vendor&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">/device&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Cannot read vendor/device IDs for </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">/vendor"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span><span class="s2">/device"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Cannot read vendor/device IDs for </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">5</span>
 <span class="k">fi</span>
 
 <span class="nv">VENDOR_ID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span>/vendor<span class="k">)</span>
 <span class="nv">DEVICE_ID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="si">${</span><span class="nv">PARENT_PATH</span><span class="si">}</span>/device<span class="k">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">VENDOR_ID</span><span class="p">,,</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0x1000&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Parent device </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> vendor_id is &#39;</span><span class="si">${</span><span class="nv">VENDOR_ID</span><span class="si">}</span><span class="s2">&#39;, expected &#39;0x1000&#39;&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">VENDOR_ID</span><span class="p">,,</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"0x1000"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Parent device </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> vendor_id is '</span><span class="si">${</span><span class="nv">VENDOR_ID</span><span class="si">}</span><span class="s2">', expected '0x1000'"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">6</span>
 <span class="k">fi</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEVICE_ID</span><span class="p">,,</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0xc030&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Parent device </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> device_id is &#39;</span><span class="si">${</span><span class="nv">DEVICE_ID</span><span class="si">}</span><span class="s2">&#39;, expected &#39;0xc030&#39;&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">DEVICE_ID</span><span class="p">,,</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"0xc030"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Parent device </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> device_id is '</span><span class="si">${</span><span class="nv">DEVICE_ID</span><span class="si">}</span><span class="s2">', expected '0xc030'"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">6</span>
 <span class="k">fi</span>
 
-<span class="nv">ACS_OFFSET</span><span class="o">=</span><span class="s2">&quot;0x176&quot;</span>
+<span class="nv">ACS_OFFSET</span><span class="o">=</span><span class="s2">"0x176"</span>
 <span class="nv">CURRENT_ACS</span><span class="o">=</span><span class="k">$(</span>setpci<span class="w"> </span>-s<span class="w"> </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">ACS_OFFSET</span><span class="si">}</span>.W<span class="k">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CURRENT_ACS</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Failed to read ACS register on </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">CURRENT_ACS</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Error: Failed to read ACS register on </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">7</span>
 <span class="k">fi</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CURRENT_ACS</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;0000&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;already set on </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">CURRENT_ACS</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"0000"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"already set on </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">else</span>
 <span class="w">  </span>setpci<span class="w"> </span>-s<span class="w"> </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">ACS_OFFSET</span><span class="si">}</span>.W<span class="o">=</span>0x0
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ACS clear for </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> completed&quot;</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ACS clear for </span><span class="si">${</span><span class="nv">PARENT_BDF</span><span class="si">}</span><span class="s2"> completed"</span>
 <span class="k">fi</span>
 </pre></div>
 </div>

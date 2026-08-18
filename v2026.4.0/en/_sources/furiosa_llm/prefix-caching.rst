@@ -162,6 +162,9 @@ The prefix cache shares memory with the KV cache pool. The scheduler automatical
 
 No manual tuning of cache size or eviction policies is necessary.
 
+To retain reusable prefixes in host memory after they leave the NPU cache, see
+:ref:`HierarchicalPrefixCaching`.
+
 Best Practices
 ==============
 

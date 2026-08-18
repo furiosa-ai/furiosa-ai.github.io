@@ -20,11 +20,11 @@ For the newer 70B revision see {doc}`llama-3.3`.
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
 | [`furiosa-ai/Llama-3.1-8B-Instruct`](https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct) | None (16-bit) | 1 | 8B instruction-tuned |
-| [`furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic`](https://huggingface.co/furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic) | FP8 (dynamic) | 1 | 8B instruction-tuned; RedHatAI FP8-dynamic build |
+| [`furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic`](https://huggingface.co/furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic) | FP8 (dynamic) | 1 | 8B instruction-tuned; RedHatAI FP8-dynamic build |
 
 - **Architecture:** Llama 3.1 (dense), `LlamaForCausalLM`
 - **Input / Output:** Text / Text
-- **Quantization:** `furiosa-ai/Llama-3.1-8B-Instruct` runs in native 16-bit; `furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic` uses static FP8 weights with dynamic FP8 activation quantization (per-token).
+- **Quantization:** `furiosa-ai/Llama-3.1-8B-Instruct` runs in native 16-bit; `furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic` uses static FP8 weights with dynamic FP8 activation quantization (per-token).
 
 ## Usage
 
@@ -37,14 +37,14 @@ The simplest way to serve the model is:
 
 ```sh
 # Launch the server, listening on port 8000 by default
-furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic
+furiosa-llm serve furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic
 ```
 
 To also enable tool (function) calling, add the `llama3_json` tool-call parser
 (the parser used by the Llama 3 series):
 
 ```sh
-furiosa-llm serve furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic \
+furiosa-llm serve furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic \
   --enable-auto-tool-choice \
   --tool-call-parser llama3_json
 ```
@@ -66,7 +66,7 @@ The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-    "model": "furiosa-ai/Llama-3.1-8B-Instruct-FP8-dynamic",
+    "model": "furiosa-ai/Meta-Llama-3.1-8B-Instruct-FP8-dynamic",
     "messages": [{"role": "user", "content": "What is the capital of France?"}]
     }' \
     | python -m json.tool

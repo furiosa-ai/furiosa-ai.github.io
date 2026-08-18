@@ -37,6 +37,7 @@ Documentation
 * :ref:`StructuredOutput`: Guide to structured output generation
 * :ref:`VisionLanguageModels`: Guide to serving Vision-Language models with image inputs
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
+* :ref:`HierarchicalPrefixCaching`: Guide to extending prefix caching with host memory
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`DataParallelRouting`: Understanding scoring-based data-parallel routing
 * :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM

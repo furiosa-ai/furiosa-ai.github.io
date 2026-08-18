@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
@@ -479,7 +481,7 @@ artifact path, as follows:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.4.0b11.
+<p>This document is based on Furiosa SDK 2026.4.0b12.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="supported-apis">
@@ -538,11 +540,11 @@ The features and APIs described herein are subject to change in the future.</p>
 <p>Once the server is running, you can interact with it using an HTTP client,
 as shown in the following example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;EMPTY&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "EMPTY",</span>
+<span class="s1">    "messages": [{"role": "user", "content": "What is the capital of France?"}]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -557,23 +559,23 @@ with streaming mode:</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
     <span class="n">stream_chat_completion</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}],</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">"EMPTY"</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What is the capital of France?"</span><span class="p">}],</span>
         <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream_chat_completion</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">run</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -651,47 +653,47 @@ parameters. Here’s an example:</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">...&quot;</span>
-<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;get_weather&quot;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">..."</span>
+<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"get_weather"</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
 
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;City and state, e.g., &#39;San Francisco, CA&#39;&quot;</span><span class="p">},</span>
-                <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]}</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span>
+    <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"get_weather"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Get the current weather in a given location"</span><span class="p">,</span>
+        <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"location"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"City and state, e.g., 'San Francisco, CA'"</span><span class="p">},</span>
+                <span class="s2">"unit"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"celsius"</span><span class="p">,</span> <span class="s2">"fahrenheit"</span><span class="p">]}</span>
             <span class="p">},</span>
-            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+            <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"location"</span><span class="p">,</span> <span class="s2">"unit"</span><span class="p">]</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}]</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What's the weather like in San Francisco?"</span><span class="p">}],</span>
     <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span><span class="p">,</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">"required"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">tool_call</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Expected &#39;get_weather&#39; but got &#39;</span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">tool_call</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"get_weather"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Expected 'get_weather' but got '</span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">'"</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The expected output is as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Function called: get_weather
-Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot;: &quot;fahrenheit&quot;}
+Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
 Result: Getting the weather for San Francisco, CA in fahrenheit...
 </pre></div>
 </div>
@@ -722,13 +724,13 @@ You can check the help text’s <code class="docutils literal notranslate"><span
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
 
 
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;9.11 and 9.8, which is greater?&quot;</span><span class="p">}]</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"9.11 and 9.8, which is greater?"</span><span class="p">}]</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
@@ -737,9 +739,9 @@ You can check the help text’s <code class="docutils literal notranslate"><span
 <span class="n">message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
 <span class="c1"># The reasoning parser splits the chain-of-thought into a separate `reasoning`</span>
 <span class="c1"># field, kept out of `content`.</span>
-<span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">,</span> <span class="s2">&quot;expected a non-empty reasoning field&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">,</span> <span class="s2">"expected a non-empty reasoning field"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Reasoning:"</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Answer:"</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">

@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>PoolingParams class &#8212; FuriosaAI Developer Center 2026.4.0b11 documentation</title>
+    <title>PoolingParams class &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=9c948bbf"></script>
+    <script src="../../_static/documentation_options.js?v=8be00bd9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
@@ -513,15 +515,15 @@ If set, truncates the embedding to the first N dimensions
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span><span class="p">,</span> <span class="n">PoolingParams</span>
 
-<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;path/to/embedding/model&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span><span class="n">artifact_path</span><span class="o">=</span><span class="s2">"path/to/embedding/model"</span><span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
     <span class="c1"># With normalization (default)</span>
     <span class="n">params_normalized</span> <span class="o">=</span> <span class="n">PoolingParams</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="n">pooling_params</span><span class="o">=</span><span class="n">params_normalized</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="n">pooling_params</span><span class="o">=</span><span class="n">params_normalized</span><span class="p">)</span>
     <span class="c1"># Output vectors have unit length (L2 norm = 1.0)</span>
 
     <span class="c1"># Without normalization</span>
     <span class="n">params_raw</span> <span class="o">=</span> <span class="n">PoolingParams</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="n">pooling_params</span><span class="o">=</span><span class="n">params_raw</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">,</span> <span class="n">pooling_params</span><span class="o">=</span><span class="n">params_raw</span><span class="p">)</span>
     <span class="c1"># Output vectors preserve original magnitudes</span>
 </pre></div>
 </div>

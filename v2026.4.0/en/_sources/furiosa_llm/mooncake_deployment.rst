@@ -10,14 +10,18 @@ Prerequisites
 -------------
 
 - A Kubernetes cluster equipped with Furiosa RNGD devices.
-- Prebuilt Mooncake Library
+- Installing ``furiosa-llm[mooncake]`` or building Mooncake library from source code
+- Installing the following set of libraries for Mooncake Store library:
+
+  - Ubuntu: ``libcurl4 libibverbs1 rdma-core librdmacm1 libnuma1 liburing2``
+  - Rocky Linux / RHEL: ``libcurl libibverbs rdma-core librdmacm numactl-libs liburing``
 
 For detailed instructions on setting up an RNGD cluster, please refer to :ref:`Installing Prerequisites<InstallingPrerequisites>` and :ref:`Kubernetes Plugins<Kubernetes>`.
 
 Building Mooncake Library
 -------------------------
 
-Furiosa-LLM uses Mooncake libraries built from commit `c989668 <https://github.com/kvcache-ai/Mooncake/tree/c9896684fbd7b85ca207c643056a645ab6be3bad>`__.
+Furiosa-LLM uses Mooncake libraries built from commit `6c721ee <https://github.com/kvcache-ai/Mooncake/tree/6c721eeab10ae2606a7829c3ee58ec42cc1c1093>`__.
 Refer to the `Mooncake Build Guide <https://kvcache-ai.github.io/Mooncake/getting_started/build.html>`__ for build instructions.
 The library is built with the following configuration:
 
@@ -31,7 +35,7 @@ The library is built with the following configuration:
        -DWITH_EP=OFF \
        -DSTORE_USE_ETCD=ON \
        -DCMAKE_BUILD_TYPE=Release \
-       -DBUILD_SHARED_LIBS=ON \
+       -DWITH_STORE_C_SHARED=ON \
        -DBUILD_EXAMPLES=OFF \
        -DBUILD_BENCHMARK=OFF \
        -DWITH_STORE_GO=OFF \
@@ -40,7 +44,7 @@ The library is built with the following configuration:
 This produces ``libmooncake_store.so`` (and its dependencies such as
 ``libtransfer_engine.so``). Furiosa-LLM loads this library at runtime rather than
 linking it, so it is **not** bundled into the ``furiosa-llm`` wheel; you make it
-available to Furiosa-LLM by putting its directory on ``LD_LIBRARY_PATH`` as
+available to Furiosa-LLM by putting its directory in ``MOONCAKE_STORE_LIB_PATH`` as
 described in :ref:`Step 4 <ConnectFuriosaToMooncake>` below.
 
 Step 1: Deploy Mooncake Master
@@ -68,7 +72,7 @@ Currently, Furiosa-LLM supports TCP-based Mooncake Master Service.
        spec:
          containers:
          - name: mooncake-master
-           image: furiosaai/mooncake:c9896684-no-cuda
+           image: kvcacheai/mooncake:0.3.12.post1
            command:
            - mooncake_master
            args:
@@ -190,7 +194,7 @@ Replace the ``MOONCAKE_MASTER_SERVICE_FQDN`` with the FQDN obtained from the ser
        spec:
          containers:
          - name: mooncake-store
-           image: furiosaai/mooncake:c9896684-no-cuda
+           image: kvcacheai/mooncake:0.3.12.post1
            command:
            - mooncake_client
            args:
@@ -249,18 +253,9 @@ Replace the ``MOONCAKE_MASTER_SERVICE_FQDN`` with the FQDN obtained from the ser
              requests:
                ephemeral-storage: 256Gi
                memory: 80Gi
-           terminationMessagePath: /dev/termination-log
-           terminationMessagePolicy: File
            volumeMounts:
            - mountPath: /mnt/ssd_offload
              name: ssd-offload
-         dnsPolicy: ClusterFirst
-         imagePullSecrets:
-         - name: gcr-credential
-         restartPolicy: Always
-         schedulerName: default-scheduler
-         securityContext: {}
-         terminationGracePeriodSeconds: 30
          volumes:
          - emptyDir: {}
            name: ssd-offload
@@ -281,17 +276,22 @@ Set the following environment variables on Furiosa-LLM Pods to utilize Mooncake.
 The following environment variables enable the TCP-based Mooncake transfer protocol for Furiosa-LLM, with 6.25 GiB of Host DRAM contributing to the distributed memory pool.
 
 Furiosa-LLM does not bundle Mooncake: the ``furiosa-llm`` wheel links no Mooncake
-library and stays lean. When L3 is enabled, Furiosa-LLM loads
-``libmooncake_store.so`` by soname on first use (``dlopen``), so put the
-directory holding the library you built above on ``LD_LIBRARY_PATH`` — the same
-directory its own dependencies (``libtransfer_engine.so``, ``libetcd_wrapper.so``,
-glog, …) are resolved from. If the library cannot be loaded, Furiosa-LLM logs a
-warning and runs L2-only instead of failing.
+library and stays lean. When L3 is enabled, Furiosa-LLM searches for
+``libmooncake_store.so`` on first use in the following order:
+
+#. The directory specified by ``MOONCAKE_STORE_LIB_PATH``.
+#. The library path provided by the installed ``furiosa-llm-mooncake`` pip package.
+#. The dynamic linker's normal lookup by soname, including directories listed
+   in ``LD_LIBRARY_PATH`` and the system library paths.
+#. If none of these sources provides a usable library, report a setup error.
+
+The setup error is logged as a warning, and Furiosa-LLM runs L2-only instead of
+failing.
 
 .. code-block:: bash
 
    export L3_ENABLED=1
-   export LD_LIBRARY_PATH=/opt/mooncake/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+   export MOONCAKE_STORE_LIB_PATH=/path/to/mooncake_store
    export MOONCAKE_MASTER=(MOONCAKE_MASTER_SERVICE_FQDN):50051
    export MOONCAKE_TE_META_DATA_SERVER=http://(MOONCAKE_MASTER_SERVICE_FQDN):8080/metadata
    export MOONCAKE_PROTOCOL=tcp
