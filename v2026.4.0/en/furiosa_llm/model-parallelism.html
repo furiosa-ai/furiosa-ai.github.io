@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.4.0b12 documentation</title>
+    <title>Model Parallelism &#8212; FuriosaAI Developer Center 2026.4.0b13 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=8be00bd9"></script>
+    <script src="../_static/documentation_options.js?v=301c89c4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -529,7 +529,7 @@ Similarly, <code class="docutils literal notranslate"><span class="pre">LLM</spa
 <h3>Best Practices for Furiosa-LLM<a class="headerlink" href="#best-practices-for-furiosa-llm" title="Link to this heading">#</a></h3>
 <p>Each parallelism type has its own characteristics and constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code> parameter can be at most the number of devices.
-The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.4.0b12 release;
+The <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code> parameter can only be 4 or 8 in the 2026.4.0b13 release;
 future releases will lift this limitation.</p>
 <p>The product of <code class="docutils literal notranslate"><span class="pre">tensor_parallel_size</span></code>, <code class="docutils literal notranslate"><span class="pre">pipeline_parallel_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>
 should be equal to the total number of PEs in your machine.</p>
