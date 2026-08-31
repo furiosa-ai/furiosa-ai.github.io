@@ -37,10 +37,10 @@ Returns the :class:`furiosa_llm.SamplingParams` used when ``generate()``,
 ``chat()``, or ``stream_generate()`` is called without an explicit
 ``sampling_params`` argument.
 
-If the loaded artifact contains a ``generation_config.json`` file, its
-values populate the returned object; otherwise a plain ``SamplingParams()``
-is returned. See :ref:`DefaultSamplingParams` for the full list of
-honored fields and the resolution rules on the server side.
+If the model repository or local directory contains a ``generation_config.json`` file, its
+values populate the returned object; otherwise a plain ``SamplingParams()`` is returned.
+See :ref:`DefaultSamplingParams` for the full list of honored fields and the resolution
+rules on the server side.
 
 embed()
 -------
@@ -62,7 +62,7 @@ Generate embedding vectors for the given prompts. This method is only applicable
 
     from furiosa_llm import LLM, PoolingParams
 
-    with LLM(artifact_path="path/to/embedding/model") as llm:
+    with LLM("furiosa-ai/Qwen3-Embedding-0.6B") as llm:
         # Single embedding
         outputs = llm.embed("Hello, world!")
         embedding = outputs[0].outputs.embedding
@@ -103,7 +103,7 @@ including Qwen3-Reranker models or models converted using ``as_binary_seq_cls_mo
 
     from furiosa_llm import LLM, PoolingParams
 
-    with LLM(artifact_path="path/to/reranker/model") as llm:
+    with LLM("furiosa-ai/Qwen3-Reranker-0.6B") as llm:
         # 1-to-N scoring: one query against multiple documents
         query = "What is machine learning?"
         documents = [

@@ -25,7 +25,7 @@ patching, prompt-token expansion) is handled by the Hugging Face
 Quick Start
 ===========
 
-Launch a server against a compiled VL artifact:
+Launch a server with a vision-language model that includes a compatible FXB:
 
 .. code-block:: bash
 

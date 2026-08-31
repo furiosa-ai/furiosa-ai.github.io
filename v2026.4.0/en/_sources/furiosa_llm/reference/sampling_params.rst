@@ -13,11 +13,10 @@ SamplingParams class
 Default Sampling Parameters from ``generation_config.json``
 ===========================================================
 
-If a model artifact contains a ``generation_config.json`` file, Furiosa-LLM
-uses the values in that file as the effective defaults for the fields listed
-below. The file is copied verbatim from the source Hugging Face model during
-artifact build — Furiosa-LLM does not customize it. If the file is absent,
-the plain ``SamplingParams()`` defaults apply.
+If the model repository or local directory contains a ``generation_config.json`` file,
+Furiosa-LLM uses its values as the effective defaults for the fields listed below. These
+values are read directly from the source model configuration and are not customized. If the
+file is absent, the plain ``SamplingParams()`` defaults apply.
 
 The following ``generation_config.json`` keys are honored, and are mapped to
 ``SamplingParams`` fields as shown:

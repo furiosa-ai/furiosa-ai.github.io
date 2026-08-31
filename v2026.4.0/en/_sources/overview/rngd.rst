@@ -58,7 +58,7 @@ For a detailed technical analysis of the TCP architecture and the RNGD implement
    * - Thermal Solution
      - Passive
    * - Thermal Design Power (TDP)
-     - 150W
+     - 180W
    * - Power Connector
      - 12VHPWR
    * - Form Factor
@@ -73,4 +73,3 @@ For a detailed technical analysis of the TCP architecture and the RNGD implement
      - Yes
    * - Secure Boot with Root of Trust
      - Yes
-

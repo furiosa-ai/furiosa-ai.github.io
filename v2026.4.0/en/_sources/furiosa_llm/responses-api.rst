@@ -42,7 +42,7 @@ is **disabled by default** and must be explicitly enabled with the
 
 .. code-block:: bash
 
-    furiosa-llm serve [ARTIFACT_PATH] --enable-responses-api-store
+    furiosa-llm serve [MODEL_ID_OR_PATH] --enable-responses-api-store
 
 The following server options control the store behavior:
 
@@ -206,6 +206,10 @@ Parameters without descriptions inherit their behavior and functionality from th
      - false
      - When true, retain the matched ``stop`` string in the output; any text
        after the match in the completing token is removed.
+   * - skip_special_tokens
+     - boolean
+     - true
+     - Whether tokenizer special tokens are omitted from generated text.
    * - max_output_tokens
      - integer
      - null

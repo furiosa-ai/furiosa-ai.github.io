@@ -19,6 +19,7 @@ Currently, Furiosa-LLM supports the following tool calling parsers:
 * ``hermes``: For models using the Hermes tool calling format (e.g., EXAONE-4.0, Qwen3 series)
 * ``llama3_json``: For Llama series models (e.g., Llama 3.1, Llama 3.2)
 * ``openai``: For models using the OpenAI tool calling format (e.g., gpt-oss-20b, gpt-oss-120b)
+* ``gemma4``: For Gemma 4 models
 
 When starting the server, specify the appropriate parser using the ``--tool-call-parser`` option.
 

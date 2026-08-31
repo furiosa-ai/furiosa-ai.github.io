@@ -81,7 +81,7 @@ Furiosa-LLM
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`DataParallelRouting`: Understanding scoring-based data-parallel routing
-* :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM
+* :ref:`FXB`: Model lifecycle, building, caching, and serving with FXB
 * :ref:`ModelParallelism`: Tensor/Pipeline/Data parallelism in Furiosa-LLM
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
@@ -153,7 +153,6 @@ Other Links
    /furiosa_llm/hierarchical-prefix-caching
    /furiosa_llm/hybrid-kv-cache
    /furiosa_llm/data-parallel-routing
-   /furiosa_llm/model-preparation
    /furiosa_llm/fxb
    /furiosa_llm/model-parallelism
    /furiosa_llm/reference

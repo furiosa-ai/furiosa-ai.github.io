@@ -77,9 +77,12 @@ Embedding Models
    * - Model Name
      - Architecture
      - HF Models
-   * - `BGE-M3 <https://huggingface.co/BAAI/bge-m3>`_
+   * - :doc:`BGE-M3 <models/bge-m3>`
      - ``XLMRobertaModel``
      - ``BAAI/bge-m3``
+   * - :doc:`E5-Mistral <models/e5-mistral>`
+     - ``MistralModel``
+     - ``intfloat/e5-mistral-7b-instruct``
    * - :doc:`Harrier OSS v1 <models/harrier-oss-v1>`
      - ``Qwen3Model``
      - ``microsoft/harrier-oss-v1-0.6b``
@@ -100,7 +103,7 @@ Cross-Encoder Models
      - Architecture
      - HF Models
      - Score Template
-   * - `BGE Reranker v2 M3 <https://huggingface.co/BAAI/bge-reranker-v2-m3>`_
+   * - :doc:`BGE Reranker v2 M3 <models/bge-reranker-v2-m3>`
      - ``XLMRobertaForSequenceClassification``
      - ``BAAI/bge-reranker-v2-m3``
      - N/A
@@ -125,6 +128,14 @@ API.
      - Architecture
      - Modalities
      - Example Hugging Face Models
+   * - :doc:`EXAONE 4.5 <models/exaone-4.5>`
+     - ``Exaone4_5_ForConditionalGeneration``
+     - Text, Image
+     - ``LGAI-EXAONE/EXAONE-4.5-33B-FP8``
+   * - :doc:`Gemma 4 <models/gemma-4>`
+     - ``Gemma4ForConditionalGeneration``
+     - Text (current FXB; upstream also Image)
+     - ``RedHatAI/gemma-4-31B-it-FP8-block``
    * - :doc:`Qwen 3 VL <models/qwen3-vl>`
      - ``Qwen3VLForConditionalGeneration``
      - Text, Image
@@ -165,11 +176,31 @@ The status of each check uses the following scale:
      - Function
      - Correctness
      - Performance
+   * - `bge-m3 <https://huggingface.co/furiosa-ai/bge-m3>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
+   * - `e5-mistral-7b-instruct <https://huggingface.co/furiosa-ai/e5-mistral-7b-instruct>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
    * - `EXAONE-4.0-32B-FP8 <https://huggingface.co/furiosa-ai/EXAONE-4.0-32B-FP8>`_
      - Text
      - ✅
      - ✅
      - ✅
+   * - `EXAONE-4.5-33B-FP8 <https://huggingface.co/furiosa-ai/EXAONE-4.5-33B-FP8>`_
+     - Multimodal
+     - ✅
+     - ✅
+     - 🟡
+   * - `gemma-4-31B-it-FP8-block <https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block>`_
+     - Text
+     - ✅
+     - ✅
+     - 🟡
    * - `K-EXAONE-236B-A23B-NVFP4A16 <https://huggingface.co/furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16>`_
      - Text (MoE)
      - ✅
@@ -299,15 +330,20 @@ For models planned for future releases, see the :ref:`Roadmap`.
 
    models/qwen3
    models/qwen3-moe
+   models/bge-m3
+   models/e5-mistral
+   models/bge-reranker-v2-m3
    models/harrier-oss-v1
    models/qwen3-embedding
    models/qwen3-reranker
    models/qwen3-vl
+   models/gemma-4
    models/qwen2.5
    models/llama-3.1
    models/llama-3.3
    models/mistral-nemo
    models/gpt-oss
    models/exaone-4.0
+   models/exaone-4.5
    models/k-exaone
    models/solar-open

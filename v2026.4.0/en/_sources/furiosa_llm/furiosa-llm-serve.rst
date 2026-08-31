@@ -8,12 +8,13 @@ Furiosa-LLM offers an OpenAI-compatible server that hosts a single model
 and provides OpenAI-compatible chat, completions, responses, and embedding APIs
 along with some additional pooling API support.
 
-To launch the server, use the ``furiosa-llm serve`` command with the model
-artifact path, as follows:
+To launch the server, pass a Hugging Face model ID or local model directory to
+``furiosa-llm serve``. A compatible FXB must be bundled with the model, available in the
+local FXB cache, or selected explicitly with ``--fxb``:
 
 .. code-block::
 
-    furiosa-llm serve [ARTIFACT_PATH]
+    furiosa-llm serve [MODEL_ID_OR_PATH]
 
 .. warning::
 
@@ -58,8 +59,9 @@ To use the OpenAI-Compatible server, you need the following:
 
 * A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * An installation of :ref:`Furiosa-LLM <InstallingFuriosaLLM>`
-* A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>`
-* A model artifact
+* A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>` for gated models
+* A compatible FXB bundled with the model, available in the local cache, or supplied with
+  ``--fxb`` (see :ref:`FXB`)
 * A chat template for chat applications (optional)
 
 Using the OpenAI API
@@ -89,12 +91,12 @@ Limiting the Context Length
 ===========================
 
 By default the server accepts requests up to the smallest of the model's
-``max_position_embeddings``, the context length the artifact was compiled for,
+``max_position_embeddings``, the context length covered by the loaded FXB,
 and what the KV cache can hold. ``--max-model-len`` lowers that limit:
 
 .. code-block::
 
-    furiosa-llm serve [ARTIFACT_PATH] --max-model-len 8192
+    furiosa-llm serve [MODEL_ID_OR_PATH] --max-model-len 8192
 
 The value caps the total tokens a single request may use — prompt plus
 generated tokens. It applies to every request, including those that do not set
@@ -104,7 +106,7 @@ so on a memory-tight deployment it can be the KV-derived one even with no cap
 set. A request exceeding it is rejected with a context-length error.
 
 The cap may only *lower* the limit. A value above either the model's
-``max_position_embeddings`` or the context length the artifact was compiled for
+``max_position_embeddings`` or the context length covered by the loaded FXB
 is rejected at startup, so a typo fails fast instead of being ignored.
 
 Lowering the cap also raises concurrency for requests that omit ``max_tokens``.
@@ -115,14 +117,14 @@ context window. Each therefore costs a full context, so roughly
 ``max_kv_len / max_model_len`` of them run concurrently per data-parallel replica.
 The gain stops once another limit binds, such as ``--max-concurrency`` or a cap
 already at or above the KV capacity. It frees no NPU memory: weights, buckets and
-the KV pool are fixed by the artifact.
+the KV pool are fixed by the loaded FXB.
 
 .. note::
 
-  ``furiosa-llm build`` and ``fxb build`` take an option of the same name, but
-  it means something different there: at build time ``--max-model-len`` shapes
-  which buckets get compiled into the artifact. At serve time the bucket set is
-  fixed by the artifact, and this option only caps admission.
+  ``fxb build`` takes an option of the same name, but it means something different there:
+  at build time ``--max-model-len`` shapes which buckets are compiled into the FXB. At
+  serving time the bucket set is fixed by the loaded FXB, and this option only caps
+  admission.
 
 .. _ChatTemplates:
 
@@ -151,7 +153,7 @@ To launch the server with a custom chat template, use the following command:
 
 .. code-block:: bash
 
-    furiosa-llm serve [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
+    furiosa-llm serve [MODEL_ID_OR_PATH] --chat-template [CHAT_TEMPLATE_PATH]
 
 .. _ToolCallingServer:
 
@@ -314,7 +316,7 @@ Parameters without descriptions inherit their behavior and functionality from th
    * - skip_special_tokens
      - boolean
      - true
-     - See :ref:`Sampling Params <SamplingParams>`.
+     - Whether tokenizer special tokens are omitted from generated text.
    * - return_token_ids
      - boolean
      - false
@@ -602,7 +604,7 @@ You can access these endpoints using the OpenAI client's ``models.list()`` and `
 
 The response includes the standard `model object <https://platform.openai.com/docs/api-reference/models/object>`_ as defined by OpenAI, along with the following Furiosa-LLM-specific extensions:
 
-* ``artifact_id``: Unique identifier for the model artifact.
+* ``artifact_id``: Unique identifier for the loaded FXB.
 * ``max_prompt_len``: Maximum allowed length of input prompts.
 * ``max_context_len``: Maximum allowed length of the total context window.
 * ``runtime_config``: Model runtime configuration parameters, including bucket specifications.

@@ -44,7 +44,7 @@ When ``True``, the embedding vectors are normalized to unit length, which is use
 
     from furiosa_llm import LLM, PoolingParams
 
-    with LLM(artifact_path="path/to/embedding/model") as llm:
+    with LLM("furiosa-ai/Qwen3-Embedding-0.6B") as llm:
         # With normalization (default)
         params_normalized = PoolingParams(normalize=True)
         outputs = llm.embed("Hello, world!", pooling_params=params_normalized)

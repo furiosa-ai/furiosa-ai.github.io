@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b13 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b14 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=301c89c4"></script>
+    <script src="../_static/documentation_options.js?v=a5090b15"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,16 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -283,16 +289,12 @@
 <li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -474,14 +476,15 @@
 <p>Furiosa-LLM offers an OpenAI-compatible server that hosts a single model
 and provides OpenAI-compatible chat, completions, responses, and embedding APIs
 along with some additional pooling API support.</p>
-<p>To launch the server, use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command with the model
-artifact path, as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span>
+<p>To launch the server, pass a Hugging Face model ID or local model directory to
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>. A compatible FXB must be bundled with the model, available in the
+local FXB cache, or selected explicitly with <code class="docutils literal notranslate"><span class="pre">--fxb</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">MODEL_ID_OR_PATH</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.4.0b13.
+<p>This document is based on Furiosa SDK 2026.4.0b14.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="supported-apis">
@@ -530,8 +533,9 @@ The features and APIs described herein are subject to change in the future.</p>
 <ul class="simple">
 <li><p>A system with the prerequisites installed (see <a class="reference internal" href="../get_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
 <li><p>An installation of <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa-LLM</span></a></p></li>
-<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
-<li><p>A model artifact</p></li>
+<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a> for gated models</p></li>
+<li><p>A compatible FXB bundled with the model, available in the local cache, or supplied with
+<code class="docutils literal notranslate"><span class="pre">--fxb</span></code> (see <a class="reference internal" href="fxb.html#fxb"><span class="std std-ref">Furiosa Executable Bundles (FXB)</span></a>)</p></li>
 <li><p>A chat template for chat applications (optional)</p></li>
 </ul>
 </section>
@@ -583,9 +587,9 @@ with streaming mode:</p>
 <section id="limiting-the-context-length">
 <span id="servemaxmodellen"></span><h2>Limiting the Context Length<a class="headerlink" href="#limiting-the-context-length" title="Link to this heading">#</a></h2>
 <p>By default the server accepts requests up to the smallest of the model’s
-<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code>, the context length the artifact was compiled for,
+<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code>, the context length covered by the loaded FXB,
 and what the KV cache can hold. <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> lowers that limit:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="nb">len</span> <span class="mi">8192</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">MODEL_ID_OR_PATH</span><span class="p">]</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="nb">len</span> <span class="mi">8192</span>
 </pre></div>
 </div>
 <p>The value caps the total tokens a single request may use — prompt plus
@@ -595,7 +599,7 @@ limit advertised on <code class="docutils literal notranslate"><span class="pre"
 so on a memory-tight deployment it can be the KV-derived one even with no cap
 set. A request exceeding it is rejected with a context-length error.</p>
 <p>The cap may only <em>lower</em> the limit. A value above either the model’s
-<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code> or the context length the artifact was compiled for
+<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code> or the context length covered by the loaded FXB
 is rejected at startup, so a typo fails fast instead of being ignored.</p>
 <p>Lowering the cap also raises concurrency for requests that omit <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>.
 Admission is conservative by default: a request is charged <code class="docutils literal notranslate"><span class="pre">prompt</span> <span class="pre">+</span> <span class="pre">max_tokens</span></code>
@@ -605,13 +609,13 @@ context window. Each therefore costs a full context, so roughly
 <code class="docutils literal notranslate"><span class="pre">max_kv_len</span> <span class="pre">/</span> <span class="pre">max_model_len</span></code> of them run concurrently per data-parallel replica.
 The gain stops once another limit binds, such as <code class="docutils literal notranslate"><span class="pre">--max-concurrency</span></code> or a cap
 already at or above the KV capacity. It frees no NPU memory: weights, buckets and
-the KV pool are fixed by the artifact.</p>
+the KV pool are fixed by the loaded FXB.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> take an option of the same name, but
-it means something different there: at build time <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> shapes
-which buckets get compiled into the artifact. At serve time the bucket set is
-fixed by the artifact, and this option only caps admission.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> takes an option of the same name, but it means something different there:
+at build time <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> shapes which buckets are compiled into the FXB. At
+serving time the bucket set is fixed by the loaded FXB, and this option only caps
+admission.</p>
 </div>
 </section>
 <section id="chat-templates">
@@ -633,7 +637,7 @@ the default, you can specify one using the <code class="docutils literal notrans
 <p>For reference, you can find a well-structured example of a chat template in the
 <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
 <p>To launch the server with a custom chat template, use the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>MODEL_ID_OR_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
 </pre></div>
 </div>
 </section>
@@ -857,7 +861,7 @@ and offline-API behavior.</p>
 <tr class="row-even"><td><p>skip_special_tokens</p></td>
 <td><p>boolean</p></td>
 <td><p>true</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<td><p>Whether tokenizer special tokens are omitted from generated text.</p></td>
 </tr>
 <tr class="row-odd"><td><p>return_token_ids</p></td>
 <td><p>boolean</p></td>
@@ -1205,7 +1209,7 @@ If not specified, all documents are returned in ranked order.</p></td>
 <p>You can access these endpoints using the OpenAI client’s <code class="docutils literal notranslate"><span class="pre">models.list()</span></code> and <code class="docutils literal notranslate"><span class="pre">models.retrieve()</span></code> methods.</p>
 <p>The response includes the standard <a class="reference external" href="https://platform.openai.com/docs/api-reference/models/object">model object</a> as defined by OpenAI, along with the following Furiosa-LLM-specific extensions:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">artifact_id</span></code>: Unique identifier for the model artifact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">artifact_id</span></code>: Unique identifier for the loaded FXB.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_prompt_len</span></code>: Maximum allowed length of input prompts.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_context_len</span></code>: Maximum allowed length of the total context window.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">runtime_config</span></code>: Model runtime configuration parameters, including bucket specifications.</p></li>

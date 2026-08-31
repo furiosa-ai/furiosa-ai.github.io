@@ -3,27 +3,29 @@
 ****************************************************
 Furiosa Executable Bundles (FXB)
 ****************************************************
-A **Furiosa Executable Bundle (FXB)** is Furiosa-LLM's compiled-artifact format. An ``.fxb``
-file is a single archive holding the compiled binaries — generated for a specific model
-architecture — together with the metadata needed to run the model on the Furiosa NPU. It
-is designed to be easy to distribute, share, and reuse: once a model is compiled into an
-``.fxb``, you can serve it directly without recompiling, copy it to another machine, or
-publish it to the Hugging Face Hub for others to reuse.
 
-A bundle is not tied to a single model. Models that compile to the same kernels share an
-**architecture fingerprint**, and any model with a matching fingerprint can reuse the same
-``.fxb`` — so a fine-tuned model, a model whose weights were updated, or any other model of
-the same architecture can be served from one bundle without recompiling. See
-:ref:`FXBFingerprint` for how compatibility is determined.
+A model served by Furiosa-LLM consists of two parts: the model assets in Hugging Face
+format and the compiled program that runs those assets on the Furiosa NPU. The model assets
+provide the configuration, tokenizer, and weights, while a **Furiosa Executable Bundle
+(FXB)** provides the compiled kernels. A runnable deployment needs both parts.
 
-.. note::
+Furiosa-LLM needs an FXB because the code executed on the NPU is compiled ahead of time for
+the model architecture and execution configuration. The resulting ``.fxb`` file is a single
+archive containing the compiled binaries and the metadata needed to load and run them.
 
-  **Coming from GPUs?** On a GPU, the kernels are software: they ship with the framework,
-  usually as pre-compiled CUDA kernel libraries, and the same binaries run for every model.
-  RNGD works differently — the compiler generates code that is optimized for a specific
-  model, and that code is not part of the Furiosa-LLM software but a separate artifact you
-  build, distribute, and load. FXB is both the **format** for that artifact and the
-  **tool** (the ``fxb`` command) for building, sharing, and inspecting it.
+Keeping the compiled program separate from the model assets has several benefits:
+
+* A model can start without compiling kernels on the serving host.
+* The FXB can be copied, cached, or published with a model.
+* Compatible models can reuse the same FXB when only their weights change.
+
+An FXB does not contain the model weights and does not replace the Hugging Face model
+directory. Furiosa-LLM still reads the configuration, tokenizer, and weights from that
+directory or repository.
+
+This page follows the model lifecycle from building an FXB to supplying it with the model
+assets and reusing it with compatible models. Detailed command behavior, bundle metadata,
+and compatibility rules are described in the later sections.
 
 .. tip::
 
@@ -34,7 +36,11 @@ the same architecture can be served from one bundle without recompiling. See
 
 Installation
 ============
-The ``fxb`` command ships with the Furiosa-LLM package — there is nothing extra to install.
+
+FXB includes the ``.fxb`` bundle format and the framework for building, distributing, and
+loading bundles. Furiosa-LLM exposes this lifecycle through the ``fxb`` CLI.
+
+The ``fxb`` CLI ships with the Furiosa-LLM package, so there is nothing extra to install.
 If you have not installed Furiosa-LLM yet, follow :ref:`InstallingFuriosaLLM`:
 
 .. only:: stable
@@ -51,21 +57,145 @@ If you have not installed Furiosa-LLM yet, follow :ref:`InstallingFuriosaLLM`:
     pip install --upgrade pip setuptools wheel uv
     uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==\ |release|
 
-Verify that the command is available:
+Verify that the CLI is available:
 
 .. code-block::
 
   fxb --help
 
-The ``fxb`` command groups the whole FXB lifecycle — building, downloading, caching, compatibility
-checking, and inspection. The cache and inspection subcommands also read the local cache that
+The ``fxb`` CLI covers the whole FXB lifecycle: building, downloading, caching, compatibility
+checking, and inspection. The cache and inspection subcommands use the same local cache that
 ``furiosa-llm serve`` consults at serving time.
 
-.. note::
 
-  FXB is the compiled-artifact format used by Furiosa-LLM. For the broader model-conversion
-  workflow and quantization, see :ref:`ModelPreparation`.
+.. _BuildingFXB:
 
+Building an FXB for a model
+===========================
+
+Use ``fxb build`` to compile a model into an ``.fxb`` bundle:
+
+.. code-block::
+
+  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8
+
+The first argument is a Hugging Face model ID or a local path (a path must start with ``.`` or
+``/``). The second is the output path; the ``.fxb`` extension is appended automatically when the
+path has none, so the command above writes ``qwen3-8b-fp8.fxb``.
+
+Preview the resolved configuration and bucket plan without compiling using ``--dry-run``:
+
+.. code-block::
+
+  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8 --dry-run
+
+Common options:
+
+* ``-tp/--tensor-parallel-size`` — number of PEs per tensor-parallel group (default: the model
+  preset).
+* ``-pp/--pipeline-parallel-size`` — pipeline-parallel size (default: ``1``).
+* ``--max-model-len`` — override the model's maximum context length for bucket selection. This
+  shapes what gets compiled into the bundle; ``furiosa-llm serve`` takes an option of the same
+  name that only caps admission at serve time (see :ref:`ServeMaxModelLen`).
+* ``-O/--optim-level`` — bucket-filtering optimization level: ``O0`` (minimal), ``O1`` (half),
+  ``O2`` (quarter), ``O3`` (full, the default).
+* ``--convert`` — task override for models with an ambiguous architecture: ``embed`` rewrites
+  ``*ForCausalLM`` → ``*Model``; ``score``/``classify`` → ``*ForSequenceClassification``
+  (default: ``auto``, i.e. keep the architecture from ``config.json``).
+
+After building, register the bundle in the cache so ``fxb check`` and ``furiosa-llm serve`` can
+find it:
+
+.. code-block::
+
+  fxb add ./qwen3-8b-fp8.fxb
+
+For production build recommendations, see :ref:`FXBBestPractices`.
+
+Models runnable with Furiosa-LLM
+================================
+
+Furiosa-LLM loads the model assets and the FXB together. The model assets must follow the
+Hugging Face Hub directory format and include files such as ``config.json``, tokenizer files,
+and model weights. A model can be distributed or invoked in either of the following forms.
+
+Model directory containing an FXB
+---------------------------------
+
+Place a compatible ``.fxb`` file in the Hugging Face model directory alongside the model
+configuration, tokenizer, and weights:
+
+.. code-block:: text
+
+  my-model/
+    config.json
+    tokenizer.json
+    model-00001-of-00002.safetensors
+    model-00002-of-00002.safetensors
+    model.safetensors.index.json
+    my-model.fxb
+
+The directory can be stored locally or published as a repository on the Hugging Face Hub.
+Furiosa-LLM discovers the bundled FXB automatically:
+
+.. code-block:: console
+
+  furiosa-llm serve ./my-model
+
+.. code-block:: console
+
+  furiosa-llm serve furiosa-ai/Qwen3-8B-FP8
+
+This form is convenient for distributing a self-contained model repository that is ready to
+serve.
+
+Specifying an FXB directly
+--------------------------
+
+Keep the model assets and FXB in separate locations and select the bundle with ``--fxb``:
+
+.. code-block:: console
+
+  furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb
+
+The first argument still identifies the Hugging Face model repository or local directory from
+which Furiosa-LLM loads the configuration, tokenizer, and weights. ``--fxb`` selects only the
+compiled bundle. This form is useful for testing a newly built FXB, pinning a specific bundle,
+or reusing one FXB with multiple compatible models.
+
+The Python API provides the same separation:
+
+.. code-block:: python
+
+  from furiosa_llm import LLM
+
+  llm = LLM("Qwen/Qwen3-8B-FP8", fxb="./qwen3-8b-fp8.fxb")
+
+For automatic discovery through the local FXB cache, see :ref:`ServingFromCachedFXB`.
+
+FXB compatibility
+=================
+
+FXB compatibility is determined by an **architecture fingerprint**. The fingerprint includes
+the model architecture and the ``config.json`` fields that affect kernel generation, such as
+hidden dimensions, attention configuration, mixture-of-experts settings, and quantization
+format. Model weights themselves are not part of the fingerprint.
+
+As a result, an existing FXB can usually be reused when:
+
+* a model is fine-tuned without changing its kernel-affecting configuration;
+* weights are updated while the architecture and fingerprint fields remain the same; or
+* another model repository has the same architecture fingerprint.
+
+A new FXB is required when a change affects the compiled kernels. Examples include changing
+the architecture, model dimensions, attention or expert configuration, quantization format,
+or another fingerprint field. Compatibility matching is strict; a fine-tuned model is not
+automatically compatible if its configuration also changes.
+
+Architecture compatibility is not the only deployment constraint. The FXB must also be
+suitable for the installed Furiosa software version and the intended tensor-parallel and
+context-length configuration. See :ref:`FXBFingerprint` for the exact matching rules and
+compatibility limitations.
 
 .. _ServingFromCachedFXB:
 
@@ -196,53 +326,6 @@ code path.
   .. code-block::
 
     hf auth login --token $HF_TOKEN
-
-
-.. _BuildingFXB:
-
-Building an FXB for a model
-===========================
-Use ``fxb build`` to compile a model into an ``.fxb`` bundle:
-
-.. code-block::
-
-  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8
-
-The first argument is a Hugging Face model id or a local path (a path must start with ``.`` or
-``/``). The second is the output path; the ``.fxb`` extension is appended automatically when the
-path has none, so the command above writes ``qwen3-8b-fp8.fxb``.
-
-Preview the resolved configuration and bucket plan without compiling using ``--dry-run``:
-
-.. code-block::
-
-  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8 --dry-run
-
-Common options:
-
-* ``-tp/--tensor-parallel-size`` — number of PEs per tensor-parallel group (default: the model
-  preset).
-* ``-pp/--pipeline-parallel-size`` — pipeline-parallel size (default: ``1``).
-* ``--max-model-len`` — override the model's maximum context length for bucket selection. This
-  shapes what gets compiled into the bundle; ``furiosa-llm serve`` takes an option of the same
-  name that only caps admission at serve time (see :ref:`ServeMaxModelLen`).
-* ``-O/--optim-level`` — bucket-filtering optimization level: ``O0`` (minimal), ``O1`` (half),
-  ``O2`` (quarter), ``O3`` (full, the default).
-* ``--convert`` — task override for models with an ambiguous architecture: ``embed`` rewrites
-  ``*ForCausalLM`` → ``*Model``; ``score``/``classify`` → ``*ForSequenceClassification``
-  (default: ``auto``, i.e. keep the architecture from ``config.json``).
-
-After building, register the bundle in the cache so ``fxb check`` and ``furiosa-llm serve`` can
-find it:
-
-.. code-block::
-
-  fxb add ./qwen3-8b-fp8.fxb
-
-.. note::
-
-  ``fxb build`` is the FXB-only build path. The legacy artifact build path remains available under
-  ``furiosa-llm build`` for backward compatibility.
 
 
 .. _FXBCLIReference:
@@ -483,6 +566,8 @@ fingerprint fields are equal. Use ``fxb check`` to verify a match before reusing
   a match with ``fxb check`` before relying on a cached bundle for a different model.
 
 
+.. _FXBBestPractices:
+
 Best Practices
 ==============
 ``fxb build`` trades build time against the runtime coverage and performance of the resulting
@@ -532,32 +617,8 @@ deployment, accepting a longer build:
   fxb build openai/gpt-oss-120b gpt-oss-120b.fxb \
       -O O3 -tp 32 --max-model-len 32768 --concurrency 24 --build-report
 
-Publishing and distribution
----------------------------
-An FXB is meant to be reused — from the local cache, copied to another machine, or published to the
-Hugging Face Hub. Once you have a ``.fxb`` file, there are two ways to serve with it:
-
-* **Register it in the cache** with ``fxb add`` so it is discovered automatically. After adding,
-  ``fxb check`` confirms a target model is compatible, and ``furiosa-llm serve`` finds the bundle by
-  fingerprint without any extra flag (see
-  :ref:`Serving a model with a compatible cached FXB <ServingFromCachedFXB>` above for how
-  compatibility is matched). This is the right choice when you serve the model regularly or share
-  one cache across several models.
-
-  .. code-block::
-
-    fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8.fxb -O O3 -tp 8
-    fxb add ./qwen3-8b-fp8.fxb
-    fxb check Qwen/Qwen3-8B-FP8
-    furiosa-llm serve Qwen/Qwen3-8B-FP8
-
-* **Point at the file directly** with ``furiosa-llm serve --fxb <path>``, which uses the given
-  bundle as-is and skips cache lookup. This is convenient for a one-off run, a freshly built bundle
-  you have not registered, or pinning a specific file.
-
-  .. code-block::
-
-    furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb
+Deployment topology
+-------------------
 
 **Tensor parallelism is fixed at build time**, while **pipeline and data parallelism are set when
 you serve.** A bundle's ``-tp/--tensor-parallel-size`` shapes the compiled kernels (each kernel is
@@ -571,29 +632,3 @@ they are chosen at ``furiosa-llm serve`` time via ``-pp/--pipeline-parallel-size
 
   # Built once for tensor-parallel size 8; deployed with pipeline and data parallelism
   furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb -pp 2 -dp 4
-
-The simplest way to distribute a model is to ship the ``.fxb`` *inside* a standard model
-directory. Take a directory saved by Transformers' ``save_pretrained()`` — the usual
-``config.json``, ``tokenizer.json``, weights, and so on — drop a single ``.fxb`` file into it, and
-``furiosa-llm serve`` runs that directory directly: it loads the weights and tokenizer as usual and
-picks up the bundled ``.fxb`` (the second step of the resolution order above), with no cache setup
-or ``--fxb`` flag needed.
-
-.. code-block::
-
-  # A model directory that also contains an .fxb
-  my-model/
-    config.json
-    tokenizer.json
-    model-00001-of-00002.safetensors
-    ...
-    qwen3-8b-fp8.fxb        # the bundle, added alongside the weights
-
-  furiosa-llm serve ./my-model
-
-The same directory can then be published or distributed however you like — pushed to the Hugging
-Face Hub, copied to another machine, or packaged for deployment — and it serves on RNGD out of the
-box for anyone who pulls it. The pre-compiled models under the
-`furiosa-ai organization on the Hugging Face Hub <https://huggingface.co/furiosa-ai>`_ (for example
-``furiosa-ai/Qwen3-8B-FP8``) are published exactly this way: each repository carries the model
-files together with a matching ``.fxb``.

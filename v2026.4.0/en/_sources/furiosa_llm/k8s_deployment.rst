@@ -231,7 +231,7 @@ You should receive a valid response from the Furiosa-LLM server, similar to:
      "id": "cmpl-69102e5d78c94e29b74660eaadbe39db",
      "object": "text_completion",
      "created": 1748675715,
-     "model": "meta-llama/Llama-3.1-8B-Instruct",
+     "model": "furiosa-ai/Llama-3.1-8B-Instruct",
      "choices": [
        {
          "index": 0,
