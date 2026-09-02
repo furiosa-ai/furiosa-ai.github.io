@@ -12,18 +12,19 @@ FuriosaAI publishes the FP8-block
 weights under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai),
 together with a Furiosa Executable Bundle (FXB) for running them on
-[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The same upstream weights
-also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
-with those, see the upstream model card linked below.
+[FuriosaAI RNGD](https://furiosa.ai) with Furiosa-LLM. The current FXB supports
+text-to-text inference; image input is not yet supported. The same upstream
+weights also run on other frameworks (such as vLLM, SGLang, and Transformers);
+for usage with those, see the upstream model card linked below.
 
 ## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
-| [`furiosa-ai/gemma-4-31B-it-FP8-block`](https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block) | FP8 block | 4 | 31B dense; thinking is off by default |
+| [`furiosa-ai/gemma-4-31B-it-FP8-block`](https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block) | FP8 block | 4 | 31B dense; current FXB is text-only; thinking is off by default |
 
 - **Architecture:** Gemma 4 (dense), `Gemma4ForConditionalGeneration`
-- **Input / Output:** Image + Text / Text
+- **Input / Output:** Text / Text with the current FXB (the upstream model also supports image + text input)
 - **Quantization:** Linear-layer weights use static FP8 quantization with 128×128 blocks, and their input activations use dynamic FP8 quantization at runtime with groups of 128 values. The vision tower, embeddings, output head, and KV cache stay in 16-bit precision.
 
 ## Usage
@@ -37,23 +38,13 @@ Serve the model by passing its `furiosa-ai/<repo>` identifier:
 
 ```sh
 # Launch the server, listening on port 8000 by default
-furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block \
-  --reasoning-parser gemma4
+furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block
 ```
 
-Gemma 4 runs in **non-reasoning mode by default**. Keeping the `gemma4`
-reasoning parser enabled lets the server return reasoning in a separate field
-when thinking is enabled (see [Advanced Usage](#advanced-usage)).
-
-To also enable tool (function) calling, add automatic tool choice and the
-`gemma4` tool-call parser:
-
-```sh
-furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block \
-  --reasoning-parser gemma4 \
-  --enable-auto-tool-choice \
-  --tool-call-parser gemma4
-```
+Gemma 4's chat template can generate reasoning and tool calls, but Furiosa-LLM
+does not currently register parsers for the Gemma 4 output format. Keep the
+default non-thinking chat mode and do not enable automatic tool choice with this
+FXB.
 
 When the server is ready, you will see:
 
@@ -66,7 +57,7 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 
 ### Basic Usage
 
-The server exposes an OpenAI-compatible API. You can send a text-only request with
+The server exposes an OpenAI-compatible API. You can send a text request with
 `curl`:
 
 ```sh
@@ -79,131 +70,19 @@ curl http://localhost:8000/v1/chat/completions \
     | python -m json.tool
 ```
 
-To ask about an image, pass an `image_url` content part in the message:
-
-```sh
-curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -d '{
-    "model": "furiosa-ai/gemma-4-31B-it-FP8-block",
-    "messages": [{
-        "role": "user",
-        "content": [
-            {"type": "image_url", "image_url": {"url": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/p-blog/candy.JPG"}},
-            {"type": "text", "text": "What animal is on the candy?"}
-        ]
-    }]
-    }' \
-    | python -m json.tool
-```
-
-The `image_url.url` field accepts a remote `http://`/`https://` URL, an inline
-base64 `data:` URL, or a local `file://` path (the last requires the
-`--allowed-local-media-path` flag described under [Advanced Usage](#advanced-usage)).
-
-Once thinking is enabled (see [Advanced Usage](#advanced-usage)), Gemma 4
-returns reasoning separately from the final answer:
-
-* `response.choices[].message.reasoning` (non-streaming)
-* `response.choices[].delta.reasoning` (streaming)
-
-```python
-from openai import OpenAI
-
-client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
-
-response = client.chat.completions.create(
-    model="furiosa-ai/gemma-4-31B-it-FP8-block",
-    messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
-    extra_body={"chat_template_kwargs": {"enable_thinking": True}},
-)
-
-print("Reasoning:", response.choices[0].message.reasoning)
-print("Answer:", response.choices[0].message.content)
-```
-
-> **Note:** The `reasoning` field is not part of the OpenAI API specification but
-> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
-> appears only in responses that contain reasoning content; accessing it otherwise
-> raises an `AttributeError`.
-
 ### Advanced Usage
 
-**Multimodal serving options.** `furiosa-llm serve` provides flags to control
-multimodal behavior; requests that violate them are rejected with HTTP 400:
-
-- `--image-limit-per-prompt N` — maximum number of images allowed per request (default: unlimited).
-- `--allowed-local-media-path PATH` — allow `file://` URLs whose resolved path is under `PATH`. Local file access is disabled unless this is set.
-- `--allowed-media-domains D [D ...]` — whitelist remote domains for SSRF protection. When set, only images from the listed domains are fetched.
-- `--interleave-mm-strings` — keep image placeholders at their original positions when the model uses a string-format chat template (no-op for OpenAI-format templates).
-- `--mm-processor-cache-gb GB` — size of the UUID-keyed multimodal processor cache (default: 4.0). Clients can tag an `image_url` part with a `uuid` field and re-reference it in follow-up requests without re-uploading the image bytes; set to 0 to disable.
-
-For example, to serve local images under `/srv/media`, restrict remote fetches
-to a single domain, and allow up to four images per request:
-
-```sh
-furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block \
-  --reasoning-parser gemma4 \
-  --enable-auto-tool-choice \
-  --tool-call-parser gemma4 \
-  --allowed-local-media-path /srv/media \
-  --allowed-media-domains cdn.example.com \
-  --image-limit-per-prompt 4
-```
+**Current feature scope.** The upstream model accepts image input and its chat
+template supports optional reasoning through `enable_thinking` as well as native
+tool calls. The current Furiosa FXB supports text input only, and Furiosa-LLM
+does not yet provide the Gemma 4 reasoning and tool-call parsers required to
+return those outputs through the corresponding OpenAI-compatible response
+fields. Multimodal serving flags and automatic tool choice therefore do not
+enable these upstream capabilities for this FXB.
 
 See the [Vision-Language Models guide](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html)
-for image input formats, the UUID cache, and Python client examples.
-
-**Enabling reasoning.** Gemma 4 runs in non-reasoning mode by default. Enable
-reasoning for a single request by passing `enable_thinking` through
-`chat_template_kwargs`, as shown under [Basic Usage](#basic-usage). With
-`--reasoning-parser gemma4`, the chain of thought is returned separately from
-the final answer.
-
-To make every request reason, launch the server with
-`--default-chat-template-kwargs` (a request can still override the default):
-
-```sh
-furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block \
-  --reasoning-parser gemma4 \
-  --default-chat-template-kwargs '{"enable_thinking": true}'
-```
-
-**Preserving reasoning in tool-call conversations.** The chat template also
-supports `preserve_thinking`, which defaults to `false`. Set it to `true` to
-retain reasoning from earlier assistant tool-call messages when rendering a
-multi-turn agent conversation. It does not enable reasoning by itself:
-
-```python
-response = client.chat.completions.create(
-    model="furiosa-ai/gemma-4-31B-it-FP8-block",
-    messages=messages,
-    tools=tools,
-    extra_body={
-        "chat_template_kwargs": {
-            "enable_thinking": True,
-            "preserve_thinking": True,
-        }
-    },
-)
-```
-
-To apply both options by default for every request, use:
-
-```sh
-furiosa-llm serve furiosa-ai/gemma-4-31B-it-FP8-block \
-  --reasoning-parser gemma4 \
-  --enable-auto-tool-choice \
-  --tool-call-parser gemma4 \
-  --default-chat-template-kwargs '{"enable_thinking": true, "preserve_thinking": true}'
-```
-
-**Tool calling.** With the server launched using
-`--enable-auto-tool-choice --tool-call-parser gemma4` (see
-[Launch the server](#launch-the-server)), pass `tools` in the request and let the
-model decide when to call them. See the
-[Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
-for a complete client example and details on tool-choice options.
+and [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
+for the APIs that will apply when those capabilities are supported.
 
 ## Learn more
 

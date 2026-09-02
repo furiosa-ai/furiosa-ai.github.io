@@ -17,6 +17,8 @@ shipping a Furiosa Executable Bundle (FXB) for running the model on
 also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
 with those, see the upstream model card linked below.
 
+For the text-only predecessor, see {doc}`exaone-4.0`.
+
 ## Available Models
 
 | Model | Quantization | RNGD cards | Notes |

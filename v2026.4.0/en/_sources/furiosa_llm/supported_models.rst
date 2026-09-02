@@ -134,7 +134,7 @@ API.
      - ``LGAI-EXAONE/EXAONE-4.5-33B-FP8``
    * - :doc:`Gemma 4 <models/gemma-4>`
      - ``Gemma4ForConditionalGeneration``
-     - Text, Image
+     - Text (current FXB; upstream also Image)
      - ``RedHatAI/gemma-4-31B-it-FP8-block``
    * - :doc:`Qwen 3 VL <models/qwen3-vl>`
      - ``Qwen3VLForConditionalGeneration``
@@ -197,7 +197,7 @@ The status of each check uses the following scale:
      - ✅
      - 🟡
    * - `gemma-4-31B-it-FP8-block <https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block>`_
-     - Multimodal
+     - Text
      - ✅
      - ✅
      - 🟡
