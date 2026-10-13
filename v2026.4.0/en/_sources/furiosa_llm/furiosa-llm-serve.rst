@@ -8,12 +8,13 @@ Furiosa-LLM offers an OpenAI-compatible server that hosts a single model
 and provides OpenAI-compatible chat, completions, responses, and embedding APIs
 along with some additional pooling API support.
 
-To launch the server, use the ``furiosa-llm serve`` command with the model
-artifact path, as follows:
+To launch the server, pass a Hugging Face model ID or local model directory to
+``furiosa-llm serve``. A compatible FXB must be bundled with the model, available in the
+local FXB cache, or selected explicitly with ``--fxb``:
 
 .. code-block::
 
-    furiosa-llm serve [ARTIFACT_PATH]
+    furiosa-llm serve [MODEL_ID_OR_PATH]
 
 .. warning::
 
@@ -46,11 +47,11 @@ In addition, we have the following vLLM-compatible APIs for pooling models:
 
 * Score API (``/score``, ``/v1/score``)
 
-  * Currently supported only for Qwen3-Rerank models.
+  * Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.
 
 * Rerank API (``/rerank``, ``/v1/rerank``, ``/v2/rerank``)
 
-  * Currently supported only for Qwen3-Rerank models.
+  * Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.
 
 Prerequisites
 =============
@@ -58,8 +59,9 @@ To use the OpenAI-Compatible server, you need the following:
 
 * A system with the prerequisites installed (see :ref:`InstallingPrerequisites`)
 * An installation of :ref:`Furiosa-LLM <InstallingFuriosaLLM>`
-* A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>`
-* A model artifact
+* A :ref:`Hugging Face access token <AuthorizingHuggingFaceHub>` for gated models
+* A compatible FXB bundled with the model, available in the local cache, or supplied with
+  ``--fxb`` (see :ref:`FXB`)
 * A chat template for chat applications (optional)
 
 Using the OpenAI API
@@ -82,6 +84,47 @@ with streaming mode:
 
 .. literalinclude:: ../../../examples/online_chat_complete_async_client.py
   :language: python
+
+.. _ServeMaxModelLen:
+
+Limiting the Context Length
+===========================
+
+By default the server accepts requests up to the smallest of the model's
+``max_position_embeddings``, the context length covered by the loaded FXB,
+and what the KV cache can hold. ``--max-model-len`` lowers that limit:
+
+.. code-block::
+
+    furiosa-llm serve [MODEL_ID_OR_PATH] --max-model-len 8192
+
+The value caps the total tokens a single request may use — prompt plus
+generated tokens. It applies to every request, including those that do not set
+``max_tokens``: the implicit generation budget shrinks with the cap as well. The
+limit advertised on ``/v1/models`` is whichever of those four bounds is smallest,
+so on a memory-tight deployment it can be the KV-derived one even with no cap
+set. A request exceeding it is rejected with a context-length error.
+
+The cap may only *lower* the limit. A value above either the model's
+``max_position_embeddings`` or the context length covered by the loaded FXB
+is rejected at startup, so a typo fails fast instead of being ignored.
+
+Lowering the cap also raises concurrency for requests that omit ``max_tokens``.
+Admission is conservative by default: a request is charged ``prompt + max_tokens``
+KV blocks — one block per token, less any prefix-cache hit — for its whole
+lifetime, and a request that omits ``max_tokens`` is budgeted the entire remaining
+context window. Each therefore costs a full context, so roughly
+``max_kv_len / max_model_len`` of them run concurrently per data-parallel replica.
+The gain stops once another limit binds, such as ``--max-concurrency`` or a cap
+already at or above the KV capacity. It frees no NPU memory: weights, buckets and
+the KV pool are fixed by the loaded FXB.
+
+.. note::
+
+  ``fxb build`` takes an option of the same name, but it means something different there:
+  at build time ``--max-model-len`` shapes which buckets are compiled into the FXB. At
+  serving time the bucket set is fixed by the loaded FXB, and this option only caps
+  admission.
 
 .. _ChatTemplates:
 
@@ -110,7 +153,7 @@ To launch the server with a custom chat template, use the following command:
 
 .. code-block:: bash
 
-    furiosa-llm serve [ARTIFACT_PATH] --chat-template [CHAT_TEMPLATE_PATH]
+    furiosa-llm serve [MODEL_ID_OR_PATH] --chat-template [CHAT_TEMPLATE_PATH]
 
 .. _ToolCallingServer:
 
@@ -185,17 +228,11 @@ Here's an example that demonstrates how to access the reasoning content:
 API Reference
 =============
 
-.. warning::
-
-    Please note that using ``use_beam_search`` together with ``stream`` is not
-    allowed because beam search requires the whole sequence to produce the
-    output tokens.
-
 .. note::
 
     For sampling-related fields (``temperature``, ``top_p``, ``top_k``,
-    ``min_p``, ``repetition_penalty``, ``max_tokens``), each field resolves
-    in this order:
+    ``min_p``, ``repetition_penalty``, ``max_tokens``, ``stop``), each field
+    resolves in this order:
 
     1. The value specified in the request body, if set.
     2. The value from the model's ``generation_config.json``, if present.
@@ -248,14 +285,6 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - best_of
-     - integer
-     - 1
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - use_beam_search
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - top_k
      - integer
      - -1
@@ -264,14 +293,18 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 0.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - length_penalty
-     - float
-     - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - repetition_penalty
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
+   * - stop
+     - string or array[string]
+     - null
+     - Stop string or list of non-empty stop strings. See :ref:`Sampling Params <SamplingParams>`.
+   * - include_stop_str_in_output
+     - boolean
+     - false
+     - Whether to retain a matched ``stop`` string. See :ref:`Sampling Params <SamplingParams>`.
    * - stop_token_ids
      - array[integer]
      - []
@@ -280,14 +313,10 @@ Parameters without descriptions inherit their behavior and functionality from th
      - boolean
      - false
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - early_stopping
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - skip_special_tokens
      - boolean
      - true
-     - See :ref:`Sampling Params <SamplingParams>`.
+     - Whether tokenizer special tokens are omitted from generated text.
    * - return_token_ids
      - boolean
      - false
@@ -366,10 +395,6 @@ Parameters without descriptions inherit their behavior and functionality from th
      - integer
      - 1
      - Currently limited to 1.
-   * - best_of
-     - integer
-     - 1
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - temperature
      - float
      - 1.0
@@ -377,10 +402,6 @@ Parameters without descriptions inherit their behavior and functionality from th
    * - top_p
      - float
      - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - use_beam_search
-     - boolean
-     - false
      - See :ref:`Sampling Params <SamplingParams>`.
    * - top_k
      - integer
@@ -390,23 +411,23 @@ Parameters without descriptions inherit their behavior and functionality from th
      - float
      - 0.0
      - See :ref:`Sampling Params <SamplingParams>`.
-   * - length_penalty
-     - float
-     - 1.0
-     - See :ref:`Sampling Params <SamplingParams>`.
    * - repetition_penalty
      - float
      - 1.0
      - See :ref:`Sampling Params <SamplingParams>`.
+   * - stop
+     - string or array[string]
+     - null
+     - Stop string or list of non-empty stop strings. See :ref:`Sampling Params <SamplingParams>`.
+   * - include_stop_str_in_output
+     - boolean
+     - false
+     - Whether to retain a matched ``stop`` string. See :ref:`Sampling Params <SamplingParams>`.
    * - stop_token_ids
      - array[integer]
      - []
      - See :ref:`Sampling Params <SamplingParams>`.
    * - ignore_eos
-     - boolean
-     - false
-     - See :ref:`Sampling Params <SamplingParams>`.
-   * - early_stopping
      - boolean
      - false
      - See :ref:`Sampling Params <SamplingParams>`.
@@ -430,6 +451,21 @@ Parameters without descriptions inherit their behavior and functionality from th
      - integer
      - null
      - See :ref:`Sampling Params <SamplingParams>`.
+
+Stop-string response fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For Chat Completions and Completions, each response choice has a
+``stop_reason`` field. This is a Furiosa-LLM extension to the OpenAI-compatible
+response schema. When a configured stop string ends generation, the terminal
+choice—or the terminal choice in a streamed chunk—has ``finish_reason`` set to
+``"stop"`` and ``stop_reason`` set to the matched string. ``stop_reason`` is
+``null`` for earlier streamed chunks and when generation ends for another
+reason.
+
+The raw JSON response always includes the field. OpenAI Python SDK response
+models that do not declare this extension expose it through
+``choice.model_extra["stop_reason"]``.
 
 .. _EmbeddingsAPI:
 
@@ -568,7 +604,7 @@ You can access these endpoints using the OpenAI client's ``models.list()`` and `
 
 The response includes the standard `model object <https://platform.openai.com/docs/api-reference/models/object>`_ as defined by OpenAI, along with the following Furiosa-LLM-specific extensions:
 
-* ``artifact_id``: Unique identifier for the model artifact.
+* ``artifact_id``: Unique identifier for the loaded FXB.
 * ``max_prompt_len``: Maximum allowed length of input prompts.
 * ``max_context_len``: Maximum allowed length of the total context window.
 * ``runtime_config``: Model runtime configuration parameters, including bucket specifications.

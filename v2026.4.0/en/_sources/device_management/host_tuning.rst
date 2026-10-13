@@ -33,10 +33,13 @@ To apply immediately (effective until reboot):
 
 Notes
 ^^^^^
+
 - This adjusts the number of 2MB HugeTLB pages.
 - When using additional caching optimizations involving KV Cache offloading,
-  increasing this number may be necessary to ensure sufficient hugepage availability for pinned DMA buffers,
-  depending on the size of the allocated host-side KV cache pool.
+  increasing this number may be necessary to ensure sufficient hugepage
+  availability for pinned DMA buffers, depending on the size of the allocated
+  host-side KV cache pool. See :ref:`HierarchicalPrefixCaching` for configuration
+  and sizing guidance.
 - The allocation can fail (partially or fully) if memory is fragmented; applying
   early after boot usually works best.
 

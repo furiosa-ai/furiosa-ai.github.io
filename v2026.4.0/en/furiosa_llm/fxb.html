@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Furiosa Executable Bundles (FXB) &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Furiosa Executable Bundles (FXB) &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Model Parallelism" href="model-parallelism.html" />
-    <link rel="prev" title="Model Preparation" href="model-preparation.html" />
+    <link rel="prev" title="Data-Parallel Routing" href="data-parallel-routing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.4.0" />
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -430,13 +436,19 @@
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-an-fxb-for-a-model">Building an FXB for a model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models-runnable-with-furiosa-llm">Models runnable with Furiosa-LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-directory-containing-an-fxb">Model directory containing an FXB</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-an-fxb-directly">Specifying an FXB directly</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-compatibility">FXB compatibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-a-model-with-a-compatible-cached-fxb">Serving a model with a compatible cached FXB</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-get-a-compatible-fxb-into-the-cache">Step 1 — Get a compatible FXB into the cache</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-check-compatibility">Step 2 — Check compatibility</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-serve-the-model">Step 3 — Serve the model</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-an-fxb-for-a-model">Building an FXB for a model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-reference">Command reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-build"><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-download"><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">download</span></code></a></li>
@@ -454,7 +466,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-test-build">Quick test build</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#production-build">Production build</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing-and-distribution">Publishing and distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-topology">Deployment topology</a></li>
 </ul>
 </li>
 </ul>
@@ -470,26 +482,25 @@
                   
   <section id="furiosa-executable-bundles-fxb">
 <span id="fxb"></span><h1>Furiosa Executable Bundles (FXB)<a class="headerlink" href="#furiosa-executable-bundles-fxb" title="Link to this heading">#</a></h1>
-<p>A <strong>Furiosa Executable Bundle (FXB)</strong> is Furiosa-LLM’s compiled-artifact format. An <code class="docutils literal notranslate"><span class="pre">.fxb</span></code>
-file is a single archive holding the compiled binaries — generated for a specific model
-architecture — together with the metadata needed to run the model on the Furiosa NPU. It
-is designed to be easy to distribute, share, and reuse: once a model is compiled into an
-<code class="docutils literal notranslate"><span class="pre">.fxb</span></code>, you can serve it directly without recompiling, copy it to another machine, or
-publish it to the Hugging Face Hub for others to reuse.</p>
-<p>A bundle is not tied to a single model. Models that compile to the same kernels share an
-<strong>architecture fingerprint</strong>, and any model with a matching fingerprint can reuse the same
-<code class="docutils literal notranslate"><span class="pre">.fxb</span></code> — so a fine-tuned model, a model whose weights were updated, or any other model of
-the same architecture can be served from one bundle without recompiling. See
-<a class="reference internal" href="#fxbfingerprint"><span class="std std-ref">Fingerprint and Compatibility</span></a> for how compatibility is determined.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>Coming from GPUs?</strong> On a GPU, the kernels are software: they ship with the framework,
-usually as pre-compiled CUDA kernel libraries, and the same binaries run for every model.
-RNGD works differently — the compiler generates code that is optimized for a specific
-model, and that code is not part of the Furiosa-LLM software but a separate artifact you
-build, distribute, and load. FXB is both the <strong>format</strong> for that artifact and the
-<strong>tool</strong> (the <code class="docutils literal notranslate"><span class="pre">fxb</span></code> command) for building, sharing, and inspecting it.</p>
-</div>
+<p>A model served by Furiosa-LLM consists of two parts: the model assets in Hugging Face
+format and the compiled program that runs those assets on the Furiosa NPU. The model assets
+provide the configuration, tokenizer, and weights, while a <strong>Furiosa Executable Bundle
+(FXB)</strong> provides the compiled kernels. A runnable deployment needs both parts.</p>
+<p>Furiosa-LLM needs an FXB because the code executed on the NPU is compiled ahead of time for
+the model architecture and execution configuration. The resulting <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> file is a single
+archive containing the compiled binaries and the metadata needed to load and run them.</p>
+<p>Keeping the compiled program separate from the model assets has several benefits:</p>
+<ul class="simple">
+<li><p>A model can start without compiling kernels on the serving host.</p></li>
+<li><p>The FXB can be copied, cached, or published with a model.</p></li>
+<li><p>Compatible models can reuse the same FXB when only their weights change.</p></li>
+</ul>
+<p>An FXB does not contain the model weights and does not replace the Hugging Face model
+directory. Furiosa-LLM still reads the configuration, tokenizer, and weights from that
+directory or repository.</p>
+<p>This page follows the model lifecycle from building an FXB to supplying it with the model
+assets and reusing it with compatible models. Detailed command behavior, bundle metadata,
+and compatibility rules are described in the later sections.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>FuriosaAI publishes a set of pre-compiled FXB bundles for popular models on the
@@ -498,22 +509,122 @@ You can download one of these and serve it for any compatible model with the wor
 </div>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">fxb</span></code> command ships with the Furiosa-LLM package — there is nothing extra to install.
+<p>FXB includes the <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> bundle format and the framework for building, distributing, and
+loading bundles. Furiosa-LLM exposes this lifecycle through the <code class="docutils literal notranslate"><span class="pre">fxb</span></code> CLI.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fxb</span></code> CLI ships with the Furiosa-LLM package, so there is nothing extra to install.
 If you have not installed Furiosa-LLM yet, follow <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Installing Furiosa-LLM</span></a>:</p>
 <pre class="literal-block">pip install --upgrade pip setuptools wheel uv
-uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b7</pre>
-<p>Verify that the command is available:</p>
+uv pip install --prerelease=allow --torch-backend=auto furiosa-llm==2026.4.0b15</pre>
+<p>Verify that the CLI is available:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">fxb</span></code> command groups the whole FXB lifecycle — building, downloading, caching, compatibility
-checking, and inspection. The cache and inspection subcommands also read the local cache that
+<p>The <code class="docutils literal notranslate"><span class="pre">fxb</span></code> CLI covers the whole FXB lifecycle: building, downloading, caching, compatibility
+checking, and inspection. The cache and inspection subcommands use the same local cache that
 <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> consults at serving time.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>FXB is the compiled-artifact format used by Furiosa-LLM. For the broader model-conversion
-workflow and quantization, see <a class="reference internal" href="model-preparation.html#modelpreparation"><span class="std std-ref">Model Preparation</span></a>.</p>
+</section>
+<section id="building-an-fxb-for-a-model">
+<span id="buildingfxb"></span><h2>Building an FXB for a model<a class="headerlink" href="#building-an-fxb-for-a-model" title="Link to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> to compile a model into an <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> bundle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">build</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span>
+</pre></div>
 </div>
+<p>The first argument is a Hugging Face model ID or a local path (a path must start with <code class="docutils literal notranslate"><span class="pre">.</span></code> or
+<code class="docutils literal notranslate"><span class="pre">/</span></code>). The second is the output path; the <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> extension is appended automatically when the
+path has none, so the command above writes <code class="docutils literal notranslate"><span class="pre">qwen3-8b-fp8.fxb</span></code>.</p>
+<p>Preview the resolved configuration and bucket plan without compiling using <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">build</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span> <span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>
+</pre></div>
+</div>
+<p>Common options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> — number of PEs per tensor-parallel group (default: the model
+preset).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pp/--pipeline-parallel-size</span></code> — pipeline-parallel size (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> — override the model’s maximum context length for bucket selection. This
+shapes what gets compiled into the bundle; <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> takes an option of the same
+name that only caps admission at serve time (see <a class="reference internal" href="furiosa-llm-serve.html#servemaxmodellen"><span class="std std-ref">Limiting the Context Length</span></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-O/--optim-level</span></code> — bucket-filtering optimization level: <code class="docutils literal notranslate"><span class="pre">O0</span></code> (minimal), <code class="docutils literal notranslate"><span class="pre">O1</span></code> (half),
+<code class="docutils literal notranslate"><span class="pre">O2</span></code> (quarter), <code class="docutils literal notranslate"><span class="pre">O3</span></code> (full, the default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--convert</span></code> — task override for models with an ambiguous architecture: <code class="docutils literal notranslate"><span class="pre">embed</span></code> rewrites
+<code class="docutils literal notranslate"><span class="pre">*ForCausalLM</span></code> → <code class="docutils literal notranslate"><span class="pre">*Model</span></code>; <code class="docutils literal notranslate"><span class="pre">score</span></code>/<code class="docutils literal notranslate"><span class="pre">classify</span></code> → <code class="docutils literal notranslate"><span class="pre">*ForSequenceClassification</span></code>
+(default: <code class="docutils literal notranslate"><span class="pre">auto</span></code>, i.e. keep the architecture from <code class="docutils literal notranslate"><span class="pre">config.json</span></code>).</p></li>
+</ul>
+<p>After building, register the bundle in the cache so <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">check</span></code> and <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> can
+find it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">add</span> <span class="o">./</span><span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span>
+</pre></div>
+</div>
+<p>For production build recommendations, see <a class="reference internal" href="#fxbbestpractices"><span class="std std-ref">Best Practices</span></a>.</p>
+</section>
+<section id="models-runnable-with-furiosa-llm">
+<h2>Models runnable with Furiosa-LLM<a class="headerlink" href="#models-runnable-with-furiosa-llm" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM loads the model assets and the FXB together. The model assets must follow the
+Hugging Face Hub directory format and include files such as <code class="docutils literal notranslate"><span class="pre">config.json</span></code>, tokenizer files,
+and model weights. A model can be distributed or invoked in either of the following forms.</p>
+<section id="model-directory-containing-an-fxb">
+<h3>Model directory containing an FXB<a class="headerlink" href="#model-directory-containing-an-fxb" title="Link to this heading">#</a></h3>
+<p>Place a compatible <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> file in the Hugging Face model directory alongside the model
+configuration, tokenizer, and weights:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>my-model/
+  config.json
+  tokenizer.json
+  model-00001-of-00002.safetensors
+  model-00002-of-00002.safetensors
+  model.safetensors.index.json
+  my-model.fxb
+</pre></div>
+</div>
+<p>The directory can be stored locally or published as a repository on the Hugging Face Hub.
+Furiosa-LLM discovers the bundled FXB automatically:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">furiosa-llm serve ./my-model</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">furiosa-llm serve furiosa-ai/Qwen3-8B-FP8</span>
+</pre></div>
+</div>
+<p>This form is convenient for distributing a self-contained model repository that is ready to
+serve.</p>
+</section>
+<section id="specifying-an-fxb-directly">
+<h3>Specifying an FXB directly<a class="headerlink" href="#specifying-an-fxb-directly" title="Link to this heading">#</a></h3>
+<p>Keep the model assets and FXB in separate locations and select the bundle with <code class="docutils literal notranslate"><span class="pre">--fxb</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">furiosa-llm serve Qwen/Qwen3-8B-FP8 --fxb ./qwen3-8b-fp8.fxb</span>
+</pre></div>
+</div>
+<p>The first argument still identifies the Hugging Face model repository or local directory from
+which Furiosa-LLM loads the configuration, tokenizer, and weights. <code class="docutils literal notranslate"><span class="pre">--fxb</span></code> selects only the
+compiled bundle. This form is useful for testing a newly built FXB, pinning a specific bundle,
+or reusing one FXB with multiple compatible models.</p>
+<p>The Python API provides the same separation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">LLM</span><span class="p">(</span><span class="s2">"Qwen/Qwen3-8B-FP8"</span><span class="p">,</span> <span class="n">fxb</span><span class="o">=</span><span class="s2">"./qwen3-8b-fp8.fxb"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For automatic discovery through the local FXB cache, see <a class="reference internal" href="#servingfromcachedfxb"><span class="std std-ref">Serving a model with a compatible cached FXB</span></a>.</p>
+</section>
+</section>
+<section id="fxb-compatibility">
+<h2>FXB compatibility<a class="headerlink" href="#fxb-compatibility" title="Link to this heading">#</a></h2>
+<p>FXB compatibility is determined by an <strong>architecture fingerprint</strong>. The fingerprint includes
+the model architecture and the <code class="docutils literal notranslate"><span class="pre">config.json</span></code> fields that affect kernel generation, such as
+hidden dimensions, attention configuration, mixture-of-experts settings, and quantization
+format. Model weights themselves are not part of the fingerprint.</p>
+<p>As a result, an existing FXB can usually be reused when:</p>
+<ul class="simple">
+<li><p>a model is fine-tuned without changing its kernel-affecting configuration;</p></li>
+<li><p>weights are updated while the architecture and fingerprint fields remain the same; or</p></li>
+<li><p>another model repository has the same architecture fingerprint.</p></li>
+</ul>
+<p>A new FXB is required when a change affects the compiled kernels. Examples include changing
+the architecture, model dimensions, attention or expert configuration, quantization format,
+or another fingerprint field. Compatibility matching is strict; a fine-tuned model is not
+automatically compatible if its configuration also changes.</p>
+<p>Architecture compatibility is not the only deployment constraint. The FXB must also be
+suitable for the installed Furiosa software version and the intended tensor-parallel and
+context-length configuration. See <a class="reference internal" href="#fxbfingerprint"><span class="std std-ref">Fingerprint and Compatibility</span></a> for the exact matching rules and
+compatibility limitations.</p>
 </section>
 <section id="serving-a-model-with-a-compatible-cached-fxb">
 <span id="servingfromcachedfxb"></span><h2>Serving a model with a compatible cached FXB<a class="headerlink" href="#serving-a-model-with-a-compatible-cached-fxb" title="Link to this heading">#</a></h2>
@@ -628,42 +739,6 @@ the same way as in <a class="reference internal" href="../get_started/furiosa_ll
 </div>
 </div>
 </section>
-</section>
-<section id="building-an-fxb-for-a-model">
-<span id="buildingfxb"></span><h2>Building an FXB for a model<a class="headerlink" href="#building-an-fxb-for-a-model" title="Link to this heading">#</a></h2>
-<p>Use <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> to compile a model into an <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> bundle:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">build</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span>
-</pre></div>
-</div>
-<p>The first argument is a Hugging Face model id or a local path (a path must start with <code class="docutils literal notranslate"><span class="pre">.</span></code> or
-<code class="docutils literal notranslate"><span class="pre">/</span></code>). The second is the output path; the <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> extension is appended automatically when the
-path has none, so the command above writes <code class="docutils literal notranslate"><span class="pre">qwen3-8b-fp8.fxb</span></code>.</p>
-<p>Preview the resolved configuration and bucket plan without compiling using <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">build</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span> <span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>
-</pre></div>
-</div>
-<p>Common options:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> — number of PEs per tensor-parallel group (default: the model
-preset).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-pp/--pipeline-parallel-size</span></code> — pipeline-parallel size (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> — override the model’s maximum context length for bucket selection.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-O/--optim-level</span></code> — bucket-filtering optimization level: <code class="docutils literal notranslate"><span class="pre">O0</span></code> (minimal), <code class="docutils literal notranslate"><span class="pre">O1</span></code> (half),
-<code class="docutils literal notranslate"><span class="pre">O2</span></code> (quarter), <code class="docutils literal notranslate"><span class="pre">O3</span></code> (full, the default).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--convert</span></code> — task override for models with an ambiguous architecture: <code class="docutils literal notranslate"><span class="pre">embed</span></code> rewrites
-<code class="docutils literal notranslate"><span class="pre">*ForCausalLM</span></code> → <code class="docutils literal notranslate"><span class="pre">*Model</span></code>; <code class="docutils literal notranslate"><span class="pre">score</span></code>/<code class="docutils literal notranslate"><span class="pre">classify</span></code> → <code class="docutils literal notranslate"><span class="pre">*ForSequenceClassification</span></code>
-(default: <code class="docutils literal notranslate"><span class="pre">auto</span></code>, i.e. keep the architecture from <code class="docutils literal notranslate"><span class="pre">config.json</span></code>).</p></li>
-</ul>
-<p>After building, register the bundle in the cache so <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">check</span></code> and <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> can
-find it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">add</span> <span class="o">./</span><span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> is the FXB-only build path. The legacy artifact build path remains available under
-<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> for backward compatibility.</p>
-</div>
 </section>
 <section id="command-reference">
 <span id="fxbclireference"></span><h2>Command reference<a class="headerlink" href="#command-reference" title="Link to this heading">#</a></h2>
@@ -885,7 +960,7 @@ a match with <code class="docutils literal notranslate"><span class="pre">fxb</s
 </div>
 </section>
 <section id="best-practices">
-<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h2>
+<span id="fxbbestpractices"></span><h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> trades build time against the runtime coverage and performance of the resulting
 bundle. The right options depend on what you are building for. The scenarios below cover the common
 cases; FuriosaAI’s own per-model production configurations live in the build matrix at
@@ -931,32 +1006,8 @@ for the real workload rather than over-built.</p></li>
 </pre></div>
 </div>
 </section>
-<section id="publishing-and-distribution">
-<h3>Publishing and distribution<a class="headerlink" href="#publishing-and-distribution" title="Link to this heading">#</a></h3>
-<p>An FXB is meant to be reused — from the local cache, copied to another machine, or published to the
-Hugging Face Hub. Once you have a <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> file, there are two ways to serve with it:</p>
-<ul>
-<li><p><strong>Register it in the cache</strong> with <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">add</span></code> so it is discovered automatically. After adding,
-<code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">check</span></code> confirms a target model is compatible, and <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> finds the bundle by
-fingerprint without any extra flag (see
-<a class="reference internal" href="#servingfromcachedfxb"><span class="std std-ref">Serving a model with a compatible cached FXB</span></a> above for how
-compatibility is matched). This is the right choice when you serve the model regularly or share
-one cache across several models.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fxb</span> <span class="n">build</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span> <span class="o">-</span><span class="n">O</span> <span class="n">O3</span> <span class="o">-</span><span class="n">tp</span> <span class="mi">8</span>
-<span class="n">fxb</span> <span class="n">add</span> <span class="o">./</span><span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span>
-<span class="n">fxb</span> <span class="n">check</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span>
-<span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span>
-</pre></div>
-</div>
-</li>
-<li><p><strong>Point at the file directly</strong> with <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">--fxb</span> <span class="pre">&lt;path&gt;</span></code>, which uses the given
-bundle as-is and skips cache lookup. This is convenient for a one-off run, a freshly built bundle
-you have not registered, or pinning a specific file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="o">--</span><span class="n">fxb</span> <span class="o">./</span><span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span>
-</pre></div>
-</div>
-</li>
-</ul>
+<section id="deployment-topology">
+<h3>Deployment topology<a class="headerlink" href="#deployment-topology" title="Link to this heading">#</a></h3>
 <p><strong>Tensor parallelism is fixed at build time</strong>, while <strong>pipeline and data parallelism are set when
 you serve.</strong> A bundle’s <code class="docutils literal notranslate"><span class="pre">-tp/--tensor-parallel-size</span></code> shapes the compiled kernels (each kernel is
 sharded for that tensor-parallel degree), so it is part of the FXB and cannot be changed
@@ -968,29 +1019,6 @@ they are chosen at <code class="docutils literal notranslate"><span class="pre">
 <span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">FP8</span> <span class="o">--</span><span class="n">fxb</span> <span class="o">./</span><span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span> <span class="o">-</span><span class="n">pp</span> <span class="mi">2</span> <span class="o">-</span><span class="n">dp</span> <span class="mi">4</span>
 </pre></div>
 </div>
-<p>The simplest way to distribute a model is to ship the <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> <em>inside</em> a standard model
-directory. Take a directory saved by Transformers’ <code class="docutils literal notranslate"><span class="pre">save_pretrained()</span></code> — the usual
-<code class="docutils literal notranslate"><span class="pre">config.json</span></code>, <code class="docutils literal notranslate"><span class="pre">tokenizer.json</span></code>, weights, and so on — drop a single <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> file into it, and
-<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> runs that directory directly: it loads the weights and tokenizer as usual and
-picks up the bundled <code class="docutils literal notranslate"><span class="pre">.fxb</span></code> (the second step of the resolution order above), with no cache setup
-or <code class="docutils literal notranslate"><span class="pre">--fxb</span></code> flag needed.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A model directory that also contains an .fxb</span>
-<span class="n">my</span><span class="o">-</span><span class="n">model</span><span class="o">/</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">json</span>
-  <span class="n">tokenizer</span><span class="o">.</span><span class="n">json</span>
-  <span class="n">model</span><span class="o">-</span><span class="mi">00001</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="mf">00002.</span><span class="n">safetensors</span>
-  <span class="o">...</span>
-  <span class="n">qwen3</span><span class="o">-</span><span class="mi">8</span><span class="n">b</span><span class="o">-</span><span class="n">fp8</span><span class="o">.</span><span class="n">fxb</span>        <span class="c1"># the bundle, added alongside the weights</span>
-
-<span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="o">./</span><span class="n">my</span><span class="o">-</span><span class="n">model</span>
-</pre></div>
-</div>
-<p>The same directory can then be published or distributed however you like — pushed to the Hugging
-Face Hub, copied to another machine, or packaged for deployment — and it serves on RNGD out of the
-box for anyone who pulls it. The pre-compiled models under the
-<a class="reference external" href="https://huggingface.co/furiosa-ai">furiosa-ai organization on the Hugging Face Hub</a> (for example
-<code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-8B-FP8</span></code>) are published exactly this way: each repository carries the model
-files together with a matching <code class="docutils literal notranslate"><span class="pre">.fxb</span></code>.</p>
 </section>
 </section>
 </section>
@@ -1007,12 +1035,12 @@ files together with a matching <code class="docutils literal notranslate"><span 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="model-preparation.html"
+       href="data-parallel-routing.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Model Preparation</p>
+        <p class="prev-next-title">Data-Parallel Routing</p>
       </div>
     </a>
     <a class="right-next"
@@ -1042,13 +1070,19 @@ files together with a matching <code class="docutils literal notranslate"><span 
   <nav class="bd-toc-nav page-toc">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-an-fxb-for-a-model">Building an FXB for a model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models-runnable-with-furiosa-llm">Models runnable with Furiosa-LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-directory-containing-an-fxb">Model directory containing an FXB</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-an-fxb-directly">Specifying an FXB directly</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-compatibility">FXB compatibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-a-model-with-a-compatible-cached-fxb">Serving a model with a compatible cached FXB</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-get-a-compatible-fxb-into-the-cache">Step 1 — Get a compatible FXB into the cache</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-check-compatibility">Step 2 — Check compatibility</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-serve-the-model">Step 3 — Serve the model</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-an-fxb-for-a-model">Building an FXB for a model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-reference">Command reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-build"><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fxb-download"><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">download</span></code></a></li>
@@ -1066,7 +1100,7 @@ files together with a matching <code class="docutils literal notranslate"><span 
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-test-build">Quick test build</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#production-build">Production build</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing-and-distribution">Publishing and distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-topology">Deployment topology</a></li>
 </ul>
 </li>
 </ul>

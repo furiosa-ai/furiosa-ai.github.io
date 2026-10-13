@@ -18,7 +18,7 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 run on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
 those, see the upstream model card linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -35,22 +35,36 @@ To run this model with Furiosa-LLM, follow the example commands below after
 
 ### Launch the server
 
-The simplest way to serve the model is:
+Pass the model's `furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16` identifier; the model
+runs on four RNGD cards. K-EXAONE reasons by default and can switch thinking on
+and off per request (see [Advanced Usage](#advanced-usage)).
+
+Serve it with the `deepseek_v3` reasoning parser so the chain of thought is
+returned in a separate field:
 
 ```sh
-# Launch the server, listening on port 8000 by default
 furiosa-llm serve furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16 \
   --reasoning-parser deepseek_v3 \
   --default-chat-template-kwargs '{"enable_thinking": true}'
 ```
 
-The `--reasoning-parser deepseek_v3` flag separates the model's chain of thought
-from the final answer (see [Reasoning](#reasoning) below). The
-`--default-chat-template-kwargs '{"enable_thinking": true}'` flag keeps the chat
-template and the reasoning parser aligned: K-EXAONE's chat template enables
+The `--default-chat-template-kwargs '{"enable_thinking": true}'` flag keeps the
+chat template and the reasoning parser aligned: K-EXAONE's chat template enables
 thinking by default, but `deepseek_v3` treats reasoning as disabled unless
 `enable_thinking` is set, so without this flag a request that omits
 `enable_thinking` would leak the raw `<think>...</think>` text into the response.
+
+To also enable tool (function) calling, add the `hermes` tool-call parser (keep
+both the reasoning parser and the `--default-chat-template-kwargs` flag so
+thinking is still parsed into its own field):
+
+```sh
+furiosa-llm serve furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16 \
+  --reasoning-parser deepseek_v3 \
+  --default-chat-template-kwargs '{"enable_thinking": true}' \
+  --enable-auto-tool-choice \
+  --tool-call-parser hermes
+```
 
 When the server is ready, you will see:
 
@@ -61,20 +75,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `hermes` tool-call
-parser:
-
-```sh
-furiosa-llm serve furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16 \
-  --reasoning-parser deepseek_v3 \
-  --default-chat-template-kwargs '{"enable_thinking": true}' \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 
@@ -87,8 +88,6 @@ curl http://localhost:8000/v1/chat/completions \
     }' \
     | python -m json.tool
 ```
-
-### Reasoning
 
 With `--reasoning-parser deepseek_v3`, K-EXAONE returns its reasoning separately
 from the final answer:
@@ -113,22 +112,31 @@ print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
 
-For latency-sensitive tasks you can turn thinking off per request by passing
-`extra_body={"chat_template_kwargs": {"enable_thinking": False}}`. The response
-then carries no reasoning content, so read only `message.content` (accessing
-`message.reasoning` would raise `AttributeError`, as noted below).
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+> appears only in responses that contain reasoning content; accessing it otherwise
+> raises an `AttributeError`.
 
-> **Note:** The `reasoning` field is not part of the OpenAI API specification, but
-> it is the convention OpenAI recommends for returning the chain-of-thought (CoT) in
-> Chat Completions-compatible APIs. The OpenAI Agents SDK uses `reasoning` as its
-> primary property for the CoT, and many LLM serving frameworks (such as vLLM) follow
-> the same convention. It appears only in responses that contain reasoning content;
-> accessing it on a response without reasoning content raises an `AttributeError`.
+### Advanced Usage
 
-### Tool calling
+**Turning thinking off.** K-EXAONE reasons by default. To turn thinking off for a
+single request, pass `enable_thinking` through `chat_template_kwargs`; the
+response then carries no reasoning content, so read only `message.content`:
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser hermes`,
-you can pass `tools` and let the model decide when to call them. See the
+```python
+# Disable thinking for a single request
+response = client.chat.completions.create(
+    model="furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16",
+    messages=[{"role": "user", "content": "What is the capital of France?"}],
+    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+)
+print(response.choices[0].message.content)
+```
+
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser hermes` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

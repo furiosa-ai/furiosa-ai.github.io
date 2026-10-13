@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Container Support &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Container Support &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="current nav bd-sidenav">
@@ -458,16 +464,17 @@
 <span id="container"></span><h1>Container Support<a class="headerlink" href="#container-support" title="Link to this heading">#</a></h1>
 <section id="container-runtime-support">
 <h2>Container Runtime Support<a class="headerlink" href="#container-runtime-support" title="Link to this heading">#</a></h2>
-<p>We do support the following versions of container runtimes:</p>
+<p>We support the following container runtimes:</p>
 <ul class="simple">
 <li><p>Docker: v25.0.0 or later</p></li>
+<li><p>Podman</p></li>
 <li><p>ContainerD: v1.7.0 or later</p></li>
 <li><p>CRI-O: v1.28.0 or later</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The supported container runtimes above (Docker, ContainerD, CRI-O) are validated with the default low-level container runtime <code class="docutils literal notranslate"><span class="pre">runc</span></code>.
-Other low-level runtimes or isolation technologies (such as <code class="docutils literal notranslate"><span class="pre">crun</span></code>, <code class="docutils literal notranslate"><span class="pre">gVisor</span></code>, or <code class="docutils literal notranslate"><span class="pre">firecracker</span></code>) are not officially tested and may have compatibility limitations.</p>
+<p>The supported container runtimes above (Docker, Podman, ContainerD, CRI-O) are validated with the low-level container runtimes <code class="docutils literal notranslate"><span class="pre">runc</span></code> and <code class="docutils literal notranslate"><span class="pre">crun</span></code>.
+Other low-level runtimes or isolation technologies (such as <code class="docutils literal notranslate"><span class="pre">gVisor</span></code> or <code class="docutils literal notranslate"><span class="pre">firecracker</span></code>) are not officially tested yet and may have compatibility limitations.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -519,10 +526,10 @@ The section below provides detailed instructions for configuring CDI for each su
 Update the Docker daemon configuration file <code class="docutils literal notranslate"><span class="pre">daemon.json</span></code> to enable CDI feature and include <code class="docutils literal notranslate"><span class="pre">/etc/cdi</span></code> in the <code class="docutils literal notranslate"><span class="pre">cdi-spec-dirs</span></code> setting.
 Below is an example of <code class="docutils literal notranslate"><span class="pre">daemon.json</span></code> configuration:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="nt">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="nt">"cdi"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;cdi-spec-dirs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/etc/cdi/&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/var/run/cdi&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">"cdi-spec-dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"/etc/cdi/"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/var/run/cdi"</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -533,9 +540,9 @@ Below is an example of <code class="docutils literal notranslate"><span class="p
 <p>ContainerD supports CDI starting from version 2.0.0 by default.
 For earlier versions, CDI must be explicitly enabled through the configuration file config.toml, typically located at <code class="docutils literal notranslate"><span class="pre">/etc/containerd/config.toml</span></code>.</p>
 <p>To enable CDI support, add the following configuration:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[plugins.</span><span class="s2">&quot;io.containerd.grpc.v1.cri&quot;</span><span class="k">]</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[plugins.</span><span class="s2">"io.containerd.grpc.v1.cri"</span><span class="k">]</span>
 <span class="n">enable_cdi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<span class="n">cdi_spec_dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/etc/cdi&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/var/run/cdi&quot;</span><span class="p">]</span>
+<span class="n">cdi_spec_dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/etc/cdi"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/var/run/cdi"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>After modifying the configuration, restart ContainerD to apply the changes:</p>

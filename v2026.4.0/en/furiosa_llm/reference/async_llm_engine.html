@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../reference.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -471,15 +477,15 @@
     <span class="n">engine_args</span> <span class="o">=</span> <span class="n">AsyncEngineArgs</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">engine</span> <span class="o">=</span> <span class="n">AsyncLLMEngine</span><span class="o">.</span><span class="n">from_engine_args</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
     <span class="n">example_input</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;What is LLM?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-        <span class="s2">&quot;request_id&quot;</span><span class="p">:</span> <span class="s2">&quot;request-123&quot;</span><span class="p">,</span>
+        <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"What is LLM?"</span><span class="p">,</span>
+        <span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="s2">"request_id"</span><span class="p">:</span> <span class="s2">"request-123"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">results_generator</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-        <span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">],</span>
-        <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]),</span>
-        <span class="n">example_input</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]</span>
+        <span class="n">example_input</span><span class="p">[</span><span class="s2">"prompt"</span><span class="p">],</span>
+        <span class="n">SamplingParams</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">example_input</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">]),</span>
+        <span class="n">example_input</span><span class="p">[</span><span class="s2">"request_id"</span><span class="p">]</span>
     <span class="p">)</span>
 
     <span class="n">final_output</span> <span class="o">=</span> <span class="kc">None</span>
@@ -488,7 +494,7 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="n">final_output</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
@@ -502,7 +508,7 @@
 <section id="arguments-supported-by-asyncllmengine">
 <span id="asyncllmengineargs"></span><h2>Arguments supported by AsyncLLMEngine<a class="headerlink" href="#arguments-supported-by-asyncllmengine" title="Link to this heading">#</a></h2>
 <p>The arguments are identical to those specified in <a class="reference internal" href="llm_engine.html#llmengineargs"><span class="std std-ref">Arguments supported by LLMEngine</span></a>.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: engine_cli_async.py [-h] --model MODEL [--revision REVISION]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: engine_cli_async.py [-h] --model MODEL [--fxb FXB] [--revision REVISION]
                            [--tokenizer TOKENIZER] [--tokenizer-mode TOKENIZER_MODE]
                            [--seed SEED] [--devices DEVICES]
                            [--pipeline-parallel-size PIPELINE_PARALLEL_SIZE]
@@ -518,8 +524,10 @@
 
 options:
   -h, --help            show this help message and exit
-  --model MODEL         The Hugging Face model id, or path to Furiosa model artifact.
-                        Currently only one model is supported per server.
+  --model MODEL         The Hugging Face model ID or local model directory. Currently
+                        only one model is supported per server.
+  --fxb FXB             Optional path to a compatible FXB. When omitted, a bundle is
+                        discovered from the model directory or local FXB cache.
   --revision REVISION   The specific model revision on Hugging Face Hub if the model
                         is given as a Hugging Face model id. It can be a branch name,
                         a tag name, or a commit id. Its default value is main.
@@ -529,20 +537,20 @@ options:
   --tokenizer TOKENIZER
                         The name or path of a HuggingFace Transformers tokenizer.
   --tokenizer-mode TOKENIZER_MODE
-                        The tokenizer mode. &quot;auto&quot; will use the fast tokenizer if
-                        available, and &quot;slow&quot; will always use the slow tokenizer.
+                        The tokenizer mode. "auto" will use the fast tokenizer if
+                        available, and "slow" will always use the slow tokenizer.
   --seed SEED           The seed to initialize the random number generator for
                         sampling.
   --devices DEVICES     The devices to run the model. It can be a single device or a
                         comma-separated list of devices. Each device can be either
-                        &quot;npu:X&quot; or &quot;npu:X:Y&quot;, where X is a device index and Y is a
-                        NPU core range notation (e.g. &quot;npu:0&quot; for whole npu 0,
-                        &quot;npu:0:0&quot; for core 0 of NPU 0, and &quot;npu:0:0-3&quot; for fused core
+                        "npu:X" or "npu:X:Y", where X is a device index and Y is a
+                        NPU core range notation (e.g. "npu:0" for whole npu 0,
+                        "npu:0:0" for core 0 of NPU 0, and "npu:0:0-3" for fused core
                         0-3 of npu 0). If not given, all available unoccupied devices
                         will be used.
   --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
                         The size of the pipeline parallelism group. If not given, it
-                        will use the value from artifact.
+                        will use the value from the loaded FXB.
   --data-parallel-size DATA_PARALLEL_SIZE
                         The size of the data parallelism group. If not given, it will
                         be inferred from total available PEs and other parallelism
@@ -550,7 +558,7 @@ options:
   --cache-dir CACHE_DIR
                         The cache directory for temporarily generated files for this
                         LLM instance. When its value is ``None``, caching is
-                        disabled. The default is &quot;$HOME/.cache/furiosa/llm&quot;.
+                        disabled. The default is "$HOME/.cache/furiosa/llm".
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES

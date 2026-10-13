@@ -37,11 +37,12 @@ Documentation
 * :ref:`StructuredOutput`: Guide to structured output generation
 * :ref:`VisionLanguageModels`: Guide to serving Vision-Language models with image inputs
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
+* :ref:`HierarchicalPrefixCaching`: Guide to extending prefix caching with host memory
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`DataParallelRouting`: Understanding scoring-based data-parallel routing
-* :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM
-* :ref:`FXB`: Building, caching, and serving Furiosa Executable Bundles (FXB)
+* :ref:`FXB`: Model lifecycle, building, caching, and serving with FXB
 * :ref:`ModelParallelism`: A guide to model parallelism in Furiosa-LLM
 * :ref:`FuriosaLLMReference`: Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
 * :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
+* :ref:`K8sMooncakeDeployment`: A guide to deploying Mooncake on Kubernetes

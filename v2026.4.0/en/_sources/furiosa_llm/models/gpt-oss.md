@@ -18,7 +18,7 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
 with those, see the upstream model cards linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -39,7 +39,7 @@ To run these models with Furiosa-LLM, follow the example commands below after
 Pass the model's `furiosa-ai/<repo>` identifier. Reasoning works out of the box
 (the harmony format is auto-detected), so no `--reasoning-parser` flag is needed;
 the reasoning content is returned in a separate field (see
-[Reasoning](#reasoning) below):
+[Basic Usage](#basic-usage) below):
 
 ```sh
 # gpt-oss-20b — single RNGD card
@@ -51,6 +51,14 @@ furiosa-llm serve furiosa-ai/gpt-oss-20b
 furiosa-llm serve furiosa-ai/gpt-oss-120b
 ```
 
+To also enable tool (function) calling, add the `openai` tool-call parser:
+
+```sh
+furiosa-llm serve furiosa-ai/gpt-oss-120b \
+  --enable-auto-tool-choice \
+  --tool-call-parser openai
+```
+
 When the server is ready, you will see:
 
 ```sh
@@ -60,18 +68,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `openai` tool-call
-parser:
-
-```sh
-furiosa-llm serve furiosa-ai/gpt-oss-120b \
-  --enable-auto-tool-choice \
-  --tool-call-parser openai
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`
 (replace the model id with the variant you launched):
@@ -86,15 +83,10 @@ curl http://localhost:8000/v1/chat/completions \
     | python -m json.tool
 ```
 
-### Reasoning
-
 GPT-OSS models return their reasoning separately from the final answer:
 
 * `response.choices[].message.reasoning` (non-streaming)
 * `response.choices[].delta.reasoning` (streaming)
-
-You can control how much effort the model spends reasoning with the
-`reasoning_effort` parameter (`"low"`, `"medium"`, or `"high"`):
 
 ```python
 from openai import OpenAI
@@ -104,25 +96,38 @@ client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
 response = client.chat.completions.create(
     model="furiosa-ai/gpt-oss-120b",
     messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
-    extra_body={"reasoning_effort": "high"},
 )
 
 print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
 
-> **Note:** The `reasoning` field is not part of the OpenAI API specification, but
-> it is the convention OpenAI [recommends](https://developers.openai.com/cookbook/articles/gpt-oss/verifying-implementations#chat-completions)
-> for returning the chain-of-thought (CoT) in Chat Completions-compatible APIs. The
-> OpenAI Agents SDK uses `reasoning` as its primary property for the CoT, and many
-> LLM serving frameworks (such as vLLM) follow the same convention. It appears only
-> in responses that contain reasoning content; accessing it on a response without
-> reasoning content raises an `AttributeError`.
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention OpenAI
+> [recommends](https://developers.openai.com/cookbook/articles/gpt-oss/verifying-implementations#chat-completions)
+> (also used by the OpenAI Agents SDK, vLLM, and others). It appears only in
+> responses that contain reasoning content; accessing it otherwise raises an
+> `AttributeError`.
 
-### Tool calling
+### Advanced Usage
 
-With the server launched using `--enable-auto-tool-choice --tool-call-parser openai`,
-you can pass `tools` and let the model decide when to call them. See the
+**Reasoning effort.** You can control how much effort the model spends reasoning
+with the `reasoning_effort` parameter (`"low"`, `"medium"`, or `"high"`):
+
+```python
+# Request high reasoning effort
+response = client.chat.completions.create(
+    model="furiosa-ai/gpt-oss-120b",
+    messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
+    extra_body={"reasoning_effort": "high"},
+)
+print(response.choices[0].message.content)
+```
+
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser openai` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

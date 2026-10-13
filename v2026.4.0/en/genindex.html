@@ -16,7 +16,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Index &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Index &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="_static/documentation_options.js?v=83f362ce"></script>
+    <script src="_static/documentation_options.js?v=1ef58908"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -235,6 +235,7 @@
 <li class="toctree-l1"><a class="reference internal" href="overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -255,14 +256,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_llm/supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -273,18 +281,15 @@
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="furiosa_llm/model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -298,6 +303,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa_llm/k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa_llm/mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -429,7 +435,6 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -437,7 +442,6 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -451,29 +455,11 @@
 </li>
       <li><a href="furiosa_llm/reference/llm_engine.html#furiosa_llm.LLMEngine.abort_request">abort_request() (furiosa_llm.LLMEngine method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="furiosa_llm/reference/llm_engine.html#furiosa_llm.LLMEngine.add_request">add_request() (furiosa_llm.LLMEngine method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactBuilder">ArtifactBuilder (class in furiosa_llm.artifact)</a>
-</li>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactConfig">ArtifactConfig (class in furiosa_llm.artifact)</a>
-</li>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactMetadata">ArtifactMetadata (class in furiosa_llm.artifact)</a>
-</li>
       <li><a href="furiosa_llm/reference/async_llm_engine.html#furiosa_llm.AsyncLLMEngine">AsyncLLMEngine (class in furiosa_llm)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactBuilder.build">build() (furiosa_llm.artifact.ArtifactBuilder method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactConfig.bundle_binaries">bundle_binaries (furiosa_llm.artifact.ArtifactConfig attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -482,12 +468,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="furiosa_llm/reference/llm.html#furiosa_llm.LLM.chat">chat() (furiosa_llm.LLM method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactConfig.copies_from_local">copies_from_local (furiosa_llm.artifact.ArtifactConfig attribute)</a>
-</li>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactConfig.copies_from_model">copies_from_model (furiosa_llm.artifact.ArtifactConfig attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -561,20 +541,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="furiosa_llm/reference/llm_engine.html#furiosa_llm.LLMEngine">LLMEngine (class in furiosa_llm)</a>
 </li>
-      <li><a href="furiosa_llm/reference/llm.html#furiosa_llm.LLM.load_artifact">load_artifact() (furiosa_llm.LLM class method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactConfig.model_config">model_config (furiosa_llm.artifact.ArtifactConfig attribute)</a>
-
-      <ul>
-        <li><a href="furiosa_llm/reference/artifact_builder.html#furiosa_llm.artifact.ArtifactMetadata.model_config">(furiosa_llm.artifact.ArtifactMetadata attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 

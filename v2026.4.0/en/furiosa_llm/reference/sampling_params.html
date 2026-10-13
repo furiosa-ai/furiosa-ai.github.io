@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>SamplingParams class &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>SamplingParams class &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../reference.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="llm.html">LLM class</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -438,7 +444,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-greedy-search">1. Basic Greedy Search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-sampling-with-top-p-top-k-parameters">2. Random Sampling with <code class="docutils literal notranslate"><span class="pre">top_p</span></code> / <code class="docutils literal notranslate"><span class="pre">top_k</span></code> Parameters</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beam-search-with-best-of-beams">3. Beam Search with <code class="docutils literal notranslate"><span class="pre">best_of</span></code> Beams</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-strings">3. Stop Strings</a></li>
 </ul>
 </li>
 </ul>
@@ -456,18 +462,13 @@
 <span id="samplingparams"></span><h1>SamplingParams class<a class="headerlink" href="#samplingparams-class" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="furiosa_llm.SamplingParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">SamplingParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_of</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_token_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_eos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_beam_search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_special_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RequestOutputKind</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">RequestOutputKind.CUMULATIVE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructuredOutputsParams</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reasoning_structured_outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructuredOutputsParams</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/sampling_params.html#SamplingParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.SamplingParams" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">furiosa_llm.</span></span><span class="sig-name descname"><span class="pre">SamplingParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_token_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_stop_str_in_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_eos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_special_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RequestOutputKind</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">RequestOutputKind.CUMULATIVE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructuredOutputsParams</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reasoning_structured_outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructuredOutputsParams</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/furiosa_llm/sampling_params.html#SamplingParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.SamplingParams" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Sampling parameters for text generation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> – Number of output sequences to return for the given prompt.</p></li>
-<li><p><strong>best_of</strong> – Number of output sequences that are generated from the prompt.
-From these <cite>best_of</cite> sequences, the top <cite>n</cite> sequences are returned.
-<cite>best_of</cite> must be greater than or equal to <cite>n</cite>. This is treated as
-the beam width when <cite>use_beam_search</cite> is True. By default, <cite>best_of</cite>
-is set to <cite>n</cite>.</p></li>
 <li><p><strong>repetition_penalty</strong> – Float that penalizes new tokens based on whether
 they appear in the prompt and the generated text so far. Values &gt; 1
 encourage the model to use new tokens, while values &lt; 1 encourage
@@ -482,21 +483,21 @@ to -1 to consider all tokens.</p></li>
 <li><p><strong>min_p</strong> – Float that represents the minimum probability for a token to be
 considered, relative to the probability of the most likely token.
 Must be in [0, 1]. Set to 0 to disable this.</p></li>
+<li><p><strong>stop</strong> – List or single non-empty string(s) that stop generation when the
+first string is matched. By default, the matched stop string is removed
+from the returned text. When streaming, Furiosa-LLM may hold back
+a trailing window up to the longest configured stop string to
+prevent a partial match from being emitted.</p></li>
 <li><p><strong>stop_token_ids</strong> – Token IDs that stop the generation when they are generated. The returned
 output will contain the stop tokens unless the stop tokens are special
 tokens.</p></li>
+<li><p><strong>include_stop_str_in_output</strong> – Whether to retain the matched stop string
+in the returned text. Defaults to False. When True, text after
+the match within the token that completed it is removed. Streaming
+does not need to hold back a trailing stop-string window in this
+mode.</p></li>
 <li><p><strong>ignore_eos</strong> – Whether to ignore the EOS token and continue generating tokens
 after the EOS token is generated.</p></li>
-<li><p><strong>use_beam_search</strong> – Whether to use beam search instead of sampling.</p></li>
-<li><p><strong>length_penalty</strong> – Float that penalizes sequences based on their length.
-Used in beam search.</p></li>
-<li><p><strong>early_stopping</strong> – Controls the stopping condition for beam search. It
-accepts the following values: <cite>True</cite>, where the generation stops as
-soon as there are <cite>best_of</cite> complete candidates; <cite>False</cite>, where an
-heuristic is applied and the generation stops when is it very
-unlikely to find better candidates; <cite>“never”</cite>, where the beam search
-procedure only stops when there cannot be better candidates
-(canonical beam search algorithm).</p></li>
 <li><p><strong>max_tokens</strong> – Maximum number of tokens to generate per output sequence.
 If the value is None, it is capped to the maximum sequence length.</p></li>
 <li><p><strong>min_tokens</strong> – Minimum number of tokens to generate per output sequence
@@ -540,11 +541,10 @@ match the two sides.</p></li>
 
 <section id="default-sampling-parameters-from-generation-config-json">
 <span id="defaultsamplingparams"></span><h2>Default Sampling Parameters from <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code><a class="headerlink" href="#default-sampling-parameters-from-generation-config-json" title="Link to this heading">#</a></h2>
-<p>If a model artifact contains a <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code> file, Furiosa-LLM
-uses the values in that file as the effective defaults for the fields listed
-below. The file is copied verbatim from the source Hugging Face model during
-artifact build — Furiosa-LLM does not customize it. If the file is absent,
-the plain <code class="docutils literal notranslate"><span class="pre">SamplingParams()</span></code> defaults apply.</p>
+<p>If the model repository or local directory contains a <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code> file,
+Furiosa-LLM uses its values as the effective defaults for the fields listed below. These
+values are read directly from the source model configuration and are not customized. If the
+file is absent, the plain <code class="docutils literal notranslate"><span class="pre">SamplingParams()</span></code> defaults apply.</p>
 <p>The following <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code> keys are honored, and are mapped to
 <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> fields as shown:</p>
 <div class="pst-scrollable-table-container"><table class="table table-center">
@@ -575,6 +575,9 @@ the plain <code class="docutils literal notranslate"><span class="pre">SamplingP
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_new_tokens</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stop_strings</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stop</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -655,29 +658,32 @@ and <a class="reference internal" href="../responses-api.html#responsesapirefere
 </ul>
 </section>
 <hr class="docutils" />
-<section id="beam-search-with-best-of-beams">
-<h3>3. Beam Search with <code class="docutils literal notranslate"><span class="pre">best_of</span></code> Beams<a class="headerlink" href="#beam-search-with-best-of-beams" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SamplingParams</span><span class="p">(</span><span class="n">min_tokens</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">use_beam_search</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">best_of</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<section id="stop-strings">
+<h3>3. Stop Strings<a class="headerlink" href="#stop-strings" title="Link to this heading">#</a></h3>
+<p>Pass a list of non-empty strings to <code class="docutils literal notranslate"><span class="pre">stop</span></code> to end generation when the first
+string is matched. By default, the matched string is removed from the returned
+text. A stop-string match sets <code class="docutils literal notranslate"><span class="pre">finish_reason</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;stop&quot;</span></code> and records the
+matched string in <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">stop</span><span class="o">=</span><span class="p">[</span><span class="s2">"&lt;END&gt;"</span><span class="p">])</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="s2">"Write a short answer."</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># If the model generates "Answer&lt;END&gt;", output.text is "Answer".</span>
+<span class="c1"># output.stop_reason is "&lt;END&gt;".</span>
 </pre></div>
 </div>
-<p>Beam Search enhances the generation process by exploring multiple sequences simultaneously.</p>
-<ul class="simple">
-<li><p><strong>Parameters:</strong></p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_tokens</span></code>: Minimum number of tokens to generate.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>: Maximum number of tokens to generate.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code>: Must be set to True to enable beam search.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">best_of</span></code>: Number of beams to consider for generating the best output.</p></li>
-</ul>
-</li>
-<li><p><strong>Behavior:</strong></p>
-<ul>
-<li><p>The generation process explores multiple possible sequences to determine the best output.</p></li>
-<li><p>Generation may terminate before reaching <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> if the number of End Of Sequence (EOS) tokens generated across all beams reaches the <code class="docutils literal notranslate"><span class="pre">best_of</span></code> count.</p></li>
-<li><p>The EOS token will not be generated before reaching the specified <code class="docutils literal notranslate"><span class="pre">min_tokens</span></code>.</p></li>
-</ul>
-</li>
-</ul>
+<p>Set <code class="docutils literal notranslate"><span class="pre">include_stop_str_in_output=True</span></code> to retain the matched string. Text
+after the match within the completing token is still removed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span>
+    <span class="n">stop</span><span class="o">=</span><span class="p">[</span><span class="s2">"&lt;END&gt;"</span><span class="p">],</span>
+    <span class="n">include_stop_str_in_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="s2">"Write a short answer."</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># If the model generates "Answer&lt;END&gt;", output.text is "Answer&lt;END&gt;".</span>
+</pre></div>
+</div>
+<p>For streamed output with the default exclusion behavior, Furiosa-LLM may delay
+emitting a trailing window up to the longest configured stop string so a
+partial match does not leak into the output. Retained-stop mode does not need
+that delay.</p>
 </section>
 </section>
 </section>
@@ -737,7 +743,7 @@ and <a class="reference internal" href="../responses-api.html#responsesapirefere
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-greedy-search">1. Basic Greedy Search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-sampling-with-top-p-top-k-parameters">2. Random Sampling with <code class="docutils literal notranslate"><span class="pre">top_p</span></code> / <code class="docutils literal notranslate"><span class="pre">top_k</span></code> Parameters</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beam-search-with-best-of-beams">3. Beam Search with <code class="docutils literal notranslate"><span class="pre">best_of</span></code> Beams</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-strings">3. Stop Strings</a></li>
 </ul>
 </li>
 </ul>

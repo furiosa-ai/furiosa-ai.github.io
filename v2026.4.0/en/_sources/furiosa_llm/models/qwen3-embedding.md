@@ -17,7 +17,7 @@ Transformers); for usage with those, see the upstream model cards linked below.
 For the related reranking model see {doc}`qwen3-reranker`; for the dense Qwen3
 chat models see {doc}`qwen3`.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -75,7 +75,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible `/v1/embeddings` endpoint. Request
 embeddings with `curl`:
@@ -173,7 +173,7 @@ for data in response.data:
 :::
 ::::
 
-### Python API
+### Advanced Usage
 
 For offline use, load the model with the `LLM` constructor (the FXB shipped in
 the repo is discovered automatically) and call `embed` to obtain dense vectors:

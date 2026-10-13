@@ -16,7 +16,7 @@ each shipping a Furiosa Executable Bundle (FXB) for running it on
 run on other frameworks (such as vLLM, SGLang, and Transformers); for usage with
 those, see the upstream model card linked below.
 
-## Variants
+## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
@@ -33,16 +33,24 @@ To run this model with Furiosa-LLM, follow the example commands below after
 
 ### Launch the server
 
-The simplest way to serve the model is:
+Serve the model with the `solar_open` reasoning parser so the chain of thought is
+returned in a separate field:
 
 ```sh
-# Launch the server, listening on port 8000 by default
 furiosa-llm serve furiosa-ai/Solar-Open-100B-NVFP4A16 \
   --reasoning-parser solar_open
 ```
 
-The `--reasoning-parser solar_open` flag separates the model's chain of thought
-from the final answer (see [Reasoning](#reasoning) below).
+To also enable tool (function) calling, add the `solar_open` tool-call parser;
+keep `--reasoning-parser solar_open` so thinking is still parsed into its own
+field:
+
+```sh
+furiosa-llm serve furiosa-ai/Solar-Open-100B-NVFP4A16 \
+  --reasoning-parser solar_open \
+  --enable-auto-tool-choice \
+  --tool-call-parser solar_open
+```
 
 When the server is ready, you will see:
 
@@ -53,19 +61,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### Launch the server with tool calling
-
-To enable tool (function) calling, start the server with the `solar_open` tool-call
-parser:
-
-```sh
-furiosa-llm serve furiosa-ai/Solar-Open-100B-NVFP4A16 \
-  --reasoning-parser solar_open \
-  --enable-auto-tool-choice \
-  --tool-call-parser solar_open
-```
-
-### Query the server
+### Basic Usage
 
 The server exposes an OpenAI-compatible API. You can send a request with `curl`:
 
@@ -79,26 +75,41 @@ curl http://localhost:8000/v1/chat/completions \
     | python -m json.tool
 ```
 
-### Reasoning
-
 With `--reasoning-parser solar_open`, Solar Open returns its reasoning separately
 from the final answer:
 
 * `response.choices[].message.reasoning` (non-streaming)
 * `response.choices[].delta.reasoning` (streaming)
 
-You can control how much the model reasons per request with the `reasoning_effort`
-parameter (`"low"`, `"medium"`, or `"high"`; default `"high"`). Solar Open's chat
-template maps this to its thinking behavior: `"high"` and `"medium"` produce a
-chain of thought — with `"high"` allowed a larger reasoning-token budget than
-`"medium"` — while `"low"` (and `"minimal"`) prefill an empty thinking block so the
-model skips reasoning and answers directly.
-
 ```python
 from openai import OpenAI
 
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
 
+response = client.chat.completions.create(
+    model="furiosa-ai/Solar-Open-100B-NVFP4A16",
+    messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
+)
+
+print("Reasoning:", response.choices[0].message.reasoning)
+print("Answer:", response.choices[0].message.content)
+```
+
+> **Note:** The `reasoning` field is not part of the OpenAI API specification but
+> is a widely followed convention (the OpenAI Agents SDK, vLLM, and others). It
+> appears only in responses that contain reasoning content; accessing it otherwise
+> raises an `AttributeError`.
+
+### Advanced Usage
+
+**Controlling reasoning effort.** You can control how much the model reasons per
+request with the `reasoning_effort` parameter (`"low"`, `"medium"`, or `"high"`;
+default `"high"`). Solar Open's chat template maps this to its thinking behavior:
+`"high"` and `"medium"` produce a chain of thought — with `"high"` allowed a larger
+reasoning-token budget than `"medium"` — while `"low"` (and `"minimal"`) prefill an
+empty thinking block so the model skips reasoning and answers directly:
+
+```python
 response = client.chat.completions.create(
     model="furiosa-ai/Solar-Open-100B-NVFP4A16",
     messages=[{"role": "user", "content": "How many r's are in 'strawberry'?"}],
@@ -109,17 +120,10 @@ print("Reasoning:", response.choices[0].message.reasoning)
 print("Answer:", response.choices[0].message.content)
 ```
 
-> **Note:** The `reasoning` field is not part of the OpenAI API specification, but
-> it is the convention OpenAI recommends for returning the chain-of-thought (CoT) in
-> Chat Completions-compatible APIs. The OpenAI Agents SDK uses `reasoning` as its
-> primary property for the CoT, and many LLM serving frameworks (such as vLLM) follow
-> the same convention. It appears only in responses that contain reasoning content;
-> accessing it on a response without reasoning content raises an `AttributeError`.
-
-### Tool calling
-
-With the server launched using `--enable-auto-tool-choice --tool-call-parser solar_open`,
-you can pass `tools` and let the model decide when to call them. See the
+**Tool calling.** With the server launched using
+`--enable-auto-tool-choice --tool-call-parser solar_open` (see
+[Launch the server](#launch-the-server)), pass `tools` in the request and let the
+model decide when to call them. See the
 [Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
 for a complete client example and details on tool-choice options.
 

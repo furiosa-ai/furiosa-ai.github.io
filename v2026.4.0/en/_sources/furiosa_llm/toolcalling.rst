@@ -19,6 +19,7 @@ Currently, Furiosa-LLM supports the following tool calling parsers:
 * ``hermes``: For models using the Hermes tool calling format (e.g., EXAONE-4.0, Qwen3 series)
 * ``llama3_json``: For Llama series models (e.g., Llama 3.1, Llama 3.2)
 * ``openai``: For models using the OpenAI tool calling format (e.g., gpt-oss-20b, gpt-oss-120b)
+* ``gemma4``: For Gemma 4 models
 
 When starting the server, specify the appropriate parser using the ``--tool-call-parser`` option.
 
@@ -32,13 +33,6 @@ The ``tool_choice`` parameter controls how the model selects tools to call. Furi
 * ``{"type": "function", "function": {"name": "<function_name>"}}``: Forces the model to call a specific named function.
 
 For more details on the tool calling specification, refer to the `OpenAI Chat API documentation <https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice>`_.
-
-
-Offline Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. literalinclude:: ../../../examples/offline_toolcalling.py
-   :language: python
-   :caption: Offline Example of Tool Calling
 
 
 Online Example with Named Function Calling

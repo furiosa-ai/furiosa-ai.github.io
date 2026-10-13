@@ -13,11 +13,10 @@ SamplingParams class
 Default Sampling Parameters from ``generation_config.json``
 ===========================================================
 
-If a model artifact contains a ``generation_config.json`` file, Furiosa-LLM
-uses the values in that file as the effective defaults for the fields listed
-below. The file is copied verbatim from the source Hugging Face model during
-artifact build — Furiosa-LLM does not customize it. If the file is absent,
-the plain ``SamplingParams()`` defaults apply.
+If the model repository or local directory contains a ``generation_config.json`` file,
+Furiosa-LLM uses its values as the effective defaults for the fields listed below. These
+values are read directly from the source model configuration and are not customized. If the
+file is absent, the plain ``SamplingParams()`` defaults apply.
 
 The following ``generation_config.json`` keys are honored, and are mapped to
 ``SamplingParams`` fields as shown:
@@ -41,6 +40,8 @@ The following ``generation_config.json`` keys are honored, and are mapped to
      - ``min_p``
    * - ``max_new_tokens``
      - ``max_tokens``
+   * - ``stop_strings``
+     - ``stop``
 
 Offline API (``LLM.generate`` / ``LLM.chat`` / ``LLM.stream_generate``)
 -----------------------------------------------------------------------
@@ -117,24 +118,34 @@ This method uses random sampling techniques for token generation, allowing for d
 
 --------
 
-3. Beam Search with ``best_of`` Beams
--------------------------------------
+3. Stop Strings
+---------------
+
+Pass a list of non-empty strings to ``stop`` to end generation when the first
+string is matched. By default, the matched string is removed from the returned
+text. A stop-string match sets ``finish_reason`` to ``"stop"`` and records the
+matched string in ``stop_reason``:
 
 .. code-block:: python
 
-    SamplingParams(min_tokens=10, max_tokens=100, use_beam_search=True, best_of=4)
+    params = SamplingParams(stop=["<END>"])
+    output = llm.generate("Write a short answer.", params)[0].outputs[0]
+    # If the model generates "Answer<END>", output.text is "Answer".
+    # output.stop_reason is "<END>".
 
-Beam Search enhances the generation process by exploring multiple sequences simultaneously.
+Set ``include_stop_str_in_output=True`` to retain the matched string. Text
+after the match within the completing token is still removed:
 
-- **Parameters:**
+.. code-block:: python
 
-  - ``min_tokens``: Minimum number of tokens to generate.
-  - ``max_tokens``: Maximum number of tokens to generate.
-  - ``use_beam_search``: Must be set to True to enable beam search.
-  - ``best_of``: Number of beams to consider for generating the best output.
+    params = SamplingParams(
+        stop=["<END>"],
+        include_stop_str_in_output=True,
+    )
+    output = llm.generate("Write a short answer.", params)[0].outputs[0]
+    # If the model generates "Answer<END>", output.text is "Answer<END>".
 
-- **Behavior:**
-
-  - The generation process explores multiple possible sequences to determine the best output.
-  - Generation may terminate before reaching ``max_tokens`` if the number of End Of Sequence (EOS) tokens generated across all beams reaches the ``best_of`` count.
-  - The EOS token will not be generated before reaching the specified ``min_tokens``.
+For streamed output with the default exclusion behavior, Furiosa-LLM may delay
+emitting a trailing window up to the longest configured stop string so a
+partial match does not leak into the output. Retained-stop mode does not need
+that delay.

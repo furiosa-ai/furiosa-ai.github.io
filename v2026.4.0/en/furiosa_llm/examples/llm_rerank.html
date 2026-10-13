@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Reranking (Document Reranking) &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>Reranking (Document Reranking) &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="../reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -469,33 +475,33 @@ use the <code class="docutils literal notranslate"><span class="pre">LLM.score()
 
 <span class="c1"># Start server with: furiosa-llm serve path/to/reranker-model</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
 
 <span class="c1"># Basic reranking</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank"</span><span class="p">,</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;reranker&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;What is deep learning?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Deep learning is a subset of machine learning using neural networks.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Python is a popular programming language for data science.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Machine learning algorithms learn patterns from data.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Neural networks are inspired by biological neural networks.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JavaScript is used for web development.&quot;</span><span class="p">,</span>
+        <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"reranker"</span><span class="p">,</span>
+        <span class="s2">"query"</span><span class="p">:</span> <span class="s2">"What is deep learning?"</span><span class="p">,</span>
+        <span class="s2">"documents"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Deep learning is a subset of machine learning using neural networks."</span><span class="p">,</span>
+            <span class="s2">"Python is a popular programming language for data science."</span><span class="p">,</span>
+            <span class="s2">"Machine learning algorithms learn patterns from data."</span><span class="p">,</span>
+            <span class="s2">"Neural networks are inspired by biological neural networks."</span><span class="p">,</span>
+            <span class="s2">"JavaScript is used for web development."</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">},</span>
 <span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total results: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Model: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">'model'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total results: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'results'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 
 <span class="c1"># Results are sorted by relevance (descending)</span>
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rank </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;relevance_score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Document: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;document&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">][:</span><span class="mi">60</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"results"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rank </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: score = </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'relevance_score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Document: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'document'</span><span class="p">][</span><span class="s1">'text'</span><span class="p">][:</span><span class="mi">60</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -512,32 +518,32 @@ use the <code class="docutils literal notranslate"><span class="pre">LLM.score()
 
 <span class="c1"># Start server with: furiosa-llm serve path/to/reranker-model</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
 
 <span class="c1"># Reranking with top_n parameter to limit results</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank"</span><span class="p">,</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;reranker&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;machine learning frameworks&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;TensorFlow is a popular machine learning framework.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PyTorch is widely used in research.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Scikit-learn provides simple ML tools.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Pandas is for data manipulation.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;NumPy is for numerical computing.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Keras is a high-level neural networks API.&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JAX is for high-performance ML research.&quot;</span><span class="p">,</span>
+        <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"reranker"</span><span class="p">,</span>
+        <span class="s2">"query"</span><span class="p">:</span> <span class="s2">"machine learning frameworks"</span><span class="p">,</span>
+        <span class="s2">"documents"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"TensorFlow is a popular machine learning framework."</span><span class="p">,</span>
+            <span class="s2">"PyTorch is widely used in research."</span><span class="p">,</span>
+            <span class="s2">"Scikit-learn provides simple ML tools."</span><span class="p">,</span>
+            <span class="s2">"Pandas is for data manipulation."</span><span class="p">,</span>
+            <span class="s2">"NumPy is for numerical computing."</span><span class="p">,</span>
+            <span class="s2">"Keras is a high-level neural networks API."</span><span class="p">,</span>
+            <span class="s2">"JAX is for high-performance ML research."</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="s2">&quot;top_n&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Only return top 3 most relevant</span>
+        <span class="s2">"top_n"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Only return top 3 most relevant</span>
     <span class="p">},</span>
 <span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Showing top </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Showing top </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'results'</span><span class="p">])</span><span class="si">}</span><span class="s2"> results:"</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;relevance_score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;document&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"results"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'relevance_score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'document'</span><span class="p">][</span><span class="s1">'text'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -553,32 +559,32 @@ use the <code class="docutils literal notranslate"><span class="pre">LLM.score()
 
 <span class="c1"># Start server with: furiosa-llm serve path/to/reranker-model</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
 
-<span class="c1"># Long documents that may exceed model&#39;s context length</span>
+<span class="c1"># Long documents that may exceed model's context length</span>
 <span class="n">long_documents</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Deep learning is a subset of machine learning. &quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="s2">&quot;Neural networks process data in layers. &quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="s2">&quot;Transformers revolutionized natural language processing. &quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">"Deep learning is a subset of machine learning. "</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">"Neural networks process data in layers. "</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">"Transformers revolutionized natural language processing. "</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># Use truncate_prompt_tokens to handle long documents</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/rerank"</span><span class="p">,</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;reranker&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;research findings&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">long_documents</span><span class="p">,</span>
-        <span class="s2">&quot;truncate_prompt_tokens&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>  <span class="c1"># Truncate to 512 tokens</span>
-        <span class="s2">&quot;top_n&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"reranker"</span><span class="p">,</span>
+        <span class="s2">"query"</span><span class="p">:</span> <span class="s2">"research findings"</span><span class="p">,</span>
+        <span class="s2">"documents"</span><span class="p">:</span> <span class="n">long_documents</span><span class="p">,</span>
+        <span class="s2">"truncate_prompt_tokens"</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>  <span class="c1"># Truncate to 512 tokens</span>
+        <span class="s2">"top_n"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reranked </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> documents with truncation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Reranked </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'results'</span><span class="p">])</span><span class="si">}</span><span class="s2"> documents with truncation:"</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Document </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;relevance_score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"results"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Document </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'relevance_score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -591,11 +597,11 @@ use the <code class="docutils literal notranslate"><span class="pre">LLM.score()
 
 <span class="c1"># Initialize client pointing to Furiosa-LLM server</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span>  <span class="c1"># Not used but required by client</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:8000/v1"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"dummy"</span>  <span class="c1"># Not used but required by client</span>
 <span class="p">)</span>
 
-<span class="c1"># Note: OpenAI client doesn&#39;t have native rerank support</span>
+<span class="c1"># Note: OpenAI client doesn't have native rerank support</span>
 <span class="c1"># Use requests library or implement custom extension</span>
 </pre></div>
 </div>
@@ -640,34 +646,34 @@ use the <code class="docutils literal notranslate"><span class="pre">LLM.score()
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="c1"># Step 1: Retrieve candidate documents (e.g., from vector database)</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;How does attention mechanism work in transformers?&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">"How does attention mechanism work in transformers?"</span>
 <span class="n">candidate_documents</span> <span class="o">=</span> <span class="n">retrieve_from_vector_db</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>  <span class="c1"># Get 50 candidates</span>
 
 <span class="c1"># Step 2: Rerank to find most relevant</span>
 <span class="n">rerank_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s2">&quot;http://localhost:8000/v1/rerank&quot;</span><span class="p">,</span>
+    <span class="s2">"http://localhost:8000/v1/rerank"</span><span class="p">,</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;reranker&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span>
-        <span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">candidate_documents</span><span class="p">,</span>
-        <span class="s2">&quot;top_n&quot;</span><span class="p">:</span> <span class="mi">5</span>  <span class="c1"># Select top 5 for LLM context</span>
+        <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"reranker"</span><span class="p">,</span>
+        <span class="s2">"query"</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span>
+        <span class="s2">"documents"</span><span class="p">:</span> <span class="n">candidate_documents</span><span class="p">,</span>
+        <span class="s2">"top_n"</span><span class="p">:</span> <span class="mi">5</span>  <span class="c1"># Select top 5 for LLM context</span>
     <span class="p">}</span>
 <span class="p">)</span>
 
 <span class="n">top_documents</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;document&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">rerank_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">"document"</span><span class="p">][</span><span class="s2">"text"</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">rerank_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">"results"</span><span class="p">]</span>
 <span class="p">]</span>
 
 <span class="c1"># Step 3: Generate answer using reranked documents</span>
-<span class="n">llm_client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+<span class="n">llm_client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:8000/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"dummy"</span><span class="p">)</span>
 
-<span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_documents</span><span class="p">)</span>
+<span class="n">context</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_documents</span><span class="p">)</span>
 <span class="n">completion</span> <span class="o">=</span> <span class="n">llm_client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"llama"</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Answer based on this context:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
+        <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Answer based on this context:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
     <span class="p">]</span>
 <span class="p">)</span>
 

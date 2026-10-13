@@ -84,28 +84,31 @@ can be shared due to the shared memory architecture of the device.
 Configuring Model Parallelism in Furiosa-LLM
 ============================================
 
-The ArtifactBuilder API allows to configure the degree of tensor parallelism
-by specifying the ``tensor_parallel_size``
+Tensor parallelism is fixed when an FXB is compiled. Configure it with
+``fxb build --tensor-parallel-size``; see :ref:`BuildingFXB` for details.
 
-``pipeline_parallel_size`` and ``data_parallel_size`` can be configured when loading a model artifact.
-For example, when you run ``furiosa-llm serve``,
-you can specify ``--pipeline-parallel-size`` (or ``-pp``) and ``--data-parallel-size`` (or ``-dp``) options.
-Similarly, ``LLM``, ``LLMEngine``, ``AsyncLLMEngine`` allows to specify the degree of pipeline parallelism and data parallelism.
+Pipeline and data parallelism are selected at serving time. With ``furiosa-llm serve``, use
+``--pipeline-parallel-size`` (or ``-pp``) and ``--data-parallel-size`` (or ``-dp``).
+The ``LLM``, ``LLMEngine``, and ``AsyncLLMEngine`` APIs expose the corresponding
+``pipeline_parallel_size`` and ``data_parallel_size`` parameters.
 
 Best Practices for Furiosa-LLM
 ==============================
 Each parallelism type has its own characteristics and constraints.
 
-The ``pipeline_parallel_size`` parameter can be at most the number of devices.
-The ``tensor_parallel_size`` parameter can only be 4 or 8 in the |release| release;
-future releases will lift this limitation.
+The ``pipeline_parallel_size`` parameter can be at most the number of devices. The
+``tensor_parallel_size`` must match the value compiled into the FXB and cannot be changed at
+serving time. ``tensor_parallel_size`` is the number of PEs in each tensor-parallel group,
+not the number of RNGD cards; one RNGD card contains 8 PEs.
 
 The product of ``tensor_parallel_size``, ``pipeline_parallel_size``, and ``data_parallel_size``
 should be equal to the total number of PEs in your machine.
+Pipeline parallelism with ``pipeline_parallel_size`` greater than 1 can be combined with
+data parallelism on a single node.
 
 For example, let's assume that you have 4 RNGD cards, each of which has 8 PEs.
 Then, the total number of PEs is 32.
 In that case, you can use the following configurations:
 
 - ``tensor_parallel_size=8``, ``pipeline_parallel_size=4``, ``data_parallel_size=1``
-- ``tensor_parallel_size=4``, ``pipeline_parallel_size=2``, ``data_parallel_size=2``
+- ``tensor_parallel_size=8``, ``pipeline_parallel_size=2``, ``data_parallel_size=2``

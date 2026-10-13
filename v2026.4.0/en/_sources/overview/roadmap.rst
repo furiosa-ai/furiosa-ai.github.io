@@ -15,7 +15,8 @@ Upcoming Releases 2026 Q3
 ==========================================
 * 🔨 EXAONE 4.5, Qwen 3.6, Gemma 4 model support
 * 🔨 Multi-modal (vision-language) serving optimization
-* 🔨 Hierarchical KV caching support, including KV cache offloading
+* 🔨 Hierarchical KV caching: an experimental local NPU/host preview is
+  available; general availability and further transfer optimizations are planned
 * 🔨 KVCacheConnector support
 * 🔨 Prefill/decode (PD) disaggregation
 * 🔨 Speculative decoding support

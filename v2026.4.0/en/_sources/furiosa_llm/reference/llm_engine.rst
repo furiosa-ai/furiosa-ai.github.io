@@ -31,9 +31,9 @@ Arguments supported by LLMEngine
 .. help-text-start
 .. code-block:: text
 
-    usage: engine_cli.py [-h] --model MODEL [--revision REVISION] [--tokenizer TOKENIZER]
-                         [--tokenizer-mode TOKENIZER_MODE] [--seed SEED]
-                         [--devices DEVICES]
+    usage: engine_cli.py [-h] --model MODEL [--fxb FXB] [--revision REVISION]
+                         [--tokenizer TOKENIZER] [--tokenizer-mode TOKENIZER_MODE]
+                         [--seed SEED] [--devices DEVICES]
                          [--pipeline-parallel-size PIPELINE_PARALLEL_SIZE]
                          [--data-parallel-size DATA_PARALLEL_SIZE]
                          [--cache-dir CACHE_DIR] [--npu-queue-limit NPU_QUEUE_LIMIT]
@@ -46,8 +46,10 @@ Arguments supported by LLMEngine
 
     options:
       -h, --help            show this help message and exit
-      --model MODEL         The Hugging Face model id, or path to Furiosa model artifact.
-                            Currently only one model is supported per server.
+      --model MODEL         The Hugging Face model ID or local model directory. Currently
+                            only one model is supported per server.
+      --fxb FXB             Optional path to a compatible FXB. When omitted, a bundle is
+                            discovered from the model directory or local FXB cache.
       --revision REVISION   The specific model revision on Hugging Face Hub if the model
                             is given as a Hugging Face model id. It can be a branch name,
                             a tag name, or a commit id. Its default value is main.
@@ -70,7 +72,7 @@ Arguments supported by LLMEngine
                             will be used.
       --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
                             The size of the pipeline parallelism group. If not given, it
-                            will use the value from artifact.
+                            will use the value from the loaded FXB.
       --data-parallel-size DATA_PARALLEL_SIZE
                             The size of the data parallelism group. If not given, it will
                             be inferred from total available PEs and other parallelism

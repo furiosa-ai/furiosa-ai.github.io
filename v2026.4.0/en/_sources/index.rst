@@ -81,11 +81,12 @@ Furiosa-LLM
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`DataParallelRouting`: Understanding scoring-based data-parallel routing
-* :ref:`ModelPreparation`: How to prepare LLM models to be served by Furiosa-LLM
+* :ref:`FXB`: Model lifecycle, building, caching, and serving with FXB
 * :ref:`ModelParallelism`: Tensor/Pipeline/Data parallelism in Furiosa-LLM
 * :ref:`FuriosaLLMReference`: The Python API reference for Furiosa-LLM
 * :ref:`FuriosaLLMExamples`: Examples of using Furiosa-LLM
 * :ref:`K8sFuriosaLLMDeployment`: A guide to deploying Furiosa-LLM on Kubernetes
+* :ref:`K8sMooncakeDeployment`: A guide to deploying Mooncake on Kubernetes
 
 Cloud Native Toolkit
 -------------------------------------------------
@@ -149,14 +150,15 @@ Other Links
    /furiosa_llm/structured-output
    /furiosa_llm/vision-language
    /furiosa_llm/prefix-caching
+   /furiosa_llm/hierarchical-prefix-caching
    /furiosa_llm/hybrid-kv-cache
    /furiosa_llm/data-parallel-routing
-   /furiosa_llm/model-preparation
    /furiosa_llm/fxb
    /furiosa_llm/model-parallelism
    /furiosa_llm/reference
    /furiosa_llm/examples
    /furiosa_llm/k8s_deployment
+   /furiosa_llm/mooncake_deployment
 
 
 .. toctree::

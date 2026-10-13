@@ -7,16 +7,17 @@ Container Support
 Container Runtime Support
 ==========================================
 
-We do support the following versions of container runtimes:
+We support the following container runtimes:
 
 * Docker: v25.0.0 or later
+* Podman
 * ContainerD: v1.7.0 or later
 * CRI-O: v1.28.0 or later
 
 .. note::
 
-  The supported container runtimes above (Docker, ContainerD, CRI-O) are validated with the default low-level container runtime ``runc``.
-  Other low-level runtimes or isolation technologies (such as ``crun``, ``gVisor``, or ``firecracker``) are not officially tested and may have compatibility limitations.
+  The supported container runtimes above (Docker, Podman, ContainerD, CRI-O) are validated with the low-level container runtimes ``runc`` and ``crun``.
+  Other low-level runtimes or isolation technologies (such as ``gVisor`` or ``firecracker``) are not officially tested yet and may have compatibility limitations.
 
 .. warning::
 

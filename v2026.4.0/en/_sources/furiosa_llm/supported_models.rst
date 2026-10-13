@@ -46,6 +46,9 @@ Decoder-only Models (Text Generation)
    * - :doc:`Llama 3.1 <models/llama-3.1>`, :doc:`Llama 3.3 <models/llama-3.3>`
      - ``LlamaForCausalLM``
      - ``meta-llama/Llama-3.1-8B-Instruct``, ``meta-llama/Llama-3.3-70B-Instruct``
+   * - :doc:`Mistral NeMo <models/mistral-nemo>`
+     - ``MistralForCausalLM``
+     - ``RedHatAI/Mistral-Nemo-Instruct-2407-FP8``
    * - :doc:`Solar Open <models/solar-open>`
      - ``SolarOpenForCausalLM``
      - ``upstage/Solar-Open-100B``
@@ -54,7 +57,7 @@ Decoder-only Models (Text Generation)
      - ``Qwen/Qwen2.5-0.5B-Instruct``
    * - :doc:`Qwen 3 <models/qwen3>`
      - ``Qwen3ForCausalLM``
-     - ``Qwen/Qwen3-8B``, ``Qwen/Qwen3-32B``
+     - ``Qwen/Qwen3-8B``, ``Qwen/Qwen3-32B``, ``Qwen/Qwen3-32B-FP8``
    * - :doc:`Qwen 3 MoE <models/qwen3-moe>`
      - ``Qwen3MoeForCausalLM``
      - ``Qwen/Qwen3-30B-A3B-Instruct-2507``
@@ -62,23 +65,52 @@ Decoder-only Models (Text Generation)
 Pooling Models
 ================================
 
+Embedding Models
+----------------
+
 .. list-table::
    :align: center
+   :class: pooling-models-table
    :header-rows: 1
-   :widths: 130 120 120 300
+   :widths: 130 180 300
 
    * - Model Name
      - Architecture
-     - Task
-     - Example Hugging Face Models
+     - HF Models
+   * - :doc:`BGE-M3 <models/bge-m3>`
+     - ``XLMRobertaModel``
+     - ``BAAI/bge-m3``
+   * - :doc:`E5-Mistral <models/e5-mistral>`
+     - ``MistralModel``
+     - ``intfloat/e5-mistral-7b-instruct``
+   * - :doc:`Harrier OSS v1 <models/harrier-oss-v1>`
+     - ``Qwen3Model``
+     - ``microsoft/harrier-oss-v1-0.6b``
    * - :doc:`Qwen 3 Embedding <models/qwen3-embedding>`
      - ``Qwen3Model``
-     - Embedding
      - ``Qwen/Qwen3-Embedding-8B``, ``Qwen/Qwen3-Embedding-4B``
+
+Cross-Encoder Models
+--------------------
+
+.. list-table::
+   :align: center
+   :class: pooling-models-table
+   :header-rows: 1
+   :widths: 130 220 220 120
+
+   * - Model Name
+     - Architecture
+     - HF Models
+     - Score Template
+   * - :doc:`BGE Reranker v2 M3 <models/bge-reranker-v2-m3>`
+     - ``XLMRobertaForSequenceClassification``
+     - ``BAAI/bge-reranker-v2-m3``
+     - N/A
    * - :doc:`Qwen 3 Reranker <models/qwen3-reranker>`
      - ``Qwen3ForSequenceClassification``
-     - Reranking
      - ``Qwen/Qwen3-Reranker-8B``, ``Qwen/Qwen3-Reranker-4B``
+     - Built-in Qwen3-Reranker template
 
 Vision-Language Models (Multimodal)
 ======================================
@@ -96,6 +128,14 @@ API.
      - Architecture
      - Modalities
      - Example Hugging Face Models
+   * - :doc:`EXAONE 4.5 <models/exaone-4.5>`
+     - ``Exaone4_5_ForConditionalGeneration``
+     - Text, Image
+     - ``LGAI-EXAONE/EXAONE-4.5-33B-FP8``
+   * - :doc:`Gemma 4 <models/gemma-4>`
+     - ``Gemma4ForConditionalGeneration``
+     - Text (current FXB; upstream also Image)
+     - ``RedHatAI/gemma-4-31B-it-FP8-block``
    * - :doc:`Qwen 3 VL <models/qwen3-vl>`
      - ``Qwen3VLForConditionalGeneration``
      - Text, Image
@@ -136,11 +176,31 @@ The status of each check uses the following scale:
      - Function
      - Correctness
      - Performance
+   * - `bge-m3 <https://huggingface.co/furiosa-ai/bge-m3>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
+   * - `e5-mistral-7b-instruct <https://huggingface.co/furiosa-ai/e5-mistral-7b-instruct>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
    * - `EXAONE-4.0-32B-FP8 <https://huggingface.co/furiosa-ai/EXAONE-4.0-32B-FP8>`_
      - Text
      - ✅
      - ✅
      - ✅
+   * - `EXAONE-4.5-33B-FP8 <https://huggingface.co/furiosa-ai/EXAONE-4.5-33B-FP8>`_
+     - Multimodal
+     - ✅
+     - ✅
+     - 🟡
+   * - `gemma-4-31B-it-FP8-block <https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block>`_
+     - Text
+     - ✅
+     - ✅
+     - 🟡
    * - `K-EXAONE-236B-A23B-NVFP4A16 <https://huggingface.co/furiosa-ai/K-EXAONE-236B-A23B-NVFP4A16>`_
      - Text (MoE)
      - ✅
@@ -156,6 +216,11 @@ The status of each check uses the following scale:
      - ✅
      - ✅
      - ✅
+   * - `Mistral-Nemo-Instruct-2407-FP8 <https://huggingface.co/furiosa-ai/Mistral-Nemo-Instruct-2407-FP8>`_
+     - Text
+     - ✅
+     - ✅
+     - 🟡
    * - `Qwen3-30B-A3B-FP8 <https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8>`_
      - Text (MoE)
      - ✅
@@ -251,6 +316,11 @@ The status of each check uses the following scale:
      - ✅
      - ✅
      - 🟡
+   * - `harrier-oss-v1-0.6b <https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b>`_
+     - Embedding
+     - ✅
+     - ✅
+     - 🟡
 
 For models planned for future releases, see the :ref:`Roadmap`.
 
@@ -260,13 +330,20 @@ For models planned for future releases, see the :ref:`Roadmap`.
 
    models/qwen3
    models/qwen3-moe
+   models/bge-m3
+   models/e5-mistral
+   models/bge-reranker-v2-m3
+   models/harrier-oss-v1
    models/qwen3-embedding
    models/qwen3-reranker
    models/qwen3-vl
+   models/gemma-4
    models/qwen2.5
    models/llama-3.1
    models/llama-3.3
+   models/mistral-nemo
    models/gpt-oss
    models/exaone-4.0
+   models/exaone-4.5
    models/k-exaone
    models/solar-open

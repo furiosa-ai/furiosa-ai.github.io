@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b7 documentation</title>
+    <title>OpenAI-Compatible Server &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=37f7f57c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../_static/documentation_options.js?v=83f362ce"></script>
+    <script src="../_static/documentation_options.js?v=1ef58908"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -240,6 +240,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
@@ -260,14 +261,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3.html">Qwen3 (dense)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/harrier-oss-v1.html">Harrier OSS v1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
 </ul>
@@ -278,18 +286,15 @@
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-preparation.html">Model Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fxb.html">Furiosa Executable Bundles (FXB)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/pooling_params.html">PoolingParams class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/artifact_builder.html">ArtifactBuilder</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
 </ul>
@@ -303,6 +308,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
 <ul class="nav bd-sidenav">
@@ -432,12 +438,14 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-apis">Supported APIs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limiting-the-context-length">Limiting the Context Length</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-string-response-fields">Stop-string response fields</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>
@@ -468,14 +476,15 @@
 <p>Furiosa-LLM offers an OpenAI-compatible server that hosts a single model
 and provides OpenAI-compatible chat, completions, responses, and embedding APIs
 along with some additional pooling API support.</p>
-<p>To launch the server, use the <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> command with the model
-artifact path, as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">ARTIFACT_PATH</span><span class="p">]</span>
+<p>To launch the server, pass a Hugging Face model ID or local model directory to
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>. A compatible FXB must be bundled with the model, available in the
+local FXB cache, or selected explicitly with <code class="docutils literal notranslate"><span class="pre">--fxb</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">MODEL_ID_OR_PATH</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This document is based on Furiosa SDK 2026.4.0b7.
+<p>This document is based on Furiosa SDK 2026.4.0b15.
 The features and APIs described herein are subject to change in the future.</p>
 </div>
 <section id="supported-apis">
@@ -508,12 +517,12 @@ The features and APIs described herein are subject to change in the future.</p>
 <ul class="simple">
 <li><p>Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</p>
 <ul>
-<li><p>Currently supported only for Qwen3-Rerank models.</p></li>
+<li><p>Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.</p></li>
 </ul>
 </li>
 <li><p>Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</p>
 <ul>
-<li><p>Currently supported only for Qwen3-Rerank models.</p></li>
+<li><p>Supported for Qwen3-Reranker and BGE-reranker-v2-m3 models.</p></li>
 </ul>
 </li>
 </ul>
@@ -524,8 +533,9 @@ The features and APIs described herein are subject to change in the future.</p>
 <ul class="simple">
 <li><p>A system with the prerequisites installed (see <a class="reference internal" href="../get_started/prerequisites.html#installingprerequisites"><span class="std std-ref">Installing Prerequisites</span></a>)</p></li>
 <li><p>An installation of <a class="reference internal" href="../get_started/furiosa_llm.html#installingfuriosallm"><span class="std std-ref">Furiosa-LLM</span></a></p></li>
-<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a></p></li>
-<li><p>A model artifact</p></li>
+<li><p>A <a class="reference internal" href="../get_started/furiosa_llm.html#authorizinghuggingfacehub"><span class="std std-ref">Hugging Face access token</span></a> for gated models</p></li>
+<li><p>A compatible FXB bundled with the model, available in the local cache, or supplied with
+<code class="docutils literal notranslate"><span class="pre">--fxb</span></code> (see <a class="reference internal" href="fxb.html#fxb"><span class="std std-ref">Furiosa Executable Bundles (FXB)</span></a>)</p></li>
 <li><p>A chat template for chat applications (optional)</p></li>
 </ul>
 </section>
@@ -534,11 +544,11 @@ The features and APIs described herein are subject to change in the future.</p>
 <p>Once the server is running, you can interact with it using an HTTP client,
 as shown in the following example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;EMPTY&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}]</span>
-<span class="s1">    }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "model": "EMPTY",</span>
+<span class="s1">    "messages": [{"role": "user", "content": "What is the capital of France?"}]</span>
+<span class="s1">    }'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </pre></div>
 </div>
@@ -553,25 +563,59 @@ with streaming mode:</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
     <span class="n">stream_chat_completion</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;EMPTY&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}],</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">"EMPTY"</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What is the capital of France?"</span><span class="p">}],</span>
         <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream_chat_completion</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">run</span><span class="p">())</span>
 </pre></div>
+</div>
+</section>
+<section id="limiting-the-context-length">
+<span id="servemaxmodellen"></span><h2>Limiting the Context Length<a class="headerlink" href="#limiting-the-context-length" title="Link to this heading">#</a></h2>
+<p>By default the server accepts requests up to the smallest of the model’s
+<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code>, the context length covered by the loaded FXB,
+and what the KV cache can hold. <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> lowers that limit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">furiosa</span><span class="o">-</span><span class="n">llm</span> <span class="n">serve</span> <span class="p">[</span><span class="n">MODEL_ID_OR_PATH</span><span class="p">]</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="nb">len</span> <span class="mi">8192</span>
+</pre></div>
+</div>
+<p>The value caps the total tokens a single request may use — prompt plus
+generated tokens. It applies to every request, including those that do not set
+<code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>: the implicit generation budget shrinks with the cap as well. The
+limit advertised on <code class="docutils literal notranslate"><span class="pre">/v1/models</span></code> is whichever of those four bounds is smallest,
+so on a memory-tight deployment it can be the KV-derived one even with no cap
+set. A request exceeding it is rejected with a context-length error.</p>
+<p>The cap may only <em>lower</em> the limit. A value above either the model’s
+<code class="docutils literal notranslate"><span class="pre">max_position_embeddings</span></code> or the context length covered by the loaded FXB
+is rejected at startup, so a typo fails fast instead of being ignored.</p>
+<p>Lowering the cap also raises concurrency for requests that omit <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>.
+Admission is conservative by default: a request is charged <code class="docutils literal notranslate"><span class="pre">prompt</span> <span class="pre">+</span> <span class="pre">max_tokens</span></code>
+KV blocks — one block per token, less any prefix-cache hit — for its whole
+lifetime, and a request that omits <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> is budgeted the entire remaining
+context window. Each therefore costs a full context, so roughly
+<code class="docutils literal notranslate"><span class="pre">max_kv_len</span> <span class="pre">/</span> <span class="pre">max_model_len</span></code> of them run concurrently per data-parallel replica.
+The gain stops once another limit binds, such as <code class="docutils literal notranslate"><span class="pre">--max-concurrency</span></code> or a cap
+already at or above the KV capacity. It frees no NPU memory: weights, buckets and
+the KV pool are fixed by the loaded FXB.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> takes an option of the same name, but it means something different there:
+at build time <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> shapes which buckets are compiled into the FXB. At
+serving time the bucket set is fixed by the loaded FXB, and this option only caps
+admission.</p>
 </div>
 </section>
 <section id="chat-templates">
@@ -593,7 +637,7 @@ the default, you can specify one using the <code class="docutils literal notrans
 <p>For reference, you can find a well-structured example of a chat template in the
 <a class="reference external" href="https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_1/">Llama 3.1 Model Card</a>.</p>
 <p>To launch the server with a custom chat template, use the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>ARTIFACT_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>MODEL_ID_OR_PATH<span class="o">]</span><span class="w"> </span>--chat-template<span class="w"> </span><span class="o">[</span>CHAT_TEMPLATE_PATH<span class="o">]</span>
 </pre></div>
 </div>
 </section>
@@ -613,46 +657,47 @@ parameters. Here’s an example:</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">...&quot;</span>
-<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;get_weather&quot;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Getting the weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">..."</span>
+<span class="n">tool_functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"get_weather"</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">}</span>
 
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;City and state, e.g., &#39;San Francisco, CA&#39;&quot;</span><span class="p">},</span>
-                <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]}</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span>
+    <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"get_weather"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Get the current weather in a given location"</span><span class="p">,</span>
+        <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"location"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"City and state, e.g., 'San Francisco, CA'"</span><span class="p">},</span>
+                <span class="s2">"unit"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"celsius"</span><span class="p">,</span> <span class="s2">"fahrenheit"</span><span class="p">]}</span>
             <span class="p">},</span>
-            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+            <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"location"</span><span class="p">,</span> <span class="s2">"unit"</span><span class="p">]</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}]</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What&#39;s the weather like in San Francisco?&quot;</span><span class="p">}],</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"What's the weather like in San Francisco?"</span><span class="p">}],</span>
     <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
-    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;required&quot;</span>
+    <span class="n">tool_choice</span><span class="o">=</span><span class="s2">"required"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">tool_call</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Function called: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Arguments: </span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">tool_call</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"get_weather"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Expected 'get_weather' but got '</span><span class="si">{</span><span class="n">tool_call</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">'"</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result: </span><span class="si">{</span><span class="n">get_weather</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The expected output is as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Function called: get_weather
-Arguments: {&quot;location&quot;: &quot;San Francisco, CA&quot;, &quot;unit&quot;: &quot;fahrenheit&quot;}
+Arguments: {"location": "San Francisco, CA", "unit": "fahrenheit"}
 Result: Getting the weather for San Francisco, CA in fahrenheit...
 </pre></div>
 </div>
@@ -683,28 +728,24 @@ You can check the help text’s <code class="docutils literal notranslate"><span
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8000/v1&quot;</span><span class="p">)</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;EMPTY&quot;</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_BASE_URL"</span><span class="p">,</span> <span class="s2">"http://localhost:8000/v1"</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">,</span> <span class="s2">"EMPTY"</span><span class="p">)</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
 
 
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;9.11 and 9.8, which is greater?&quot;</span><span class="p">}]</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"9.11 and 9.8, which is greater?"</span><span class="p">}]</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-    <span class="c1"># Pass the argument here in the extra_body field for Qwen3, Exaone4</span>
-    <span class="c1"># It depends on the model you are using</span>
-    <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;chat_template_kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;enable_thinking&quot;</span><span class="p">:</span> <span class="kc">True</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
 <span class="p">)</span>
 
-<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;reasoning&quot;</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reasoning:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+<span class="c1"># The reasoning parser splits the chain-of-thought into a separate `reasoning`</span>
+<span class="c1"># field, kept out of `content`.</span>
+<span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">,</span> <span class="s2">"expected a non-empty reasoning field"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Reasoning:"</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">reasoning</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Answer:"</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -716,17 +757,11 @@ attempting to access this field in responses without reasoning content will rais
 </section>
 <section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Please note that using <code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code> together with <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not
-allowed because beam search requires the whole sequence to produce the
-output tokens.</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For sampling-related fields (<code class="docutils literal notranslate"><span class="pre">temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">top_p</span></code>, <code class="docutils literal notranslate"><span class="pre">top_k</span></code>,
-<code class="docutils literal notranslate"><span class="pre">min_p</span></code>, <code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code>, <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>), each field resolves
-in this order:</p>
+<code class="docutils literal notranslate"><span class="pre">min_p</span></code>, <code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code>, <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code>), each field
+resolves in this order:</p>
 <ol class="arabic simple">
 <li><p>The value specified in the request body, if set.</p></li>
 <li><p>The value from the model’s <code class="docutils literal notranslate"><span class="pre">generation_config.json</span></code>, if present.</p></li>
@@ -788,16 +823,6 @@ and offline-API behavior.</p>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>best_of</p></td>
-<td><p>integer</p></td>
-<td><p>1</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>use_beam_search</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
 <tr class="row-odd"><td><p>top_k</p></td>
 <td><p>integer</p></td>
 <td><p>-1</p></td>
@@ -808,27 +833,27 @@ and offline-API behavior.</p>
 <td><p>0.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>length_penalty</p></td>
+<tr class="row-odd"><td><p>repetition_penalty</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>repetition_penalty</p></td>
-<td><p>float</p></td>
-<td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<tr class="row-even"><td><p>stop</p></td>
+<td><p>string or array[string]</p></td>
+<td><p>null</p></td>
+<td><p>Stop string or list of non-empty stop strings. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<tr class="row-odd"><td><p>include_stop_str_in_output</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>Whether to retain a matched <code class="docutils literal notranslate"><span class="pre">stop</span></code> string. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>stop_token_ids</p></td>
 <td><p>array[integer]</p></td>
 <td><p>[]</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>ignore_eos</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p>early_stopping</p></td>
+<tr class="row-odd"><td><p>ignore_eos</p></td>
 <td><p>boolean</p></td>
 <td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
@@ -836,7 +861,7 @@ and offline-API behavior.</p>
 <tr class="row-even"><td><p>skip_special_tokens</p></td>
 <td><p>boolean</p></td>
 <td><p>true</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<td><p>Whether tokenizer special tokens are omitted from generated text.</p></td>
 </tr>
 <tr class="row-odd"><td><p>return_token_ids</p></td>
 <td><p>boolean</p></td>
@@ -936,24 +961,14 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 <td><p>1</p></td>
 <td><p>Currently limited to 1.</p></td>
 </tr>
-<tr class="row-odd"><td><p>best_of</p></td>
-<td><p>integer</p></td>
-<td><p>1</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>temperature</p></td>
+<tr class="row-odd"><td><p>temperature</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>top_p</p></td>
+<tr class="row-even"><td><p>top_p</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>use_beam_search</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>top_k</p></td>
@@ -966,27 +981,27 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 <td><p>0.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>length_penalty</p></td>
+<tr class="row-odd"><td><p>repetition_penalty</p></td>
 <td><p>float</p></td>
 <td><p>1.0</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>repetition_penalty</p></td>
-<td><p>float</p></td>
-<td><p>1.0</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+<tr class="row-even"><td><p>stop</p></td>
+<td><p>string or array[string]</p></td>
+<td><p>null</p></td>
+<td><p>Stop string or list of non-empty stop strings. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>stop_token_ids</p></td>
+<tr class="row-odd"><td><p>include_stop_str_in_output</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>Whether to retain a matched <code class="docutils literal notranslate"><span class="pre">stop</span></code> string. See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>stop_token_ids</p></td>
 <td><p>array[integer]</p></td>
 <td><p>[]</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>ignore_eos</p></td>
-<td><p>boolean</p></td>
-<td><p>false</p></td>
-<td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p>early_stopping</p></td>
+<tr class="row-odd"><td><p>ignore_eos</p></td>
 <td><p>boolean</p></td>
 <td><p>false</p></td>
 <td><p>See <a class="reference internal" href="reference/sampling_params.html#samplingparams"><span class="std std-ref">Sampling Params</span></a>.</p></td>
@@ -1019,6 +1034,19 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 </tbody>
 </table>
 </div>
+</section>
+<section id="stop-string-response-fields">
+<h3>Stop-string response fields<a class="headerlink" href="#stop-string-response-fields" title="Link to this heading">#</a></h3>
+<p>For Chat Completions and Completions, each response choice has a
+<code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> field. This is a Furiosa-LLM extension to the OpenAI-compatible
+response schema. When a configured stop string ends generation, the terminal
+choice—or the terminal choice in a streamed chunk—has <code class="docutils literal notranslate"><span class="pre">finish_reason</span></code> set to
+<code class="docutils literal notranslate"><span class="pre">&quot;stop&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> set to the matched string. <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code> is
+<code class="docutils literal notranslate"><span class="pre">null</span></code> for earlier streamed chunks and when generation ends for another
+reason.</p>
+<p>The raw JSON response always includes the field. OpenAI Python SDK response
+models that do not declare this extension expose it through
+<code class="docutils literal notranslate"><span class="pre">choice.model_extra[&quot;stop_reason&quot;]</span></code>.</p>
 </section>
 <section id="embeddings-api-v1-embeddings">
 <span id="embeddingsapi"></span><h3>Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)<a class="headerlink" href="#embeddings-api-v1-embeddings" title="Link to this heading">#</a></h3>
@@ -1181,7 +1209,7 @@ If not specified, all documents are returned in ranked order.</p></td>
 <p>You can access these endpoints using the OpenAI client’s <code class="docutils literal notranslate"><span class="pre">models.list()</span></code> and <code class="docutils literal notranslate"><span class="pre">models.retrieve()</span></code> methods.</p>
 <p>The response includes the standard <a class="reference external" href="https://platform.openai.com/docs/api-reference/models/object">model object</a> as defined by OpenAI, along with the following Furiosa-LLM-specific extensions:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">artifact_id</span></code>: Unique identifier for the model artifact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">artifact_id</span></code>: Unique identifier for the loaded FXB.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_prompt_len</span></code>: Maximum allowed length of input prompts.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_context_len</span></code>: Maximum allowed length of the total context window.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">runtime_config</span></code>: Model runtime configuration parameters, including bucket specifications.</p></li>
@@ -1392,12 +1420,14 @@ Hugging Face cache directory.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-apis">Supported APIs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-openai-api">Using the OpenAI API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limiting-the-context-length">Limiting the Context Length</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat Templates</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-calling-support">Tool Calling Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-support">Reasoning Support</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-api-v1-chat-completions">Chat API (<code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completions-api-v1-completions">Completions API (<code class="docutils literal notranslate"><span class="pre">/v1/completions</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-string-response-fields">Stop-string response fields</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embeddings-api-v1-embeddings">Embeddings API (<code class="docutils literal notranslate"><span class="pre">/v1/embeddings</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-api-score-v1-score">Score API (<code class="docutils literal notranslate"><span class="pre">/score</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/score</span></code>)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rerank-api-rerank-v1-rerank-v2-rerank">Rerank API (<code class="docutils literal notranslate"><span class="pre">/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v1/rerank</span></code>, <code class="docutils literal notranslate"><span class="pre">/v2/rerank</span></code>)</a></li>
