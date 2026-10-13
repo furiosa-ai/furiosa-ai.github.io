@@ -4,6 +4,14 @@
 ******************************
 Upgrading FuriosaAI's Software
 ******************************
+
+.. note::
+
+   Furiosa SDK 2026.4 requires the **2026.4.0 RNGD driver**. Upgrade
+   ``furiosa-driver-rngd`` before running Furiosa-LLM 2026.4. Using a
+   2026.3.x driver may cause unexpected issues. Also review the CLI and
+   Python configuration migration table in :ref:`Release2026_4_0_BreakingChanges`.
+
 The high-level upgrade workflow is as follows:
 
 1. Upgrade the driver package.
@@ -128,3 +136,82 @@ To upgrade Furiosa-LLM, use ``uv pip``:
 .. code-block:: sh
 
    uv pip install --upgrade --torch-backend=auto furiosa-llm
+
+
+.. _FuriosaSMIPythonMigration:
+
+Migrating the Furiosa SMI Python Package
+========================================
+
+When upgrading from **Furiosa SDK 2026.3.0 or earlier to 2026.4.0**, follow
+this guide if your Python application uses ``furiosa-smi-py`` and you are
+migrating it to ``furiosa-smi``.
+
+Replace ``furiosa-smi-py`` with ``furiosa-smi==2026.4.*`` in your application's
+Python dependencies, then install the new package:
+
+.. code-block:: sh
+
+   python -m pip install --upgrade "furiosa-smi==2026.4.*"
+
+The packages have separate import names, so installing ``furiosa-smi`` does
+not update existing ``furiosa_smi_py`` imports. Update your imports and API
+calls as follows:
+
+.. list-table:: Python API changes
+   :header-rows: 1
+   :widths: 50 50
+
+   * - Previous API (``furiosa_smi_py``)
+     - New API (``furiosa_smi``)
+   * - ``import furiosa_smi_py``
+     - ``import furiosa_smi``
+   * - ``furiosa_smi_py.init()``
+     - Remove the call; explicit initialization is no longer required.
+   * - ``device.device_info().name()``
+     - ``device.device_name()`` returns a name such as ``npu0``.
+   * - ``device.device_info().uuid()``
+     - ``device.uuid()``
+   * - ``device.device_info().firmware_version()``
+     - ``device.firmware_version()``
+   * - ``device.device_info().serial()``
+     - ``device.serial()``
+   * - ``device.device_info().numa_node()``
+     - ``device.numa_node()``
+   * - ``device.core_status().pe_status()``
+     - ``device.core_status().items()`` yields ``(core, status)`` pairs.
+
+The following examples query the same device information and list available
+cores before and after migration.
+
+**Before: ``furiosa-smi-py``**
+
+.. code-block:: python
+
+   import furiosa_smi_py as smi
+
+   smi.init()
+   print("Driver:", smi.driver_info())
+   for device in smi.list_devices():
+       info = device.device_info()
+       print(info.name().split("/")[-1], info.uuid(), info.firmware_version())
+       for pe_status in device.core_status().pe_status():
+           if pe_status.status() == smi.CoreStatus.Available:
+               print("Available core:", pe_status.core())
+
+**After: ``furiosa-smi``**
+
+.. code-block:: python
+
+   import furiosa_smi as smi
+
+   print("Driver:", smi.driver_info())
+   for device in smi.list_devices():
+       print(device.device_name(), device.uuid(), device.firmware_version())
+       for core, status in device.core_status().items():
+           if status == smi.CoreStatus.Available:
+               print("Available core:", core)
+
+``core_status()`` now returns a dictionary mapping core indices to
+``CoreStatus`` values. Compare these values with ``==``, as shown above;
+``is`` compares Python object identity and should not be used here.

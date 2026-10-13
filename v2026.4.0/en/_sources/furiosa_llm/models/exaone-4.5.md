@@ -17,8 +17,6 @@ shipping a Furiosa Executable Bundle (FXB) for running the model on
 also run on other frameworks (such as vLLM, SGLang, and Transformers); for usage
 with those, see the upstream model card linked below.
 
-For the text-only predecessor, see {doc}`exaone-4.0`.
-
 ## Available Models
 
 | Model | Quantization | RNGD cards | Notes |
@@ -129,16 +127,9 @@ print("Answer:", response.choices[0].message.content)
 
 ### Advanced Usage
 
-**Multimodal serving options.** `furiosa-llm serve` provides flags to control
-multimodal behavior; requests that violate them are rejected with HTTP 400:
-
-- `--image-limit-per-prompt N` — maximum number of images allowed per request (default: unlimited).
-- `--allowed-local-media-path PATH` — allow `file://` URLs whose resolved path is under `PATH`. Local file access is disabled unless this is set.
-- `--allowed-media-domains D [D ...]` — whitelist remote domains for SSRF protection. When set, only images from the listed domains are fetched.
-- `--interleave-mm-strings` — keep image placeholders at their original positions when the model uses a string-format chat template.
-
-For example, to serve local images under `/srv/media` and restrict remote
-fetches to a single domain:
+**Multimodal serving options.** This example allows local images under
+`/srv/media`, restricts remote image fetches to `cdn.example.com`, and limits
+each request to four images:
 
 ```sh
 furiosa-llm serve furiosa-ai/EXAONE-4.5-33B-FP8 \
@@ -148,8 +139,22 @@ furiosa-llm serve furiosa-ai/EXAONE-4.5-33B-FP8 \
   --image-limit-per-prompt 4
 ```
 
-See the [Vision-Language Models guide](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html)
-for image input formats and Python client examples.
+See [Server Options](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#server-options)
+in the Vision-Language Models guide for the full option reference and defaults.
+
+**Image processing options.** This example sets a 10-second HTTP image-fetch
+timeout and uses `min_pixels` and `max_pixels` to bound image resizing:
+
+```sh
+furiosa-llm serve furiosa-ai/EXAONE-4.5-33B-FP8 \
+  --reasoning-parser qwen3 \
+  --media-io-kwargs '{"image": {"timeout": 10}}' \
+  --mm-processor-kwargs '{"min_pixels": 4096, "max_pixels": 200704}'
+```
+
+For supported values, sizing behavior, and per-request overrides, see
+[Multimodal Options](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#multimodal-options)
+in the Vision-Language Models guide.
 
 **Turning thinking off.** EXAONE 4.5 reasons by default. To turn thinking off
 for a single request, pass `enable_thinking` through `chat_template_kwargs`; the

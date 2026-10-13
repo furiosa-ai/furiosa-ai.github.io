@@ -134,7 +134,7 @@ API.
      - ``LGAI-EXAONE/EXAONE-4.5-33B-FP8``
    * - :doc:`Gemma 4 <models/gemma-4>`
      - ``Gemma4ForConditionalGeneration``
-     - Text (current FXB; upstream also Image)
+     - Text, Image
      - ``RedHatAI/gemma-4-31B-it-FP8-block``
    * - :doc:`Qwen 3 VL <models/qwen3-vl>`
      - ``Qwen3VLForConditionalGeneration``
@@ -197,7 +197,7 @@ The status of each check uses the following scale:
      - ✅
      - 🟡
    * - `gemma-4-31B-it-FP8-block <https://huggingface.co/furiosa-ai/gemma-4-31B-it-FP8-block>`_
-     - Text
+     - Multimodal
      - ✅
      - ✅
      - 🟡
@@ -220,22 +220,22 @@ The status of each check uses the following scale:
      - Text
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-30B-A3B-FP8 <https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-FP8>`_
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-30B-A3B-Instruct-2507-FP8 <https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Instruct-2507-FP8>`_
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-30B-A3B-Thinking-2507-FP8 <https://huggingface.co/furiosa-ai/Qwen3-30B-A3B-Thinking-2507-FP8>`_
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-32B-FP8 <https://huggingface.co/furiosa-ai/Qwen3-32B-FP8>`_
      - Text
      - ✅
@@ -245,17 +245,17 @@ The status of each check uses the following scale:
      - Text
      - ✅
      - ✅
-     - ⛔️
+     - ✅
    * - `Qwen3-8B-FP8 <https://huggingface.co/furiosa-ai/Qwen3-8B-FP8>`_
      - Text
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-Coder-30B-A3B-Instruct-FP8 <https://huggingface.co/furiosa-ai/Qwen3-Coder-30B-A3B-Instruct-FP8>`_
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-Embedding-0.6B <https://huggingface.co/furiosa-ai/Qwen3-Embedding-0.6B>`_
      - Embedding
      - ✅
@@ -295,7 +295,7 @@ The status of each check uses the following scale:
      - Multimodal
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `Qwen3-VL-4B-Instruct <https://huggingface.co/furiosa-ai/Qwen3-VL-4B-Instruct>`_
      - Multimodal
      - ✅
@@ -310,12 +310,12 @@ The status of each check uses the following scale:
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `gpt-oss-20b <https://huggingface.co/furiosa-ai/gpt-oss-20b>`_
      - Text (MoE)
      - ✅
      - ✅
-     - 🟡
+     - ✅
    * - `harrier-oss-v1-0.6b <https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b>`_
      - Embedding
      - ✅

@@ -14,8 +14,10 @@ Key features of Furiosa-LLM include:
 * Generative and pooling model support (embedding, reranking, classification)
 * Efficient KV cache management with PagedAttention
 * Radix-tree prefix caching for reuse of shared prompt prefixes
+* Hierarchical prefix caching (HiCache) with KV cache offloading to host memory (**experimental**)
 * Hybrid KV cache for models that mix sliding-window and global attention
 * Continuous batching of incoming requests
+* Overlap scheduling of CPU batch preparation and NPU execution (**experimental**)
 * Quantization: INT4, INT8, BF16, FP8, MXFP4, and NVFP4
 * Support for data, tensor, and pipeline parallelism across multiple NPUs
 * OpenAI-compatible API server with Chat Completions and Responses APIs
@@ -36,6 +38,7 @@ Documentation
 * :ref:`ToolCalling`: Guide to tool calling with parsers and choice options
 * :ref:`StructuredOutput`: Guide to structured output generation
 * :ref:`VisionLanguageModels`: Guide to serving Vision-Language models with image inputs
+* :ref:`PerformanceOptimization`: Guide to tuning throughput, latency, and cache reuse
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
 * :ref:`HierarchicalPrefixCaching`: Guide to extending prefix caching with host memory
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management

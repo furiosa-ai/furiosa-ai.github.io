@@ -79,6 +79,7 @@ Furiosa-LLM
 * :ref:`StructuredOutput`: Guide to structured output generation
 * :ref:`VisionLanguageModels`: Guide to serving Vision-Language models with image inputs
 * :ref:`PrefixCaching`: Guide to prefix caching for improved performance
+* :ref:`OverlapScheduling`: Benefits and caveats of overlapping CPU scheduling with NPU execution
 * :ref:`HybridKVCache`: Understanding hybrid KV cache management
 * :ref:`DataParallelRouting`: Understanding scoring-based data-parallel routing
 * :ref:`FXB`: Model lifecycle, building, caching, and serving with FXB
@@ -149,8 +150,10 @@ Other Links
    /furiosa_llm/toolcalling
    /furiosa_llm/structured-output
    /furiosa_llm/vision-language
+   /furiosa_llm/performance-optimization
    /furiosa_llm/prefix-caching
    /furiosa_llm/hierarchical-prefix-caching
+   /furiosa_llm/overlap-scheduling
    /furiosa_llm/hybrid-kv-cache
    /furiosa_llm/data-parallel-routing
    /furiosa_llm/fxb

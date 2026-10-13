@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Hierarchical Prefix Caching &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
+    <title>Hierarchical Prefix Caching &#8212; FuriosaAI Developer Center 2026.4.0 documentation</title>
   
   
   
@@ -36,8 +36,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
@@ -46,12 +46,12 @@
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=1ef58908"></script>
+    <script src="../_static/documentation_options.js?v=69820004"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,41 +60,34 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/hierarchical-prefix-caching';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.19.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Hybrid KV Cache Management" href="hybrid-kv-cache.html" />
+    <link rel="next" title="Overlap Scheduling" href="overlap-scheduling.html" />
     <link rel="prev" title="Prefix Caching" href="prefix-caching.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.4.0" />
-  
-    
-    <script src="../_static/searchtools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-  
-  
-  
+
   
   <dialog id="pst-search-dialog">
     
@@ -120,51 +113,7 @@
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -285,8 +234,10 @@
 <li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance-optimization.html">Performance Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Hierarchical Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlap-scheduling.html">Overlap Scheduling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fxb.html">Furiosa Executable Bundles (FXB)</a></li>
@@ -400,18 +351,11 @@
       
         <div class="header-article-item">
 
-<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
-  </ul>
-</div></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
         <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
@@ -434,7 +378,7 @@
                 <h2>  </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-it">When to Use It</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-retention-policies">Host Retention Policies</a><ul class="nav section-nav flex-column">
@@ -450,6 +394,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api">Python API</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-l2-reload-with-model-execution">Overlapping L2 Reload with Model Execution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-interactions-and-limitations">Feature Interactions and Limitations</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching">Prefix caching</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism">Data parallelism</a></li>
@@ -632,6 +577,11 @@ disables promotion. Negative values are invalid.</p></td>
 <td><p>Preserves NPU-only cached prefixes in host memory when NPU eviction
 occurs, subject to host capacity.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-overlap-l2-reload</span></code></p></td>
+<td><p>Disabled</p></td>
+<td><p>Overlaps layerwise L2-to-L1 transfers with model execution. Requires a
+host-capacity option and <code class="docutils literal notranslate"><span class="pre">--npu-queue-limit</span> <span class="pre">1</span></code>; see <a class="reference internal" href="#layerwisekvreload"><span class="std std-ref">Overlapping L2 Reload with Model Execution</span></a>.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -748,6 +698,26 @@ explicitly; setting a capacity field alone does not enable offloading. Use
 direct <code class="docutils literal notranslate"><span class="pre">KVOffloadConfig</span></code>. The CLI uses <code class="docutils literal notranslate"><span class="pre">0</span></code> for the same purpose.</p>
 </section>
 </section>
+<section id="overlapping-l2-reload-with-model-execution">
+<span id="layerwisekvreload"></span><h2>Overlapping L2 Reload with Model Execution<a class="headerlink" href="#overlapping-l2-reload-with-model-execution" title="Link to this heading">#</a></h2>
+<p>By default, the runtime completes a host-to-NPU KV reload before executing the
+model. The experimental layerwise reload path can overlap transfers for later
+layers with execution of layers whose KV data is already available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-overlap-l2-reload
+</pre></div>
+</div>
+<p>This option is disabled by default and requires a positive L2 capacity and
+<code class="docutils literal notranslate"><span class="pre">npu_queue_limit=1</span></code> (the default). It works with eager scheduling and with
+supported <a class="reference internal" href="overlap-scheduling.html#overlapscheduling"><span class="std std-ref">overlap scheduling</span></a> configurations. It
+cannot be combined with speculative decoding or PD disaggregation. It applies
+to local L2-to-L1 reloads, not Mooncake L3 prefetch.</p>
+<p>For the Python API, set <code class="docutils literal notranslate"><span class="pre">overlap_l2_reload=True</span></code> in <code class="docutils literal notranslate"><span class="pre">KVOffloadConfig</span></code>
+alongside <code class="docutils literal notranslate"><span class="pre">enabled=True</span></code> and a host capacity. Benchmark the option with
+representative cache misses and context lengths; benefits depend on how much
+transfer time can overlap model execution.</p>
+</section>
 <section id="feature-interactions-and-limitations">
 <h2>Feature Interactions and Limitations<a class="headerlink" href="#feature-interactions-and-limitations" title="Link to this heading">#</a></h2>
 <section id="prefix-caching">
@@ -780,8 +750,7 @@ semantics and <a class="reference internal" href="hybrid-kv-cache.html#hybridkvc
 <section id="other-limitations">
 <h3>Other limitations<a class="headerlink" href="#other-limitations" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Speculative decoding is currently incompatible with prefix caching and,
-consequently, with hierarchical prefix caching.</p></li>
+<li><p>Speculative decoding cannot be combined with hierarchical KV offloading.</p></li>
 <li><p>Prefix reuse is token-exact. Whitespace, punctuation, chat-template changes,
 or tokenizer changes can prevent reuse.</p></li>
 <li><p>Host cache contents are lost when the process exits and are not shared with
@@ -910,11 +879,11 @@ endpoint.</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="hybrid-kv-cache.html"
+       href="overlap-scheduling.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Hybrid KV Cache Management</p>
+        <p class="prev-next-title">Overlap Scheduling</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -934,7 +903,7 @@ endpoint.</p></li>
     <i class="fa-solid fa-list"></i> 
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-it">When to Use It</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-retention-policies">Host Retention Policies</a><ul class="nav section-nav flex-column">
@@ -950,6 +919,7 @@ endpoint.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api">Python API</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-l2-reload-with-model-execution">Overlapping L2 Reload with Model Execution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-interactions-and-limitations">Feature Interactions and Limitations</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching">Prefix caching</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism">Data parallelism</a></li>
@@ -1015,8 +985,8 @@ By FuriosaAI, Inc.
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

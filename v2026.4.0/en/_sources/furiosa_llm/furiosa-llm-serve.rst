@@ -85,46 +85,14 @@ with streaming mode:
 .. literalinclude:: ../../../examples/online_chat_complete_async_client.py
   :language: python
 
-.. _ServeMaxModelLen:
+For image inputs with a compatible vision-language model, see
+:ref:`VisionLanguageModels`. Chat Completions requests accept
+``media_io_kwargs`` and ``mm_processor_kwargs`` through the request body
+(or the OpenAI client's ``extra_body``); see :ref:`MultimodalOptions` for
+server defaults, request overrides, and model-specific validation.
 
-Limiting the Context Length
-===========================
-
-By default the server accepts requests up to the smallest of the model's
-``max_position_embeddings``, the context length covered by the loaded FXB,
-and what the KV cache can hold. ``--max-model-len`` lowers that limit:
-
-.. code-block::
-
-    furiosa-llm serve [MODEL_ID_OR_PATH] --max-model-len 8192
-
-The value caps the total tokens a single request may use — prompt plus
-generated tokens. It applies to every request, including those that do not set
-``max_tokens``: the implicit generation budget shrinks with the cap as well. The
-limit advertised on ``/v1/models`` is whichever of those four bounds is smallest,
-so on a memory-tight deployment it can be the KV-derived one even with no cap
-set. A request exceeding it is rejected with a context-length error.
-
-The cap may only *lower* the limit. A value above either the model's
-``max_position_embeddings`` or the context length covered by the loaded FXB
-is rejected at startup, so a typo fails fast instead of being ignored.
-
-Lowering the cap also raises concurrency for requests that omit ``max_tokens``.
-Admission is conservative by default: a request is charged ``prompt + max_tokens``
-KV blocks — one block per token, less any prefix-cache hit — for its whole
-lifetime, and a request that omits ``max_tokens`` is budgeted the entire remaining
-context window. Each therefore costs a full context, so roughly
-``max_kv_len / max_model_len`` of them run concurrently per data-parallel replica.
-The gain stops once another limit binds, such as ``--max-concurrency`` or a cap
-already at or above the KV capacity. It frees no NPU memory: weights, buckets and
-the KV pool are fixed by the loaded FXB.
-
-.. note::
-
-  ``fxb build`` takes an option of the same name, but it means something different there:
-  at build time ``--max-model-len`` shapes which buckets are compiled into the FXB. At
-  serving time the bucket set is fixed by the loaded FXB, and this option only caps
-  admission.
+For context-length limits, decode batching, NPU sampling, and other
+performance settings, see :ref:`PerformanceOptimization`.
 
 .. _ChatTemplates:
 
@@ -641,6 +609,15 @@ It is available for all model types and consists of three endpoints:
   It accepts either a ``prompt`` string (completion-style) or ``messages`` array (chat-style, which applies the chat template before tokenizing).
 * ``POST /detokenize`` corresponds to calling ``tokenizer.decode()``.
 * ``GET /tokenizer_info`` returns metadata about the tokenizer, including its class name and configuration.
+
+Chat-style ``/tokenize`` requests validate supplied ``mm_processor_kwargs``
+using the loaded model's schema; see :ref:`MultimodalOptions`. Tokenization applies the chat template and may
+fetch image inputs, but does not run the image processor or expand vision
+tokens. It does not apply ``LLM``/CLI processor defaults, and ignores
+``media_io_kwargs`` request overrides and ``--media-io-kwargs`` defaults.
+Image fetching uses the fetcher's default timeout and the configured local-path,
+domain, and image-count restrictions. Returned counts describe template tokens,
+not the final expanded multimodal prompt length.
 
 .. _MonitoringOpenAICompatibleServer:
 

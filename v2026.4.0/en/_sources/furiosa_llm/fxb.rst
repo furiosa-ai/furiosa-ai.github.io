@@ -73,6 +73,23 @@ checking, and inspection. The cache and inspection subcommands use the same loca
 Building an FXB for a model
 ===========================
 
+Prerequisites
+-------------
+
+Building an FXB requires the AArch64 GNU C cross-compiler and target C library headers.
+On Debian or Ubuntu, install the required packages with:
+
+.. code-block:: sh
+
+  sudo apt-get update
+  sudo apt-get install --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+
+.. note::
+
+  Building FXBs is not currently supported on RHEL or other RPM-based distributions.
+  The EPEL cross-compiler does not provide the AArch64 glibc userspace sysroot required
+  by ``furiosa-tcc``.
+
 Use ``fxb build`` to compile a model into an ``.fxb`` bundle:
 
 .. code-block::
@@ -352,6 +369,10 @@ Build an FXB artifact from a model.
 * ``--convert {auto,embed,score,classify}`` — task override (default: ``auto``).
 * ``--dry-run`` — resolve config and buckets and print the build summary without compiling.
 * ``--build-report`` — print a per-kernel compilation timing report after the build.
+* ``--slow-kernel-threshold DURATION`` — log running kernels exceeding this duration every
+  five seconds, with their types, buckets, and elapsed times, longest-running first.
+  Accepts a non-negative integer in seconds or with an ``s``, ``m``, or ``h`` suffix
+  (default: ``15m``; ``0`` disables slow-kernel reporting).
 * ``--concurrency N`` — maximum kernel compilations to run in parallel (default: ``1``).
 * ``--dump-tc DIR`` — dump the generated TC/DSL files to ``DIR`` for debugging.
 
@@ -363,6 +384,19 @@ Advanced options (leave unset unless you know you need them):
 * ``--tokenwise-buckets 1,2,4,8`` / ``--attention-buckets '(1,128,128),(1,1024,1)'`` — override the bucket plan.
 
 On success (non-dry-run) it prints ``Artifact Build Completed``.
+
+Slow-kernel reporting is enabled by default, including in FXB build CI. Elapsed
+compilation time excludes time spent waiting for a concurrency slot. Each update
+adds new log lines instead of rewriting terminal output, making slow kernels
+visible in CI logs while the build is running. Reporting does not stop or time
+out a compilation. FXB build CI uses the CLI default without additional configuration.
+
+To investigate shorter stalls, lower the threshold:
+
+.. code-block::
+
+  fxb build Qwen/Qwen3-8B-FP8 qwen3-8b-fp8 \
+      --concurrency 8 --slow-kernel-threshold 2m
 
 ``fxb download``
 ----------------

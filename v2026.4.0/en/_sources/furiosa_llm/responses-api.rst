@@ -6,7 +6,8 @@ Responses API
 
 Furiosa-LLM implements the `OpenResponses specification <https://www.openresponses.org/specification>`_,
 a multi-provider, interoperable LLM interface. The Responses API is available for
-text generation models with a chat template. It supports text input, streaming,
+text generation models with a chat template. It supports text input, image input
+with a compatible vision-language model, streaming,
 multi-turn conversations, tool calling with ``tool_choice`` control
 (see :ref:`ToolCallingServer`), and structured output via JSON Schema.
 
@@ -14,8 +15,8 @@ multi-turn conversations, tool calling with ``tool_choice`` control
 
    The following features from the OpenResponses specification are **not yet supported**:
 
-   * **Multimodal inputs** — ``input_image``, ``input_audio``, and ``input_file``
-     content types are accepted but silently ignored.
+   * **Audio and file inputs** — ``input_audio`` and ``input_file`` are unsupported.
+     Images require ``input_image.image_url``; file-ID-only images are rejected.
    * **Built-in tools** — ``web_search``, ``file_search``, ``code_interpreter``,
      ``computer_use``, and ``mcp`` tools are not supported. Only custom function
      tools are available.
@@ -98,6 +99,11 @@ The server automatically prepends the stored conversation history from the
 referenced response. This is the simplest approach and requires ``store=true``
 on the referenced response.
 
+``previous_response_id`` carries conversation history, but does not inherit
+the previous request's ``media_io_kwargs`` or ``mm_processor_kwargs``. Each
+request resolves these options against the current server defaults, including
+when processing images from the stored history. Resend any desired overrides.
+
 .. literalinclude:: ../../../examples/online_responses_multi_turn.py
    :language: python
 
@@ -130,6 +136,50 @@ Streaming:
 
 .. literalinclude:: ../../../examples/online_responses_streaming.py
    :language: python
+
+Image input
+~~~~~~~~~~~
+
+Start a compatible vision-language server, for example
+``furiosa-llm serve furiosa-ai/Qwen3-VL-32B-Instruct``, then send an
+``input_image`` part alongside ``input_text``:
+
+.. code-block:: python
+
+   import os
+   from openai import OpenAI
+
+   client = OpenAI(
+       base_url=os.getenv("OPENAI_BASE_URL", "http://localhost:8000/v1"),
+       api_key=os.getenv("OPENAI_API_KEY", "EMPTY"),
+   )
+   response = client.responses.create(
+       model=client.models.list().data[0].id,
+       input=[{
+           "role": "user",
+           "content": [
+               {"type": "input_text", "text": "Describe this image."},
+               {
+                   "type": "input_image",
+                   "image_url": "https://developer.furiosa.ai/latest/en/_images/Furiosa_RNGD_image.png",
+                   "detail": "auto",
+               },
+           ],
+       }],
+       max_output_tokens=32,
+       extra_body={
+           "media_io_kwargs": {"image": {"timeout": 10}},
+           "mm_processor_kwargs": {"min_pixels": 1024},
+       },
+   )
+   print(response.output_text)
+
+``input_image.image_url`` is a URL string. It accepts HTTP(S) URLs, base64
+``data:`` URLs, and local ``file://`` URLs permitted by
+``--allowed-local-media-path``. Remote URLs obey ``--allowed-media-domains``,
+and image counts obey ``--image-limit-per-prompt``. A ``file_id`` without an
+``image_url`` is rejected with HTTP 400. See :ref:`VisionLanguageModels` for
+input formats and :ref:`MultimodalOptions` for defaults and request overrides.
 
 .. _ResponsesAPIReference:
 
@@ -168,7 +218,20 @@ Parameters without descriptions inherit their behavior and functionality from th
      - string or array
      -
      - Text string, or an array of input items (messages, function call outputs).
-       Multimodal content types (``input_image``, ``input_audio``, ``input_file``) are not yet supported.
+       Message content may include ``input_text`` and ``input_image`` parts.
+       Images require a compatible vision-language model and an ``image_url``.
+       Audio and file inputs are unsupported.
+   * - media_io_kwargs
+     - object or null
+     - null
+     - Image-fetch overrides keyed by modality, such as
+       ``{"image": {"timeout": 10}}``. See :ref:`MultimodalOptions`.
+   * - mm_processor_kwargs
+     - object or null
+     - null
+     - Processor overrides, such as ``{"min_pixels": 1024}``, with optional
+       ``images_kwargs``. Request keys replace top-level server defaults,
+       including whole nested objects; see :ref:`MultimodalOptions`.
    * - instructions
      - string
      - null

@@ -124,12 +124,25 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-**Tool calling.** With the server launched using
-`--enable-auto-tool-choice --tool-call-parser openai` (see
-[Launch the server](#launch-the-server)), pass `tools` in the request and let the
-model decide when to call them. See the
-[Tool Calling guide](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html)
-for a complete client example and details on tool-choice options.
+**Tool calling.** In the [server example](#launch-the-server),
+`--enable-auto-tool-choice` enables automatic tool selection and
+`--tool-call-parser openai` selects the GPT-OSS tool-call parser. Supply
+function definitions in `tools` and use `tool_choice="auto"` to let the model
+decide when to call them.
+
+See [Tool Choice Options](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html#tool-choice-options)
+for other selection modes, streaming support, and a complete client example.
+
+(furiosa-llm-model-gpt-oss-limitations)=
+
+## Limitations
+
+In Furiosa-LLM, GPT-OSS Chat Completions do not return reasoning when the
+request uses any of the following:
+
+* `tool_choice="required"` or a named function choice.
+* `structured_outputs` explicitly set in the sampling parameters.
+* `response_format` with `type="json_object"` or `type="json_schema"`.
 
 ## Learn more
 

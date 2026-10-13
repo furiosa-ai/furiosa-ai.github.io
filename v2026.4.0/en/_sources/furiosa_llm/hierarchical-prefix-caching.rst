@@ -163,6 +163,10 @@ positive host-capacity options enables it.
      - Disabled
      - Preserves NPU-only cached prefixes in host memory when NPU eviction
        occurs, subject to host capacity.
+   * - ``--experimental-kv-offload-overlap-l2-reload``
+     - Disabled
+     - Overlaps layerwise L2-to-L1 transfers with model execution. Requires a
+       host-capacity option and ``--npu-queue-limit 1``; see :ref:`LayerwiseKVReload`.
 
 The two host-capacity options are mutually exclusive. A host-memory ratio of
 ``0`` leaves hierarchical caching disabled; a negative ratio is invalid. The
@@ -297,6 +301,32 @@ explicitly; setting a capacity field alone does not enable offloading. Use
 ``write_through_threshold=None`` to disable write-through promotion in a
 direct ``KVOffloadConfig``. The CLI uses ``0`` for the same purpose.
 
+.. _LayerwiseKVReload:
+
+Overlapping L2 Reload with Model Execution
+==========================================
+
+By default, the runtime completes a host-to-NPU KV reload before executing the
+model. The experimental layerwise reload path can overlap transfers for later
+layers with execution of layers whose KV data is already available:
+
+.. code-block:: bash
+
+   furiosa-llm serve <model> \
+     --experimental-kv-offload-host-memory-gb 16 \
+     --experimental-kv-offload-overlap-l2-reload
+
+This option is disabled by default and requires a positive L2 capacity and
+``npu_queue_limit=1`` (the default). It works with eager scheduling and with
+supported :ref:`overlap scheduling <OverlapScheduling>` configurations. It
+cannot be combined with speculative decoding or PD disaggregation. It applies
+to local L2-to-L1 reloads, not Mooncake L3 prefetch.
+
+For the Python API, set ``overlap_l2_reload=True`` in ``KVOffloadConfig``
+alongside ``enabled=True`` and a host capacity. Benchmark the option with
+representative cache misses and context lengths; benefits depend on how much
+transfer time can overlap model execution.
+
 Feature Interactions and Limitations
 ====================================
 
@@ -334,8 +364,7 @@ semantics and :ref:`HybridKVCache` for the underlying memory model.
 Other limitations
 -----------------
 
-* Speculative decoding is currently incompatible with prefix caching and,
-  consequently, with hierarchical prefix caching.
+* Speculative decoding cannot be combined with hierarchical KV offloading.
 * Prefix reuse is token-exact. Whitespace, punctuation, chat-template changes,
   or tokenizer changes can prevent reuse.
 * Host cache contents are lost when the process exits and are not shared with

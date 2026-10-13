@@ -2,7 +2,7 @@
 
 # Qwen3-VL
 
-The [Qwen3-VL](https://huggingface.co/Qwen) models are dense **vision-language
+The upstream [Qwen3-VL](https://huggingface.co/Qwen) models are dense **vision-language
 models** that pair a vision encoder with a dense transformer decoder, using
 Interleaved-MRoPE positional embeddings and DeepStack multi-level feature fusion
 to handle images and videos alongside text. They cover visual understanding
@@ -144,17 +144,9 @@ print("Answer:", response.choices[0].message.content)
 
 ### Advanced Usage
 
-**Multimodal serving options.** `furiosa-llm serve` provides flags to control
-multimodal behavior; requests that violate them are rejected with HTTP 400:
-
-- `--image-limit-per-prompt N` / `--video-limit-per-prompt N` — maximum number of images/videos allowed per request (default: unlimited).
-- `--allowed-local-media-path PATH` — allow `file://` URLs whose resolved path is under `PATH`. Local file access is disabled unless this is set.
-- `--allowed-media-domains D [D ...]` — whitelist of remote domains for SSRF protection. When set, only images from the listed domains are fetched.
-- `--interleave-mm-strings` — keep image placeholders at their original positions when the model uses a string-format chat template (no-op for OpenAI-format templates, the common case).
-- `--mm-processor-cache-gb GB` — size of the UUID-keyed multimodal processor cache (default: 4.0). Clients can tag an `image_url` part with a `uuid` field and re-reference it in follow-up requests without re-uploading the image bytes; set to 0 to disable.
-
-For example, to serve local images under `/srv/media` and restrict remote
-fetches to a single domain:
+**Multimodal serving options.** This example allows local images under
+`/srv/media`, restricts remote image fetches to `cdn.example.com`, and limits
+each request to four images:
 
 ```sh
 furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
@@ -163,8 +155,21 @@ furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
   --image-limit-per-prompt 4
 ```
 
-See the [Vision-Language Models guide](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html)
-for image input formats, the UUID cache, and Python client examples.
+See [Server Options](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#server-options)
+in the Vision-Language Models guide for the full option reference and defaults.
+
+**Image processing options.** This example sets a 10-second HTTP image-fetch
+timeout and uses `min_pixels` and `max_pixels` to bound image resizing:
+
+```sh
+furiosa-llm serve furiosa-ai/Qwen3-VL-2B-Instruct \
+  --media-io-kwargs '{"image": {"timeout": 10}}' \
+  --mm-processor-kwargs '{"min_pixels": 4096, "max_pixels": 200704}'
+```
+
+For supported values, sizing behavior, and per-request overrides, see
+[Multimodal Options](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#multimodal-options)
+in the Vision-Language Models guide.
 
 **Reasoning.** The **Thinking** editions always reason; there is no
 `enable_thinking` switch (the Instruct editions are the non-thinking
@@ -179,7 +184,7 @@ for a complete client example and details on tool-choice options.
 
 ## Learn more
 
-* [Vision-Language Models](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html) — image input formats, multimodal server options, and the UUID cache
+* [Vision-Language Models](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html) — image input formats, multimodal server options, and content-based caching
 * [Tool Calling](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html) — parsers, tool-choice options, and more examples
 * [Furiosa-LLM Server (`furiosa-llm serve`)](https://developer.furiosa.ai/latest/en/furiosa_llm/furiosa-llm-serve.html) — full OpenAI-compatible API reference and serving options
 * Upstream model cards: [Qwen/Qwen3-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct), [Qwen/Qwen3-VL-4B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct), [Qwen/Qwen3-VL-32B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct), [Qwen/Qwen3-VL-2B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-2B-Thinking), [Qwen/Qwen3-VL-4B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking), [Qwen/Qwen3-VL-32B-Thinking](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking)

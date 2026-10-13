@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0b15 documentation</title>
+    <title>AsyncLLMEngine class &#8212; FuriosaAI Developer Center 2026.4.0 documentation</title>
   
   
   
@@ -36,8 +36,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
@@ -46,12 +46,12 @@
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=39f50d33" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=1ef58908"></script>
+    <script src="../../_static/documentation_options.js?v=69820004"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,13 +60,12 @@
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/reference/async_llm_engine';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.19.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -75,26 +74,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.4.0" />
-  
-    
-    <script src="../../_static/searchtools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script src="../../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-  
-  
-  
+
   
   <dialog id="pst-search-dialog">
     
@@ -120,51 +113,7 @@
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -285,8 +234,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolcalling.html">Tool Calling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../structured-output.html">Structured Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vision-language.html">Vision-Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance-optimization.html">Performance Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../prefix-caching.html">Prefix Caching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overlap-scheduling.html">Overlap Scheduling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data-parallel-routing.html">Data-Parallel Routing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fxb.html">Furiosa Executable Bundles (FXB)</a></li>
@@ -400,18 +351,11 @@
       
         <div class="header-article-item">
 
-<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
-  </ul>
-</div></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
         <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
@@ -434,7 +378,7 @@
                 <h2>  </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example Usage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-supported-by-asyncllmengine">Arguments supported by AsyncLLMEngine</a></li>
@@ -500,7 +444,7 @@
 </pre></div>
 </div>
 <p>The script can be executed with various arguments defined in AsyncEngineArgs, as shown in the following example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>async_llm_engine.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>engine_cli_async.py<span class="w"> </span>--model<span class="w"> </span>/path/to/model<span class="w"> </span>--devices<span class="w"> </span>npu:0
 </pre></div>
 </div>
 <p>For a comprehensive list of available arguments for AsyncEngineArgs, please refer to the section below.</p>
@@ -510,17 +454,12 @@
 <p>The arguments are identical to those specified in <a class="reference internal" href="llm_engine.html#llmengineargs"><span class="std std-ref">Arguments supported by LLMEngine</span></a>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: engine_cli_async.py [-h] --model MODEL [--fxb FXB] [--revision REVISION]
                            [--tokenizer TOKENIZER] [--tokenizer-mode TOKENIZER_MODE]
-                           [--seed SEED] [--devices DEVICES]
+                           [--devices DEVICES]
                            [--pipeline-parallel-size PIPELINE_PARALLEL_SIZE]
                            [--data-parallel-size DATA_PARALLEL_SIZE]
-                           [--cache-dir CACHE_DIR]
                            [--npu-queue-limit NPU_QUEUE_LIMIT]
                            [--max-processing-samples MAX_PROCESSING_SAMPLES]
-                           [--spare-blocks-ratio SPARE_BLOCKS_RATIO]
-                           [--enable-jit-compilation ENABLE_JIT_COMPILATION]
-                           [--jit-threshold JIT_THRESHOLD]
-                           [--jit-max-workers JIT_MAX_WORKERS]
-                           [--jit-unit-size JIT_UNIT_SIZE]
+                           [--experimental-enable-npu-sampling]
 
 options:
   -h, --help            show this help message and exit
@@ -539,15 +478,13 @@ options:
   --tokenizer-mode TOKENIZER_MODE
                         The tokenizer mode. "auto" will use the fast tokenizer if
                         available, and "slow" will always use the slow tokenizer.
-  --seed SEED           The seed to initialize the random number generator for
-                        sampling.
   --devices DEVICES     The devices to run the model. It can be a single device or a
                         comma-separated list of devices. Each device can be either
-                        "npu:X" or "npu:X:Y", where X is a device index and Y is a
-                        NPU core range notation (e.g. "npu:0" for whole npu 0,
-                        "npu:0:0" for core 0 of NPU 0, and "npu:0:0-3" for fused core
-                        0-3 of npu 0). If not given, all available unoccupied devices
-                        will be used.
+                        "npu:X" or "npu:X:Y", where X is a device index and Y is a NPU
+                        core range notation (e.g. "npu:0" for whole npu 0, "npu:0:0"
+                        for core 0 of NPU 0, and "npu:0:0-3" for fused core 0-3 of npu
+                        0). If not given, all available unoccupied devices will be
+                        used.
   --pipeline-parallel-size PIPELINE_PARALLEL_SIZE
                         The size of the pipeline parallelism group. If not given, it
                         will use the value from the loaded FXB.
@@ -555,28 +492,16 @@ options:
                         The size of the data parallelism group. If not given, it will
                         be inferred from total available PEs and other parallelism
                         degrees.
-  --cache-dir CACHE_DIR
-                        The cache directory for temporarily generated files for this
-                        LLM instance. When its value is ``None``, caching is
-                        disabled. The default is "$HOME/.cache/furiosa/llm".
   --npu-queue-limit NPU_QUEUE_LIMIT
                         The NPU queue limit of the scheduler config.
   --max-processing-samples MAX_PROCESSING_SAMPLES
                         The maximum processing samples. Used as an hint for the
                         scheduler.
-  --spare-blocks-ratio SPARE_BLOCKS_RATIO
-                        The spare blocks ratio. Used as an hint for the scheduler.
-  --enable-jit-compilation ENABLE_JIT_COMPILATION
-                        [EXPERIMENTAL] Enable JIT compilation.
-  --jit-threshold JIT_THRESHOLD
-                        [EXPERIMENTAL] Number of requests before triggering JIT
-                        compilation.
-  --jit-max-workers JIT_MAX_WORKERS
-                        [EXPERIMENTAL] Maximum concurrent background JIT
-                        compilations.
-  --jit-unit-size JIT_UNIT_SIZE
-                        [EXPERIMENTAL] Number of stages to compile together. Must be
-                        &gt;= 2.
+  --experimental-enable-npu-sampling
+                        [EXPERIMENTAL] Draw the next token with the artifact's on-chip
+                        sampling kernel instead of on the host. Requires an artifact
+                        compiled with sampling kernels; engine init fails if the
+                        artifact carries no sampling kernel. (default: False)
 </pre></div>
 </div>
 </section>
@@ -612,6 +537,8 @@ They are just placeholders for compatibility with the vLLM API.</p>
 <dt class="sig sig-object py" id="furiosa_llm.AsyncLLMEngine.generate">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TextPrompt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TokensPrompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sampling_params.html#furiosa_llm.SamplingParams" title="furiosa_llm.sampling_params.SamplingParams"><span class="pre">SamplingParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncGenerator</span><span class="p"><span class="pre">[</span></span><span class="pre">RequestOutput</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/furiosa_llm/llm_engine.html#AsyncLLMEngine.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#furiosa_llm.AsyncLLMEngine.generate" title="Link to this definition">#</a></dt>
 <dd><p>Generates text completions for a given prompt.</p>
+<p>A native vision token-count mismatch raises <cite>MultimodalTokenCountError</cite>
+during iteration, after aborting the multimodal request.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -674,7 +601,7 @@ for more details about the format of each input.</p></li>
     <i class="fa-solid fa-list"></i> 
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example Usage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arguments-supported-by-asyncllmengine">Arguments supported by AsyncLLMEngine</a></li>
@@ -736,8 +663,8 @@ By FuriosaAI, Inc.
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
