@@ -518,9 +518,9 @@ devices, run the following command:</p>
 <p>When upgrading from <strong>Furiosa SDK 2026.3.0 or earlier to 2026.4.0</strong>, follow
 this guide if your Python application uses <code class="docutils literal notranslate"><span class="pre">furiosa-smi-py</span></code> and you are
 migrating it to <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code>.</p>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">furiosa-smi-py</span></code> with <code class="docutils literal notranslate"><span class="pre">furiosa-smi==2026.4.*</span></code> in your application’s
+<p>Replace <code class="docutils literal notranslate"><span class="pre">furiosa-smi-py</span></code> with <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> in your application’s
 Python dependencies, then install the new package:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span><span class="s2">"furiosa-smi==2026.4.*"</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>furiosa-smi
 </pre></div>
 </div>
 <p>The packages have separate import names, so installing <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> does
@@ -567,7 +567,7 @@ calls as follows:</p>
 </div>
 <p>The following examples query the same device information and list available
 cores before and after migration.</p>
-<p><strong>Before: ``furiosa-smi-py``</strong></p>
+<p><strong>Before:</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-smi-py</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">furiosa_smi_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smi</span>
 
 <span class="n">smi</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
@@ -580,7 +580,7 @@ cores before and after migration.</p>
             <span class="nb">print</span><span class="p">(</span><span class="s2">"Available core:"</span><span class="p">,</span> <span class="n">pe_status</span><span class="o">.</span><span class="n">core</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>After: ``furiosa-smi``</strong></p>
+<p><strong>After:</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">furiosa_smi</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smi</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Driver:"</span><span class="p">,</span> <span class="n">smi</span><span class="o">.</span><span class="n">driver_info</span><span class="p">())</span>

@@ -379,7 +379,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q3">Upcoming Releases 2026 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q4">Upcoming Releases 2026 Q4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3">2026 Q3</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2026 Q1 - Q2</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-packages">Platform &amp; Packages</a></li>
@@ -413,17 +414,39 @@ This page shows the forward-looking roadmap of ongoing &amp; upcoming projects a
 <p class="admonition-title">Note</p>
 <p>The latest release is 2026.4.0. You can find the release notes <a class="reference internal" href="../whatsnew/index.html#whatsnew"><span class="std std-ref">here</span></a>.</p>
 </div>
-<section id="upcoming-releases-2026-q3">
-<h2>Upcoming Releases 2026 Q3<a class="headerlink" href="#upcoming-releases-2026-q3" title="Link to this heading">#</a></h2>
+<section id="upcoming-releases-2026-q4">
+<h2>Upcoming Releases 2026 Q4<a class="headerlink" href="#upcoming-releases-2026-q4" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>🔨 EXAONE 4.5, Qwen 3.6, Gemma 4 model support</p></li>
-<li><p>🔨 Multi-modal (vision-language) serving optimization</p></li>
-<li><p>🔨 Hierarchical KV caching: an experimental local NPU/host preview is
-available; general availability and further transfer optimizations are planned</p></li>
-<li><p>🔨 KVCacheConnector support</p></li>
-<li><p>🔨 Prefill/decode (PD) disaggregation</p></li>
-<li><p>🔨 Speculative decoding support</p></li>
+<li><p>🔨 Speech recognition models and Transcribe API support</p></li>
+<li><p>🔨 Video modality support</p></li>
 <li><p>🔨 PyTorch eager mode support</p></li>
+<li><p>🔨 KV cache management for linear and hybrid attention models</p></li>
+<li><p>🔨 HiCache general availability and further transfer optimizations</p></li>
+<li><p>🔨 DFlash speculative decoding support</p></li>
+<li><p>🔨 Expanded multi-token prediction (MTP) support, including Gemma 4 and Qwen3.5</p></li>
+<li><p>🔨 Lower token generation latency through improved overlap scheduling</p></li>
+<li><p>🔨 Improved serving and KV cache observability</p></li>
+<li><p>🔨 Preparation for an open-source release of Furiosa-LLM</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="q3">
+<h2>2026 Q3<a class="headerlink" href="#q3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>✅ EXAONE 4.5 with MTP, Gemma 4 model support</p></li>
+<li><p>✅ Expanded embedding and reranking model support</p></li>
+<li><p>✅ Improved multi-modal serving and prefix caching</p></li>
+<li><p>✅ Inference performance improvements, including profile-guided decode batching</p></li>
+<li><p>✅ Hierarchical KV caching across NPU memory, host memory, and shared storage
+(experimental)</p></li>
+<li><p>✅ KVCacheConnector support</p></li>
+<li><p>✅ KV cache transfer optimizations through overlap with computation</p></li>
+<li><p>✅ Prefill/decode (PD) disaggregation</p></li>
+<li><p>✅ Speculative decoding support</p></li>
+<li><p>✅ NPU sampling support</p></li>
+<li><p>✅ Complete migration to Furiosa Executable Bundles (FXB)</p></li>
+<li><p>✅ Ragged Paged Attention support</p></li>
+<li><p>✅ Tensor Contraction Language (TCL) support</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -567,7 +590,8 @@ available; general availability and further transfer optimizations are planned</
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q3">Upcoming Releases 2026 Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-releases-2026-q4">Upcoming Releases 2026 Q4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q3">2026 Q3</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-q2">2026 Q1 - Q2</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-packages">Platform &amp; Packages</a></li>
