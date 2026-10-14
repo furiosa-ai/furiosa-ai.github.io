@@ -45,12 +45,12 @@
         "url": "https://developer.furiosa.ai/v2026.2.0/en/"
     },
     {
-        "name": "2026.3.0 (Latest)",
+        "name": "2026.3.0",
         "version": "2026.3.0",
         "url": "https://developer.furiosa.ai/v2026.3.0/en/"
     },
     {
-        "name": "2026.4.0",
+        "name": "2026.4.0 (Latest)",
         "version": "2026.4.0",
         "url": "https://developer.furiosa.ai/v2026.4.0/en/",
         "preferred": true
