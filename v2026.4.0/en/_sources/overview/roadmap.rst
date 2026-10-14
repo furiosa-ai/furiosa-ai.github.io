@@ -11,16 +11,39 @@ This page shows the forward-looking roadmap of ongoing & upcoming projects and w
 .. note::
     The latest release is |release|. You can find the release notes :ref:`here <WhatsNew>`.
 
-Upcoming Releases 2026 Q3
+Upcoming Releases 2026 Q4
 ==========================================
-* 🔨 EXAONE 4.5, Qwen 3.6, Gemma 4 model support
-* 🔨 Multi-modal (vision-language) serving optimization
-* 🔨 Hierarchical KV caching: an experimental local NPU/host preview is
-  available; general availability and further transfer optimizations are planned
-* 🔨 KVCacheConnector support
-* 🔨 Prefill/decode (PD) disaggregation
-* 🔨 Speculative decoding support
+
+* 🔨 Speech recognition models and Transcribe API support
+* 🔨 Video modality support
 * 🔨 PyTorch eager mode support
+* 🔨 KV cache management for linear and hybrid attention models
+* 🔨 HiCache general availability and further transfer optimizations
+* 🔨 DFlash speculative decoding support
+* 🔨 Expanded multi-token prediction (MTP) support, including Gemma 4 and Qwen3.5
+* 🔨 Lower token generation latency through improved overlap scheduling
+* 🔨 Improved serving and KV cache observability
+* 🔨 Preparation for an open-source release of Furiosa-LLM
+
+------------
+
+2026 Q3
+==========================================
+
+* ✅ EXAONE 4.5 with MTP, Gemma 4 model support
+* ✅ Expanded embedding and reranking model support
+* ✅ Improved multi-modal serving and prefix caching
+* ✅ Inference performance improvements, including profile-guided decode batching
+* ✅ Hierarchical KV caching across NPU memory, host memory, and shared storage
+  (experimental)
+* ✅ KVCacheConnector support
+* ✅ KV cache transfer optimizations through overlap with computation
+* ✅ Prefill/decode (PD) disaggregation
+* ✅ Speculative decoding support
+* ✅ NPU sampling support
+* ✅ Complete migration to Furiosa Executable Bundles (FXB)
+* ✅ Ragged Paged Attention support
+* ✅ Tensor Contraction Language (TCL) support
 
 ------------
 

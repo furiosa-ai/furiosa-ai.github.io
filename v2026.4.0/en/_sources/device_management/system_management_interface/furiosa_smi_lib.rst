@@ -29,7 +29,7 @@ separately in your Python environment:
 
 .. code-block:: sh
 
-   python -m pip install --upgrade "furiosa-smi==2026.4.*"
+   pip install furiosa-smi
 
 The host must have the NPU driver installed; see :ref:`InstallingPrerequisites`.
 For the system-installed command-line tool, see :ref:`FuriosaSMICLI`.

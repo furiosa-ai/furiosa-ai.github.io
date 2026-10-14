@@ -147,12 +147,12 @@ When upgrading from **Furiosa SDK 2026.3.0 or earlier to 2026.4.0**, follow
 this guide if your Python application uses ``furiosa-smi-py`` and you are
 migrating it to ``furiosa-smi``.
 
-Replace ``furiosa-smi-py`` with ``furiosa-smi==2026.4.*`` in your application's
+Replace ``furiosa-smi-py`` with ``furiosa-smi`` in your application's
 Python dependencies, then install the new package:
 
 .. code-block:: sh
 
-   python -m pip install --upgrade "furiosa-smi==2026.4.*"
+   pip install furiosa-smi
 
 The packages have separate import names, so installing ``furiosa-smi`` does
 not update existing ``furiosa_smi_py`` imports. Update your imports and API
@@ -184,7 +184,7 @@ calls as follows:
 The following examples query the same device information and list available
 cores before and after migration.
 
-**Before: ``furiosa-smi-py``**
+**Before:** ``furiosa-smi-py``
 
 .. code-block:: python
 
@@ -199,7 +199,7 @@ cores before and after migration.
            if pe_status.status() == smi.CoreStatus.Available:
                print("Available core:", pe_status.core())
 
-**After: ``furiosa-smi``**
+**After:** ``furiosa-smi``
 
 .. code-block:: python
 
