@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<svg 
+ viewBox="0 0 960 500"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 5.4 patchlevel 2 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="960" height="500" fill="#ffffff"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5' stroke='currentColor'/>
+	<path id='gpPt0' stroke-width='0.190' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.190' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.190' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.190' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.190' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.190' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.190' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<path id='gpPt13' stroke-width='0.190' stroke='currentColor' d='M0,1.330 L1.265,0.411 L0.782,-1.067 L-0.782,-1.076 L-1.265,0.411 z'/>
+	<use xlink:href='#gpPt13' id='gpPt14' fill='currentColor' stroke='none'/>
+	<filter id='textbox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='#FFFFFF' flood-opacity='1' result='bgnd'/>
+	  <feComposite in='SourceGraphic' in2='bgnd' operator='atop'/>
+	</filter>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g fill="none" color="#FFFFFF" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(245, 247, 250)' points = '456.00,468.00 456.00,468.00 458.34,467.77 460.59,467.09 462.66,465.98 464.48,464.49 465.97,462.67 467.08,460.59 467.76,458.34 468.00,456.00 468.00,144.01 467.76,141.67 467.08,139.42 465.97,137.34 464.48,135.52 462.66,134.03
+460.59,132.92 458.34,132.24 456.00,132.01 44.00,132.01 41.66,132.24 39.41,132.92 37.33,134.03 35.51,135.52 34.02,137.34 32.91,139.42 32.23,141.67 32.00,144.01 32.00,456.00 32.23,458.34 32.91,460.59 34.02,462.67
+35.51,464.49 37.33,465.98 39.41,467.09 41.66,467.77 44.00,468.00 456.00,468.00 '/>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(245, 247, 250)' points = '915.99,468.00 915.99,468.00 918.33,467.77 920.58,467.09 922.66,465.98 924.48,464.49 925.97,462.67 927.08,460.59 927.76,458.34 927.99,456.00 927.99,144.01 927.76,141.67 927.08,139.42 925.97,137.34 924.48,135.52 922.66,134.03
+920.58,132.92 918.33,132.24 915.99,132.01 503.99,132.01 501.65,132.24 499.40,132.92 497.33,134.03 495.51,135.52 494.02,137.34 492.91,139.42 492.23,141.67 491.99,144.01 491.99,456.00 492.23,458.34 492.91,460.59 494.02,462.67
+495.51,464.49 497.33,465.98 499.40,467.09 501.65,467.77 503.99,468.00 915.99,468.00 '/>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M52.00,423.00  '/>	<g transform="translate(52.00,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >0%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M124.04,423.00  '/>	<g transform="translate(124.04,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >5%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M196.07,423.00  '/>	<g transform="translate(196.07,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >10%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M268.11,423.00  '/>	<g transform="translate(268.11,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >15%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M340.14,423.00  '/>	<g transform="translate(340.14,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >20%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M412.18,423.00  '/>	<g transform="translate(412.18,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >25%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(183, 200, 222)'  d='M52.01,422.99 L52.01,190.25  '/>	<path stroke='rgb(224, 231, 240)'  d='M124.05,422.99 L124.05,190.25 M196.08,422.99 L196.08,190.25 M268.12,422.99 L268.12,190.25 M340.15,422.99 L340.15,190.25
+		M412.19,422.99 L412.19,190.25  '/></g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+	<g id="gnuplot_plot_1a" ><title>data using ($2/2):(2-$0):($2/2):(0.18)</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb( 39, 103, 204)' points = '52.00,233.54 378.80,233.54 378.80,204.13 52.00,204.13 '/>
+		<polygon fill = 'rgb( 39, 103, 204)' points = '52.00,315.20 57.07,315.20 57.07,285.80 52.00,285.80 '/>
+		<polygon fill = 'rgb( 39, 103, 204)' points = '52.00,396.87 64.86,396.87 64.86,367.46 52.00,367.46 '/>
+	</g>
+</g>
+	</g>
+	<g id="gnuplot_plot_2a" ><title>data using (0):(2-$0+0.39):(sprintf("{/:Bold %s}", workloads[int($0+1)]))</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(52.00,191.87)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >ShareGPT</tspan></text>
+	</g>
+	<g transform="translate(52.00,273.54)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Random 1024 × 1024</tspan></text>
+	</g>
+	<g transform="translate(52.00,355.20)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Mixed 1K–128K → 128</tspan></text>
+	</g>
+</g>
+	</g>
+	<g id="gnuplot_plot_3a" ><title>data using (26.9):(2-$0+0.39):(sprintf("{/:Bold +%.2f%%}", display_pct($2)))</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(439.55,193.17)" stroke="none" fill="rgb(39,103,204)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+22.68%</tspan></text>
+	</g>
+	<g transform="translate(439.55,274.84)" stroke="none" fill="rgb(39,103,204)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+0.35%</tspan></text>
+	</g>
+	<g transform="translate(439.55,356.50)" stroke="none" fill="rgb(39,103,204)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+0.89%</tspan></text>
+	</g>
+</g>
+	</g>
+<g fill="none" color="#FFFFFF" stroke="rgb( 39, 103, 204)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(32.00,48.11)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="28.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Profile-guided decode batching</tspan></text>
+	</g>
+	<g transform="translate(32.00,81.54)" stroke="none" fill="rgb(80,100,128)" font-family="DejaVu Sans" font-size="17.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans" >Measured ON/OFF comparison · Median change across matched configurations</tspan></text>
+	</g>
+	<g transform="translate(32.00,107.56)" stroke="none" fill="rgb(80,100,128)" font-family="DejaVu Sans" font-size="14.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans" >GPT-OSS-120B · TP=32 · DP=1</tspan></text>
+	</g>
+	<g transform="translate(52.00,161.19)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Output throughput increase</tspan></text>
+	</g>
+	<g transform="translate(511.99,161.19)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Mean TPOT reduction</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="rgb( 25,  40,  63)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M512.00,423.00  '/>	<g transform="translate(512.00,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >0%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M584.04,423.00  '/>	<g transform="translate(584.04,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >5%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M656.07,423.00  '/>	<g transform="translate(656.07,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >10%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M728.11,423.00  '/>	<g transform="translate(728.11,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >15%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M800.14,423.00  '/>	<g transform="translate(800.14,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >20%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M872.18,423.00  '/>	<g transform="translate(872.18,441.60)" stroke="none" fill="rgb(100,120,149)" font-family="DejaVu Sans" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="DejaVu Sans" >25%</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(183, 200, 222)'  d='M512.01,422.99 L512.01,190.25  '/>	<path stroke='rgb(224, 231, 240)'  d='M584.05,422.99 L584.05,190.25 M656.08,422.99 L656.08,190.25 M728.12,422.99 L728.12,190.25 M800.15,422.99 L800.15,190.25
+		M872.19,422.99 L872.19,190.25  '/></g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+	<g id="gnuplot_plot_1b" ><title>data using ($3/2):(2-$0):($3/2):(0.18)</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb( 22, 135, 121)' points = '512.00,233.54 742.52,233.54 742.52,204.13 512.00,204.13 '/>
+		<polygon fill = 'rgb( 22, 135, 121)' points = '512.00,315.20 517.17,315.20 517.17,285.80 512.00,285.80 '/>
+		<polygon fill = 'rgb( 22, 135, 121)' points = '512.00,396.87 534.56,396.87 534.56,367.46 512.00,367.46 '/>
+	</g>
+</g>
+	</g>
+	<g id="gnuplot_plot_2b" ><title>data using (0):(2-$0+0.39):(sprintf("{/:Bold %s}", workloads[int($0+1)]))</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(512.00,191.87)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >ShareGPT</tspan></text>
+	</g>
+	<g transform="translate(512.00,273.54)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Random 1024 × 1024</tspan></text>
+	</g>
+	<g transform="translate(512.00,355.20)" stroke="none" fill="rgb(25,40,63)" font-family="DejaVu Sans" font-size="15.00"  text-anchor="start">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >Mixed 1K–128K → 128</tspan></text>
+	</g>
+</g>
+	</g>
+	<g id="gnuplot_plot_3b" ><title>data using (26.9):(2-$0+0.39):(sprintf("{/:Bold +%.2f%%}", display_pct($3)))</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(899.55,193.17)" stroke="none" fill="rgb(22,135,121)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+16.00%</tspan></text>
+	</g>
+	<g transform="translate(899.55,274.84)" stroke="none" fill="rgb(22,135,121)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+0.36%</tspan></text>
+	</g>
+	<g transform="translate(899.55,356.50)" stroke="none" fill="rgb(22,135,121)" font-family="DejaVu Sans" font-size="19.00"  text-anchor="end">
+		<text><tspan font-family="DejaVu Sans"  font-weight="bold" >+1.57%</tspan></text>
+	</g>
+</g>
+	</g>
+<g fill="none" color="#FFFFFF" stroke="rgb( 22, 135, 121)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+</g>
+</svg>
+
