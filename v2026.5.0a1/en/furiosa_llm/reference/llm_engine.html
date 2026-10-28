@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -486,7 +488,8 @@
                      [--data-parallel-size DATA_PARALLEL_SIZE]
                      [--npu-queue-limit NPU_QUEUE_LIMIT]
                      [--max-processing-samples MAX_PROCESSING_SAMPLES]
-                     [--experimental-enable-npu-sampling]
+                     [--enable-npu-sampling | --no-enable-npu-sampling]
+                     [--experimental-enable-fp8-max-scale-requant]
 
 options:
   -h, --help            show this help message and exit
@@ -524,11 +527,17 @@ options:
   --max-processing-samples MAX_PROCESSING_SAMPLES
                         The maximum processing samples. Used as an hint for the
                         scheduler.
-  --experimental-enable-npu-sampling
-                        [EXPERIMENTAL] Draw the next token with the artifact's on-chip
-                        sampling kernel instead of on the host. Requires an artifact
-                        compiled with sampling kernels; engine init fails if the
-                        artifact carries no sampling kernel. (default: False)
+  --enable-npu-sampling, --no-enable-npu-sampling
+                        Draw the next token with the artifact's on-chip sampling
+                        kernel instead of on the host. Engine init fails if the
+                        artifact carries no sampling kernel. Speculative decoding
+                        turns it off with a warning.
+  --experimental-enable-fp8-max-scale-requant
+                        [EXPERIMENTAL] For per-tensor FP8 checkpoints, requantize each
+                        fused projection (QKV, gate/up) to the largest weight scale
+                        among its shards, as vLLM does, instead of keeping each
+                        shard's own scale. Yields the same weights as vLLM at a small
+                        precision cost. (default: False)
 </pre></div>
 </div>
 </section>

@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -382,7 +384,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limiting-the-context-length">Limiting the Context Length</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profile-guided-decode-batching">Profile-Guided Decode Batching</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-npu-sampling">Experimental NPU Sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-sampling">NPU Sampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-overlap-scheduling">Experimental Overlap Scheduling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-hierarchical-prefix-caching">Experimental Hierarchical Prefix Caching</a></li>
 </ul>
@@ -481,28 +483,26 @@ cannot be combined with an explicit <code class="docutils literal notranslate"><
 throughput, TPOT, TTFT, and startup profiling time with your own traffic. The
 <a class="reference internal" href="../whatsnew/release-2026.4.0.html#release2026-4-0"><span class="std std-ref">2026.4 release notes</span></a> include an illustrative ON/OFF comparison.</p>
 </section>
-<section id="experimental-npu-sampling">
-<span id="npusampling"></span><h2>Experimental NPU Sampling<a class="headerlink" href="#experimental-npu-sampling" title="Link to this heading">#</a></h2>
+<section id="npu-sampling">
+<span id="npusampling"></span><h2>NPU Sampling<a class="headerlink" href="#npu-sampling" title="Link to this heading">#</a></h2>
 <p>NPU sampling selects the next token on the NPU for supported generative models.
-Use it when CPU token selection or logits transfers contribute significantly to
+It helps when CPU token selection or logits transfers contribute significantly to
 decode latency, especially with larger batches. Moving sampling to the NPU can
-reduce TPOT and improve output throughput. Compatible FXB builds include sampling
-kernels by default; enable the path explicitly:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--experimental-enable-npu-sampling
+reduce TPOT and improve output throughput. FXB builds include sampling kernels for
+every generative model, and the path is enabled by default. To sample on the host
+instead:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--no-enable-npu-sampling
 </pre></div>
 </div>
-<p>For the Python API, set <code class="docutils literal notranslate"><span class="pre">SchedulerConfig(enable_npu_sampling=True)</span></code>. The
-serving default is host sampling. Engine startup fails if NPU sampling is enabled
-with an FXB that lacks the required sampling kernel.</p>
+<p>For the Python API, set <code class="docutils literal notranslate"><span class="pre">SchedulerConfig(enable_npu_sampling=False)</span></code>. Engine
+startup fails if NPU sampling is enabled with an FXB that lacks the required
+sampling kernel. Speculative decoding turns NPU sampling off with a warning.</p>
 <p>The NPU sampler supports greedy and random sampling, including temperature,
 <code class="docutils literal notranslate"><span class="pre">top_k</span></code>, <code class="docutils literal notranslate"><span class="pre">top_p</span></code>, <code class="docutils literal notranslate"><span class="pre">min_p</span></code>, repetition penalties, minimum token lengths, and
 structured-output masks. Requests for output <code class="docutils literal notranslate"><span class="pre">logprobs</span></code> require transferring
 and processing logits on the host, while token selection remains on the NPU.
 The runtime can skip full-logit transfers when no request in the batch needs
 logits on the host.</p>
-<p>This feature remains experimental. It works with eager scheduling and with
-supported overlap-scheduling configurations, but not with speculative decoding.
-See <a class="reference internal" href="overlap-scheduling.html#overlapscheduling"><span class="std std-ref">Overlap Scheduling</span></a> for configuration details.</p>
 </section>
 <section id="experimental-overlap-scheduling">
 <h2>Experimental Overlap Scheduling<a class="headerlink" href="#experimental-overlap-scheduling" title="Link to this heading">#</a></h2>
@@ -584,7 +584,7 @@ for host-memory sizing and retention policies.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limiting-the-context-length">Limiting the Context Length</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profile-guided-decode-batching">Profile-Guided Decode Batching</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-npu-sampling">Experimental NPU Sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-sampling">NPU Sampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-overlap-scheduling">Experimental Overlap Scheduling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-hierarchical-prefix-caching">Experimental Hierarchical Prefix Caching</a></li>
 </ul>

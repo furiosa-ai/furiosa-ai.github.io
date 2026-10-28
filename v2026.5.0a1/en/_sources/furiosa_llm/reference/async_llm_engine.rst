@@ -41,7 +41,8 @@ The arguments are identical to those specified in :ref:`LLMEngineArgs`.
                                [--data-parallel-size DATA_PARALLEL_SIZE]
                                [--npu-queue-limit NPU_QUEUE_LIMIT]
                                [--max-processing-samples MAX_PROCESSING_SAMPLES]
-                               [--experimental-enable-npu-sampling]
+                               [--enable-npu-sampling | --no-enable-npu-sampling]
+                               [--experimental-enable-fp8-max-scale-requant]
 
     options:
       -h, --help            show this help message and exit
@@ -79,11 +80,17 @@ The arguments are identical to those specified in :ref:`LLMEngineArgs`.
       --max-processing-samples MAX_PROCESSING_SAMPLES
                             The maximum processing samples. Used as an hint for the
                             scheduler.
-      --experimental-enable-npu-sampling
-                            [EXPERIMENTAL] Draw the next token with the artifact's on-chip
-                            sampling kernel instead of on the host. Requires an artifact
-                            compiled with sampling kernels; engine init fails if the
-                            artifact carries no sampling kernel. (default: False)
+      --enable-npu-sampling, --no-enable-npu-sampling
+                            Draw the next token with the artifact's on-chip sampling
+                            kernel instead of on the host. Engine init fails if the
+                            artifact carries no sampling kernel. Speculative decoding
+                            turns it off with a warning.
+      --experimental-enable-fp8-max-scale-requant
+                            [EXPERIMENTAL] For per-tensor FP8 checkpoints, requantize each
+                            fused projection (QKV, gate/up) to the largest weight scale
+                            among its shards, as vLLM does, instead of keeping each
+                            shard's own scale. Yields the same weights as vLLM at a small
+                            precision cost. (default: False)
 .. help-text-end
 
 API Reference

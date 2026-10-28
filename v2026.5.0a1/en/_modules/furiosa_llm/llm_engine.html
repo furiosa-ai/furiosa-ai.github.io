@@ -188,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -216,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
@@ -227,6 +228,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../furiosa_llm/models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -406,22 +408,27 @@
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_context_length</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">GENERATION_TASKS</span><span class="p">,</span> <span class="n">POOLING_TASKS</span><span class="p">,</span> <span class="n">GenerationTask</span><span class="p">,</span> <span class="n">PoolingTask</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.mm_models.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.cache.keys</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_media_cache_key_mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.inputs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">extract_mm_data</span><span class="p">,</span>
+    <span class="n">extract_mm_processor_kwargs</span><span class="p">,</span>
+    <span class="n">extract_mm_uuids</span><span class="p">,</span>
+    <span class="n">normalize_mm_inputs</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hf_config</span><span class="p">,</span> <span class="n">load_processor</span><span class="p">,</span> <span class="n">resolve_constraints</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_mm_processor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.models.cached_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">CachedMultiModalProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.options</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">resolve_mm_processor_kwargs</span><span class="p">,</span>
+    <span class="n">validate_mm_input_options</span><span class="p">,</span>
+    <span class="n">validate_mm_processor_kwargs</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.prompt_updates</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">compute_expanded_prompt_len</span><span class="p">,</span>
     <span class="n">expand_multimodal_placeholders</span><span class="p">,</span>
     <span class="n">validate_aligned_fields</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.mm_options</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize_mm_processor_kwargs</span><span class="p">,</span> <span class="n">resolve_mm_processor_kwargs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.mm_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">MediaId</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">MultimodalInputSet</span><span class="p">,</span>
-    <span class="n">extract_mm_data</span><span class="p">,</span>
-    <span class="n">extract_mm_processor_kwargs</span><span class="p">,</span>
-    <span class="n">extract_mm_uuids</span><span class="p">,</span>
-    <span class="n">load_processor</span><span class="p">,</span>
-    <span class="n">process_mm</span><span class="p">,</span>
-    <span class="n">resolve_constraints</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.multimodal.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">MediaId</span><span class="p">,</span> <span class="n">ModalityKwargs</span><span class="p">,</span> <span class="n">MultimodalInputSet</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.outputs</span><span class="w"> </span><span class="kn">import</span> <span class="n">NativeOutputConverter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.speculative_args</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SpeculativeConfigLike</span><span class="p">,</span>
@@ -461,7 +468,10 @@
     <span class="c1"># scheduler_config</span>
     <span class="n">npu_queue_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">max_processing_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">enable_npu_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">enable_npu_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># model loading</span>
+    <span class="n">fp8_max_scale_requant</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># kv_offload_config</span>
     <span class="n">kv_offload_host_memory_gb</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -616,14 +626,31 @@
             <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">'--enable-npu-sampling'</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">enable_npu_sampling</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">BooleanOptionalAction</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">"Draw the next token with the artifact's on-chip sampling kernel instead of "</span>
+            <span class="s1">'on the host. Engine init fails if the artifact carries no sampling kernel. '</span>
+            <span class="s1">'Speculative decoding turns it off with a warning.'</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># The 2026.4 opt-in flag, kept hidden for one release so existing launch scripts still</span>
+        <span class="c1"># start. NPU sampling is on by default, so it changes nothing.</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s1">'--experimental-enable-npu-sampling'</span><span class="p">,</span>
             <span class="n">dest</span><span class="o">=</span><span class="s1">'enable_npu_sampling'</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">enable_npu_sampling</span><span class="p">,</span>
             <span class="n">action</span><span class="o">=</span><span class="s1">'store_true'</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">"[EXPERIMENTAL] Draw the next token with the artifact's on-chip sampling "</span>
-            <span class="s1">'kernel instead of on the host. Requires an artifact compiled with sampling '</span>
-            <span class="s1">'kernels; engine init fails if the artifact carries no sampling kernel. '</span>
-            <span class="s1">'(default: </span><span class="si">%(default)s</span><span class="s1">)'</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">'--experimental-enable-fp8-max-scale-requant'</span><span class="p">,</span>
+            <span class="n">dest</span><span class="o">=</span><span class="s1">'fp8_max_scale_requant'</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">EngineArgs</span><span class="o">.</span><span class="n">fp8_max_scale_requant</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">'store_true'</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">'[EXPERIMENTAL] For per-tensor FP8 checkpoints, requantize each fused projection '</span>
+            <span class="s1">'(QKV, gate/up) to the largest weight scale among its shards, as vLLM does, instead '</span>
+            <span class="s2">"of keeping each shard's own scale. Yields the same weights as vLLM at a small "</span>
+            <span class="s1">'precision cost. (default: </span><span class="si">%(default)s</span><span class="s1">)'</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># TODO: remove this once overlap L2 KV reload is stabilized and enabled by default</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -666,10 +693,14 @@
 <span class="c1"># The best solution would be to change SamplingParams.max_tokens in Rust to an Option type in the future.</span>
 <span class="c1"># related PR: https://github.com/furiosa-ai/furiosa-runtime/pull/1260</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">LLMEngineBase</span><span class="p">:</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">AnyTokenizer</span>
     <span class="n">max_model_len</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
     <span class="n">trust_remote_code</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">native_engine</span><span class="p">:</span> <span class="s2">"NativeEngineLike"</span>
+    <span class="c1"># Built on the first multimodal request; see `_get_mm_processor`.</span>
+    <span class="n">_mm_processor</span><span class="p">:</span> <span class="n">CachedMultiModalProcessor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_mm_processor_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
     <span class="n">request_ids</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
@@ -688,15 +719,46 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_mm_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CachedMultiModalProcessor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Build the cached model processor on the first multimodal request and reuse it."""</span>
+        <span class="c1"># Check first to not hold lock every time</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor_lock</span><span class="p">:</span>
+            <span class="c1"># Another thread may have initialized while waiting for the lock</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span> <span class="o">=</span> <span class="n">CachedMultiModalProcessor</span><span class="p">(</span>
+                <span class="n">create_mm_processor</span><span class="p">(</span>
+                    <span class="n">load_processor</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_remote_code</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+                    <span class="n">load_hf_config</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_remote_code</span><span class="p">),</span>
+                    <span class="n">resolve_constraints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_preprocess_multimodal_inputs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span>
         <span class="n">batch_encoding</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">,</span>
         <span class="n">max_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">min_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">mm_processor_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mm_processor_kwargs</span><span class="p">:</span> <span class="n">ModalityKwargs</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultimodalInputSet</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Prepare media and validate the full expanded prompt before native holds."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_multimodal_inputs</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_multimodal_inputs</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">mm_processor_kwargs</span><span class="p">),</span>
+            <span class="n">batch_encoding</span><span class="p">,</span>
+            <span class="n">max_completion_tokens</span><span class="p">,</span>
+            <span class="n">min_completion_tokens</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_multimodal_inputs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="n">PromptType</span><span class="p">,</span> <span class="n">mm_processor_kwargs</span><span class="p">:</span> <span class="n">ModalityKwargs</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultimodalInputSet</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Load, hash, and process media without using the shared tokenizer."""</span>
         <span class="n">user_kwargs</span> <span class="o">=</span> <span class="n">extract_mm_processor_kwargs</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
         <span class="n">llm</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"_llm"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">model_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="s2">"model_config"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_type"</span><span class="p">)</span>
@@ -712,21 +774,37 @@
                 <span class="sa">f</span><span class="s2">"received a multimodal request but </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2"> has no model_path; "</span>
                 <span class="sa">f</span><span class="s2">"construct it via </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">.from_llm or pass model_path explicitly"</span>
             <span class="p">)</span>
-        <span class="n">processor</span> <span class="o">=</span> <span class="n">load_processor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_remote_code</span><span class="p">)</span>
-        <span class="n">constraints</span> <span class="o">=</span> <span class="n">resolve_constraints</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">native_engine</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_remote_code</span>
+        <span class="c1"># Reject malformed options before the first request builds the processor.</span>
+        <span class="n">processor_kwargs</span> <span class="o">=</span> <span class="n">validate_mm_processor_kwargs</span><span class="p">(</span>
+            <span class="n">user_kwargs</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">load_hf_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_remote_code</span><span class="p">)</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">mm_inputs</span> <span class="o">=</span> <span class="n">process_mm</span><span class="p">(</span>
-            <span class="n">processor</span><span class="p">,</span>
+        <span class="n">cached_processor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mm_processor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">)</span>
+        <span class="n">supported_modalities</span> <span class="o">=</span> <span class="n">cached_processor</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">supported_modalities</span>
+        <span class="n">processor_kwargs</span> <span class="o">=</span> <span class="n">validate_mm_input_options</span><span class="p">(</span>
+            <span class="n">processor_kwargs</span><span class="p">,</span> <span class="n">supported_modalities</span><span class="o">=</span><span class="n">supported_modalities</span>
+        <span class="p">)</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">normalize_mm_inputs</span><span class="p">(</span>
             <span class="n">mm_data</span><span class="p">,</span>
-            <span class="n">user_kwargs</span><span class="o">=</span><span class="n">normalize_mm_processor_kwargs</span><span class="p">(</span>
-                <span class="n">user_kwargs</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="n">constraints</span><span class="o">.</span><span class="n">model_type</span>
-            <span class="p">),</span>
-            <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+            <span class="n">supported_modalities</span><span class="o">=</span><span class="n">supported_modalities</span><span class="p">,</span>
+            <span class="n">media_cache_key_mapping</span><span class="o">=</span><span class="n">get_media_cache_key_mapping</span><span class="p">(),</span>
             <span class="n">mm_uuids</span><span class="o">=</span><span class="n">extract_mm_uuids</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span>
             <span class="n">mm_cache_keys</span><span class="o">=</span><span class="n">mm_cache_keys_nullable</span><span class="p">,</span>
-            <span class="n">prompt_token_ids</span><span class="o">=</span><span class="n">batch_encoding</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cached_processor</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">processor_kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_finalize_multimodal_inputs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">mm_inputs</span><span class="p">:</span> <span class="n">MultimodalInputSet</span><span class="p">,</span>
+        <span class="n">batch_encoding</span><span class="p">:</span> <span class="n">BatchEncoding</span><span class="p">,</span>
+        <span class="n">max_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_completion_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultimodalInputSet</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Construct prompt updates and validate them before native admission."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mm_inputs</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mm_inputs</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">mm_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm_processor</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">batch_encoding</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">mm_inputs</span><span class="p">)</span>
         <span class="n">validate_aligned_fields</span><span class="p">(</span><span class="n">batch_encoding</span><span class="p">,</span> <span class="n">mm_inputs</span><span class="o">.</span><span class="n">prompt_updates</span><span class="p">)</span>
         <span class="n">validate_context_length</span><span class="p">(</span>
             <span class="n">max_model_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_model_len</span><span class="p">,</span>
@@ -911,6 +989,7 @@
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
             <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
+            <span class="n">fp8_max_scale_requant</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fp8_max_scale_requant</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span></div>
@@ -1222,6 +1301,7 @@
             <span class="n">devices</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span>
             <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
             <span class="n">logger_config</span><span class="o">=</span><span class="n">logger_config</span><span class="p">,</span>
+            <span class="n">fp8_max_scale_requant</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fp8_max_scale_requant</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span></div>
@@ -1266,13 +1346,24 @@
             <span class="p">)</span>
 
             <span class="n">mm_processor_kwargs</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_llm</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_llm</span><span class="o">.</span><span class="n">mm_processor_kwargs</span>
-            <span class="n">mm_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
-                <span class="n">prompt</span><span class="p">,</span>
-                <span class="n">batch_encoding</span><span class="p">,</span>
-                <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
-                <span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
-                <span class="n">mm_processor_kwargs</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">extract_mm_data</span><span class="p">(</span><span class="n">prompt</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">prepared</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_multimodal_inputs</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">mm_processor_kwargs</span>
+                <span class="p">)</span>
+                <span class="n">mm_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_multimodal_inputs</span><span class="p">(</span>
+                    <span class="n">prepared</span><span class="p">,</span>
+                    <span class="n">batch_encoding</span><span class="p">,</span>
+                    <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
+                    <span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mm_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_multimodal_inputs</span><span class="p">(</span>
+                    <span class="n">prompt</span><span class="p">,</span>
+                    <span class="n">batch_encoding</span><span class="p">,</span>
+                    <span class="n">sampling_params</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
+                    <span class="n">sampling_params</span><span class="o">.</span><span class="n">min_tokens</span><span class="p">,</span>
+                    <span class="n">mm_processor_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="n">native_sampling_params</span> <span class="o">=</span> <span class="n">_build_native_sampling_params</span><span class="p">(</span><span class="n">sampling_params</span><span class="p">)</span>
 
             <span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt_getter</span><span class="p">()</span>

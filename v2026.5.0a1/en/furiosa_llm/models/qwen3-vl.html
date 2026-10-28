@@ -69,7 +69,7 @@
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)" href="qwen3.5.html" />
+    <link rel="next" title="Qwen3.5 / Qwen3.6 / Qwen3.8" href="qwen3.5.html" />
     <link rel="prev" title="Qwen3-Reranker" href="qwen3-reranker.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -462,7 +464,7 @@ linked below.</p>
 </div>
 <ul class="simple">
 <li><p><strong>Architecture:</strong> Qwen3-VL (dense), <code class="docutils literal notranslate"><span class="pre">Qwen3VLForConditionalGeneration</span></code></p></li>
-<li><p><strong>Input / Output:</strong> Image + Text / Text</p></li>
+<li><p><strong>Input / Output:</strong> Image + Video + Text / Text</p></li>
 <li><p><strong>Quantization:</strong> No quantization is applied — the models run in the same precision as the upstream weights.</p></li>
 </ul>
 </section>
@@ -535,6 +537,10 @@ with <code class="docutils literal notranslate"><span class="pre">curl</span></c
 <p>The <code class="docutils literal notranslate"><span class="pre">image_url.url</span></code> field accepts a remote <code class="docutils literal notranslate"><span class="pre">http://</span></code>/<code class="docutils literal notranslate"><span class="pre">https://</span></code> URL, an inline
 base64 <code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path (the last requires the
 <code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span></code> flag described under <a class="reference internal" href="#advanced-usage">Advanced Usage</a>).</p>
+<p>Videos use a <code class="docutils literal notranslate"><span class="pre">video_url</span></code> content part with the same URL schemes. Install
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm[video]</span></code> and FFmpeg shared libraries for decoding. See the
+<a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#video-input-formats">video input guide</a>
+for HTTP and engine input formats, frame sampling, and timestamp handling.</p>
 <p>The <strong>Thinking</strong> editions (such as <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3-VL-2B-Thinking</span></code>) return
 their reasoning separately from the final answer:</p>
 <ul class="simple">
@@ -631,7 +637,7 @@ for a complete client example and details on tool-choice options.</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</p>
+        <p class="prev-next-title">Qwen3.5 / Qwen3.6 / Qwen3.8</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

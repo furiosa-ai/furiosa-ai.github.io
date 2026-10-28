@@ -119,7 +119,10 @@ For image inputs with a compatible vision-language model, see
 :ref:`VisionLanguageModels`. Chat Completions requests accept
 ``media_io_kwargs`` and ``mm_processor_kwargs`` through the request body
 (or the OpenAI client's ``extra_body``); see :ref:`MultimodalOptions` for
-server defaults, request overrides, and model-specific validation.
+server defaults, request overrides, and model-specific validation. Both fields
+use modality-keyed objects, such as
+``{"mm_processor_kwargs": {"image": {"min_pixels": 1024}}}``. Request options
+override defaults within each modality; an empty ``image`` object retains defaults.
 
 For context-length limits, decode batching, NPU sampling, and other
 performance settings, see :ref:`PerformanceOptimization`.
@@ -340,6 +343,10 @@ Parameters without descriptions inherit their behavior and functionality from th
      - string or object
      - null
      -
+   * - reasoning_effort
+     - string
+     - null
+     - 
    * - functions
      - array
      - null

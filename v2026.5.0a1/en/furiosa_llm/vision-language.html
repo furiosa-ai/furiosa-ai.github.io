@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -382,11 +384,13 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-input-formats">Image Input Formats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-input-formats">Video Input Formats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#server-options">Server Options</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multimodal-options">Multimodal Options</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-fetch-options">Image-fetch options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-options">Video options</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processor-options">Processor options</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#registered-image-processor-options">Registered image processor options</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor-options">Image processor options</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-errors">Validation errors</a></li>
@@ -416,13 +420,11 @@ supported architecture is <strong>Qwen3-VL</strong> (e.g.,
 <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-VL-32B-Instruct</span></code>); see <a class="reference internal" href="supported_models.html#supportedmodels"><span class="std std-ref">Supported Models</span></a> for the
 authoritative list.</p>
 <p>Image inputs may be passed as a remote <code class="docutils literal notranslate"><span class="pre">https://</span></code> URL, a base64
-<code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path. Preprocessing (resizing,
-patching, prompt-token expansion) is handled by the Hugging Face
-<code class="docutils literal notranslate"><span class="pre">AutoProcessor</span></code> that ships with the model.</p>
+<code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path. Images are automatically
+resized and prepared for the selected model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>Video input is not currently supported.</strong> Support is planned for
-<strong>Furiosa SDK 2026.5.0</strong>.</p>
+<p>Video input is currently supported for <strong>Qwen3-VL</strong>.</p>
 </div>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
@@ -462,8 +464,8 @@ example).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">image_url.url</span></code> field in a chat-completion message accepts three
 URL schemes:</p>
 <ol class="arabic">
-<li><p><strong>Remote URL</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code> / <code class="docutils literal notranslate"><span class="pre">https://</span></code>) — the server fetches the
-image with <code class="docutils literal notranslate"><span class="pre">httpx</span></code>.</p>
+<li><p><strong>Remote URL</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code> / <code class="docutils literal notranslate"><span class="pre">https://</span></code>) — the server downloads the
+image.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/photo.png"</span><span class="p">}</span>
@@ -502,6 +504,54 @@ to the prompt; pass <code class="docutils literal notranslate"><span class="pre"
 their original positions instead.</p></li>
 </ul>
 </section>
+<section id="video-input-formats">
+<h2>Video Input Formats<a class="headerlink" href="#video-input-formats" title="Link to this heading">#</a></h2>
+<p>Install <code class="docutils literal notranslate"><span class="pre">furiosa-llm[video]</span></code> and FFmpeg shared libraries to
+decode video URLs. The <code class="docutils literal notranslate"><span class="pre">video_url.url</span></code> field accepts remote HTTP(S), base64
+<code class="docutils literal notranslate"><span class="pre">data:video/...</span></code>, and allowed local <code class="docutils literal notranslate"><span class="pre">file://</span></code> URLs, with the same access
+restrictions as images. The model must support video. For example, a Qwen3-VL
+chat-completion request can contain:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"furiosa-ai/Qwen3-VL-32B-Instruct"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w"> </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video_url"</span><span class="p">,</span><span class="w"> </span><span class="nt">"video_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/clip.mp4"</span><span class="p">}},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Describe what happens in this clip."</span><span class="p">}</span>
+<span class="w">  </span><span class="p">]}],</span>
+<span class="w">  </span><span class="nt">"mm_processor_kwargs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"video"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"num_frames"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">}}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Direct <code class="docutils literal notranslate"><span class="pre">LLMEngine</span></code> and <code class="docutils literal notranslate"><span class="pre">AsyncLLMEngine</span></code> prompts accept these forms under
+<code class="docutils literal notranslate"><span class="pre">multi_modal_data[&quot;video&quot;]</span></code>:</p>
+<ul class="simple">
+<li><p>One video: a 4D NumPy array or torch tensor, or a list of PIL images or 3D
+array/tensor frames. Frames may use channels-first or channels-last layout.</p></li>
+<li><p>One video with timing: <code class="docutils literal notranslate"><span class="pre">(frames,</span> <span class="pre">metadata)</span></code>, where <code class="docutils literal notranslate"><span class="pre">metadata</span></code> may contain
+<code class="docutils literal notranslate"><span class="pre">fps</span></code>, <code class="docutils literal notranslate"><span class="pre">frames_indices</span></code> (source frame indices), <code class="docutils literal notranslate"><span class="pre">total_num_frames</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">do_sample_frames</span></code>. The model processor determines metadata requirements
+and sampling behavior.</p></li>
+<li><p>Multiple videos: a list of the above video items, or a 5D array/tensor with
+a leading video dimension. A flat frame list counts as <strong>one</strong> video.</p></li>
+</ul>
+<p>For example, a Qwen3-VL prompt with RGB frames in a NumPy array <code class="docutils literal notranslate"><span class="pre">frames</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"Describe this clip: &lt;|vision_start|&gt;&lt;|video_pad|&gt;&lt;|vision_end|&gt;"</span><span class="p">,</span>
+    <span class="s2">"multi_modal_data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"video"</span><span class="p">:</span> <span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="p">{</span><span class="s2">"fps"</span><span class="p">:</span> <span class="mf">30.0</span><span class="p">})},</span>
+    <span class="s2">"multi_modal_uuids"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"video"</span><span class="p">:</span> <span class="s2">"clip-1"</span><span class="p">},</span>
+    <span class="s2">"mm_processor_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"video"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"num_frames"</span><span class="p">:</span> <span class="mi">8</span><span class="p">}},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use the model’s video placeholder for each clip. Images and videos can share a
+prompt when the model supports both. UUID-only references use <code class="docutils literal notranslate"><span class="pre">None</span></code> in place
+of the video and require an available cached result.</p>
+<p>For direct frame inputs, Qwen3-VL requires <code class="docutils literal notranslate"><span class="pre">(frames,</span> <span class="pre">metadata)</span></code> with a finite,
+positive source <code class="docutils literal notranslate"><span class="pre">fps</span></code>; missing FPS raises an error. It preserves source
+timestamps and skips resampling when metadata marks the selection as
+final (<code class="docutils literal notranslate"><span class="pre">do_sample_frames=False</span></code>) or describes a subset of the source frames.
+Frames must fit within the selected model’s supported sizes. See <em>Video options</em>
+below for controls.</p>
+</section>
 <section id="server-options">
 <h2>Server Options<a class="headerlink" href="#server-options" title="Link to this heading">#</a></h2>
 <p>The following <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code> flags configure multimodal
@@ -527,20 +577,19 @@ limit returns HTTP 400.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--video-limit-per-prompt</span> <span class="pre">N</span></code></p></td>
 <td><p>unlimited</p></td>
-<td><p>Maximum number of videos allowed per request. Video input is not
-currently supported (see the note above), so this flag has no
-effect yet.</p></td>
+<td><p>Maximum number of videos allowed per request. Exceeding the
+limit returns HTTP 400.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span> <span class="pre">PATH</span></code></p></td>
 <td><p>disabled</p></td>
 <td><p>Allow <code class="docutils literal notranslate"><span class="pre">file://</span></code> URLs whose resolved path is under <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
-Required to serve local images; other <code class="docutils literal notranslate"><span class="pre">file://</span></code> URLs are
+Required to serve local images or videos; other <code class="docutils literal notranslate"><span class="pre">file://</span></code> URLs are
 rejected.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--allowed-media-domains</span> <span class="pre">D</span> <span class="pre">[D</span> <span class="pre">…]</span></code></p></td>
 <td><p>all allowed</p></td>
 <td><p>Whitelist of remote domains for SSRF protection. When set, only
-images from listed domains are fetched; others return HTTP 400.</p></td>
+media from listed domains are fetched; others return HTTP 400.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--interleave-mm-strings</span></code></p></td>
 <td><p>off</p></td>
@@ -550,17 +599,17 @@ OpenAI-format chat templates.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--mm-processor-cache-gb</span> <span class="pre">GB</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">4.0</span></code></p></td>
 <td><p>Size of the multimodal preprocessing cache in GiB. Set to <code class="docutils literal notranslate"><span class="pre">0</span></code> to
-disable preprocessing caching; encoded embeddings can still be reused.
+disable preprocessing caching.
 See <em>Caching Multimodal Inputs with UUID</em> below.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--media-io-kwargs</span> <span class="pre">JSON</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
-<td><p>Default image-fetch options, keyed by modality. See
+<td><p>Default media fetching and video decoding options, keyed by modality. See
 <a class="reference internal" href="#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a> for timeouts and request overrides.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--mm-processor-kwargs</span> <span class="pre">JSON</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
-<td><p>Processor defaults with optional <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code>. See
+<td><p>Processor defaults keyed by modality. See
 <a class="reference internal" href="#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a> for model-specific controls and request overrides.</p></td>
 </tr>
 </tbody>
@@ -588,13 +637,12 @@ limit SSRF and bandwidth-amplification risk.</p>
 </section>
 <section id="multimodal-options">
 <span id="multimodaloptions"></span><h2>Multimodal Options<a class="headerlink" href="#multimodal-options" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">media_io_kwargs</span></code> uses an <code class="docutils literal notranslate"><span class="pre">image</span></code> object. <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs</span></code> accepts
-processor options and optional <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code>.
-<code class="docutils literal notranslate"><span class="pre">videos_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">audio_kwargs</span></code> are currently rejected because only image
-processing is supported. Set server defaults with the CLI:</p>
+<p><code class="docutils literal notranslate"><span class="pre">media_io_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs</span></code> use modality-keyed objects.
+The option envelopes accept <code class="docutils literal notranslate"><span class="pre">image</span></code> and <code class="docutils literal notranslate"><span class="pre">video</span></code>. Supported modalities and
+processor options depend on the model. Set server defaults with the CLI:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3-VL-32B-Instruct<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--media-io-kwargs<span class="w"> </span><span class="s1">'{"image": {"timeout": 10}}'</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--mm-processor-kwargs<span class="w"> </span><span class="s1">'{"min_pixels": 1024}'</span>
+<span class="w">    </span>--mm-processor-kwargs<span class="w"> </span><span class="s1">'{"image": {"min_pixels": 1024}}'</span>
 </pre></div>
 </div>
 <p>Chat Completions and Responses requests can override these defaults with
@@ -621,7 +669,7 @@ With the OpenAI Python client, pass these fields through <code class="docutils l
     <span class="n">max_completion_tokens</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
     <span class="n">extra_body</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"media_io_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">5</span><span class="p">}},</span>
-        <span class="s2">"mm_processor_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">4096</span><span class="p">},</span>
+        <span class="s2">"mm_processor_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">4096</span><span class="p">}},</span>
     <span class="p">},</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
@@ -629,7 +677,8 @@ With the OpenAI Python client, pass these fields through <code class="docutils l
 </div>
 <p>Overrides apply only to that request and do not change server defaults.
 Omitting either dictionary, setting it to <code class="docutils literal notranslate"><span class="pre">null</span></code>, or passing <code class="docutils literal notranslate"><span class="pre">{}</span></code> retains
-defaults. The two dictionaries have different merge rules, described below.</p>
+defaults. For both dictionaries, request options override defaults within each
+modality. Passing <code class="docutils literal notranslate"><span class="pre">{&quot;image&quot;:</span> <span class="pre">{}}</span></code> also retains defaults.</p>
 <section id="image-fetch-options">
 <h3>Image-fetch options<a class="headerlink" href="#image-fetch-options" title="Link to this heading">#</a></h3>
 <p>Request option keys override defaults within each modality. Passing
@@ -663,33 +712,51 @@ on local files, inline data URLs, or references without a URL.</p></td>
 <p>The server’s local-path and domain restrictions still apply and cannot be
 overridden through this dictionary.</p>
 </section>
+<section id="video-options">
+<h3>Video options<a class="headerlink" href="#video-options" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">media_io_kwargs.video</span></code> accepts <code class="docutils literal notranslate"><span class="pre">timeout</span></code>, <code class="docutils literal notranslate"><span class="pre">num_frames</span></code>, <code class="docutils literal notranslate"><span class="pre">fps</span></code>,
+<code class="docutils literal notranslate"><span class="pre">min_frames</span></code>, <code class="docutils literal notranslate"><span class="pre">max_frames</span></code>, <code class="docutils literal notranslate"><span class="pre">do_sample_frames</span></code>, <code class="docutils literal notranslate"><span class="pre">device</span></code>, <code class="docutils literal notranslate"><span class="pre">seek_mode</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">num_ffmpeg_threads</span></code>. Decoder defaults are <code class="docutils literal notranslate"><span class="pre">device=&quot;cpu&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">seek_mode=&quot;exact&quot;</span></code>, and one FFmpeg thread. <code class="docutils literal notranslate"><span class="pre">cuda</span></code> and <code class="docutils literal notranslate"><span class="pre">cuda:N</span></code> select
+CUDA decoding when available. <code class="docutils literal notranslate"><span class="pre">seek_mode</span></code> also accepts <code class="docutils literal notranslate"><span class="pre">&quot;approximate&quot;</span></code>.
+Zero FFmpeg threads lets the
+decoder choose its thread count. Access restrictions remain server-controlled.</p>
+<p>For Qwen3-VL, <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs.video</span></code> accepts the same sampling controls,
+image normalization controls, <code class="docutils literal notranslate"><span class="pre">do_resize</span></code>, and positive <code class="docutils literal notranslate"><span class="pre">shortest_edge</span></code> and
+<code class="docutils literal notranslate"><span class="pre">longest_edge</span></code> pixel budgets. Omitted bounds retain the model defaults. These
+budgets cover the clip, unlike the image processor’s per-image bounds.</p>
+<p>Request values override server defaults within each modality, and an empty
+object retains defaults. Selecting <code class="docutils literal notranslate"><span class="pre">fps</span></code> removes
+an inherited <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> and vice versa; specifying both together is invalid.
+Frame counts must be positive integers and FPS must be finite and positive.
+The effective <code class="docutils literal notranslate"><span class="pre">min_frames</span></code> must not exceed <code class="docutils literal notranslate"><span class="pre">max_frames</span></code>. Frame bounds apply
+to FPS sampling; an explicit <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> takes precedence over them.</p>
+<p>For sampling, <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs.video</span></code> takes precedence over
+<code class="docutils literal notranslate"><span class="pre">media_io_kwargs.video</span></code>, which takes precedence over model defaults.
+<code class="docutils literal notranslate"><span class="pre">do_sample_frames=false</span></code> keeps every frame. Request overrides do not change
+other requests’ settings.</p>
+<p>Repeated videos can reuse cached preprocessing results. Changing frames, timing,
+or processing options may require preprocessing again. Supplying a video URL
+still causes the server to fetch and decode it. Use a UUID-only reference to
+reuse a previously submitted video without resending it; its cached result must
+still be available.</p>
+</section>
 <section id="processor-options">
 <h3>Processor options<a class="headerlink" href="#processor-options" title="Link to this heading">#</a></h3>
-<p>Request keys replace matching top-level processor defaults, including entire
-nested objects. For example,
-an override of <code class="docutils literal notranslate"><span class="pre">size</span></code> replaces the entire default <code class="docutils literal notranslate"><span class="pre">size</span></code> object rather
-than merging its dimensions.</p>
-<p>Image-specific options can be supplied in <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code>:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">"mm_processor_kwargs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"min_pixels"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="nt">"images_kwargs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"max_pixels"</span><span class="p">:</span><span class="w"> </span><span class="mi">200704</span><span class="p">}}}</span>
+<p>Place image processor options inside the <code class="docutils literal notranslate"><span class="pre">image</span></code> object:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">"mm_processor_kwargs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"min_pixels"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="nt">"max_pixels"</span><span class="p">:</span><span class="w"> </span><span class="mi">200704</span><span class="p">}}}</span>
 </pre></div>
 </div>
-<p>This uses both controls. A request’s <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code> replaces the entire
-default <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code> object; <code class="docutils literal notranslate"><span class="pre">{&quot;images_kwargs&quot;:</span> <span class="pre">{}}</span></code> clears that group
-and keeps the remaining top-level options. An option must not appear both at
-the top level and inside <code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code>, including after defaults and request
-options are combined. This applies to all option names, even when their values
-are equal.</p>
-<section id="registered-image-processor-options">
-<h4>Registered image processor options<a class="headerlink" href="#registered-image-processor-options" title="Link to this heading">#</a></h4>
-<p>The catalog lists recommended runtime controls, rather than every upstream
-processor argument. The common options below apply to Qwen-VL, EXAONE 4.5,
-and Gemma 4. EXAONE uses the Qwen image processor with additional
-window-aligned resizing.
-Defaults come from the loaded processor configuration. The table shows the
-Transformers 5.8 class fallbacks; checkpoint configuration can override them,
-including normalization values. Omitted options use those loaded defaults.
-An explicit <code class="docutils literal notranslate"><span class="pre">null</span></code> is forwarded as such and is not generally equivalent to
-omission.</p>
+<p>Request options override matching defaults within <code class="docutils literal notranslate"><span class="pre">image</span></code> while retaining
+other default options. Passing <code class="docutils literal notranslate"><span class="pre">{&quot;image&quot;:</span> <span class="pre">{}}</span></code> preserves all image defaults.
+An override of <code class="docutils literal notranslate"><span class="pre">size</span></code> replaces the entire default <code class="docutils literal notranslate"><span class="pre">size</span></code> object without
+merging its dimensions.</p>
+<section id="image-processor-options">
+<h4>Image processor options<a class="headerlink" href="#image-processor-options" title="Link to this heading">#</a></h4>
+<p>The common options below apply to Qwen-VL, EXAONE 4.5, and Gemma 4.
+The table shows fallback defaults; the selected model’s configuration can
+override them, including normalization values. Omitted options use the model’s
+defaults. An explicit <code class="docutils literal notranslate"><span class="pre">null</span></code> is not generally equivalent to omission.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 20.0%" />
@@ -708,13 +775,12 @@ omission.</p>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">do_convert_rgb</span></code></p></td>
 <td><p>Boolean or <code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
-<td><p>Convert inputs to RGB. EXAONE performs this before window-aligned resizing.</p></td>
+<td><p>Convert inputs to RGB.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">resample</span></code></p></td>
 <td><p>Integer <code class="docutils literal notranslate"><span class="pre">0</span></code> through <code class="docutils literal notranslate"><span class="pre">5</span></code>, or <code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">3</span></code> (bicubic)</p></td>
-<td><p>Pillow filter: nearest (0), Lanczos (1), bilinear (2), bicubic (3), box (4), or Hamming (5).
-The selected backend determines supported filters.</p></td>
+<td><p>Pillow filter: nearest (0), Lanczos (1), bilinear (2), bicubic (3), box (4), or Hamming (5).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">do_rescale</span></code></p></td>
 <td><p>Boolean or <code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
@@ -744,8 +810,7 @@ The selected backend determines supported filters.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">input_data_format</span></code></p></td>
 <td><p>String or <code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (infer from input)</p></td>
-<td><p>Input channel placement: <code class="docutils literal notranslate"><span class="pre">channels_first</span></code> or <code class="docutils literal notranslate"><span class="pre">channels_last</span></code>. EXAONE forwards
-channel-first data after its initial conversion.</p></td>
+<td><p>Input channel placement: <code class="docutils literal notranslate"><span class="pre">channels_first</span></code> or <code class="docutils literal notranslate"><span class="pre">channels_last</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">device</span></code></p></td>
 <td><p>Device string or <code class="docutils literal notranslate"><span class="pre">null</span></code>; offline also accepts <code class="docutils literal notranslate"><span class="pre">torch.device</span></code></p></td>
@@ -756,7 +821,7 @@ channel-first data after its initial conversion.</p></td>
 </table>
 </div>
 <p>Model-specific controls are listed below. Omitted sizing controls retain
-Furiosa’s automatic sizing. EXAONE always performs window-aligned resizing.</p>
+Furiosa’s automatic sizing.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 20.0%" />
@@ -785,50 +850,43 @@ Furiosa’s automatic sizing. EXAONE always performs window-aligned resizing.</p
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">min_pixels</span></code></p></td>
 <td><p>Qwen-VL / EXAONE 4.5</p></td>
 <td><p>Positive integer</p></td>
-<td><p>With FXB buckets, <code class="docutils literal notranslate"><span class="pre">(processor.patch_size</span> <span class="pre">*</span> <span class="pre">processor.merge_size)</span> <span class="pre">**</span> <span class="pre">2</span></code>.
+<td><p>Selected automatically for the model.
 Minimum resize pixel count; must not exceed <code class="docutils literal notranslate"><span class="pre">max_pixels</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_pixels</span></code></p></td>
 <td><p>Qwen-VL / EXAONE 4.5</p></td>
 <td><p>Positive integer</p></td>
-<td><p>Selected automatically from the image and FXB vision buckets.
-Maximum resize pixel count; EXAONE also enforces window alignment.</p></td>
+<td><p>Selected automatically from the image and the model’s supported sizes.
+Maximum resize pixel count.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_soft_tokens</span></code></p></td>
 <td><p>Gemma 4</p></td>
 <td><p>Integer: <code class="docutils literal notranslate"><span class="pre">70</span></code>, <code class="docutils literal notranslate"><span class="pre">140</span></code>, <code class="docutils literal notranslate"><span class="pre">280</span></code>, <code class="docutils literal notranslate"><span class="pre">560</span></code>, or <code class="docutils literal notranslate"><span class="pre">1024</span></code></p></td>
-<td><p>Selected automatically for the image and compiled capacity, starting
-from the loaded processor limit (HF fallback: <code class="docutils literal notranslate"><span class="pre">280</span></code>).</p></td>
+<td><p>Selected automatically from the image and the model’s supported limits.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Without FXB vision buckets, sizing falls back to the loaded processor’s
-settings. <code class="docutils literal notranslate"><span class="pre">images</span></code> and <code class="docutils literal notranslate"><span class="pre">return_tensors</span></code> are supplied by the runtime and
-are not user processor options.</p>
+<p><code class="docutils literal notranslate"><span class="pre">images</span></code> and <code class="docutils literal notranslate"><span class="pre">return_tensors</span></code> cannot be set through processor options.</p>
 <p>Strings, booleans, floats, and <code class="docutils literal notranslate"><span class="pre">null</span></code> are rejected for <code class="docutils literal notranslate"><span class="pre">min_pixels</span></code>,
-<code class="docutils literal notranslate"><span class="pre">max_pixels</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_soft_tokens</span></code>. Defaults, request overrides, and their
-merged result are validated. Cross-field bounds are checked on the combined
-options. Unregistered options continue to pass through; the loaded processor
-determines whether they are supported. These options also participate in cache
-identity.</p>
-<p>Processing remains subject to the loaded FXB’s compiled vision capacity. A
-valid option value alone does not guarantee that an image fits. The converter
-continues to use the loaded processor’s patch and merge geometry for capacity
-checks and output conversion; geometry overrides must agree with it.</p>
-<p>Preprocessing cache hits skip image processing. Their keys include the supplied
-processor kwargs after server defaults and request overrides are merged and
-<code class="docutils literal notranslate"><span class="pre">images_kwargs</span></code> is flattened. Changing a supplied option such as
-<code class="docutils literal notranslate"><span class="pre">do_rescale</span></code> selects a separate cache entry. Supply the image again when
-requesting an option set that has not been cached; UUIDs still identify the
-original image.</p>
-<p>Processor configuration defaults and automatically selected sizing values are
-not added to the preprocessing key. Omitting an option and explicitly supplying
-its default can therefore select different entries. Reuse still applies the
-existing <code class="docutils literal notranslate"><span class="pre">min_pixels</span></code> / <code class="docutils literal notranslate"><span class="pre">max_pixels</span></code> checks for Qwen-VL and EXAONE 4.5, or the
-<code class="docutils literal notranslate"><span class="pre">max_soft_tokens</span></code> check for Gemma 4. Entries outside the requested bounds
-are dropped from the hits and reprocessed. These checks do not guarantee that
-an automatically sized cached result matches a fresh processing run.</p>
+<code class="docutils literal notranslate"><span class="pre">max_pixels</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_soft_tokens</span></code>. The combined defaults and request overrides
+must satisfy the option constraints. Support for additional options depends on
+the selected model. Changing these options can also require an image to be
+processed again.</p>
+<p>Images must fit within the selected model’s supported sizes. A valid option
+value alone does not guarantee that an image can be processed. If a request
+exceeds these limits, reduce the image size or the number of images.</p>
+<p>Repeated images can reuse previous preprocessing results. Changing a processor
+option such as <code class="docutils literal notranslate"><span class="pre">do_rescale</span></code> may require an image to be processed again. Adding
+or removing other images from a request can also change automatic sizing and
+prevent reuse, even when the supplied options are unchanged. Automatic sizing
+follows the same rules whether images are supplied again or referenced by UUID,
+and whether previous preprocessing results are available.</p>
+<p>A UUID continues to identify the original image, but does not guarantee that a
+previous result can be reused. If a UUID-only request fails because no reusable
+result is available, retry with the image attached. Explicitly setting an option
+that was previously left to the loaded processor’s default can also prevent
+reuse. Empty request overrides still retain server defaults as described above.</p>
 </section>
 </section>
 <section id="validation-errors">
@@ -837,11 +895,9 @@ an automatically sized cached result matches a fresh processing run.</p>
 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Invalid CLI option structures or fetch options are argument
 errors, while model-specific processor validation occurs when loading the
 model. These checks also apply to requests without images.</p>
-<p>If native vision encoding or embedding reuse returns a token count that
-disagrees with the processed image layout, the request is aborted before text
-generation.
-Chat Completions and Responses return HTTP 500 <code class="docutils literal notranslate"><span class="pre">InternalServerError</span></code> as JSON,
-including for streaming requests, before sending any SSE events.
+<p>If image processing fails with <code class="docutils literal notranslate"><span class="pre">MultimodalTokenCountError</span></code>, no text is
+generated. Chat Completions and Responses return HTTP 500
+<code class="docutils literal notranslate"><span class="pre">InternalServerError</span></code> as JSON, including for streaming requests.
 Offline callers receive <code class="docutils literal notranslate"><span class="pre">MultimodalTokenCountError</span></code> (a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>);
 <code class="docutils literal notranslate"><span class="pre">LLMEngine</span></code> delivers it through <code class="docutils literal notranslate"><span class="pre">step()</span></code>, and <code class="docutils literal notranslate"><span class="pre">AsyncLLMEngine</span></code> raises it
 while iterating <code class="docutils literal notranslate"><span class="pre">generate()</span></code>.</p>
@@ -851,22 +907,17 @@ while iterating <code class="docutils literal notranslate"><span class="pre">gen
 </section>
 <section id="caching-multimodal-inputs-with-uuid">
 <h2>Caching Multimodal Inputs with UUID<a class="headerlink" href="#caching-multimodal-inputs-with-uuid" title="Link to this heading">#</a></h2>
-<p>Images are automatically hashed by content, and their processed results are
-cached even when no <code class="docutils literal notranslate"><span class="pre">uuid</span></code> is supplied. Repeated images can reuse cached
-results and skip pre-processing, subject to the processor-bound checks
-described in <a class="reference internal" href="#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a>.</p>
-<p>Cached results contain image preprocessing output, independent of the prompt.
-You can reuse an image with different text or at a different position in a
-later prompt. Each request still validates its image placeholders and expanded
-context length; reusing an image does not reuse a previous response.</p>
-<p>After a preprocessing cache miss, the server preprocesses the supplied image
-again before checking for reusable encoded embeddings. Automatic resizing can
-change with the other images in a request. Encoded embeddings are reused only
-when the media identity, supplied processor options, processed pixels, and layout
-match; this applies with or without a UUID.</p>
+<p>Images with the same content can reuse cached preprocessing results even when
+no <code class="docutils literal notranslate"><span class="pre">uuid</span></code> is supplied. Reuse skips preprocessing when the image’s processing
+settings, including automatic sizing, match those used for the cached result,
+as described in <a class="reference internal" href="#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a>.</p>
+<p>You can reuse an image with different text or at a different position in a
+later prompt. Each request must still include the required image placeholders
+and fit within the model’s context length. A new response is generated for
+each request.</p>
 <p>You can optionally tag each image with a stable <code class="docutils literal notranslate"><span class="pre">uuid</span></code> to reference its
-cached result on follow-up requests without resending the image. UUIDs provide
-an additional lookup mechanism; omitting a UUID does not opt out of caching.</p>
+cached result on follow-up requests without resending the image. Caching is
+available with or without a UUID.</p>
 <p>Add <code class="docutils literal notranslate"><span class="pre">uuid</span></code> next to <code class="docutils literal notranslate"><span class="pre">image_url</span></code> on the content part:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image_url"</span><span class="p">,</span>
@@ -884,22 +935,21 @@ reference the upload by <code class="docutils literal notranslate"><span class="
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If no reusable entry exists for that UUID and the effective processor options
-(for example, an unknown UUID, eviction, changed options, or an entry outside
-the requested bounds), the server re-runs pre-processing when <code class="docutils literal notranslate"><span class="pre">image_url</span></code> is also supplied;
-otherwise it returns HTTP 400 <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">multimodal</span> <span class="pre">uuid</span></code>, and the
-client should retry with the image attached. A UUID-only reference also skips
-fetching; supplying a URL still fetches and decodes the image before checking
-the processing cache. Offline callers can use <code class="docutils literal notranslate"><span class="pre">multi_modal_uuids</span></code> for the
+<p>You may need to resend an image if its UUID is unknown, its cached result has
+been evicted, or its processing options or automatic sizing have changed. If
+<code class="docutils literal notranslate"><span class="pre">image_url</span></code> is supplied, the server can process the image again. Otherwise,
+it returns HTTP 400 <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">multimodal</span> <span class="pre">uuid</span></code>; retry with the image attached.</p>
+<p>A UUID-only reference also avoids fetching the image. Supplying a URL still
+causes the server to fetch and decode the image, even if it can reuse previous
+preprocessing results. Offline callers can use <code class="docutils literal notranslate"><span class="pre">multi_modal_uuids</span></code> for the
 same reuse behavior (see <em>Offline API</em> below).</p>
 <p>Cache capacity is controlled by <code class="docutils literal notranslate"><span class="pre">--mm-processor-cache-gb</span></code> (default
-<code class="docutils literal notranslate"><span class="pre">4.0</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code> disables preprocessing caching). The cap counts the pixel buffers
-in preprocessing entries, rather than total server memory. The
-least-recently-used entries are evicted when the cache is full. Encoded embeddings have a separate lifetime and can still be
-reused after preprocessing eviction or when preprocessing caching is disabled.
-UUID-only requests require a resident preprocessing entry; a retained encoded
-embedding alone cannot satisfy them.
-The cache and UUID mappings are local to the process and reset on restart.</p>
+<code class="docutils literal notranslate"><span class="pre">4.0</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code> disables preprocessing caching). This limits memory used for
+cached preprocessing results; it does not limit total server memory. Older
+results may be removed when the cache is full. UUID-only requests require an
+available cached result and cannot be used when preprocessing caching is
+disabled. Send follow-up requests to the same server; cached results and UUIDs
+are cleared on restart.</p>
 </section>
 <section id="python-example">
 <span id="vlpythonexample"></span><h2>Python Example<a class="headerlink" href="#python-example" title="Link to this heading">#</a></h2>
@@ -958,14 +1008,14 @@ images keyed by modality:</p>
     <span class="p">{</span>
         <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"&lt;|vision_start|&gt;&lt;|image_pad|&gt;&lt;|vision_end|&gt;Describe this image."</span><span class="p">,</span>
         <span class="s2">"multi_modal_data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">]},</span>
-        <span class="s2">"mm_processor_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">4096</span><span class="p">},</span>
+        <span class="s2">"mm_processor_kwargs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">4096</span><span class="p">}},</span>
     <span class="p">}</span>
 <span class="p">]</span>
 
 <span class="k">with</span> <span class="n">LLM</span><span class="p">(</span>
     <span class="s2">"Qwen/Qwen3-VL-32B-Instruct"</span><span class="p">,</span>
     <span class="n">fxb</span><span class="o">=</span><span class="s2">"/path/to/qwen3-vl-32b.fxb"</span><span class="p">,</span>
-    <span class="n">mm_processor_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">1024</span><span class="p">},</span>
+    <span class="n">mm_processor_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"min_pixels"</span><span class="p">:</span> <span class="mi">1024</span><span class="p">}},</span>
 <span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_tokens</span><span class="o">=</span><span class="mi">64</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -1066,11 +1116,13 @@ alone — pass <code class="docutils literal notranslate"><span class="pre">None
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-input-formats">Image Input Formats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-input-formats">Video Input Formats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#server-options">Server Options</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multimodal-options">Multimodal Options</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-fetch-options">Image-fetch options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-options">Video options</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processor-options">Processor options</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#registered-image-processor-options">Registered image processor options</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor-options">Image processor options</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-errors">Validation errors</a></li>

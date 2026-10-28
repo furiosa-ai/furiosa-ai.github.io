@@ -12,14 +12,12 @@ supported architecture is **Qwen3-VL** (e.g.,
 authoritative list.
 
 Image inputs may be passed as a remote ``https://`` URL, a base64
-``data:`` URL, or a local ``file://`` path. Preprocessing (resizing,
-patching, prompt-token expansion) is handled by the Hugging Face
-``AutoProcessor`` that ships with the model.
+``data:`` URL, or a local ``file://`` path. Images are automatically
+resized and prepared for the selected model.
 
 .. note::
 
-   **Video input is not currently supported.** Support is planned for
-   **Furiosa SDK 2026.5.0**.
+   Video input is currently supported for **Qwen3-VL**.
 
 
 Quick Start
@@ -46,8 +44,8 @@ Image Input Formats
 The ``image_url.url`` field in a chat-completion message accepts three
 URL schemes:
 
-1. **Remote URL** (``http://`` / ``https://``) — the server fetches the
-   image with ``httpx``.
+1. **Remote URL** (``http://`` / ``https://``) — the server downloads the
+   image.
 
    .. code-block:: json
 
@@ -88,6 +86,61 @@ placeholders are rendered into the prompt:
   their original positions instead.
 
 
+Video Input Formats
+===================
+
+Install ``furiosa-llm[video]`` and FFmpeg shared libraries to
+decode video URLs. The ``video_url.url`` field accepts remote HTTP(S), base64
+``data:video/...``, and allowed local ``file://`` URLs, with the same access
+restrictions as images. The model must support video. For example, a Qwen3-VL
+chat-completion request can contain:
+
+.. code-block:: json
+
+   {
+     "model": "furiosa-ai/Qwen3-VL-32B-Instruct",
+     "messages": [{"role": "user", "content": [
+       {"type": "video_url", "video_url": {"url": "https://example.com/clip.mp4"}},
+       {"type": "text", "text": "Describe what happens in this clip."}
+     ]}],
+     "mm_processor_kwargs": {"video": {"num_frames": 8}}
+   }
+
+Direct ``LLMEngine`` and ``AsyncLLMEngine`` prompts accept these forms under
+``multi_modal_data["video"]``:
+
+* One video: a 4D NumPy array or torch tensor, or a list of PIL images or 3D
+  array/tensor frames. Frames may use channels-first or channels-last layout.
+* One video with timing: ``(frames, metadata)``, where ``metadata`` may contain
+  ``fps``, ``frames_indices`` (source frame indices), ``total_num_frames``, and
+  ``do_sample_frames``. The model processor determines metadata requirements
+  and sampling behavior.
+* Multiple videos: a list of the above video items, or a 5D array/tensor with
+  a leading video dimension. A flat frame list counts as **one** video.
+
+For example, a Qwen3-VL prompt with RGB frames in a NumPy array ``frames``:
+
+.. code-block:: python
+
+   prompt = {
+       "prompt": "Describe this clip: <|vision_start|><|video_pad|><|vision_end|>",
+       "multi_modal_data": {"video": (frames, {"fps": 30.0})},
+       "multi_modal_uuids": {"video": "clip-1"},
+       "mm_processor_kwargs": {"video": {"num_frames": 8}},
+   }
+
+Use the model's video placeholder for each clip. Images and videos can share a
+prompt when the model supports both. UUID-only references use ``None`` in place
+of the video and require an available cached result.
+
+For direct frame inputs, Qwen3-VL requires ``(frames, metadata)`` with a finite,
+positive source ``fps``; missing FPS raises an error. It preserves source
+timestamps and skips resampling when metadata marks the selection as
+final (``do_sample_frames=False``) or describes a subset of the source frames.
+Frames must fit within the selected model's supported sizes. See *Video options*
+below for controls.
+
+
 Server Options
 ==============
 
@@ -109,18 +162,17 @@ behaviour. Requests that violate any of them are rejected with HTTP
        limit returns HTTP 400.
    * - ``--video-limit-per-prompt N``
      - unlimited
-     - Maximum number of videos allowed per request. Video input is not
-       currently supported (see the note above), so this flag has no
-       effect yet.
+     - Maximum number of videos allowed per request. Exceeding the
+       limit returns HTTP 400.
    * - ``--allowed-local-media-path PATH``
      - disabled
      - Allow ``file://`` URLs whose resolved path is under ``PATH``.
-       Required to serve local images; other ``file://`` URLs are
+       Required to serve local images or videos; other ``file://`` URLs are
        rejected.
    * - ``--allowed-media-domains D [D …]``
      - all allowed
      - Whitelist of remote domains for SSRF protection. When set, only
-       images from listed domains are fetched; others return HTTP 400.
+       media from listed domains are fetched; others return HTTP 400.
    * - ``--interleave-mm-strings``
      - off
      - See *Image Input Formats* above. No-op for the common
@@ -128,15 +180,15 @@ behaviour. Requests that violate any of them are rejected with HTTP
    * - ``--mm-processor-cache-gb GB``
      - ``4.0``
      - Size of the multimodal preprocessing cache in GiB. Set to ``0`` to
-       disable preprocessing caching; encoded embeddings can still be reused.
+       disable preprocessing caching.
        See *Caching Multimodal Inputs with UUID* below.
    * - ``--media-io-kwargs JSON``
      - ``{}``
-     - Default image-fetch options, keyed by modality. See
+     - Default media fetching and video decoding options, keyed by modality. See
        :ref:`MultimodalOptions` for timeouts and request overrides.
    * - ``--mm-processor-kwargs JSON``
      - ``{}``
-     - Processor defaults with optional ``images_kwargs``. See
+     - Processor defaults keyed by modality. See
        :ref:`MultimodalOptions` for model-specific controls and request overrides.
 
 Example with multiple allowed domains (``nargs="+"``):
@@ -166,16 +218,15 @@ Example with multiple allowed domains (``nargs="+"``):
 Multimodal Options
 ==================
 
-``media_io_kwargs`` uses an ``image`` object. ``mm_processor_kwargs`` accepts
-processor options and optional ``images_kwargs``.
-``videos_kwargs`` and ``audio_kwargs`` are currently rejected because only image
-processing is supported. Set server defaults with the CLI:
+``media_io_kwargs`` and ``mm_processor_kwargs`` use modality-keyed objects.
+The option envelopes accept ``image`` and ``video``. Supported modalities and
+processor options depend on the model. Set server defaults with the CLI:
 
 .. code-block:: bash
 
    furiosa-llm serve furiosa-ai/Qwen3-VL-32B-Instruct \
        --media-io-kwargs '{"image": {"timeout": 10}}' \
-       --mm-processor-kwargs '{"min_pixels": 1024}'
+       --mm-processor-kwargs '{"image": {"min_pixels": 1024}}'
 
 Chat Completions and Responses requests can override these defaults with
 ``media_io_kwargs`` and ``mm_processor_kwargs`` in the JSON request body.
@@ -204,14 +255,15 @@ With the OpenAI Python client, pass these fields through ``extra_body``:
        max_completion_tokens=32,
        extra_body={
            "media_io_kwargs": {"image": {"timeout": 5}},
-           "mm_processor_kwargs": {"min_pixels": 4096},
+           "mm_processor_kwargs": {"image": {"min_pixels": 4096}},
        },
    )
    print(response.choices[0].message.content)
 
 Overrides apply only to that request and do not change server defaults.
 Omitting either dictionary, setting it to ``null``, or passing ``{}`` retains
-defaults. The two dictionaries have different merge rules, described below.
+defaults. For both dictionaries, request options override defaults within each
+modality. Passing ``{"image": {}}`` also retains defaults.
 
 Image-fetch options
 ~~~~~~~~~~~~~~~~~~~
@@ -239,39 +291,61 @@ The following fetch option is supported:
 The server's local-path and domain restrictions still apply and cannot be
 overridden through this dictionary.
 
+Video options
+~~~~~~~~~~~~~
+
+``media_io_kwargs.video`` accepts ``timeout``, ``num_frames``, ``fps``,
+``min_frames``, ``max_frames``, ``do_sample_frames``, ``device``, ``seek_mode``,
+and ``num_ffmpeg_threads``. Decoder defaults are ``device="cpu"``,
+``seek_mode="exact"``, and one FFmpeg thread. ``cuda`` and ``cuda:N`` select
+CUDA decoding when available. ``seek_mode`` also accepts ``"approximate"``.
+Zero FFmpeg threads lets the
+decoder choose its thread count. Access restrictions remain server-controlled.
+
+For Qwen3-VL, ``mm_processor_kwargs.video`` accepts the same sampling controls,
+image normalization controls, ``do_resize``, and positive ``shortest_edge`` and
+``longest_edge`` pixel budgets. Omitted bounds retain the model defaults. These
+budgets cover the clip, unlike the image processor's per-image bounds.
+
+Request values override server defaults within each modality, and an empty
+object retains defaults. Selecting ``fps`` removes
+an inherited ``num_frames`` and vice versa; specifying both together is invalid.
+Frame counts must be positive integers and FPS must be finite and positive.
+The effective ``min_frames`` must not exceed ``max_frames``. Frame bounds apply
+to FPS sampling; an explicit ``num_frames`` takes precedence over them.
+
+For sampling, ``mm_processor_kwargs.video`` takes precedence over
+``media_io_kwargs.video``, which takes precedence over model defaults.
+``do_sample_frames=false`` keeps every frame. Request overrides do not change
+other requests' settings.
+
+Repeated videos can reuse cached preprocessing results. Changing frames, timing,
+or processing options may require preprocessing again. Supplying a video URL
+still causes the server to fetch and decode it. Use a UUID-only reference to
+reuse a previously submitted video without resending it; its cached result must
+still be available.
+
 Processor options
 ~~~~~~~~~~~~~~~~~
 
-Request keys replace matching top-level processor defaults, including entire
-nested objects. For example,
-an override of ``size`` replaces the entire default ``size`` object rather
-than merging its dimensions.
-
-Image-specific options can be supplied in ``images_kwargs``:
+Place image processor options inside the ``image`` object:
 
 .. code-block:: json
 
-   {"mm_processor_kwargs": {"min_pixels": 1024, "images_kwargs": {"max_pixels": 200704}}}
+   {"mm_processor_kwargs": {"image": {"min_pixels": 1024, "max_pixels": 200704}}}
 
-This uses both controls. A request's ``images_kwargs`` replaces the entire
-default ``images_kwargs`` object; ``{"images_kwargs": {}}`` clears that group
-and keeps the remaining top-level options. An option must not appear both at
-the top level and inside ``images_kwargs``, including after defaults and request
-options are combined. This applies to all option names, even when their values
-are equal.
+Request options override matching defaults within ``image`` while retaining
+other default options. Passing ``{"image": {}}`` preserves all image defaults.
+An override of ``size`` replaces the entire default ``size`` object without
+merging its dimensions.
 
-Registered image processor options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Image processor options
+^^^^^^^^^^^^^^^^^^^^^^^
 
-The catalog lists recommended runtime controls, rather than every upstream
-processor argument. The common options below apply to Qwen-VL, EXAONE 4.5,
-and Gemma 4. EXAONE uses the Qwen image processor with additional
-window-aligned resizing.
-Defaults come from the loaded processor configuration. The table shows the
-Transformers 5.8 class fallbacks; checkpoint configuration can override them,
-including normalization values. Omitted options use those loaded defaults.
-An explicit ``null`` is forwarded as such and is not generally equivalent to
-omission.
+The common options below apply to Qwen-VL, EXAONE 4.5, and Gemma 4.
+The table shows fallback defaults; the selected model's configuration can
+override them, including normalization values. Omitted options use the model's
+defaults. An explicit ``null`` is not generally equivalent to omission.
 
 .. list-table::
    :header-rows: 1
@@ -284,12 +358,11 @@ omission.
    * - ``do_convert_rgb``
      - Boolean or ``null``
      - ``true``
-     - Convert inputs to RGB. EXAONE performs this before window-aligned resizing.
+     - Convert inputs to RGB.
    * - ``resample``
      - Integer ``0`` through ``5``, or ``null``
      - ``3`` (bicubic)
      - Pillow filter: nearest (0), Lanczos (1), bilinear (2), bicubic (3), box (4), or Hamming (5).
-       The selected backend determines supported filters.
    * - ``do_rescale``
      - Boolean or ``null``
      - ``true``
@@ -313,15 +386,14 @@ omission.
    * - ``input_data_format``
      - String or ``null``
      - ``null`` (infer from input)
-     - Input channel placement: ``channels_first`` or ``channels_last``. EXAONE forwards
-       channel-first data after its initial conversion.
+     - Input channel placement: ``channels_first`` or ``channels_last``.
    * - ``device``
      - Device string or ``null``; offline also accepts ``torch.device``
      - ``null`` (input device)
      - Device for image processing, such as ``cpu``. PIL images start on CPU.
 
 Model-specific controls are listed below. Omitted sizing controls retain
-Furiosa's automatic sizing. EXAONE always performs window-aligned resizing.
+Furiosa's automatic sizing.
 
 .. list-table::
    :header-rows: 1
@@ -342,49 +414,42 @@ Furiosa's automatic sizing. EXAONE always performs window-aligned resizing.
    * - ``min_pixels``
      - Qwen-VL / EXAONE 4.5
      - Positive integer
-     - With FXB buckets, ``(processor.patch_size * processor.merge_size) ** 2``.
+     - Selected automatically for the model.
        Minimum resize pixel count; must not exceed ``max_pixels``.
    * - ``max_pixels``
      - Qwen-VL / EXAONE 4.5
      - Positive integer
-     - Selected automatically from the image and FXB vision buckets.
-       Maximum resize pixel count; EXAONE also enforces window alignment.
+     - Selected automatically from the image and the model's supported sizes.
+       Maximum resize pixel count.
    * - ``max_soft_tokens``
      - Gemma 4
      - Integer: ``70``, ``140``, ``280``, ``560``, or ``1024``
-     - Selected automatically for the image and compiled capacity, starting
-       from the loaded processor limit (HF fallback: ``280``).
+     - Selected automatically from the image and the model's supported limits.
 
-Without FXB vision buckets, sizing falls back to the loaded processor's
-settings. ``images`` and ``return_tensors`` are supplied by the runtime and
-are not user processor options.
+``images`` and ``return_tensors`` cannot be set through processor options.
 
 Strings, booleans, floats, and ``null`` are rejected for ``min_pixels``,
-``max_pixels``, and ``max_soft_tokens``. Defaults, request overrides, and their
-merged result are validated. Cross-field bounds are checked on the combined
-options. Unregistered options continue to pass through; the loaded processor
-determines whether they are supported. These options also participate in cache
-identity.
+``max_pixels``, and ``max_soft_tokens``. The combined defaults and request overrides
+must satisfy the option constraints. Support for additional options depends on
+the selected model. Changing these options can also require an image to be
+processed again.
 
-Processing remains subject to the loaded FXB's compiled vision capacity. A
-valid option value alone does not guarantee that an image fits. The converter
-continues to use the loaded processor's patch and merge geometry for capacity
-checks and output conversion; geometry overrides must agree with it.
+Images must fit within the selected model's supported sizes. A valid option
+value alone does not guarantee that an image can be processed. If a request
+exceeds these limits, reduce the image size or the number of images.
 
-Preprocessing cache hits skip image processing. Their keys include the supplied
-processor kwargs after server defaults and request overrides are merged and
-``images_kwargs`` is flattened. Changing a supplied option such as
-``do_rescale`` selects a separate cache entry. Supply the image again when
-requesting an option set that has not been cached; UUIDs still identify the
-original image.
+Repeated images can reuse previous preprocessing results. Changing a processor
+option such as ``do_rescale`` may require an image to be processed again. Adding
+or removing other images from a request can also change automatic sizing and
+prevent reuse, even when the supplied options are unchanged. Automatic sizing
+follows the same rules whether images are supplied again or referenced by UUID,
+and whether previous preprocessing results are available.
 
-Processor configuration defaults and automatically selected sizing values are
-not added to the preprocessing key. Omitting an option and explicitly supplying
-its default can therefore select different entries. Reuse still applies the
-existing ``min_pixels`` / ``max_pixels`` checks for Qwen-VL and EXAONE 4.5, or the
-``max_soft_tokens`` check for Gemma 4. Entries outside the requested bounds
-are dropped from the hits and reprocessed. These checks do not guarantee that
-an automatically sized cached result matches a fresh processing run.
+A UUID continues to identify the original image, but does not guarantee that a
+previous result can be reused. If a UUID-only request fails because no reusable
+result is available, retry with the image attached. Explicitly setting an option
+that was previously left to the loaded processor's default can also prevent
+reuse. Empty request overrides still retain server defaults as described above.
 
 Validation errors
 ~~~~~~~~~~~~~~~~~
@@ -394,11 +459,9 @@ Invalid request options return HTTP 400 or 422; invalid offline options raise
 errors, while model-specific processor validation occurs when loading the
 model. These checks also apply to requests without images.
 
-If native vision encoding or embedding reuse returns a token count that
-disagrees with the processed image layout, the request is aborted before text
-generation.
-Chat Completions and Responses return HTTP 500 ``InternalServerError`` as JSON,
-including for streaming requests, before sending any SSE events.
+If image processing fails with ``MultimodalTokenCountError``, no text is
+generated. Chat Completions and Responses return HTTP 500
+``InternalServerError`` as JSON, including for streaming requests.
 Offline callers receive ``MultimodalTokenCountError`` (a ``RuntimeError``);
 ``LLMEngine`` delivers it through ``step()``, and ``AsyncLLMEngine`` raises it
 while iterating ``generate()``.
@@ -410,25 +473,19 @@ See :ref:`TokenizerAPI` for tokenization-specific behavior and
 Caching Multimodal Inputs with UUID
 ===================================
 
-Images are automatically hashed by content, and their processed results are
-cached even when no ``uuid`` is supplied. Repeated images can reuse cached
-results and skip pre-processing, subject to the processor-bound checks
-described in :ref:`MultimodalOptions`.
+Images with the same content can reuse cached preprocessing results even when
+no ``uuid`` is supplied. Reuse skips preprocessing when the image's processing
+settings, including automatic sizing, match those used for the cached result,
+as described in :ref:`MultimodalOptions`.
 
-Cached results contain image preprocessing output, independent of the prompt.
 You can reuse an image with different text or at a different position in a
-later prompt. Each request still validates its image placeholders and expanded
-context length; reusing an image does not reuse a previous response.
-
-After a preprocessing cache miss, the server preprocesses the supplied image
-again before checking for reusable encoded embeddings. Automatic resizing can
-change with the other images in a request. Encoded embeddings are reused only
-when the media identity, supplied processor options, processed pixels, and layout
-match; this applies with or without a UUID.
+later prompt. Each request must still include the required image placeholders
+and fit within the model's context length. A new response is generated for
+each request.
 
 You can optionally tag each image with a stable ``uuid`` to reference its
-cached result on follow-up requests without resending the image. UUIDs provide
-an additional lookup mechanism; omitting a UUID does not opt out of caching.
+cached result on follow-up requests without resending the image. Caching is
+available with or without a UUID.
 
 Add ``uuid`` next to ``image_url`` on the content part:
 
@@ -451,23 +508,23 @@ reference the upload by ``uuid`` alone:
      "uuid": "receipt-2026-05-01-abc"
    }
 
-If no reusable entry exists for that UUID and the effective processor options
-(for example, an unknown UUID, eviction, changed options, or an entry outside
-the requested bounds), the server re-runs pre-processing when ``image_url`` is also supplied;
-otherwise it returns HTTP 400 ``unknown multimodal uuid``, and the
-client should retry with the image attached. A UUID-only reference also skips
-fetching; supplying a URL still fetches and decodes the image before checking
-the processing cache. Offline callers can use ``multi_modal_uuids`` for the
+You may need to resend an image if its UUID is unknown, its cached result has
+been evicted, or its processing options or automatic sizing have changed. If
+``image_url`` is supplied, the server can process the image again. Otherwise,
+it returns HTTP 400 ``unknown multimodal uuid``; retry with the image attached.
+
+A UUID-only reference also avoids fetching the image. Supplying a URL still
+causes the server to fetch and decode the image, even if it can reuse previous
+preprocessing results. Offline callers can use ``multi_modal_uuids`` for the
 same reuse behavior (see *Offline API* below).
 
 Cache capacity is controlled by ``--mm-processor-cache-gb`` (default
-``4.0``, ``0`` disables preprocessing caching). The cap counts the pixel buffers
-in preprocessing entries, rather than total server memory. The
-least-recently-used entries are evicted when the cache is full. Encoded embeddings have a separate lifetime and can still be
-reused after preprocessing eviction or when preprocessing caching is disabled.
-UUID-only requests require a resident preprocessing entry; a retained encoded
-embedding alone cannot satisfy them.
-The cache and UUID mappings are local to the process and reset on restart.
+``4.0``, ``0`` disables preprocessing caching). This limits memory used for
+cached preprocessing results; it does not limit total server memory. Older
+results may be removed when the cache is full. UUID-only requests require an
+available cached result and cannot be used when preprocessing caching is
+disabled. Send follow-up requests to the same server; cached results and UUIDs
+are cleared on restart.
 
 
 .. _VLPythonExample:
@@ -498,14 +555,14 @@ images keyed by modality:
        {
            "prompt": "<|vision_start|><|image_pad|><|vision_end|>Describe this image.",
            "multi_modal_data": {"image": [image]},
-           "mm_processor_kwargs": {"min_pixels": 4096},
+           "mm_processor_kwargs": {"image": {"min_pixels": 4096}},
        }
    ]
 
    with LLM(
        "Qwen/Qwen3-VL-32B-Instruct",
        fxb="/path/to/qwen3-vl-32b.fxb",
-       mm_processor_kwargs={"min_pixels": 1024},
+       mm_processor_kwargs={"image": {"min_pixels": 1024}},
    ) as llm:
        outputs = llm.generate(prompts, SamplingParams(max_tokens=64))
        print(outputs[0].outputs[0].text)

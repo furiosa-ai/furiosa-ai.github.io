@@ -70,7 +70,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Responses API" href="responses-api.html" />
-    <link rel="prev" title="Solar Open" href="models/solar-open.html" />
+    <link rel="prev" title="Solar Open 2" href="models/solar-open2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.5.0a1" />
@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">OpenAI-Compatible Server</a></li>
@@ -557,7 +559,10 @@ with streaming mode:</p>
 <a class="reference internal" href="vision-language.html#visionlanguagemodels"><span class="std std-ref">Vision-Language Models</span></a>. Chat Completions requests accept
 <code class="docutils literal notranslate"><span class="pre">media_io_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs</span></code> through the request body
 (or the OpenAI client’s <code class="docutils literal notranslate"><span class="pre">extra_body</span></code>); see <a class="reference internal" href="vision-language.html#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a> for
-server defaults, request overrides, and model-specific validation.</p>
+server defaults, request overrides, and model-specific validation. Both fields
+use modality-keyed objects, such as
+<code class="docutils literal notranslate"><span class="pre">{&quot;mm_processor_kwargs&quot;:</span> <span class="pre">{&quot;image&quot;:</span> <span class="pre">{&quot;min_pixels&quot;:</span> <span class="pre">1024}}}</span></code>. Request options
+override defaults within each modality; an empty <code class="docutils literal notranslate"><span class="pre">image</span></code> object retains defaults.</p>
 <p>For context-length limits, decode batching, NPU sampling, and other
 performance settings, see <a class="reference internal" href="performance-optimization.html#performanceoptimization"><span class="std std-ref">Performance Optimization</span></a>.</p>
 </section>
@@ -837,22 +842,27 @@ The sum of this value and the prompt length must not exceed the model’s maximu
 <td><p>null</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>functions</p></td>
+<tr class="row-odd"><td><p>reasoning_effort</p></td>
+<td><p>string</p></td>
+<td><p>null</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>functions</p></td>
 <td><p>array</p></td>
 <td><p>null</p></td>
 <td><p>Legacy parameter superseded by <code class="docutils literal notranslate"><span class="pre">tools</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p>function_call</p></td>
+<tr class="row-odd"><td><p>function_call</p></td>
 <td><p>string or object</p></td>
 <td><p>null</p></td>
 <td><p>Legacy parameter superseded by <code class="docutils literal notranslate"><span class="pre">tool_choice</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>logprobs (experimental)</p></td>
+<tr class="row-even"><td><p>logprobs (experimental)</p></td>
 <td><p>boolean</p></td>
 <td><p>false</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>top_logprobs (experimental)</p></td>
+<tr class="row-odd"><td><p>top_logprobs (experimental)</p></td>
 <td><p>integer</p></td>
 <td><p>null</p></td>
 <td></td>
@@ -1339,12 +1349,12 @@ Hugging Face cache directory.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="models/solar-open.html"
+       href="models/solar-open2.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Solar Open</p>
+        <p class="prev-next-title">Solar Open 2</p>
       </div>
     </a>
     <a class="right-next"

@@ -108,22 +108,23 @@ throughput, TPOT, TTFT, and startup profiling time with your own traffic. The
 
 .. _NPUSampling:
 
-Experimental NPU Sampling
-=========================
+NPU Sampling
+============
 
 NPU sampling selects the next token on the NPU for supported generative models.
-Use it when CPU token selection or logits transfers contribute significantly to
+It helps when CPU token selection or logits transfers contribute significantly to
 decode latency, especially with larger batches. Moving sampling to the NPU can
-reduce TPOT and improve output throughput. Compatible FXB builds include sampling
-kernels by default; enable the path explicitly:
+reduce TPOT and improve output throughput. FXB builds include sampling kernels for
+every generative model, and the path is enabled by default. To sample on the host
+instead:
 
 .. code-block:: bash
 
-   furiosa-llm serve <model> --experimental-enable-npu-sampling
+   furiosa-llm serve <model> --no-enable-npu-sampling
 
-For the Python API, set ``SchedulerConfig(enable_npu_sampling=True)``. The
-serving default is host sampling. Engine startup fails if NPU sampling is enabled
-with an FXB that lacks the required sampling kernel.
+For the Python API, set ``SchedulerConfig(enable_npu_sampling=False)``. Engine
+startup fails if NPU sampling is enabled with an FXB that lacks the required
+sampling kernel. Speculative decoding turns NPU sampling off with a warning.
 
 The NPU sampler supports greedy and random sampling, including temperature,
 ``top_k``, ``top_p``, ``min_p``, repetition penalties, minimum token lengths, and
@@ -131,10 +132,6 @@ structured-output masks. Requests for output ``logprobs`` require transferring
 and processing logits on the host, while token selection remains on the NPU.
 The runtime can skip full-logit transfers when no request in the batch needs
 logits on the host.
-
-This feature remains experimental. It works with eager scheduling and with
-supported overlap-scheduling configurations, but not with speculative decoding.
-See :ref:`OverlapScheduling` for configuration details.
 
 Experimental Overlap Scheduling
 ===============================

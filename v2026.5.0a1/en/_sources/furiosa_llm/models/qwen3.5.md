@@ -1,24 +1,26 @@
 (furiosa-llm-model-qwen3.5)=
 
-# Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)
+# Qwen3.5 / Qwen3.6 / Qwen3.8
 
-The dense Qwen3.5 architecture pairs a vision encoder with a decoder that
-combines Gated DeltaNet linear attention and full attention. Qwen3.6-27B uses
-this architecture (`Qwen3_5ForConditionalGeneration`) and supports reasoning,
-tool (function) calling, and visual understanding. Thinking is enabled by
-default and can be turned off per request.
+The Qwen3.5 architectures pair a vision encoder with a decoder that combines
+Gated DeltaNet linear attention and full attention. Qwen3.6-27B uses the dense
+architecture (`Qwen3_5ForConditionalGeneration`), while Qwen3.6-35B-A3B uses
+the Mixture-of-Experts (MoE) architecture (`Qwen3_5MoeForConditionalGeneration`)
+with 35B total parameters and 3B activated per token. Both models support
+reasoning, tool (function) calling, and visual understanding. Thinking is
+enabled by default and can be turned off per request.
 
 [Qwen3.8-27B-FP8](https://huggingface.co/Qwen/Qwen3.8-27B-FP8) uses the same
 architecture, kernel shapes, and FP8 quantization configuration as
 Qwen3.6-27B-FP8, so it can use the same Furiosa-LLM compilation path. The
-pre-compiled model and usage examples below cover Qwen3.6-27B-FP8.
+usage examples below use Qwen3.6-27B-FP8.
 
 FuriosaAI packages the upstream FP8 weights together with a Furiosa Executable
 Bundle (FXB) for running them on [FuriosaAI RNGD](https://furiosa.ai) with
 Furiosa-LLM under the
 [`furiosa-ai` organization on the Hugging Face Hub](https://huggingface.co/furiosa-ai).
 The same upstream weights also run on other frameworks (such as vLLM, SGLang,
-and Transformers); for usage with those, see the upstream model card linked
+and Transformers); for usage with those, see the upstream model cards linked
 below.
 
 For the Qwen3 dense chat models see {doc}`qwen3`, and for the Qwen3-VL
@@ -29,21 +31,24 @@ vision-language models see {doc}`qwen3-vl`.
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
 | [`furiosa-ai/Qwen3.6-27B-FP8`](https://huggingface.co/furiosa-ai/Qwen3.6-27B-FP8) | FP8 | 4 | 27B dense; hybrid thinking / non-thinking; experimental |
+| [`furiosa-ai/Qwen3.6-35B-A3B-FP8`](https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8) | FP8 | 2 | 35B total / 3B active MoE; hybrid thinking / non-thinking; correctness and performance experimental |
 
-- **Architecture:** Qwen3.5 (dense), `Qwen3_5ForConditionalGeneration`
+- **Architecture:** Qwen3.5 (dense), `Qwen3_5ForConditionalGeneration`; Qwen3.5-MoE, `Qwen3_5MoeForConditionalGeneration`
 - **Input / Output:** Image + Text / Text
 - **Quantization:** Quantized projections use **static FP8 weights** (E4M3, 128 × 128 blocks) and **dynamic FP8 activation quantization** at runtime (per-token / per-block), without offline activation calibration. Modules excluded by the upstream quantization configuration, including the vision encoder and LM head, retain higher precision. The KV cache stays in 16-bit precision.
 
 ## Usage
 
-To run this model with Furiosa-LLM, follow the example commands below after
+To run these models with Furiosa-LLM, follow the example commands below after
 [installing Furiosa-LLM and its prerequisites](https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm).
 
 ### Launch the server
 
 Pass the model's `furiosa-ai/<repo>` identifier. `Qwen3.6-27B-FP8` runs on four
-RNGD cards (tensor-parallel size 32 PEs). It reasons by default and can switch
-thinking on and off (see [Advanced Usage](#advanced-usage)).
+RNGD cards (tensor-parallel size 32 PEs). `Qwen3.6-35B-A3B-FP8` runs on two RNGD
+cards (tensor-parallel size 16 PEs); use `furiosa-ai/Qwen3.6-35B-A3B-FP8` in place
+of the model ID in the examples below. Both models reason by default and can
+switch thinking on and off (see [Advanced Usage](#advanced-usage)).
 
 Serve it with the `qwen3` reasoning parser so the reasoning is returned in a
 separate field:
@@ -108,7 +113,7 @@ curl http://localhost:8000/v1/chat/completions \
 The `image_url.url` field accepts a remote `http://`/`https://` URL, an inline
 base64 `data:` URL, or a local `file://` path (the last requires the
 `--allowed-local-media-path` flag described under [Advanced Usage](#advanced-usage)).
-Furiosa-LLM currently serves text and image inputs for this model.
+Furiosa-LLM currently serves text and image inputs for these models.
 
 With thinking enabled, the model returns its reasoning separately from the
 final answer:
@@ -137,7 +142,7 @@ print("Answer:", response.choices[0].message.content)
 
 ### Advanced Usage
 
-**Toggling thinking.** The model reasons by default. To turn thinking off for a
+**Toggling thinking.** These models reason by default. To turn thinking off for a
 single request, pass `enable_thinking` through `chat_template_kwargs`; the
 response then carries no reasoning content, so read only `message.content`:
 
@@ -189,3 +194,4 @@ for a complete client example and details on tool-choice options.
 * [Tool Calling](https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html) — parsers, tool-choice options, and more examples
 * [Furiosa-LLM Server (`furiosa-llm serve`)](https://developer.furiosa.ai/latest/en/furiosa_llm/furiosa-llm-serve.html) — full OpenAI-compatible API reference and serving options
 * [Qwen/Qwen3.6-27B-FP8](https://huggingface.co/Qwen/Qwen3.6-27B-FP8) — upstream model card
+* [Qwen/Qwen3.6-35B-A3B-FP8](https://huggingface.co/Qwen/Qwen3.6-35B-A3B-FP8) — upstream model card

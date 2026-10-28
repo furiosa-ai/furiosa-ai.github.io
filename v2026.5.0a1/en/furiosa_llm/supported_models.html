@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -456,15 +458,19 @@ repository-level model cards live on the Hugging Face Hub.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">SolarOpenForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">upstage/Solar-Open-100B</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="models/qwen2.5.html"><span class="doc">Qwen 2.5</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/solar-open2.html"><span class="doc">Solar Open 2</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SolarOpen2ForCausalLM</span></code></p></td>
+<td><p>solar mini4</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen2.5.html"><span class="doc">Qwen 2.5</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen2ForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen2.5-0.5B-Instruct</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3.html"><span class="doc">Qwen 3</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3.html"><span class="doc">Qwen 3</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3ForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-8B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-32B-FP8</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3-moe.html"><span class="doc">Qwen 3 MoE</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/qwen3-moe.html"><span class="doc">Qwen 3 MoE</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3MoeForCausalLM</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3-30B-A3B-Instruct-2507</span></code></p></td>
 </tr>
@@ -580,6 +586,11 @@ API.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen3_5ForConditionalGeneration</span></code></p></td>
 <td><p>Text, Image</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3.6-27B-FP8</span></code>, <code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3.8-27B-FP8</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="models/qwen3.5.html"><span class="doc">Qwen 3.5 / 3.6 (MoE)</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Qwen3_5MoeForConditionalGeneration</span></code></p></td>
+<td><p>Text, Image</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Qwen/Qwen3.6-35B-A3B-FP8</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -789,26 +800,38 @@ does it produce correct results (<strong>Correctness</strong>), and has its perf
 <td><p>🟡</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16">Solar-Open-100B-NVFP4A16</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8">Qwen3.6-35B-A3B-FP8</a></p></td>
+<td><p>Multimodal (MoE)</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16">Solar-Open-100B-NVFP4A16</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-120b">gpt-oss-120b</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-120b">gpt-oss-120b</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/gpt-oss-20b">gpt-oss-20b</a></p></td>
 <td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b">harrier-oss-v1-0.6b</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b">harrier-oss-v1-0.6b</a></p></td>
 <td><p>Embedding</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr class="row-odd"><td><p>solar mini4</p></td>
+<td><p>Text (MoE)</p></td>
 <td><p>✅</p></td>
 <td><p>✅</p></td>
 <td><p>🟡</p></td>

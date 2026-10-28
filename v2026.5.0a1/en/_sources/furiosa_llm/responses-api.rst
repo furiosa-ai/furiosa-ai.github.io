@@ -169,7 +169,7 @@ Start a compatible vision-language server, for example
        max_output_tokens=32,
        extra_body={
            "media_io_kwargs": {"image": {"timeout": 10}},
-           "mm_processor_kwargs": {"min_pixels": 1024},
+           "mm_processor_kwargs": {"image": {"min_pixels": 1024}},
        },
    )
    print(response.output_text)
@@ -229,9 +229,9 @@ Parameters without descriptions inherit their behavior and functionality from th
    * - mm_processor_kwargs
      - object or null
      - null
-     - Processor overrides, such as ``{"min_pixels": 1024}``, with optional
-       ``images_kwargs``. Request keys replace top-level server defaults,
-       including whole nested objects; see :ref:`MultimodalOptions`.
+     - Processor overrides keyed by modality, such as
+       ``{"image": {"min_pixels": 1024}}``. Request options override server
+       defaults within each modality; see :ref:`MultimodalOptions`.
    * - instructions
      - string
      - null
@@ -319,7 +319,7 @@ Parameters without descriptions inherit their behavior and functionality from th
    * - reasoning
      - object
      - null
-     - Accepted but not yet functional.
+     - Accepted, and ``reasoning.effort`` field is effective per OpenResponses definition.
    * - metadata
      - object
      - null

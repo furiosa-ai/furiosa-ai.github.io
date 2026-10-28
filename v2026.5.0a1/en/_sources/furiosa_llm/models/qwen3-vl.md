@@ -31,7 +31,7 @@ linked below.
 | [`furiosa-ai/Qwen3-VL-32B-Thinking`](https://huggingface.co/furiosa-ai/Qwen3-VL-32B-Thinking) | None (BF16) | 4 | 32B dense; Thinking edition (always reasons) |
 
 - **Architecture:** Qwen3-VL (dense), `Qwen3VLForConditionalGeneration`
-- **Input / Output:** Image + Text / Text
+- **Input / Output:** Image + Video + Text / Text
 - **Quantization:** No quantization is applied — the models run in the same precision as the upstream weights.
 
 ## Usage
@@ -116,6 +116,11 @@ curl http://localhost:8000/v1/chat/completions \
 The `image_url.url` field accepts a remote `http://`/`https://` URL, an inline
 base64 `data:` URL, or a local `file://` path (the last requires the
 `--allowed-local-media-path` flag described under [Advanced Usage](#advanced-usage)).
+
+Videos use a `video_url` content part with the same URL schemes. Install
+`furiosa-llm[video]` and FFmpeg shared libraries for decoding. See the
+[video input guide](https://developer.furiosa.ai/latest/en/furiosa_llm/vision-language.html#video-input-formats)
+for HTTP and engine input formats, frame sampling, and timestamp handling.
 
 The **Thinking** editions (such as `furiosa-ai/Qwen3-VL-2B-Thinking`) return
 their reasoning separately from the final answer:

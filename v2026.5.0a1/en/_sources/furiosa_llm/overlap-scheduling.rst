@@ -163,7 +163,7 @@ Supported Configurations
    * - Layerwise L2-to-L1 reload
      - Supported with the separate experimental reload option and a host cache
        budget. See :ref:`LayerwiseKVReload`.
-   * - Experimental NPU sampling
+   * - NPU sampling
      - Supported for compatible models and FXBs. See :ref:`NPUSampling`.
    * - Experimental speculative decoding
      - Unsupported. Use eager scheduling.

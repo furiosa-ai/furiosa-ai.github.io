@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Qwen3.5 / Qwen3.6 / Qwen3.8 (dense) &#8212; FuriosaAI Developer Center 2026.5.0a1 documentation</title>
+    <title>Qwen3.5 / Qwen3.6 / Qwen3.8 &#8212; FuriosaAI Developer Center 2026.5.0a1 documentation</title>
   
   
   
@@ -189,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../overview/rngd.html">FuriosaAI RNGD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
@@ -217,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qwen3-embedding.html">Qwen3-Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qwen3-reranker.html">Qwen3-Reranker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qwen3-vl.html">Qwen3-VL</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gemma-4.html">Gemma 4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qwen2.5.html">Qwen2.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="llama-3.1.html">Llama 3.1</a></li>
@@ -228,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="exaone-4.5.html">EXAONE 4.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="k-exaone.html">K-EXAONE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar-open2.html">Solar Open 2</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
@@ -370,7 +372,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)</h1>
+    <h1>Qwen3.5 / Qwen3.6 / Qwen3.8</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -399,23 +401,25 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="qwen3-5-qwen3-6-qwen3-8-dense">
-<span id="furiosa-llm-model-qwen3-5"></span><h1>Qwen3.5 / Qwen3.6 / Qwen3.8 (dense)<a class="headerlink" href="#qwen3-5-qwen3-6-qwen3-8-dense" title="Link to this heading">#</a></h1>
-<p>The dense Qwen3.5 architecture pairs a vision encoder with a decoder that
-combines Gated DeltaNet linear attention and full attention. Qwen3.6-27B uses
-this architecture (<code class="docutils literal notranslate"><span class="pre">Qwen3_5ForConditionalGeneration</span></code>) and supports reasoning,
-tool (function) calling, and visual understanding. Thinking is enabled by
-default and can be turned off per request.</p>
+  <section id="qwen3-5-qwen3-6-qwen3-8">
+<span id="furiosa-llm-model-qwen3-5"></span><h1>Qwen3.5 / Qwen3.6 / Qwen3.8<a class="headerlink" href="#qwen3-5-qwen3-6-qwen3-8" title="Link to this heading">#</a></h1>
+<p>The Qwen3.5 architectures pair a vision encoder with a decoder that combines
+Gated DeltaNet linear attention and full attention. Qwen3.6-27B uses the dense
+architecture (<code class="docutils literal notranslate"><span class="pre">Qwen3_5ForConditionalGeneration</span></code>), while Qwen3.6-35B-A3B uses
+the Mixture-of-Experts (MoE) architecture (<code class="docutils literal notranslate"><span class="pre">Qwen3_5MoeForConditionalGeneration</span></code>)
+with 35B total parameters and 3B activated per token. Both models support
+reasoning, tool (function) calling, and visual understanding. Thinking is
+enabled by default and can be turned off per request.</p>
 <p><a class="reference external" href="https://huggingface.co/Qwen/Qwen3.8-27B-FP8">Qwen3.8-27B-FP8</a> uses the same
 architecture, kernel shapes, and FP8 quantization configuration as
 Qwen3.6-27B-FP8, so it can use the same Furiosa-LLM compilation path. The
-pre-compiled model and usage examples below cover Qwen3.6-27B-FP8.</p>
+usage examples below use Qwen3.6-27B-FP8.</p>
 <p>FuriosaAI packages the upstream FP8 weights together with a Furiosa Executable
 Bundle (FXB) for running them on <a class="reference external" href="https://furiosa.ai">FuriosaAI RNGD</a> with
 Furiosa-LLM under the
 <a class="reference external" href="https://huggingface.co/furiosa-ai"><code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> organization on the Hugging Face Hub</a>.
 The same upstream weights also run on other frameworks (such as vLLM, SGLang,
-and Transformers); for usage with those, see the upstream model card linked
+and Transformers); for usage with those, see the upstream model cards linked
 below.</p>
 <p>For the Qwen3 dense chat models see <a class="reference internal" href="qwen3.html"><span class="doc">Qwen3 (dense)</span></a>, and for the Qwen3-VL
 vision-language models see <a class="reference internal" href="qwen3-vl.html"><span class="doc">Qwen3-VL</span></a>.</p>
@@ -435,24 +439,31 @@ vision-language models see <a class="reference internal" href="qwen3-vl.html"><s
 <td><p>4</p></td>
 <td><p>27B dense; hybrid thinking / non-thinking; experimental</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3.6-35B-A3B-FP8</span></code></a></p></td>
+<td><p>FP8</p></td>
+<td><p>2</p></td>
+<td><p>35B total / 3B active MoE; hybrid thinking / non-thinking; correctness and performance experimental</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <ul class="simple">
-<li><p><strong>Architecture:</strong> Qwen3.5 (dense), <code class="docutils literal notranslate"><span class="pre">Qwen3_5ForConditionalGeneration</span></code></p></li>
+<li><p><strong>Architecture:</strong> Qwen3.5 (dense), <code class="docutils literal notranslate"><span class="pre">Qwen3_5ForConditionalGeneration</span></code>; Qwen3.5-MoE, <code class="docutils literal notranslate"><span class="pre">Qwen3_5MoeForConditionalGeneration</span></code></p></li>
 <li><p><strong>Input / Output:</strong> Image + Text / Text</p></li>
 <li><p><strong>Quantization:</strong> Quantized projections use <strong>static FP8 weights</strong> (E4M3, 128 × 128 blocks) and <strong>dynamic FP8 activation quantization</strong> at runtime (per-token / per-block), without offline activation calibration. Modules excluded by the upstream quantization configuration, including the vision encoder and LM head, retain higher precision. The KV cache stays in 16-bit precision.</p></li>
 </ul>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
-<p>To run this model with Furiosa-LLM, follow the example commands below after
+<p>To run these models with Furiosa-LLM, follow the example commands below after
 <a class="reference external" href="https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm">installing Furiosa-LLM and its prerequisites</a>.</p>
 <section id="launch-the-server">
 <h3>Launch the server<a class="headerlink" href="#launch-the-server" title="Link to this heading">#</a></h3>
 <p>Pass the model’s <code class="docutils literal notranslate"><span class="pre">furiosa-ai/&lt;repo&gt;</span></code> identifier. <code class="docutils literal notranslate"><span class="pre">Qwen3.6-27B-FP8</span></code> runs on four
-RNGD cards (tensor-parallel size 32 PEs). It reasons by default and can switch
-thinking on and off (see <a class="reference internal" href="#advanced-usage">Advanced Usage</a>).</p>
+RNGD cards (tensor-parallel size 32 PEs). <code class="docutils literal notranslate"><span class="pre">Qwen3.6-35B-A3B-FP8</span></code> runs on two RNGD
+cards (tensor-parallel size 16 PEs); use <code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3.6-35B-A3B-FP8</span></code> in place
+of the model ID in the examples below. Both models reason by default and can
+switch thinking on and off (see <a class="reference internal" href="#advanced-usage">Advanced Usage</a>).</p>
 <p>Serve it with the <code class="docutils literal notranslate"><span class="pre">qwen3</span></code> reasoning parser so the reasoning is returned in a
 separate field:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>furiosa-ai/Qwen3.6-27B-FP8<span class="w"> </span><span class="se">\</span>
@@ -507,7 +518,7 @@ with <code class="docutils literal notranslate"><span class="pre">curl</span></c
 <p>The <code class="docutils literal notranslate"><span class="pre">image_url.url</span></code> field accepts a remote <code class="docutils literal notranslate"><span class="pre">http://</span></code>/<code class="docutils literal notranslate"><span class="pre">https://</span></code> URL, an inline
 base64 <code class="docutils literal notranslate"><span class="pre">data:</span></code> URL, or a local <code class="docutils literal notranslate"><span class="pre">file://</span></code> path (the last requires the
 <code class="docutils literal notranslate"><span class="pre">--allowed-local-media-path</span></code> flag described under <a class="reference internal" href="#advanced-usage">Advanced Usage</a>).
-Furiosa-LLM currently serves text and image inputs for this model.</p>
+Furiosa-LLM currently serves text and image inputs for these models.</p>
 <p>With thinking enabled, the model returns its reasoning separately from the
 final answer:</p>
 <ul class="simple">
@@ -536,7 +547,7 @@ raises an <code class="docutils literal notranslate"><span class="pre">Attribute
 </section>
 <section id="advanced-usage">
 <h3>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Link to this heading">#</a></h3>
-<p><strong>Toggling thinking.</strong> The model reasons by default. To turn thinking off for a
+<p><strong>Toggling thinking.</strong> These models reason by default. To turn thinking off for a
 single request, pass <code class="docutils literal notranslate"><span class="pre">enable_thinking</span></code> through <code class="docutils literal notranslate"><span class="pre">chat_template_kwargs</span></code>; the
 response then carries no reasoning content, so read only <code class="docutils literal notranslate"><span class="pre">message.content</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Disable thinking for a single request</span>
@@ -583,6 +594,7 @@ for a complete client example and details on tool-choice options.</p>
 <li><p><a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/toolcalling.html">Tool Calling</a> — parsers, tool-choice options, and more examples</p></li>
 <li><p><a class="reference external" href="https://developer.furiosa.ai/latest/en/furiosa_llm/furiosa-llm-serve.html">Furiosa-LLM Server (<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>)</a> — full OpenAI-compatible API reference and serving options</p></li>
 <li><p><a class="reference external" href="https://huggingface.co/Qwen/Qwen3.6-27B-FP8">Qwen/Qwen3.6-27B-FP8</a> — upstream model card</p></li>
+<li><p><a class="reference external" href="https://huggingface.co/Qwen/Qwen3.6-35B-A3B-FP8">Qwen/Qwen3.6-35B-A3B-FP8</a> — upstream model card</p></li>
 </ul>
 </section>
 </section>

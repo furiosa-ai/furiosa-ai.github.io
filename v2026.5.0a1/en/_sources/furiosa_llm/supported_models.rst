@@ -52,6 +52,9 @@ Decoder-only Models (Text Generation)
    * - :doc:`Solar Open <models/solar-open>`
      - ``SolarOpenForCausalLM``
      - ``upstage/Solar-Open-100B``
+   * - :doc:`Solar Open 2 <models/solar-open2>`
+     - ``SolarOpen2ForCausalLM``
+     - solar mini4
    * - :doc:`Qwen 2.5 <models/qwen2.5>`
      - ``Qwen2ForCausalLM``
      - ``Qwen/Qwen2.5-0.5B-Instruct``
@@ -144,6 +147,10 @@ API.
      - ``Qwen3_5ForConditionalGeneration``
      - Text, Image
      - ``Qwen/Qwen3.6-27B-FP8``, ``Qwen/Qwen3.8-27B-FP8``
+   * - :doc:`Qwen 3.5 / 3.6 (MoE) <models/qwen3.5>`
+     - ``Qwen3_5MoeForConditionalGeneration``
+     - Text, Image
+     - ``Qwen/Qwen3.6-35B-A3B-FP8``
 
 Status of Models
 ================
@@ -310,6 +317,11 @@ The status of each check uses the following scale:
      - 🟡
      - 🟡
      - 🟡
+   * - `Qwen3.6-35B-A3B-FP8 <https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8>`_
+     - Multimodal (MoE)
+     - ✅
+     - 🟡
+     - 🟡
    * - `Solar-Open-100B-NVFP4A16 <https://huggingface.co/furiosa-ai/Solar-Open-100B-NVFP4A16>`_
      - Text (MoE)
      - ✅
@@ -327,6 +339,11 @@ The status of each check uses the following scale:
      - ✅
    * - `harrier-oss-v1-0.6b <https://huggingface.co/furiosa-ai/harrier-oss-v1-0.6b>`_
      - Embedding
+     - ✅
+     - ✅
+     - 🟡
+   * - solar mini4
+     - Text (MoE)
      - ✅
      - ✅
      - 🟡
@@ -357,3 +374,4 @@ For models planned for future releases, see the :ref:`Roadmap`.
    models/exaone-4.5
    models/k-exaone
    models/solar-open
+   models/solar-open2
