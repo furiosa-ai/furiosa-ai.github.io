@@ -1,0 +1,997 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Hierarchical Prefix Caching &#8212; FuriosaAI Developer Center 2026.5.0b3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=a5eae460"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'furiosa_llm/hierarchical-prefix-caching';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.5.0b3';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overlap Scheduling" href="overlap-scheduling.html" />
+    <link rel="prev" title="Prefix Caching" href="prefix-caching.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.5.0b3" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../whatsnew/index.html">What’s New</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.4.0.html">Furiosa SDK Release 2026.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.html">Qwen3 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/harrier-oss-v1.html">Harrier OSS v1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3-embedding.html">Qwen3-Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3-reranker.html">Qwen3-Reranker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/gemma-4.html">Gemma 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/qwen2.5.html">Qwen2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/llama-3.1.html">Llama 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/mistral-nemo.html">Mistral NeMo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/gpt-oss.html">GPT-OSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/exaone-4.5.html">EXAONE 4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/k-exaone.html">K-EXAONE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/solar-mini4.html">Solar Mini 4</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="responses-api.html">Responses API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolcalling.html">Tool Calling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision-language.html">Vision-Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance-optimization.html">Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hierarchical Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlap-scheduling.html">Overlap Scheduling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-parallel-routing.html">Data-Parallel Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fxb.html">Furiosa Executable Bundles (FXB)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/online_chat_completion_logprobs.html">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/llm_d.html">Deploying Furiosa-LLM with llm-d</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Hierarchical Prefix Caching</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-it">When to Use It</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-retention-policies">Host Retention Policies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#write-through-promotion">Write-through promotion</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#write-back-on-npu-eviction">Write-back on NPU eviction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-host-capacity">Choosing a Host Capacity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-examples">CLI Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api">Python API</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-l2-reload-with-model-execution">Overlapping L2 Reload with Model Execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-interactions-and-limitations">Feature Interactions and Limitations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching">Prefix caching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism">Data parallelism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-attention">Hybrid attention</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-limitations">Other limitations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-preparation">Host Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-and-tuning">Monitoring and Tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server-fails-to-start">Server fails to start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-hit-rate-but-limited-latency-improvement">High hit rate but limited latency improvement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#low-hit-rate">Low hit rate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-memory-grows-more-than-expected">Host memory grows more than expected</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-topics">Related Topics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="hierarchical-prefix-caching">
+<span id="hierarchicalprefixcaching"></span><h1>Hierarchical Prefix Caching<a class="headerlink" href="#hierarchical-prefix-caching" title="Link to this heading">#</a></h1>
+<p>Hierarchical prefix caching extends <a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a> with a host-memory
+cache tier. It allows Furiosa-LLM to preserve more reusable KV cache than can fit
+in NPU memory, which is useful for workloads with long, repeated prefixes and a
+working set larger than the NPU KV cache.</p>
+<p>This document describes the local two-tier cache:</p>
+<ul class="simple">
+<li><p><strong>NPU cache (L1)</strong> provides the lowest-latency prefix reuse, but has limited
+capacity and is also needed by active requests.</p></li>
+<li><p><strong>Host cache (L2)</strong> provides additional capacity in system memory. A matching
+host-resident prefix is copied back to NPU memory before it is reused.</p></li>
+</ul>
+<p>Each data-parallel replica owns an independent NPU and host cache within the
+Furiosa-LLM process. Cache contents are neither persistent nor shared between
+server processes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Hierarchical prefix caching is experimental. Its CLI options therefore use
+an <code class="docutils literal notranslate"><span class="pre">--experimental-</span></code> prefix and do not appear in <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span>
+<span class="pre">--help</span></code>. Option names and behavior may change in a future release.</p>
+</div>
+<section id="when-to-use-it">
+<h2>When to Use It<a class="headerlink" href="#when-to-use-it" title="Link to this heading">#</a></h2>
+<p>Hierarchical prefix caching is most effective when all of the following are
+true:</p>
+<ul class="simple">
+<li><p>Requests repeatedly use long, token-identical prefixes.</p></li>
+<li><p>The reusable prefix working set is too large to remain in NPU memory.</p></li>
+<li><p>Recomputing an evicted prefix costs more than copying its KV cache from host
+memory.</p></li>
+<li><p>The host has enough free memory and bidirectional host-NPU bandwidth for the
+configured cache.</p></li>
+</ul>
+<p>Typical examples include repeated system prompts, multi-turn conversations,
+RAG requests that reuse document prefixes, and applications with a collection
+of large prompt templates.</p>
+<p>It may provide little benefit when prompts rarely share a prefix, shared
+prefixes are short, or NPU prefix-cache capacity is already sufficient. A host
+cache hit is normally slower than an NPU cache hit because the KV data must be
+reloaded, but it can be substantially cheaper than recomputing a long prefix.
+Measure the result with a representative request distribution before deploying
+it broadly.</p>
+</section>
+<section id="how-it-works">
+<h2>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h2>
+<p>Furiosa-LLM continues to match prefixes by token ID from the beginning of each
+prompt. Enabling hierarchical caching changes where a matched prefix may
+reside, not what constitutes a match.</p>
+<p>Conceptually, a cached prefix can be in one of three states:</p>
+<ul class="simple">
+<li><p><strong>NPU only</strong>: immediately reusable.</p></li>
+<li><p><strong>Host only</strong>: retained outside NPU memory and reloaded on the next hit.</p></li>
+<li><p><strong>NPU and host</strong>: immediately reusable, with a host copy that can survive NPU
+eviction.</p></li>
+</ul>
+<p>For a new request, the scheduler finds the longest safe token-exact match. The
+beginning of that match may already be NPU-resident, while a following portion
+is host-resident. Furiosa-LLM reuses the NPU portion, reloads the host portion,
+and computes only the remaining unmatched prompt suffix.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>New prompt:       [       matching prefix       ][ new suffix ]
+Cache residency:  [ NPU-resident ][ host-only   ][ not cached ]
+Request action:   [ reuse         ][ reload     ][ compute    ]
+</pre></div>
+</div>
+<p>Host and NPU capacity are managed automatically. Entries used by active
+requests are protected. Under NPU memory pressure, inactive cached entries may
+lose their NPU copy; whether they remain in host memory depends on the
+retention policy described below. Under host memory pressure, older eligible
+host entries are evicted to make room for more useful cache content.</p>
+<section id="host-retention-policies">
+<h3>Host Retention Policies<a class="headerlink" href="#host-retention-policies" title="Link to this heading">#</a></h3>
+<p>Hierarchical caching provides two complementary ways to create a host copy.</p>
+<section id="write-through-promotion">
+<h4>Write-through promotion<a class="headerlink" href="#write-through-promotion" title="Link to this heading">#</a></h4>
+<p>Write-through promotion identifies repeatedly reused prefixes while they are
+still NPU-resident. When a prefix reaches the configured hit threshold,
+Furiosa-LLM proactively copies it to host memory. The prefix then has both NPU
+and host copies, so a later NPU eviction can retain the host copy without an
+eviction-time transfer.</p>
+<p>This is the default policy. The default threshold is <code class="docutils literal notranslate"><span class="pre">2</span></code>, and write-back is
+disabled. Consequently, frequently reused prefixes are preserved in host
+memory while NPU-only prefixes that have not reached the threshold can be
+discarded during eviction. This is a conservative starting point because it
+limits host traffic and host-cache pollution.</p>
+<p>The initial write to the NPU prefix cache does not count as a hit. A threshold
+of <code class="docutils literal notranslate"><span class="pre">1</span></code> therefore promotes a prefix on its first subsequent matching request,
+while the default threshold of <code class="docutils literal notranslate"><span class="pre">2</span></code> promotes it on the second.</p>
+<p>Increase the threshold to admit only hotter prefixes. Set the threshold to
+<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable write-through promotion.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for a write-through threshold of <code class="docutils literal notranslate"><span class="pre">0</span></code> as an immediate-promotion
+mode is planned. In that mode, Furiosa-LLM will copy a prefix to the host tier
+when it is first written to the NPU prefix cache. In the current experimental
+release, <code class="docutils literal notranslate"><span class="pre">0</span></code> disables write-through promotion; it does not request an
+immediate host copy.</p>
+</div>
+</section>
+<section id="write-back-on-npu-eviction">
+<h4>Write-back on NPU eviction<a class="headerlink" href="#write-back-on-npu-eviction" title="Link to this heading">#</a></h4>
+<p>When write-back is enabled, Furiosa-LLM attempts to copy an NPU-only cached
+prefix to host memory when NPU memory pressure evicts it. This preserves a
+broader set of prefixes, including prefixes that did not reach the
+write-through threshold.</p>
+<p>Write-back can improve reuse for a large or less predictable working set, but
+it also increases NPU-to-host traffic and can fill the host cache with prefixes
+that are never used again. Enable it when reuse after NPU eviction is common
+and benchmarks show that the additional transfers are worthwhile.</p>
+<p>Write-through promotion remains active when write-back is enabled unless its
+threshold is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
+<p>Hierarchical prefix caching is disabled by default. Supplying one of the two
+positive host-capacity options enables it.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">CLI options</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 36.0%" />
+<col style="width: 14.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-host-memory-gb</span> <span class="pre">FLOAT</span></code></p></td>
+<td><p>Disabled</p></td>
+<td><p>Enables hierarchical caching with a process-wide host KV cache budget in
+GiB. The budget is divided among scheduler instances and, for hybrid
+attention models, their cache types.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-host-memory-ratio</span> <span class="pre">FLOAT</span></code></p></td>
+<td><p>Disabled</p></td>
+<td><p>Enables hierarchical caching with host capacity for each scheduler and
+cache type sized as a ratio of its NPU KV block count. For example,
+<code class="docutils literal notranslate"><span class="pre">0.5</span></code> requests half as many host blocks as NPU blocks.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-write-through-threshold</span> <span class="pre">INTEGER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Minimum prefix-cache hit count for write-through promotion. <code class="docutils literal notranslate"><span class="pre">0</span></code>
+disables promotion. Negative values are invalid.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-write-back</span></code></p></td>
+<td><p>Disabled</p></td>
+<td><p>Preserves NPU-only cached prefixes in host memory when NPU eviction
+occurs, subject to host capacity.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-overlap-l2-reload</span></code></p></td>
+<td><p>Disabled</p></td>
+<td><p>Overlaps layerwise L2-to-L1 transfers with model execution. Requires a
+host-capacity option and <code class="docutils literal notranslate"><span class="pre">--npu-queue-limit</span> <span class="pre">1</span></code>; see <a class="reference internal" href="#layerwisekvreload"><span class="std std-ref">Overlapping L2 Reload with Model Execution</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The two host-capacity options are mutually exclusive. A host-memory ratio of
+<code class="docutils literal notranslate"><span class="pre">0</span></code> leaves hierarchical caching disabled; a negative ratio is invalid. The
+GiB value must be positive and large enough to hold at least one usable KV
+cache block after the process budget is divided.</p>
+<section id="choosing-a-host-capacity">
+<h3>Choosing a Host Capacity<a class="headerlink" href="#choosing-a-host-capacity" title="Link to this heading">#</a></h3>
+<p>For most deployments, prefer the GiB option because it establishes a
+predictable upper bound for the process’s host KV cache allocation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">16</span>
+</pre></div>
+</div>
+<p>The budget applies to the entire Furiosa-LLM process. With data parallelism it
+is divided among data-parallel scheduler instances. For a hybrid-attention
+model, each instance’s share is further divided between global-attention and
+sliding-window cache according to their NPU KV memory footprints. Capacity is
+allocated in whole blocks, so the actual allocation can be slightly smaller
+than the requested limit.</p>
+<p>The ratio option is convenient when host capacity should scale with the model’s
+NPU KV cache:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-ratio<span class="w"> </span><span class="m">0</span>.5
+</pre></div>
+</div>
+<p>The ratio is applied independently to every scheduler instance. Therefore,
+total process host-memory use grows with <code class="docutils literal notranslate"><span class="pre">data_parallel_size</span></code>. A ratio of
+<code class="docutils literal notranslate"><span class="pre">1.0</span></code> requests approximately one host KV block for every NPU KV block in each
+cache type; it is not a process-wide memory limit.</p>
+<p>The configured budget covers the host KV cache pools, not the model weights,
+runtime state, request data, or other process memory. Leave sufficient physical
+memory for those components and for the operating system.</p>
+</section>
+<section id="cli-examples">
+<h3>CLI Examples<a class="headerlink" href="#cli-examples" title="Link to this heading">#</a></h3>
+<p>Preserve prefixes that receive repeated hits, using the default promotion
+threshold and no eviction-time write-back:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">16</span>
+</pre></div>
+</div>
+<p>Preserve a wider working set by writing NPU-only cache entries to host during
+eviction:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-write-back
+</pre></div>
+</div>
+<p>Admit only prefixes that have received at least four cache hits:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-ratio<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-write-through-threshold<span class="w"> </span><span class="m">4</span>
+</pre></div>
+</div>
+<p>Promote prefixes after their first cache hit and preserve colder NPU-only
+entries during eviction:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-write-through-threshold<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-write-back
+</pre></div>
+</div>
+</section>
+<section id="python-api">
+<h3>Python API<a class="headerlink" href="#python-api" title="Link to this heading">#</a></h3>
+<p>The offline Python API exposes the same behavior through <code class="docutils literal notranslate"><span class="pre">SchedulerConfig</span></code>.
+The following example uses a 16 GiB process-wide host budget and the default
+hot-prefix promotion policy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLM</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">furiosa_llm.metadata.config_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">KVOffloadConfig</span><span class="p">,</span>
+    <span class="n">PrefixCacheConfig</span><span class="p">,</span>
+    <span class="n">SchedulerConfig</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">scheduler_config</span> <span class="o">=</span> <span class="n">SchedulerConfig</span><span class="p">(</span>
+    <span class="n">prefix_cache_config</span><span class="o">=</span><span class="n">PrefixCacheConfig</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">kv_offload_config</span><span class="o">=</span><span class="n">KVOffloadConfig</span><span class="p">(</span>
+        <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">host_memory_bytes</span><span class="o">=</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">write_through_threshold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">write_back</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="k">with</span> <span class="n">LLM</span><span class="p">(</span>
+    <span class="s2">"furiosa-ai/Qwen3-8B-FP8"</span><span class="p">,</span>
+    <span class="n">scheduler_config</span><span class="o">=</span><span class="n">scheduler_config</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">llm</span><span class="p">:</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+        <span class="s2">"A long shared document or instruction prefix...</span><span class="se">\n</span><span class="s2">Question one"</span>
+    <span class="p">)</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+        <span class="s2">"A long shared document or instruction prefix...</span><span class="se">\n</span><span class="s2">Question two"</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>To size the host tier relative to NPU KV capacity, set
+<code class="docutils literal notranslate"><span class="pre">host_memory_ratio</span></code> instead of <code class="docutils literal notranslate"><span class="pre">host_memory_bytes</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kv_offload_config</span> <span class="o">=</span> <span class="n">KVOffloadConfig</span><span class="p">(</span>
+    <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">host_memory_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">write_through_threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">write_back</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Do not set both <code class="docutils literal notranslate"><span class="pre">host_memory_bytes</span></code> and a positive
+<code class="docutils literal notranslate"><span class="pre">host_memory_ratio</span></code>. In the Python API, <code class="docutils literal notranslate"><span class="pre">enabled=True</span></code> must be set
+explicitly; setting a capacity field alone does not enable offloading. Use
+<code class="docutils literal notranslate"><span class="pre">write_through_threshold=None</span></code> to disable write-through promotion in a
+direct <code class="docutils literal notranslate"><span class="pre">KVOffloadConfig</span></code>. The CLI uses <code class="docutils literal notranslate"><span class="pre">0</span></code> for the same purpose.</p>
+</section>
+</section>
+<section id="overlapping-l2-reload-with-model-execution">
+<span id="layerwisekvreload"></span><h2>Overlapping L2 Reload with Model Execution<a class="headerlink" href="#overlapping-l2-reload-with-model-execution" title="Link to this heading">#</a></h2>
+<p>By default, the runtime completes a host-to-NPU KV reload before executing the
+model. The experimental layerwise reload path can overlap transfers for later
+layers with execution of layers whose KV data is already available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--experimental-kv-offload-overlap-l2-reload
+</pre></div>
+</div>
+<p>This option is disabled by default and requires a positive L2 capacity and
+<code class="docutils literal notranslate"><span class="pre">npu_queue_limit=1</span></code> (the default). It works with eager scheduling and with
+supported <a class="reference internal" href="overlap-scheduling.html#overlapscheduling"><span class="std std-ref">overlap scheduling</span></a> configurations. It
+cannot be combined with speculative decoding or PD disaggregation. It applies
+to local L2-to-L1 reloads, not Mooncake L3 prefetch.</p>
+<p>For the Python API, set <code class="docutils literal notranslate"><span class="pre">overlap_l2_reload=True</span></code> in <code class="docutils literal notranslate"><span class="pre">KVOffloadConfig</span></code>
+alongside <code class="docutils literal notranslate"><span class="pre">enabled=True</span></code> and a host capacity. Benchmark the option with
+representative cache misses and context lengths; benefits depend on how much
+transfer time can overlap model execution.</p>
+</section>
+<section id="feature-interactions-and-limitations">
+<h2>Feature Interactions and Limitations<a class="headerlink" href="#feature-interactions-and-limitations" title="Link to this heading">#</a></h2>
+<section id="prefix-caching">
+<h3>Prefix caching<a class="headerlink" href="#prefix-caching" title="Link to this heading">#</a></h3>
+<p>Hierarchical caching requires ordinary prefix caching. Prefix caching is
+enabled by default, so no additional option is normally necessary. Do not
+combine a host-capacity option with <code class="docutils literal notranslate"><span class="pre">--no-enable-prefix-caching</span></code>; the server
+cannot initialize hierarchical caching in that configuration.</p>
+</section>
+<section id="data-parallelism">
+<h3>Data parallelism<a class="headerlink" href="#data-parallelism" title="Link to this heading">#</a></h3>
+<p>Each data-parallel replica has its own NPU and host prefix cache. Cache entries
+are not copied between replicas. A process-wide GiB budget is divided among the
+replicas, while a ratio-based capacity is applied to each replica and therefore
+increases total host allocation as replicas are added.</p>
+<p>Cache-aware routing can improve reuse by sending related prompts back to the
+replica that already owns their cache entries. See <a class="reference internal" href="data-parallel-routing.html#dataparallelrouting"><span class="std std-ref">Data-Parallel Routing</span></a>
+and consider the <code class="docutils literal notranslate"><span class="pre">locality</span></code> scoring profile for workloads dominated by large
+shared prefixes.</p>
+</section>
+<section id="hybrid-attention">
+<h3>Hybrid attention<a class="headerlink" href="#hybrid-attention" title="Link to this heading">#</a></h3>
+<p>Hierarchical caching supports models that combine global attention and
+sliding-window attention. Furiosa-LLM allocates host capacity for both cache
+types and reloads only a prefix for which the required sliding-window state is
+valid. Consequently, the safely reusable prefix can be shorter than the raw
+token match. See <a class="reference internal" href="prefix-caching.html#prefixcachinghybridattentionmodels"><span class="std std-ref">Hybrid Attention Models</span></a> for the matching
+semantics and <a class="reference internal" href="hybrid-kv-cache.html#hybridkvcache"><span class="std std-ref">Hybrid KV Cache Management</span></a> for the underlying memory model.</p>
+</section>
+<section id="other-limitations">
+<h3>Other limitations<a class="headerlink" href="#other-limitations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Speculative decoding cannot be combined with hierarchical KV offloading.</p></li>
+<li><p>Prefix reuse is token-exact. Whitespace, punctuation, chat-template changes,
+or tokenizer changes can prevent reuse.</p></li>
+<li><p>Host cache contents are lost when the process exits and are not shared with
+another server process.</p></li>
+<li><p>The host cache increases capacity, not NPU capacity. A host-resident prefix
+still needs NPU blocks before inference can continue.</p></li>
+</ul>
+</section>
+</section>
+<section id="host-preparation">
+<h2>Host Preparation<a class="headerlink" href="#host-preparation" title="Link to this heading">#</a></h2>
+<p>Host KV cache pools are allocated when the engine starts. Engine startup fails
+if the requested pool cannot be allocated or if the resulting process share is
+too small to provide usable global-attention capacity.</p>
+<p>On Linux, reserve enough hugepages for the host KV cache. Furiosa-LLM can fall
+back to regular 4 KiB pages when the reserved hugepage pool is insufficient,
+but this can reduce transfer throughput. The server emits a warning that
+includes the required hugepage count when it detects insufficient reservation.
+See <a class="reference internal" href="../device_management/host_tuning.html#hosttuning"><span class="std std-ref">Host PCI Optimization Tuning</span></a> for system configuration instructions.</p>
+</section>
+<section id="monitoring-and-tuning">
+<h2>Monitoring and Tuning<a class="headerlink" href="#monitoring-and-tuning" title="Link to this heading">#</a></h2>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/metrics</span></code> endpoint described in
+<a class="reference internal" href="furiosa-llm-serve.html#monitoringopenaicompatibleserver"><span class="std std-ref">Monitoring the OpenAI-Compatible Server</span></a> and server logs to compare the
+following before and after enabling hierarchical caching:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_prefix_cache_hits</span></code>: cumulative cached tokens reused.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">furiosa_llm_prefix_cache_queries</span></code>: cumulative prompt tokens considered for
+prefix matching.</p></li>
+<li><p>Time to first token (TTFT), especially after enough cache churn to exceed NPU
+cache capacity.</p></li>
+<li><p>Host memory consumption, NPU utilization, request queueing, and end-to-end
+latency under the expected concurrency.</p></li>
+</ul>
+<p>The prefix-cache counters combine NPU-resident and host-resident hits; they do
+not currently identify the cache tier. A higher combined hit rate therefore
+does not by itself prove that host offload improved latency. Compare TTFT and
+throughput on a warm, steady-state workload that forces NPU cache eviction.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Host- and NPU-specific metrics are planned to make troubleshooting and tuning
+hierarchical caching for different workload characteristics easier.</p>
+</div>
+<p>A practical tuning sequence is:</p>
+<ol class="arabic simple">
+<li><p>Start with a bounded GiB budget, the default threshold of <code class="docutils literal notranslate"><span class="pre">2</span></code>, and
+write-back disabled.</p></li>
+<li><p>Confirm that the workload has repeated long prefixes and that cache reuse
+improves after NPU-cache churn.</p></li>
+<li><p>Increase the host budget if valuable prefixes are still lost and the host
+has sufficient memory.</p></li>
+<li><p>Raise the promotion threshold if one-off prefixes consume too much host
+capacity or transfer bandwidth.</p></li>
+<li><p>Test write-back if useful prefixes are evicted before they become hot enough
+for write-through promotion.</p></li>
+<li><p>Retest at production concurrency, because transfer contention and cache
+residency patterns change with load.</p></li>
+</ol>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<section id="server-fails-to-start">
+<h3>Server fails to start<a class="headerlink" href="#server-fails-to-start" title="Link to this heading">#</a></h3>
+<p>Check that exactly one positive host-capacity option is set, prefix caching is
+enabled, the configured process budget is large enough after data-parallel
+division, and sufficient host memory is available. For a ratio, use a value
+greater than <code class="docutils literal notranslate"><span class="pre">0</span></code>. For a write-through threshold, use <code class="docutils literal notranslate"><span class="pre">0</span></code> or a positive
+integer.</p>
+</section>
+<section id="high-hit-rate-but-limited-latency-improvement">
+<h3>High hit rate but limited latency improvement<a class="headerlink" href="#high-hit-rate-but-limited-latency-improvement" title="Link to this heading">#</a></h3>
+<p>The published hit rate combines NPU and host hits. Host hits include reload
+cost, and short-prefix reloads may not save enough computation to offset that
+cost. Compare long-prefix requests separately and check for host-memory or DMA
+bandwidth contention.</p>
+</section>
+<section id="low-hit-rate">
+<h3>Low hit rate<a class="headerlink" href="#low-hit-rate" title="Link to this heading">#</a></h3>
+<p>Verify that the fully rendered prompts are token-identical at the beginning,
+including their chat templates and system messages. With data parallelism,
+use cache-aware routing so related requests return to the same replica. Also
+confirm that the workload has warmed the cache and that the host budget is
+large enough for its reusable working set.</p>
+</section>
+<section id="host-memory-grows-more-than-expected">
+<h3>Host memory grows more than expected<a class="headerlink" href="#host-memory-grows-more-than-expected" title="Link to this heading">#</a></h3>
+<p>The ratio option is per scheduler, not process-wide. Total allocation grows
+with data-parallel replicas and includes the cache requirements of each
+attention type. Use the GiB option when a process-wide bound is required, and
+remember that the rest of Furiosa-LLM also consumes host memory.</p>
+</section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="prefix-caching.html#prefixcaching"><span class="std std-ref">Prefix Caching</span></a> describes token-exact prefix matching and the
+NPU-resident cache.</p></li>
+<li><p><a class="reference internal" href="hybrid-kv-cache.html#hybridkvcache"><span class="std std-ref">Hybrid KV Cache Management</span></a> explains the cache layout for hybrid-attention models.</p></li>
+<li><p><a class="reference internal" href="data-parallel-routing.html#dataparallelrouting"><span class="std std-ref">Data-Parallel Routing</span></a> explains how request routing affects cache
+locality across data-parallel replicas.</p></li>
+<li><p><a class="reference internal" href="../device_management/host_tuning.html#hosttuning"><span class="std std-ref">Host PCI Optimization Tuning</span></a> covers hugepage and host-transfer tuning.</p></li>
+<li><p><a class="reference internal" href="furiosa-llm-serve.html#monitoringopenaicompatibleserver"><span class="std std-ref">Monitoring the OpenAI-Compatible Server</span></a> describes the server metrics
+endpoint.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="prefix-caching.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Prefix Caching</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="overlap-scheduling.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overlap Scheduling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-it">When to Use It</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-retention-policies">Host Retention Policies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#write-through-promotion">Write-through promotion</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#write-back-on-npu-eviction">Write-back on NPU eviction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-host-capacity">Choosing a Host Capacity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-examples">CLI Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api">Python API</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-l2-reload-with-model-execution">Overlapping L2 Reload with Model Execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-interactions-and-limitations">Feature Interactions and Limitations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-caching">Prefix caching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-parallelism">Data parallelism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-attention">Hybrid attention</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-limitations">Other limitations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-preparation">Host Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-and-tuning">Monitoring and Tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server-fails-to-start">Server fails to start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-hit-rate-but-limited-latency-improvement">High hit rate but limited latency improvement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#low-hit-rate">Low hit rate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#host-memory-grows-more-than-expected">Host memory grows more than expected</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-topics">Related Topics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
