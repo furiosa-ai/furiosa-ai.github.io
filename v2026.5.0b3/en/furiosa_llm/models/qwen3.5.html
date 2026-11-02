@@ -446,7 +446,7 @@ vision-language models see <a class="reference internal" href="qwen3-vl.html"><s
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3.6-27B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3.6-27B-FP8</span></code></a></p></td>
 <td><p>FP8</p></td>
-<td><p>4</p></td>
+<td><p>2</p></td>
 <td><p>27B dense; hybrid thinking / non-thinking; experimental</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8"><code class="docutils literal notranslate"><span class="pre">furiosa-ai/Qwen3.6-35B-A3B-FP8</span></code></a></p></td>
@@ -469,9 +469,10 @@ vision-language models see <a class="reference internal" href="qwen3-vl.html"><s
 <a class="reference external" href="https://developer.furiosa.ai/latest/en/get_started/furiosa_llm.html#installing-furiosa-llm">installing Furiosa-LLM and its prerequisites</a>.</p>
 <section id="launch-the-server">
 <h3>Launch the server<a class="headerlink" href="#launch-the-server" title="Link to this heading">#</a></h3>
-<p>Pass the model’s <code class="docutils literal notranslate"><span class="pre">furiosa-ai/&lt;repo&gt;</span></code> identifier. <code class="docutils literal notranslate"><span class="pre">Qwen3.6-27B-FP8</span></code> runs on four
-RNGD cards (tensor-parallel size 32 PEs). <code class="docutils literal notranslate"><span class="pre">Qwen3.6-35B-A3B-FP8</span></code> runs on two RNGD
-cards (tensor-parallel size 16 PEs), and <code class="docutils literal notranslate"><span class="pre">Qwen3.5-0.8B</span></code> runs on half of one RNGD
+<p>Pass the model’s <code class="docutils literal notranslate"><span class="pre">furiosa-ai/&lt;repo&gt;</span></code> identifier. <code class="docutils literal notranslate"><span class="pre">Qwen3.6-27B-FP8</span></code> runs on two
+RNGD cards per replica (tensor-parallel size 16 PEs, pipeline-parallel size 1).
+<code class="docutils literal notranslate"><span class="pre">Qwen3.6-35B-A3B-FP8</span></code> also runs on two RNGD cards (tensor-parallel size 16 PEs),
+and <code class="docutils literal notranslate"><span class="pre">Qwen3.5-0.8B</span></code> runs on half of one RNGD
 card (tensor-parallel size 4 PEs); use their identifiers in place of the model ID
 in the examples below. The Qwen3.6 models reason by default, while Qwen3.5-0.8B
 answers without reasoning by default; all of them can switch thinking on and off

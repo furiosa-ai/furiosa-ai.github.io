@@ -33,7 +33,7 @@ vision-language models see {doc}`qwen3-vl`.
 | Model | Quantization | RNGD cards | Notes |
 | --- | --- | --- | --- |
 | [`furiosa-ai/Qwen3.5-0.8B`](https://huggingface.co/furiosa-ai/Qwen3.5-0.8B) | None (BF16) | 0.5 (4 PEs) | 0.8B dense; hybrid thinking / non-thinking (non-thinking by default); performance experimental |
-| [`furiosa-ai/Qwen3.6-27B-FP8`](https://huggingface.co/furiosa-ai/Qwen3.6-27B-FP8) | FP8 | 4 | 27B dense; hybrid thinking / non-thinking; experimental |
+| [`furiosa-ai/Qwen3.6-27B-FP8`](https://huggingface.co/furiosa-ai/Qwen3.6-27B-FP8) | FP8 | 2 | 27B dense; hybrid thinking / non-thinking; experimental |
 | [`furiosa-ai/Qwen3.6-35B-A3B-FP8`](https://huggingface.co/furiosa-ai/Qwen3.6-35B-A3B-FP8) | FP8 | 2 | 35B total / 3B active MoE; hybrid thinking / non-thinking; correctness and performance experimental |
 
 - **Architecture:** Qwen3.5 (dense), `Qwen3_5ForConditionalGeneration`; Qwen3.5-MoE, `Qwen3_5MoeForConditionalGeneration`
@@ -47,9 +47,10 @@ To run these models with Furiosa-LLM, follow the example commands below after
 
 ### Launch the server
 
-Pass the model's `furiosa-ai/<repo>` identifier. `Qwen3.6-27B-FP8` runs on four
-RNGD cards (tensor-parallel size 32 PEs). `Qwen3.6-35B-A3B-FP8` runs on two RNGD
-cards (tensor-parallel size 16 PEs), and `Qwen3.5-0.8B` runs on half of one RNGD
+Pass the model's `furiosa-ai/<repo>` identifier. `Qwen3.6-27B-FP8` runs on two
+RNGD cards per replica (tensor-parallel size 16 PEs, pipeline-parallel size 1).
+`Qwen3.6-35B-A3B-FP8` also runs on two RNGD cards (tensor-parallel size 16 PEs),
+and `Qwen3.5-0.8B` runs on half of one RNGD
 card (tensor-parallel size 4 PEs); use their identifiers in place of the model ID
 in the examples below. The Qwen3.6 models reason by default, while Qwen3.5-0.8B
 answers without reasoning by default; all of them can switch thinking on and off
