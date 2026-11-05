@@ -452,6 +452,20 @@ Firmware
 * Added correctable and uncorrectable ECC error counts to firmware diagnostic reports.
 
 
+Furiosa SMI
+^^^^^^^^^^^
+
+* Added support for configuring device power limits in watts with ``furiosa-smi power``
+  (requires root privileges). The configured limit is shown by
+  ``furiosa-smi info --format full``. See :ref:`FuriosaSMICLI` for details.
+* Updated CLI output formats: ``info --format full`` now includes power limits
+  and TCP clocks, and power values are displayed in whole watts.
+  ``status`` now shows a per-device summary by default; use ``--format full``
+  for per-core utilization. The Liveness column has been removed.
+* The legacy ``furiosa-libsmi`` package is deprecated and will no longer be
+  maintained. The ``furiosa-smi`` CLI no longer requires it to be installed.
+
+
 .. _Release2026_4_0_BreakingChanges:
 
 🚨 Breaking Changes & Deprecations
@@ -464,6 +478,17 @@ Firmware
     can cause incorrect results or runtime failures.
   * **Migration**: Follow :ref:`UpgradeGuide` to update the driver and verify the installed
     version before restarting your serving workloads.
+
+* **Furiosa SMI CLI output changed**:
+
+  * The default ``furiosa-smi status`` output is now a per-device summary,
+    and the Liveness column has been removed.
+  * In ``status`` JSON/YAML output, memory fields moved from
+    ``memory.DRAM`` to ``memory``, and the ``liveness`` field was removed.
+  * **Migration**: Use ``furiosa-smi status --format full`` for per-core utilization
+    and update scripts that parse ``info`` or ``status`` tables to match the new
+    columns and power formatting. Update JSON/YAML consumers to use ``memory.*``
+    instead of ``memory.DRAM.*`` and remove reliance on ``liveness``.
 
 * **Legacy model artifacts and** ``furiosa-llm build`` **removed**:
 
