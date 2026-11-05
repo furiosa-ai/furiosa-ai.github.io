@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Furiosa SDK Release 2026.4.0 &#8212; FuriosaAI Developer Center 2026.4.0 documentation</title>
+    <title>Furiosa SDK Release 2026.4.0 &#8212; FuriosaAI Developer Center 2026.4.1 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69820004"></script>
+    <script src="../_static/documentation_options.js?v=d27e8219"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="What’s New" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.4.0" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -399,6 +399,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#device-runtime">Device Runtime</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#driver">Driver</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#firmware">Firmware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-smi">Furiosa SMI</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
@@ -838,6 +839,20 @@ with older firmware versions.</p></li>
 <li><p>Added correctable and uncorrectable ECC error counts to firmware diagnostic reports.</p></li>
 </ul>
 </section>
+<section id="furiosa-smi">
+<h3>Furiosa SMI<a class="headerlink" href="#furiosa-smi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added support for configuring device power limits in watts with <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">power</span></code>
+(requires root privileges). The configured limit is shown by
+<code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">info</span> <span class="pre">--format</span> <span class="pre">full</span></code>. See <a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">Furiosa SMI CLI</span></a> for details.</p></li>
+<li><p>Updated CLI output formats: <code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">--format</span> <span class="pre">full</span></code> now includes power limits
+and TCP clocks, and power values are displayed in whole watts.
+<code class="docutils literal notranslate"><span class="pre">status</span></code> now shows a per-device summary by default; use <code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">full</span></code>
+for per-core utilization. The Liveness column has been removed.</p></li>
+<li><p>The legacy <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code> package is deprecated and will no longer be
+maintained. The <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> CLI no longer requires it to be installed.</p></li>
+</ul>
+</section>
 </section>
 <section id="breaking-changes-deprecations">
 <span id="release2026-4-0-breakingchanges"></span><h2>🚨 Breaking Changes &amp; Deprecations<a class="headerlink" href="#breaking-changes-deprecations" title="Link to this heading">#</a></h2>
@@ -849,6 +864,18 @@ with older firmware versions.</p></li>
 can cause incorrect results or runtime failures.</p></li>
 <li><p><strong>Migration</strong>: Follow <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> to update the driver and verify the installed
 version before restarting your serving workloads.</p></li>
+</ul>
+</li>
+<li><p><strong>Furiosa SMI CLI output changed</strong>:</p>
+<ul>
+<li><p>The default <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">status</span></code> output is now a per-device summary,
+and the Liveness column has been removed.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">status</span></code> JSON/YAML output, memory fields moved from
+<code class="docutils literal notranslate"><span class="pre">memory.DRAM</span></code> to <code class="docutils literal notranslate"><span class="pre">memory</span></code>, and the <code class="docutils literal notranslate"><span class="pre">liveness</span></code> field was removed.</p></li>
+<li><p><strong>Migration</strong>: Use <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span> <span class="pre">status</span> <span class="pre">--format</span> <span class="pre">full</span></code> for per-core utilization
+and update scripts that parse <code class="docutils literal notranslate"><span class="pre">info</span></code> or <code class="docutils literal notranslate"><span class="pre">status</span></code> tables to match the new
+columns and power formatting. Update JSON/YAML consumers to use <code class="docutils literal notranslate"><span class="pre">memory.*</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">memory.DRAM.*</span></code> and remove reliance on <code class="docutils literal notranslate"><span class="pre">liveness</span></code>.</p></li>
 </ul>
 </li>
 <li><p><strong>Legacy model artifacts and</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> <strong>removed</strong>:</p>
@@ -1140,6 +1167,7 @@ aggressive batching.</p></td>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#device-runtime">Device Runtime</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#driver">Driver</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#firmware">Firmware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-smi">Furiosa SMI</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>

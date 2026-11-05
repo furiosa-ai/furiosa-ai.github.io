@@ -17,7 +17,7 @@
         gtag('config', 'G-0HTTHGM3MD');
     </script>
     
-    <title>Furiosa SMI &#8212; FuriosaAI Developer Center 2026.4.0 documentation</title>
+    <title>Furiosa SMI &#8212; FuriosaAI Developer Center 2026.4.1 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69820004"></script>
+    <script src="../_static/documentation_options.js?v=d27e8219"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,7 +62,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.4.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Deploying Furiosa-LLM with llm-d" href="../cloud_native_toolkit/llm_d.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.4.0" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -382,10 +382,10 @@
   <section id="furiosa-smi">
 <span id="furiosasmi"></span><h1>Furiosa SMI<a class="headerlink" href="#furiosa-smi" title="Link to this heading">#</a></h1>
 <p>Furiosa System Management Interface (furiosa-smi) provides the capability to manage and monitor FuriosaAI NPU products.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> is command line interface (CLI) version of the interface based on the top of the Furiosa SMI Library.
+<p>The <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> command-line interface (CLI) no longer requires the legacy <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code> system package.
 The CLI tool allows users and/or administrators to access npu information, system topology, utilization, and performance data.
 Visit <a class="reference internal" href="system_management_interface/furiosa_smi_cli.html#furiosasmicli"><span class="std std-ref">Furiosa SMI CLI</span></a> page for more information.</p>
-<p>The Furiosa System Management Interface Library provides C-based programmatic interface with Go, Rust, Python bindings.
+<p>Furiosa SMI provides a Python API through the <code class="docutils literal notranslate"><span class="pre">furiosa-smi</span></code> package; the legacy C API is provided by <code class="docutils literal notranslate"><span class="pre">furiosa-libsmi</span></code>.
 It is designed for developers to integrate the Furiosa NPU into their applications, platforms and infrastructure.
 Visit <a class="reference internal" href="system_management_interface/furiosa_smi_lib.html#furiosasmilib"><span class="std std-ref">Furiosa SMI Library</span></a> page for more information.</p>
 <div class="toctree-wrapper compound">

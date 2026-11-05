@@ -57,6 +57,12 @@ C API
 
 The C API is provided by the ``furiosa-libsmi`` system library.
 
+.. warning::
+
+   The legacy ``furiosa-libsmi`` package is deprecated and will no longer be
+   maintained. The following instructions are retained for existing C API users.
+   The current ``furiosa-smi`` CLI does not require this package.
+
 Installation
 ------------
 
