@@ -50,9 +50,14 @@
         "url": "https://developer.furiosa.ai/v2026.3.0/en/"
     },
     {
-        "name": "2026.4.0 (Stable)",
+        "name": "2026.4.0",
         "version": "2026.4.0",
-        "url": "https://developer.furiosa.ai/v2026.4.0/en/",
+        "url": "https://developer.furiosa.ai/v2026.4.0/en/"
+    },
+    {
+        "name": "2026.4.1",
+        "version": "2026.4.1",
+        "url": "https://developer.furiosa.ai/v2026.4.1/en/",
         "preferred": true
     },
     {
