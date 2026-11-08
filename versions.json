@@ -74,5 +74,10 @@
         "name": "2026.5.0-beta.3",
         "version": "2026.5.0b3",
         "url": "https://developer.furiosa.ai/v2026.5.0b3/en/"
+    },
+    {
+        "name": "2026.5.0-beta.4",
+        "version": "2026.5.0b4",
+        "url": "https://developer.furiosa.ai/v2026.5.0b4/en/"
     }
 ]
