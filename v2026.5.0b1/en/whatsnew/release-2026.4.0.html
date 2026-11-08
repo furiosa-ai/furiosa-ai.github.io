@@ -1,0 +1,1209 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTTHGM3MD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0HTTHGM3MD');
+    </script>
+    
+    <title>Furiosa SDK Release 2026.4.0 &#8212; FuriosaAI Developer Center 2026.5.0b1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=39f50d33" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=0962e61b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'whatsnew/release-2026.4.0';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/furiosa-ai/furiosa-ai.github.io/refs/heads/main/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2026.5.0b1';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Furiosa SDK Release 2026.3.0" href="release-2026.3.0.html" />
+    <link rel="prev" title="Furiosa SDK Release 2026.5.0b0" href="release-2026.5.0b0.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.5.0b1" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/doc-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/doc-logo-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">
+            <div class='sidebar-title mr-auto'>
+                Furiosa Docs
+            </div>
+        </p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/rngd.html">FuriosaAI RNGD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/software_stack.html">FuriosaAI’s Software Stack</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">What’s New</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="release-2026.5.0b0.html">Furiosa SDK Release 2026.5.0b0</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Furiosa SDK Release 2026.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2026.3.0.html">Furiosa SDK Release 2026.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2026.2.0.html">Furiosa SDK Release 2026.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2026.1.0.html">Furiosa SDK Release 2026.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-2025.html">Release Notes for Furiosa SDK Release 2025.X</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/roadmap.html">Roadmap</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/prerequisites.html">Installing Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/furiosa_llm.html">Quick Start with Furiosa-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/upgrade_guide.html">Upgrading FuriosaAI’s Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Furiosa-LLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/intro.html">Furiosa-LLM</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/supported_models.html">Supported Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3.html">Qwen3 (dense)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-moe.html">Qwen3-MoE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/bge-m3.html">BGE-M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/e5-mistral.html">E5-Mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/bge-reranker-v2-m3.html">BGE Reranker v2 M3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/harrier-oss-v1.html">Harrier OSS v1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-embedding.html">Qwen3-Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-reranker.html">Qwen3-Reranker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3-vl.html">Qwen3-VL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen3.5.html">Qwen3.5 / Qwen3.6 / Qwen3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gemma-4.html">Gemma 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/qwen2.5.html">Qwen2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html">Llama 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/llama-3.3.html">Llama 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html">Mistral NeMo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/gpt-oss.html">GPT-OSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.0.html">EXAONE 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/exaone-4.5.html">EXAONE 4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/k-exaone.html">K-EXAONE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/solar-open.html">Solar Open</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/models/solar-open2.html">Solar Open 2</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/furiosa-llm-serve.html">OpenAI-Compatible Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/responses-api.html">Responses API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/toolcalling.html">Tool Calling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/structured-output.html">Structured Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/vision-language.html">Vision-Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/performance-optimization.html">Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/prefix-caching.html">Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html">Hierarchical Prefix Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/overlap-scheduling.html">Overlap Scheduling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/hybrid-kv-cache.html">Hybrid KV Cache Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/data-parallel-routing.html">Data-Parallel Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/fxb.html">Furiosa Executable Bundles (FXB)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/model-parallelism.html">Model Parallelism</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm.html">LLM class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/sampling_params.html">SamplingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/pooling_params.html">PoolingParams class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/llm_engine.html">LLMEngine class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/reference/async_llm_engine.html">AsyncLLMEngine class</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../furiosa_llm/examples.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_chat.html">Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_embed.html">Embedding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_score.html">Scoring (Similarity Scoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/llm_rerank.html">Reranking (Document Reranking)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furiosa_llm/examples/online_chat_completion_logprobs.html">OpenAI-Compatible API with Logprobs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/k8s_deployment.html">Deploying Furiosa-LLM on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../furiosa_llm/mooncake_deployment.html">Using Mooncake with Furiosa-LLM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cloud Native Toolkit</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/intro.html">Cloud Native Toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/container.html">Container Support</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cloud_native_toolkit/kubernetes.html">Kubernetes Plugins</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/feature_discovery.html">Installing Furiosa Feature Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/device_plugin.html">Installing Furiosa Device Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/dra_driver.html">Installing Furiosa DRA Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/metrics_exporter.html">Installing Furiosa Metrics Exporter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud_native_toolkit/kubernetes/npu_operator.html">Installing Furiosa NPU Operator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_native_toolkit/llm_d.html">Deploying Furiosa-LLM with llm-d</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Device Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../device_management/system_management_interface.html">Furiosa SMI</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_cli.html">Furiosa SMI CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_management/system_management_interface/furiosa_smi_lib.html">Furiosa SMI Library</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../device_management/host_tuning.html">Host PCI Optimization Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/furiosa-ai/sdk-cookbook">FuriosaAI SDK CookBook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customer Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://forums.furiosa.ai">Forums</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.atlassian.net/servicedesk/customer/portals/">Customer Support</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://furiosa.ai">FuriosaAI Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://furiosa-ai.github.io/docs/latest/en/">Furiosa Gen 1 NPU SDK Doc</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><img id='furiosa_logo' width="100" /></div>
+      <div class="sidebar-primary-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+</div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button></div>
+      
+        <div class="header-article-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="header-article-item"><button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Furiosa SDK Release 2026.4.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2>  </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical-kv-cache-offloading">Hierarchical KV Cache Offloading</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-multimodal-serving">Optimized Multimodal Serving</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanded-model-and-pooling-coverage">Expanded Model and Pooling Coverage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profile-guided-decode-batching">Profile-Guided Decode Batching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faster-token-sampling">Faster Token Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-migration-to-fxb">Complete Migration to FXB</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-changes">All Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#engine-core">Engine Core</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#device-runtime">Device Runtime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#driver">Driver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#firmware">Firmware</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#released-components">📦 Released Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">Python packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apt-packages">APT packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yum-packages">YUM packages</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="furiosa-sdk-release-2026-4-0">
+<span id="release2026-4-0"></span><h1>Furiosa SDK Release 2026.4.0<a class="headerlink" href="#furiosa-sdk-release-2026-4-0" title="Link to this heading">#</a></h1>
+<p>We are happy to announce the release of <strong>Furiosa SDK 2026.4.0</strong>.</p>
+<p>This release significantly improves overall performance through experimental <strong>NPU sampling</strong>,
+<strong>profile-guided decode batching</strong>, reduced runtime overhead, and compiler
+optimizations. Compared with the 2026.3.0 performance baseline (including early beta
+measurements), <strong>token-generation performance per watt (output tok/s/W)
+improved by 2–138%</strong> across the 18 models with prior measurements.
+The largest gains were seen in <strong>MoE models</strong>, including
+<strong>GPT-OSS-120B (+138%)</strong>, <strong>GPT-OSS-20B (+57%)</strong>, and <strong>Qwen3-30B-A3B (+43%)</strong>.</p>
+<p>The <strong>vision-language model support</strong> introduced in 2026.3.0 is now integrated
+with the regular FCFS scheduler, enabling continuous batching, batched vision
+encoding, and reuse of KV cache entries and encoded image embeddings across
+chat turns.</p>
+<p>Building on the <strong>KVConnector interface</strong> introduced in 2026.3.0, this release
+adds experimental <strong>hierarchical KV caching (HiCache)</strong>, including KV cache
+offloading. HiCache extends prefix reuse beyond NPU memory to host memory and
+optional external shared storage, with <strong>Mooncake</strong> as the first supported
+storage backend.</p>
+<p>New model support includes <strong>Gemma 4</strong> and <strong>EXAONE 4.5 with MTP</strong>.
+The pooling model lineup expands with
+<strong>BGE-M3</strong>, <strong>E5-Mistral</strong>, <strong>BGE Reranker v2 M3</strong>, and <strong>Harrier OSS v1</strong> for
+embedding and reranking workloads. Existing model families gain additional
+variants, including <strong>Qwen3-VL 2B/4B</strong> and <strong>Mistral NeMo</strong>.</p>
+<p>Finally, this release completes the migration from the deprecated legacy model
+artifact format to <strong>FXB-based model loading and execution</strong>.</p>
+<p>If you are upgrading from 2026.3, please also read the
+<a class="reference internal" href="#release2026-4-0-breakingchanges"><span class="std std-ref">🚨 Breaking Changes &amp; Deprecations</span></a> section and the <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a>.</p>
+<section id="highlights">
+<h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<section id="hierarchical-kv-cache-offloading">
+<h3>Hierarchical KV Cache Offloading<a class="headerlink" href="#hierarchical-kv-cache-offloading" title="Link to this heading">#</a></h3>
+<p>Prefix caching avoids repeated prefill for long, shared contexts, but a conventional cache is
+bounded by NPU DRAM. Once a cached prefix is evicted, a later request must recompute it even
+if the same prefix was used only moments earlier.</p>
+<p>2026.4 introduces an experimental <strong>hierarchical KV cache</strong> that expands prefix reuse beyond
+NPU memory. This release also replaces separate global-only and hybrid prefix-cache
+implementations with a <strong>unified radix tree implementation</strong>. Global-attention and
+sliding-window KV caches share the same prefix-matching and scheduling infrastructure
+while retaining independent cache management.</p>
+<p>The hierarchical cache extends this unified foundation across three tiers:</p>
+<ul class="simple">
+<li><p><strong>L1 — NPU DRAM:</strong> the active, lowest-latency KV blocks used directly by attention.</p></li>
+<li><p><strong>L2 — host memory:</strong> evicted or proactively backed-up blocks are copied over DMA and can
+be reloaded instead of recomputed.</p></li>
+<li><p><strong>L3 — external storage:</strong> an optional backend retains prefixes beyond local process
+memory; a shared backend makes them reusable by other Furiosa-LLM replicas in the cluster.</p></li>
+</ul>
+<p>L3 is storage-independent by design. A backend-agnostic <strong>KV cache connector</strong> interface
+separates cache management from backend-specific existence checks and data transfers.
+Additional storage systems can be integrated through this interface without changing the cache
+hierarchy. <strong>Mooncake is the first supported backend</strong>, providing content-addressed,
+cluster-wide prefix storage and asynchronous transfer outside the scheduler’s critical path.</p>
+<p>Two write policies determine when KV cache is stored in L2:</p>
+<ul class="simple">
+<li><p><strong>Write-through:</strong> writes KV cache to L2 whenever it is stored in L1. Keeping an L2 copy
+allows L1 blocks to be reclaimed without an eviction-time transfer. This suits deployments
+with enough NPU-to-host bandwidth and host-memory capacity to maintain copies in both tiers.</p></li>
+<li><p><strong>Write-back:</strong> writes KV cache to L2 when it is evicted from L1. Deferring the copy
+reduces duplicate storage across the two tiers, making it useful when host-cache capacity
+is limited and more space is needed for evicted prefixes. The transfer can add eviction latency.</p></li>
+</ul>
+<p>With either policy, the scheduler reuses the L1-resident portion of a matching prefix and
+reloads only its missing cached suffix. Offloading also works with hybrid global/sliding-window
+attention and intra-node pipeline parallelism. An experimental layerwise L2-to-L1 reload path can
+overlap host-to-NPU transfers with model execution; see <a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html#layerwisekvreload"><span class="std std-ref">Overlapping L2 Reload with Model Execution</span></a>.</p>
+<p>Enable the L2 tier by assigning a process-wide host-memory budget:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--experimental-kv-offload-host-memory-gb<span class="w"> </span><span class="m">64</span>
+</pre></div>
+</div>
+<p>Alternatively, <code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-host-memory-ratio</span></code> sizes L2 relative to each
+model lane’s L1 KV capacity. <code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-write-through-threshold</span></code> controls
+the promotion hit threshold (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>; <code class="docutils literal notranslate"><span class="pre">0</span></code> disables promotion), and
+<code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-write-back</span></code> enables the additional write-back policy.
+See <a class="reference internal" href="../furiosa_llm/hierarchical-prefix-caching.html#hierarchicalprefixcaching"><span class="std std-ref">Hierarchical Prefix Caching</span></a> for policy and configuration details.</p>
+<p>This feature is <strong>experimental and off by default</strong>. Its options are deliberately hidden
+from <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">--help</span></code> while the policy and defaults are being tuned. With the
+backend included in 2026.4, L3 requires a compatible Mooncake deployment and shared-library
+installation; see <a class="reference internal" href="../furiosa_llm/mooncake_deployment.html#k8smooncakedeployment"><span class="std std-ref">Using Mooncake with Furiosa-LLM</span></a> for setup and namespace configuration.</p>
+</section>
+<section id="optimized-multimodal-serving">
+<h3>Optimized Multimodal Serving<a class="headerlink" href="#optimized-multimodal-serving" title="Link to this heading">#</a></h3>
+<p>The vision-language support introduced in 2026.3 now runs end to end on the regular FCFS
+scheduler. This unifies text-only and image-and-text requests under the same scheduling,
+prefix-cache, and data-parallel infrastructure instead of a separate proof-of-concept loop.</p>
+<p>Multimodal request processing has been optimized in three areas:</p>
+<ul class="simple">
+<li><p><strong>Batched vision encoding:</strong> images from multiple requests can be encoded together
+to improve throughput under concurrent load.</p></li>
+<li><p><strong>Overlapped image preparation:</strong> image preparation on the host can overlap with NPU
+text generation for other requests, reducing NPU idle time.</p></li>
+<li><p><strong>Image embedding reuse:</strong> cached image embeddings can be reused across conversation
+turns and data-parallel (DP) workers, avoiding repeated vision encoding for the same image.</p></li>
+</ul>
+<p>These improvements apply to all currently supported vision-language models, including
+<strong>Gemma 4</strong>, <strong>Qwen3-VL</strong>, and <strong>EXAONE 4.5</strong>. See <a class="reference internal" href="../furiosa_llm/vision-language.html#visionlanguagemodels"><span class="std std-ref">Vision-Language Models</span></a> for details.</p>
+</section>
+<section id="expanded-model-and-pooling-coverage">
+<h3>Expanded Model and Pooling Coverage<a class="headerlink" href="#expanded-model-and-pooling-coverage" title="Link to this heading">#</a></h3>
+<p>2026.4 substantially broadens both generation and retrieval workloads:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../furiosa_llm/models/qwen3-vl.html#furiosa-llm-model-qwen3-vl"><span class="std std-ref">Qwen3-VL</span></a> — new 2B and 4B Instruct/Thinking models,
+alongside the existing 32B family.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/qwen3-embedding.html#furiosa-llm-model-qwen3-embedding"><span class="std std-ref">Qwen3 Embedding</span></a> — new 0.6B and 4B models,
+alongside the existing 8B model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/qwen3-reranker.html#furiosa-llm-model-qwen3-reranker"><span class="std std-ref">Qwen3 Reranker</span></a> — new 0.6B and 4B models,
+alongside the existing 8B model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/harrier-oss-v1.html#furiosa-llm-model-harrier-oss-v1"><span class="std std-ref">Harrier OSS v1</span></a> — the 0.6B multilingual,
+instruction-aware text embedding model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/mistral-nemo.html#furiosa-llm-model-mistral-nemo"><span class="std std-ref">Mistral NeMo</span></a> — the 12B
+<code class="docutils literal notranslate"><span class="pre">Mistral-Nemo-Instruct-2407-FP8</span></code> text-generation model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/llama-3.1.html#furiosa-llm-model-llama-3-1"><span class="std std-ref">Llama 3.1</span></a> and
+<a class="reference internal" href="../furiosa_llm/models/llama-3.3.html#furiosa-llm-model-llama-3-3"><span class="std std-ref">Llama 3.3</span></a> — dynamically quantized FP8 variants.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/bge-m3.html#furiosa-llm-model-bge-m3"><span class="std std-ref">BGE-M3</span></a> — a multilingual dense-embedding model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/bge-reranker-v2-m3.html#furiosa-llm-model-bge-reranker-v2-m3"><span class="std std-ref">BGE Reranker v2 M3</span></a> — a multilingual
+cross-encoder.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/e5-mistral.html#furiosa-llm-model-e5-mistral"><span class="std std-ref">E5-Mistral</span></a> — the instruction-aware
+<code class="docutils literal notranslate"><span class="pre">E5-Mistral-7B-Instruct</span></code> embedding model.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/gemma-4.html#furiosa-llm-model-gemma-4"><span class="std std-ref">Gemma 4</span></a> — the 31B vision-language model
+supporting text and image input.</p></li>
+<li><p><a class="reference internal" href="../furiosa_llm/models/exaone-4.5.html#furiosa-llm-model-exaone-4-5"><span class="std std-ref">EXAONE 4.5</span></a> — the 33B vision-language model
+supporting text and image input.</p></li>
+</ul>
+<p>Consult <a class="reference internal" href="../furiosa_llm/supported_models.html#supportedmodels"><span class="std std-ref">Supported Models</span></a> for the models that FuriosaAI publishes and validates.</p>
+</section>
+<section id="profile-guided-decode-batching">
+<h3>Profile-Guided Decode Batching<a class="headerlink" href="#profile-guided-decode-batching" title="Link to this heading">#</a></h3>
+<p><strong>Profile-guided decode batching</strong> uses actual NPU execution and I/O costs measured through
+profiling to optimize decode batches and bucket selection for requests with different context lengths.
+Originally introduced as an opt-in feature in 2025.3.0, it is now <strong>enabled by default
+for generative models in 2026.4.0</strong> following performance improvements and stabilization.</p>
+<p>According to GPT-OSS-120B benchmarks (TP=32, DP=1), enabling the feature increased ShareGPT
+output-token throughput by a median <strong>22.7%</strong> and reduced mean time per output token (TPOT)
+by a median <strong>16.0%</strong> across 20 matched configurations. These combine five concurrency
+levels (16, 32, 64, 128, and 256) with prefix caching on/off and overlap scheduling
+on/off (5 × 2 × 2). Each configuration compares the feature enabled and disabled
+under otherwise identical conditions. Results vary by workload.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/profile-guided-decode-batching-2026.4.svg"><img alt="Median output throughput gains and mean TPOT reductions with profile-guided decode batching enabled, for three GPT-OSS-120B workloads." src="../_images/profile-guided-decode-batching-2026.4.svg" style="width: 90%;" />
+</a>
+</figure>
+<p>On the first model load, profiling may take <strong>1–2 minutes</strong>. Subsequent loads reuse compatible
+cached profiles. To disable profiling and profile-guided batching, pass
+<code class="docutils literal notranslate"><span class="pre">--no-profile-guided-decode-batching</span></code> to <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>.
+See <a class="reference internal" href="../furiosa_llm/performance-optimization.html#profileguideddecodebatching"><span class="std std-ref">Profile-Guided Decode Batching</span></a> for configuration details.</p>
+</section>
+<section id="faster-token-sampling">
+<h3>Faster Token Sampling<a class="headerlink" href="#faster-token-sampling" title="Link to this heading">#</a></h3>
+<p>Token sampling selects the next token from the logit scores produced by the
+model’s forward pass, using greedy selection or random sampling controlled by
+<code class="docutils literal notranslate"><span class="pre">top_k</span></code> and <code class="docutils literal notranslate"><span class="pre">top_p</span></code>. The selected token becomes the input to the next decode step, making
+sampling part of the critical path for time per output token (TPOT).
+Furiosa SDK 2026.4.0 introduces two major improvements to this process.</p>
+<p>First, <strong>CPU sampling uses a faster algorithm for top-k and top-p filtering</strong>.
+Inspired by <a class="reference external" href="https://arxiv.org/abs/2602.01518">Qrita</a>, it uses SIMD instructions
+to estimate the distribution of BF16 logits and narrow the candidate set before
+exact selection. It relaxes the threshold when necessary to retain enough
+candidates. Packed integer comparisons and partial selection further reduce
+top-p filtering overhead.
+These optimizations are enabled by default and require no additional configuration.
+Greedy sampling uses a separate argmax path.</p>
+<p>In benchmarks using logits from GPT-OSS-20B and EXAONE 4.0 models, top-k/top-p
+filtering was <strong>2.7–13.2× faster</strong>. In a separate ShareGPT benchmark with
+<code class="docutils literal notranslate"><span class="pre">top_k=50</span></code> and <code class="docutils literal notranslate"><span class="pre">top_p=0.9</span></code>, output-token throughput improved by <strong>6.9–16.9%</strong>
+and mean TPOT fell by <strong>6.5–15.4%</strong> across concurrency levels from 16 to 256.
+Results depend on the model, logit distribution, and workload.</p>
+<p>Second, <strong>NPU sampling runs the token-selection algorithm directly on the NPU</strong>.
+When no request in the batch needs logits on the host, this avoids transferring
+the full vocabulary logits to host memory. Batched NPU execution also parallelizes
+token selection across requests, reducing CPU sampling work for larger batches.</p>
+<p>In a microbenchmark with <strong>Qwen3-MoE at batch size 128</strong>, NPU sampling path
+optimizations reduced the delay between the forward pass and NPU sampling from
+<strong>over 1 ms to about 200 µs</strong>, and host processing of sampled tokens from
+<strong>over 600 µs to about 100 µs</strong> per decode iteration.</p>
+<p>Default FXB builds for all currently supported generative models include sampling
+kernels. <strong>NPU sampling is experimental and disabled by default</strong>. Enable it
+explicitly with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>furiosa-llm<span class="w"> </span>serve<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--experimental-enable-npu-sampling
+</pre></div>
+</div>
+<p>NPU sampling works with eager and overlap scheduling, subject to the model’s
+scheduling restrictions, and cannot be combined with speculative decoding.
+See <a class="reference internal" href="../furiosa_llm/performance-optimization.html#npusampling"><span class="std std-ref">Experimental NPU Sampling</span></a> for configuration and <a class="reference internal" href="../furiosa_llm/overlap-scheduling.html#overlapscheduling"><span class="std std-ref">Overlap Scheduling</span></a> for compatibility.</p>
+</section>
+<section id="complete-migration-to-fxb">
+<h3>Complete Migration to FXB<a class="headerlink" href="#complete-migration-to-fxb" title="Link to this heading">#</a></h3>
+<p>Furiosa SDK 2026.4.0 removes support for the deprecated legacy artifact format.
+Compiled NPU kernels for all supported models are now provided through
+<strong>Furiosa Executable Bundles (FXB)</strong>.</p>
+<p>Introduced in 2026.3.0, FXB packages compiled kernels and their metadata in a
+single file, separate from model weights. Models can start without compiling
+kernels on the serving host, and bundles can be copied, cached, or published
+with a model. Compatible fine-tuned or weight-updated models can reuse the same
+FXB without recompiling.</p>
+<p>We will continue to improve FXB tooling to make model compilation and the reuse
+and distribution of compiled kernels easier. See <a class="reference internal" href="../furiosa_llm/fxb.html#fxb"><span class="std std-ref">Furiosa Executable Bundles (FXB)</span></a> for details on
+building, serving, and reusing bundles.</p>
+<hr class="docutils" />
+<p>The complete list of changes in this release is summarized in the All Changes section below.</p>
+</section>
+</section>
+<section id="all-changes">
+<span id="release2026-4-0-allchanges"></span><h2>All Changes<a class="headerlink" href="#all-changes" title="Link to this heading">#</a></h2>
+<section id="furiosa-llm">
+<h3>Furiosa-LLM<a class="headerlink" href="#furiosa-llm" title="Link to this heading">#</a></h3>
+<section id="major-features-improvements">
+<h4>Major Features &amp; Improvements<a class="headerlink" href="#major-features-improvements" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Hierarchical KV Cache</strong> (experimental)</p>
+<ul>
+<li><p>Added a hierarchy-aware radix cache spanning NPU DRAM (L1) and host memory (L2), with
+asynchronous DMA offload, reload, capacity accounting, and on-demand eviction.</p></li>
+<li><p>Added proactive write-through and optional eviction-time write-back policies so useful
+prefixes can survive NPU-cache reclamation.</p></li>
+<li><p>Reloads can combine an existing local prefix head with a longer cached suffix, avoiding
+both redundant transfer and prefill recomputation.</p></li>
+<li><p>Added auxiliary/sliding-window KV offload and reload, including alignment to sliding-
+window boundaries and all-sliding-window model support.</p></li>
+<li><p>Enabled L1/L2 offloading with intra-node pipeline parallelism.</p></li>
+<li><p>Added opt-in layerwise L2-to-L1 reload overlap to hide host-to-NPU transfer latency
+behind model execution.</p></li>
+<li><p>Added a separate L3 host-staging budget through
+<code class="docutils literal notranslate"><span class="pre">--experimental-kv-offload-staging-memory-gb</span></code> (default: 24 GiB).</p></li>
+<li><p>Added a <strong>Mooncake-backed L3 tier</strong> for cross-process and cluster-wide prefix reuse,
+including namespace isolation, write-through backup, full and partial-prefix prefetch,
+and asynchronous cross-process transfer.</p></li>
+<li><p>Mooncake libraries are loaded at runtime with <code class="docutils literal notranslate"><span class="pre">dlopen</span></code>. They are not linked into or
+bundled with the Furiosa-LLM wheel; a missing library degrades to L2-only operation.</p></li>
+</ul>
+</li>
+<li><p><strong>Speculative Decoding</strong> (experimental)</p>
+<ul>
+<li><p>Replaced the dual-scheduler prototype with a single FCFS scheduler that owns target and
+draft model lanes and verifies draft tokens in batches.</p></li>
+<li><p>Added the hidden JSON option <code class="docutils literal notranslate"><span class="pre">--experimental-speculative-config</span></code> (alias
+<code class="docutils literal notranslate"><span class="pre">--experimental-spec-config</span></code>) and matching <code class="docutils literal notranslate"><span class="pre">LLM</span></code> configuration for external draft
+models and embedded multi-token prediction (MTP).</p></li>
+<li><p>Added tokenizer, model-interface, tensor-parallel, bucket-capacity, and I/O-memory
+validation for target/draft pairs.</p></li>
+<li><p>Added initial self-speculation support for vision-language models with identical target
+and draft layouts.</p></li>
+<li><p>Added optional MTP kernel compilation to EXAONE 4.5 FXB builds. <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code> enables it
+when the model preset and kernel plan support it; pass <code class="docutils literal notranslate"><span class="pre">--no-enable-mtp</span></code> to omit it.</p></li>
+<li><p>Integrated EXAONE 4.5 MTP into serving and enabled prefix caching for both external
+draft-model and MTP decoding.</p></li>
+<li><p>Support remains limited: speculative decoding cannot be combined with overlap
+scheduling, hierarchical KV offloading, PD disaggregation, NPU sampling, structured
+output, or log-probability requests. MTP currently supports text tokens with pipeline
+parallelism 1; MTP prefix caching cannot be combined with aggressive batching.</p></li>
+</ul>
+</li>
+<li><p><strong>Multimodal Serving</strong></p>
+<ul>
+<li><p>Moved Qwen3-VL text-only and image-and-text serving to the standard FCFS scheduler and
+DP routing path.</p></li>
+<li><p>Added vision-encoder batching and separate encoder/decoder NPU task queues.</p></li>
+<li><p>Added a two-phase acquire-and-encode/generate flow to reduce NPU idle time.</p></li>
+<li><p>Added content-derived media IDs and an encoded-embedding registry, allowing repeated
+images to reuse both preprocessing results and NPU-generated vision embeddings.</p></li>
+<li><p>Integrated multimodal token pinning with prefix-cache insertion and eviction.</p></li>
+<li><p>Fixed mRoPE offset computation, chunked-prefill aborts, and multimodal requests using
+repetition penalty, minimum length, and prompt-logprob sampling parameters.</p></li>
+</ul>
+</li>
+<li><p><strong>Model Support</strong></p>
+<ul>
+<li><p>Added Qwen3-VL 2B and 4B, including Instruct and Thinking variants.</p></li>
+<li><p>Added Qwen3-Embedding 0.6B/4B/8B and Qwen3-Reranker 0.6B/4B/8B FXB serving.</p></li>
+<li><p>Added Harrier OSS v1 0.6B embeddings.</p></li>
+<li><p>Added Mistral-Nemo-Instruct-2407-FP8.</p></li>
+<li><p>Added dynamically quantized FP8 Llama 3.1 8B and Llama 3.3 70B variants.</p></li>
+<li><p>Added BGE-M3, BGE-reranker-v2-m3,
+E5-Mistral-7B-Instruct, EXAONE 4.5 33B, and Gemma 4 31B.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="engine-core">
+<h4>Engine Core<a class="headerlink" href="#engine-core" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Loading and Memory Efficiency</strong></p>
+<ul>
+<li><p>Load model weights for DP instances in parallel.</p></li>
+<li><p>Deduplicate shared ModelBuffer uploads such as RoPE caches across EDFs.</p></li>
+<li><p>Generate metadata for profile-guided decode batching about five times faster for large
+MoE models by reducing redundant scheduler-estimation quantization steps.</p></li>
+<li><p>Let the runtime estimate I/O-buffer memory by default in both <code class="docutils literal notranslate"><span class="pre">LLM</span></code> and serving paths;
+explicit <code class="docutils literal notranslate"><span class="pre">--max-io-memory-mb</span></code> values remain available.</p></li>
+<li><p>Size peer-DRAM windows from the device mesh and preserve explicit I/O-memory settings on
+the FXB path.</p></li>
+</ul>
+</li>
+<li><p><strong>Scheduling and Distributed Serving</strong></p>
+<ul>
+<li><p>Improved profile-guided decode batching using measured compute and input-transfer
+costs, with cached startup profiles and a configurable scheduler CPU budget.</p></li>
+<li><p>Improved strict batch composition and moved non-critical result processing out of the
+overlap scheduler’s NPU dispatch path. See <a class="reference internal" href="../furiosa_llm/overlap-scheduling.html#overlapscheduling"><span class="std std-ref">Overlap Scheduling</span></a>.</p></li>
+<li><p>Added prefix-cache-aware admission estimates, on-demand eviction, and additional
+long-context radix-cache optimizations.</p></li>
+<li><p>Added the initial PD-disaggregation connector lifecycle, admission signal, cancellation
+handling, and dedicated correctness tests. The public serving workflow remains
+experimental. Added batched completion routing, layer-group DMA/network transfer
+pipelining, and 1 GB payload chunking for large KV transfers. Mooncake-backed PD
+integration remains in development.</p></li>
+<li><p>Enabled intra-node pipeline parallelism on the FXB path.</p></li>
+</ul>
+</li>
+<li><p><strong>Sampling</strong></p>
+<ul>
+<li><p>Accelerated CPU <code class="docutils literal notranslate"><span class="pre">top_k</span></code>/<code class="docutils literal notranslate"><span class="pre">top_p</span></code> sampling with distribution-aware candidate pruning
+and packed integer ordering.</p></li>
+<li><p>Fixed BF16 cumulative-probability precision during top-p sampling.</p></li>
+<li><p>Added experimental NPU sampling across supported generative models, including
+structured-output masks and host fallback for output log-probability requests.</p></li>
+<li><p>Reduced host sampling-loop overhead and skipped unnecessary logits transfers when
+all requests in a batch can be served by the NPU sampler.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="api-usability-improvements">
+<h4>API &amp; Usability Improvements<a class="headerlink" href="#api-usability-improvements" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Responses API</strong>:</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">/v1/responses</span></code> support for gpt-oss through the Harmony output path, including
+multi-turn and tool-calling fixes.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">structured_outputs</span></code> to Responses requests, with explicit conflict errors when
+<code class="docutils literal notranslate"><span class="pre">tool_choice</span></code>, <code class="docutils literal notranslate"><span class="pre">response_format</span></code>, and <code class="docutils literal notranslate"><span class="pre">structured_outputs</span></code> compete.</p></li>
+<li><p>Improved gpt-oss output refinement using xgrammar structural tags.</p></li>
+</ul>
+</li>
+<li><p><strong>Structured Output and Reasoning</strong>:</p>
+<ul>
+<li><p>Reasoning and final-content constraints now use independent structured-output states and
+may select different backends.</p></li>
+<li><p>Fixed cancellation races involving structured grammars and the Python frontend.</p></li>
+<li><p>Added Gemma 4 reasoning and tool-call parsers and fixed streaming output handling.</p></li>
+<li><p>Added required and named tool choices for gpt-oss. See
+<a class="reference internal" href="../furiosa_llm/models/gpt-oss.html#furiosa-llm-model-gpt-oss-limitations"><span class="std std-ref">GPT-OSS limitations</span></a> for conditions
+where reasoning is not returned.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">qwen3_xml</span></code> tool-call parser (alias <code class="docutils literal notranslate"><span class="pre">qwen3_coder</span></code>) and output refinement
+for Qwen3-Coder auto tool calls.</p></li>
+</ul>
+</li>
+<li><p><strong>Sampling API</strong>:</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">stop</span></code> and <code class="docutils literal notranslate"><span class="pre">include_stop_str_in_output</span></code> to <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> for online and
+offline generation. Stop-string matches report <code class="docutils literal notranslate"><span class="pre">finish_reason=&quot;stop&quot;</span></code> and expose the
+matched value in <code class="docutils literal notranslate"><span class="pre">stop_reason</span></code>.</p></li>
+<li><p>Disabled tokenizer whitespace cleanup in incremental decoding so generated whitespace is
+preserved faithfully.</p></li>
+</ul>
+</li>
+<li><p><strong>Serving and CLI</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code> now actively caps prompt-plus-generation context length, is reflected
+by <code class="docutils literal notranslate"><span class="pre">/v1/models</span></code>, and can improve admission concurrency for requests that omit
+<code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>. See <a class="reference internal" href="../furiosa_llm/performance-optimization.html#servemaxmodellen"><span class="std std-ref">Limiting the Context Length</span></a>.</p></li>
+<li><p>Added embedding, score, and rerank endpoint support for the expanded pooling-model set.</p></li>
+<li><p>Lazy-loaded heavy Python dependencies, making help and version commands nearly
+instantaneous.</p></li>
+<li><p>Improved FXB inspection and build summaries, including MTP and vision-encoder kernels.</p></li>
+<li><p>Added model-aware multimodal processing options and request-level overrides through
+<code class="docutils literal notranslate"><span class="pre">media_io_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">mm_processor_kwargs</span></code>; see <a class="reference internal" href="../furiosa_llm/vision-language.html#multimodaloptions"><span class="std std-ref">Multimodal Options</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h4>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Fixed gpt-oss parsing in multi-turn tool-calling conversations and multi-turn Responses API
+requests.</p></li>
+<li><p>Fixed hierarchical-cache admission deadlocks, auxiliary-cache reload alignment, partial
+prefix reuse, and prefix-router mirror consistency.</p></li>
+<li><p>Fixed vision-language sampling panics and multimodal position-offset handling.</p></li>
+<li><p>Fixed stop-string cancellation cleanup and structured-output cancellation races.</p></li>
+<li><p>Fixed host-memory exhaustion when calculating prompt log probabilities for long contexts.</p></li>
+<li><p>Fixed a repetition-penalty regression so each distinct token is penalized once, avoiding
+repeated penalties that could produce invalid logits and sampling failures.</p></li>
+<li><p>Fixed automatic FXB discovery to select the latest bundle compatible with the runtime IR
+revision.</p></li>
+<li><p>Improved telemetry export performance and fixed telemetry memory leaks.</p></li>
+</ul>
+</section>
+</section>
+<section id="device-runtime">
+<h3>Device Runtime<a class="headerlink" href="#device-runtime" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Migrated generator execution to <strong>device-runtime2</strong>, expressing compute and DMA as
+explicit stream operations with event-based dependencies.</p></li>
+<li><p>Reduced stream-operation host overhead, removed a redundant host buffer pool in favor of
+the runtime’s DMA-BUF interface, and eliminated unnecessary DMA synchronization brackets
+and compute-stream launch barriers.</p></li>
+<li><p>Updated hierarchical device-ID handling and fixed device-runtime memory leaks and
+vision-language NaN failures through dependency updates.</p></li>
+</ul>
+</section>
+<section id="driver">
+<h3>Driver<a class="headerlink" href="#driver" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed DMA-BUF allocation failures when transfer descriptor arrays exceed 4 MiB,
+and corrected peer-to-peer address mappings for remote device memory.</p></li>
+<li><p>Fixed intermittent firmware-update timeouts and improved stability when pending
+device commands are cancelled.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">pert_version</span></code> sysfs attribute. Custom monitoring scripts
+that read this attribute must be updated.</p></li>
+</ul>
+</section>
+<section id="firmware">
+<h3>Firmware<a class="headerlink" href="#firmware" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed intermittent firmware-update timeouts and improved update-command compatibility
+with older firmware versions.</p></li>
+<li><p>Added correctable and uncorrectable ECC error counts to firmware diagnostic reports.</p></li>
+</ul>
+</section>
+</section>
+<section id="breaking-changes-deprecations">
+<span id="release2026-4-0-breakingchanges"></span><h2>🚨 Breaking Changes &amp; Deprecations<a class="headerlink" href="#breaking-changes-deprecations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>RNGD driver update required</strong>:</p>
+<ul>
+<li><p>Furiosa SDK 2026.4 requires the <strong>2026.4.0 RNGD driver</strong>. Upgrade
+<code class="docutils literal notranslate"><span class="pre">furiosa-driver-rngd</span></code> before starting Furiosa-LLM 2026.4; keeping a 2026.3.x driver
+can cause incorrect results or runtime failures.</p></li>
+<li><p><strong>Migration</strong>: Follow <a class="reference internal" href="../get_started/upgrade_guide.html#upgradeguide"><span class="std std-ref">Upgrading FuriosaAI’s Software</span></a> to update the driver and verify the installed
+version before restarting your serving workloads.</p></li>
+</ul>
+</li>
+<li><p><strong>Legacy model artifacts and</strong> <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span></code> <strong>removed</strong>:</p>
+<ul>
+<li><p>The v2 artifact path based on <code class="docutils literal notranslate"><span class="pre">furiosa-models</span></code> and the model rewriter has been removed.
+Furiosa-LLM now loads models through the FXB runtime only.</p></li>
+<li><p><strong>Migration</strong>: Replace <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">build</span> <span class="pre">&lt;model&gt;</span> <span class="pre">...</span></code> with
+<code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span> <span class="pre">&lt;model&gt;</span> <span class="pre">&lt;output&gt;.fxb</span></code>. Serve a local bundle with
+<code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">&lt;model&gt;</span> <span class="pre">--fxb</span> <span class="pre">&lt;output&gt;.fxb</span></code>, or use a <code class="docutils literal notranslate"><span class="pre">furiosa-ai</span></code> Hugging Face
+repository that already publishes a compatible FXB.</p></li>
+</ul>
+</li>
+<li><p><strong>Deprecated serve-time bucket flags removed</strong>:</p>
+<ul>
+<li><p>The previously deprecated <code class="docutils literal notranslate"><span class="pre">--max-batch-size</span></code>, <code class="docutils literal notranslate"><span class="pre">--min-batch-size</span></code>,
+<code class="docutils literal notranslate"><span class="pre">--max-prompt-len</span></code>, <code class="docutils literal notranslate"><span class="pre">--prefill-buckets</span></code>/<code class="docutils literal notranslate"><span class="pre">-pb</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">--decode-buckets</span></code>/<code class="docutils literal notranslate"><span class="pre">-db</span></code> options have been removed from <code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span></code>
+in 2026.4.0.</p></li>
+<li><p><strong>Migration</strong>: Remove these options from server launch scripts. Select buckets when
+running <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span></code>. For runtime scheduling limits, use <code class="docutils literal notranslate"><span class="pre">--max-concurrency</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--max-num-batched-tokens</span></code> as appropriate.</p></li>
+</ul>
+</li>
+<li><p><strong>Obsolete beam-search parameters removed</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_beam_search</span></code>, <code class="docutils literal notranslate"><span class="pre">best_of</span></code>, <code class="docutils literal notranslate"><span class="pre">length_penalty</span></code>, and <code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> have been
+removed from <code class="docutils literal notranslate"><span class="pre">SamplingParams</span></code> and the compatible request models. Beam search has not
+been supported since SDK 2026.1.</p></li>
+<li><p><strong>Migration</strong>: Remove these fields and use greedy or random sampling parameters such as
+<code class="docutils literal notranslate"><span class="pre">temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">top_k</span></code>, and <code class="docutils literal notranslate"><span class="pre">top_p</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p>The following CLI and Python configuration changes also require updates to existing launch
+scripts and applications:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">CLI and Python configuration migration</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 31.8%" />
+<col style="width: 27.3%" />
+<col style="width: 40.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Previous option or setting</p></th>
+<th class="head"><p>Change in 2026.4</p></th>
+<th class="head"><p>Migration</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--enable-exec-stats</span></code> / <code class="docutils literal notranslate"><span class="pre">--no-enable-exec-stats</span></code>;
+<code class="docutils literal notranslate"><span class="pre">SchedulerConfig.enable_exec_stats</span></code></p></td>
+<td><p>Renamed without compatibility aliases.</p></td>
+<td><p>Use <code class="docutils literal notranslate"><span class="pre">--profile-guided-decode-batching</span></code> /
+<code class="docutils literal notranslate"><span class="pre">--no-profile-guided-decode-batching</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SchedulerConfig.profile_guided_decode_batching</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">furiosa-llm</span> <span class="pre">serve</span> <span class="pre">-tp</span></code> / <code class="docutils literal notranslate"><span class="pre">--tensor-parallel-size</span></code></p></td>
+<td><p>Removed; tensor parallelism is fixed by the loaded FXB.</p></td>
+<td><p>Select the degree with <code class="docutils literal notranslate"><span class="pre">fxb</span> <span class="pre">build</span> <span class="pre">--tensor-parallel-size</span></code> and serve that bundle.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--spare-blocks-ratio</span></code> / <code class="docutils literal notranslate"><span class="pre">spare_blocks_ratio</span></code></p></td>
+<td><p>Removed unused scheduler setting.</p></td>
+<td><p>Remove it from CLI arguments, <code class="docutils literal notranslate"><span class="pre">EngineArgs</span></code>, and scheduler configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LLM(seed=...)</span></code>, <code class="docutils literal notranslate"><span class="pre">EngineArgs.seed</span></code>, and engine CLI <code class="docutils literal notranslate"><span class="pre">--seed</span></code></p></td>
+<td><p>Removed unused engine-level seed configuration.</p></td>
+<td><p>Remove these arguments from engine initialization.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_concurrency</span></code> / <code class="docutils literal notranslate"><span class="pre">--max-concurrency</span></code>;
+<code class="docutils literal notranslate"><span class="pre">max_processing_samples</span></code> / <code class="docutils literal notranslate"><span class="pre">--max-processing-samples</span></code></p></td>
+<td><p>Explicit values must be positive integers.</p></td>
+<td><p>Replace zero or negative values with a positive limit, or omit the setting.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Experimental aggressive batching with an explicit <code class="docutils literal notranslate"><span class="pre">max_concurrency</span></code> or disabled
+profile-guided decode batching</p></td>
+<td><p>Unsupported combinations are rejected.</p></td>
+<td><p>Omit <code class="docutils literal notranslate"><span class="pre">max_concurrency</span></code> and keep profile-guided decode batching enabled when using
+aggressive batching.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="released-components">
+<h2>📦 Released Components<a class="headerlink" href="#released-components" title="Link to this heading">#</a></h2>
+<section id="python-packages">
+<h3>Python packages<a class="headerlink" href="#python-packages" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 12.5%" />
+<col style="width: 37.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package name</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Supported architectures</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosa-kernels</p></td>
+<td><p>2026.4.0</p></td>
+<td><p>pure Python (<code class="docutils literal notranslate"><span class="pre">any</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-kernels-contrib</p></td>
+<td><p>2026.4.0</p></td>
+<td><p>pure Python (<code class="docutils literal notranslate"><span class="pre">any</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-llm</p></td>
+<td><p>2026.4.0</p></td>
+<td><p>pure Python (<code class="docutils literal notranslate"><span class="pre">any</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-llm-native</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-native-llm-common</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-tcc</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-torch</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-smi</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="apt-packages">
+<h3>APT packages<a class="headerlink" href="#apt-packages" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 12.5%" />
+<col style="width: 37.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package name</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Supported architectures</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosa-driver-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">all</span></code> (architecture-independent)</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-firmware-image-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">all</span></code> (architecture-independent)</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-firmware-tools-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">amd64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-smi</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">amd64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-metrics-exporter</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">amd64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-cdi</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">amd64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="yum-packages">
+<h3>YUM packages<a class="headerlink" href="#yum-packages" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 12.5%" />
+<col style="width: 37.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package name</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Supported architectures</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>furiosa-driver-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">noarch</span></code> (architecture-independent)</p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-firmware-image-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">noarch</span></code> (architecture-independent)</p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-firmware-tools-rngd</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-smi</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>furiosa-metrics-exporter</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>furiosa-cdi</p></td>
+<td><p>2026.4.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="release-2026.5.0b0.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Furiosa SDK Release 2026.5.0b0</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="release-2026.3.0.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Furiosa SDK Release 2026.3.0</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical-kv-cache-offloading">Hierarchical KV Cache Offloading</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-multimodal-serving">Optimized Multimodal Serving</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanded-model-and-pooling-coverage">Expanded Model and Pooling Coverage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profile-guided-decode-batching">Profile-Guided Decode Batching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faster-token-sampling">Faster Token Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-migration-to-fxb">Complete Migration to FXB</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-changes">All Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#furiosa-llm">Furiosa-LLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#major-features-improvements">Major Features &amp; Improvements</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#engine-core">Engine Core</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#api-usability-improvements">API &amp; Usability Improvements</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#device-runtime">Device Runtime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#driver">Driver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#firmware">Firmware</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-deprecations">🚨 Breaking Changes &amp; Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#released-components">📦 Released Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">Python packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apt-packages">APT packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yum-packages">YUM packages</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FuriosaAI, Inc.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 FuriosaAI Inc.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

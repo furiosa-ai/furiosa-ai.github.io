@@ -40,9 +40,39 @@
         "url": "https://developer.furiosa.ai/v2026.1.0/en/"
     },
     {
-        "name": "2026.2.0 (Latest)",
+        "name": "2026.2.0",
         "version": "2026.2.0",
-        "url": "https://developer.furiosa.ai/v2026.2.0/en/",
+        "url": "https://developer.furiosa.ai/v2026.2.0/en/"
+    },
+    {
+        "name": "2026.3.0",
+        "version": "2026.3.0",
+        "url": "https://developer.furiosa.ai/v2026.3.0/en/"
+    },
+    {
+        "name": "2026.4.0",
+        "version": "2026.4.0",
+        "url": "https://developer.furiosa.ai/v2026.4.0/en/"
+    },
+    {
+        "name": "2026.4.1",
+        "version": "2026.4.1",
+        "url": "https://developer.furiosa.ai/v2026.4.1/en/",
         "preferred": true
+    },
+    {
+        "name": "2026.5.0-beta.0",
+        "version": "2026.5.0b0",
+        "url": "https://developer.furiosa.ai/v2026.5.0b0/en/"
+    },
+    {
+        "name": "2026.5.0-beta.1",
+        "version": "2026.5.0b1",
+        "url": "https://developer.furiosa.ai/v2026.5.0b1/en/"
+    },
+    {
+        "name": "2026.5.0-beta.3",
+        "version": "2026.5.0b3",
+        "url": "https://developer.furiosa.ai/v2026.5.0b3/en/"
     }
 ]
