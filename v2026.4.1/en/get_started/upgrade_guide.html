@@ -449,39 +449,42 @@ Before upgrading the firmware, install the firmware updater and firmware image p
 <input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="apt" for="sd-tab-item-3">
 APT (Debian/Ubuntu)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools<span class="w"> </span>furiosa-firmware-image-rngd
 </pre></div>
 </div>
 </div>
 <input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rocky" for="sd-tab-item-4">
 RPM (Rocky Linux)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools<span class="w"> </span>furiosa-firmware-image-rngd
 </pre></div>
 </div>
 </div>
 <input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="rpm-rhel" for="sd-tab-item-5">
 RPM (RHEL)</label><div class="sd-tab-content docutils">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools-rngd<span class="w"> </span>furiosa-firmware-image-rngd
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>furiosa-firmware-tools<span class="w"> </span>furiosa-firmware-image-rngd
 </pre></div>
 </div>
 </div>
 </div>
-<p>To upgrade the firmware on all RNGD devices, run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater_all
+<p>The driver must be detached from the devices before upgrading the firmware.
+To upgrade the firmware on all RNGD devices, run:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>modprobe<span class="w"> </span>-r<span class="w"> </span>furiosa_rngd
+sudo<span class="w"> </span>furiosa-npu-ctl<span class="w"> </span>update<span class="w"> </span>-a<span class="w"> </span>-f<span class="w"> </span>&lt;firmware<span class="w"> </span>image&gt;
 </pre></div>
 </div>
 <p>Alternatively, you can upgrade the firmware on a specific RNGD by specifying its BDF and the firmware image:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>furiosa_rngd_updater<span class="w"> </span>-b<span class="w"> </span>&lt;BDF&gt;<span class="w"> </span>-f<span class="w"> </span>&lt;firmware<span class="w"> </span>image&gt;
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>&lt;BDF&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/sys/bus/pci/drivers/furiosa_rngd/unbind
+sudo<span class="w"> </span>furiosa-npu-ctl<span class="w"> </span>update<span class="w"> </span>-b<span class="w"> </span>&lt;BDF&gt;<span class="w"> </span>-f<span class="w"> </span>&lt;firmware<span class="w"> </span>image&gt;
 <span class="c1"># Example:</span>
-<span class="c1"># sudo furiosa_rngd_updater -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.3.0.bin</span>
+<span class="c1"># sudo furiosa-npu-ctl update -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.4.0.bin</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Before the 2026.3 release, the firmware updater was executed automatically when the firmware image package was installed.
-Starting with the 2026.3 release, you must run the firmware updater manually after installing the firmware image package.</p>
+<p>Before the 2026.1 release, the firmware updater was executed automatically when the firmware image package was installed.
+Starting with the 2026.1 release, you must run the firmware updater (<code class="docutils literal notranslate"><span class="pre">furiosa-npu-ctl</span> <span class="pre">update</span></code>) manually after installing the firmware image package.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -495,13 +498,13 @@ devices, run the following command:</p>
 +------+--------+-------------------+---------+-------+--------------+
 <span class="p">|</span><span class="w"> </span>Arch<span class="w"> </span><span class="p">|</span><span class="w"> </span>Device<span class="w"> </span><span class="p">|</span><span class="w"> </span>Firmware<span class="w">          </span><span class="p">|</span><span class="w"> </span>Temp.<span class="w">   </span><span class="p">|</span><span class="w"> </span>Power<span class="w"> </span><span class="p">|</span><span class="w"> </span>PCI-BDF<span class="w">      </span><span class="p">|</span>
 +------+--------+-------------------+---------+-------+--------------+
-<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu0<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.3.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">28</span>.01°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:83:00.0<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu0<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.4.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">28</span>.01°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:83:00.0<span class="w"> </span><span class="p">|</span>
 +------+--------+-------------------+---------+-------+--------------+
-<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu1<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.3.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">27</span>.25°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:84:00.0<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu1<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.4.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">27</span>.25°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:84:00.0<span class="w"> </span><span class="p">|</span>
 +------+--------+-------------------+---------+-------+--------------+
-<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu2<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.3.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">27</span>.95°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:c3:00.0<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu2<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.4.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">27</span>.95°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:c3:00.0<span class="w"> </span><span class="p">|</span>
 +------+--------+-------------------+---------+-------+--------------+
-<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu3<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.3.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">29</span>.12°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:c4:00.0<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>RNGD<span class="w"> </span><span class="p">|</span><span class="w"> </span>npu3<span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="m">2026</span>.4.0,<span class="w"> </span>2d3f72a<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">29</span>.12°C<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">37</span><span class="w"> </span>W<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:c4:00.0<span class="w"> </span><span class="p">|</span>
 +------+--------+-------------------+---------+-------+--------------+
 </pre></div>
 </div>

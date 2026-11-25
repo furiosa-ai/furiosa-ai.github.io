@@ -67,40 +67,43 @@ Before upgrading the firmware, install the firmware updater and firmware image p
 
     .. code-block:: sh
 
-      sudo apt install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+      sudo apt install -y furiosa-firmware-tools furiosa-firmware-image-rngd
 
   .. tab-item:: RPM (Rocky Linux)
     :sync: rpm-rocky
 
     .. code-block:: sh
 
-      sudo dnf install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+      sudo dnf install -y furiosa-firmware-tools furiosa-firmware-image-rngd
 
   .. tab-item:: RPM (RHEL)
     :sync: rpm-rhel
 
     .. code-block:: sh
 
-      sudo dnf install -y furiosa-firmware-tools-rngd furiosa-firmware-image-rngd
+      sudo dnf install -y furiosa-firmware-tools furiosa-firmware-image-rngd
 
+The driver must be detached from the devices before upgrading the firmware.
 To upgrade the firmware on all RNGD devices, run:
 
 .. code-block:: sh
 
-   sudo furiosa_rngd_updater_all
+   sudo modprobe -r furiosa_rngd
+   sudo furiosa-npu-ctl update -a -f <firmware image>
 
 Alternatively, you can upgrade the firmware on a specific RNGD by specifying its BDF and the firmware image:
 
 .. code-block:: sh
 
-   sudo furiosa_rngd_updater -b <BDF> -f <firmware image>
+   echo <BDF> | sudo tee /sys/bus/pci/drivers/furiosa_rngd/unbind
+   sudo furiosa-npu-ctl update -b <BDF> -f <firmware image>
    # Example:
-   # sudo furiosa_rngd_updater -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.3.0.bin
+   # sudo furiosa-npu-ctl update -b 0000:43:00.0 -f /usr/lib/firmware/furiosa-rngd/rngd_fw_v2026.4.0.bin
 
 .. note::
 
-  Before the 2026.3 release, the firmware updater was executed automatically when the firmware image package was installed.
-  Starting with the 2026.3 release, you must run the firmware updater manually after installing the firmware image package.
+  Before the 2026.1 release, the firmware updater was executed automatically when the firmware image package was installed.
+  Starting with the 2026.1 release, you must run the firmware updater (``furiosa-npu-ctl update``) manually after installing the firmware image package.
 
 .. note::
 
@@ -118,13 +121,13 @@ devices, run the following command:
    +------+--------+-------------------+---------+-------+--------------+
    | Arch | Device | Firmware          | Temp.   | Power | PCI-BDF      |
    +------+--------+-------------------+---------+-------+--------------+
-   | RNGD | npu0   | 2026.3.0, 2d3f72a | 28.01°C |  37 W | 0000:83:00.0 |
+   | RNGD | npu0   | 2026.4.0, 2d3f72a | 28.01°C |  37 W | 0000:83:00.0 |
    +------+--------+-------------------+---------+-------+--------------+
-   | RNGD | npu1   | 2026.3.0, 2d3f72a | 27.25°C |  37 W | 0000:84:00.0 |
+   | RNGD | npu1   | 2026.4.0, 2d3f72a | 27.25°C |  37 W | 0000:84:00.0 |
    +------+--------+-------------------+---------+-------+--------------+
-   | RNGD | npu2   | 2026.3.0, 2d3f72a | 27.95°C |  37 W | 0000:c3:00.0 |
+   | RNGD | npu2   | 2026.4.0, 2d3f72a | 27.95°C |  37 W | 0000:c3:00.0 |
    +------+--------+-------------------+---------+-------+--------------+
-   | RNGD | npu3   | 2026.3.0, 2d3f72a | 29.12°C |  37 W | 0000:c4:00.0 |
+   | RNGD | npu3   | 2026.4.0, 2d3f72a | 29.12°C |  37 W | 0000:c4:00.0 |
    +------+--------+-------------------+---------+-------+--------------+
 
 
